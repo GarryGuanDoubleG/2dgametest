@@ -39,6 +39,8 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
+
+
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
 
 class Tile

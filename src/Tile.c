@@ -29,3 +29,11 @@ bool init(){
 bool loadMedia(){
 	return false;
 }
+
+bool checkCollision(){
+	return false;
+}
+
+bool setTiles ( Tile *tiles[]){
+	return false;
+}

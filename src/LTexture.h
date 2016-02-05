@@ -2,8 +2,6 @@
 #define _LTexture_H
 
 #include "graphics.h"
-#include "Tile.h"
-#include "SDL_ttf.h"
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -59,6 +57,6 @@ class LTexture
 //Scene textures
 LTexture gDotTexture;
 LTexture gTileTexture;
-
+TTF_Font *gFont = NULL;
 
 #endif
