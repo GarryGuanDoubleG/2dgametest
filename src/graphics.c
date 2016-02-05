@@ -862,3 +862,20 @@ void DrawMouse()
  Mouse.y = my;
 }
 
+//GG edit
+
+SDL_Window * get_gt_window(){
+	return __gt_graphics_main_window;
+}
+SDL_Renderer * get_gt_renderer(){
+	return __gt_graphics_renderer;
+}
+SDL_Texture * get_gt_texture(){
+	return __gt_graphics_texture;
+}
+SDL_Surface * get_gt_Surface(){
+	return __gt_graphics_surface;
+}
+SDL_Surface * get_gt_buffer(){
+	return __gt_graphics_temp_buffer;
+}

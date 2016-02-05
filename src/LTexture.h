@@ -53,10 +53,13 @@ class LTexture
 		int mHeight;
 };
 
-
-//Scene textures
-LTexture gDotTexture;
-LTexture gTileTexture;
+//Frees media and shuts down SDL
+void close();
+//The window we'll be rendering to
+SDL_Window* gWindow = NULL;
+//The window renderer
+SDL_Renderer* gRenderer = NULL;
 TTF_Font *gFont = NULL;
+//Scene textures
 
 #endif

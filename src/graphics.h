@@ -95,4 +95,12 @@ void NextFrame();
 void InitMouse();
 void DrawMouse();
 
+//GG edits
+//getting handle on DJ's static graphics
+SDL_Window * get_gt_window();
+SDL_Renderer * get_gt_renderer();
+SDL_Texture * get_gt_texture();
+SDL_Surface * get_gt_Surface();
+SDL_Surface * get_gt_buffer();
+//end
 #endif

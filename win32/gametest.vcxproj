@@ -19,9 +19,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h" />
     <ClInclude Include="..\src\LTexture.h" />
-    <ClInclude Include="..\src\Tile.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
+    <ClInclude Include="..\src\Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,12 +60,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2_image-2.0.1\include;C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2_mixer-2.0.1\include;C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2_ttf-2.0.13\include;C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Garry\Documents\Visual Studio 2010\SDL 2\includes;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2_image-2.0.1\lib\x86;C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2_mixer-2.0.1\lib\x86;C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2_ttf-2.0.13\lib\x86;C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL-1.2.15\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Garry\Documents\Visual Studio 2010\SDL 2\Libs;$(LibraryPath)</LibraryPath>
     <OutDir>../</OutDir>
-    <ReferencePath>C:\Libraries\SDL2_ttf-2.0.12\lib\x86;C:\Libraries\SDL2_mixer-2.0.0\lib\x86;C:\Libraries\SDL2_image-2.0.0\lib\x86;C:\Libraries\SDL2-2.0.3\lib\x86;$(ReferencePath)</ReferencePath>
+    <ReferencePath>C:\Users\Garry\Documents\Visual Studio 2010\SDL 2\Libs;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\djkehoe\Ironsoft Studios\libs\include;$(IncludePath)</IncludePath>

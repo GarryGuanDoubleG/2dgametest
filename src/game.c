@@ -3,6 +3,8 @@
 #include "SDL_image.h"
 #include "graphics.h"
 #include <string.h>
+#include "LTexture.h"
+#include "Tile.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/

@@ -14,6 +14,15 @@ LTexture::~LTexture()
 	free();
 }
 
+//gg edit
+bool init(){
+	gWindow = get_gt_window();
+	gRenderer = get_gt_renderer();
+
+	return gWindow && gRenderer;
+}
+//end
+
 bool LTexture::loadFromFile( std::string path )
 {
 	//Get rid of preexisting texture

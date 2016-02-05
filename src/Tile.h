@@ -1,25 +1,25 @@
-#ifndef _TILE_H
-#define _TILE_H
+#ifndef _TILE_H_
+#define _TILE_H_
 
-#include "SDL.h"
-#include "SDL_image.h"
 #include "LTexture.h"
-#include <stdio.h>
+#include <string>
+#include <fstream>
 
-//Tile Generation
-// Code obtained from lazyfoo at lazyfoo.net
+//Screen dimension constants
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 
-//Screen Dimension Constants
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 960;
+//The dimensions of the level
+const int LEVEL_WIDTH = 1280;
+const int LEVEL_HEIGHT = 960;
 
 //Tile constants
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
 const int TOTAL_TILES = 192;
 const int TOTAL_TILE_SPRITES = 12;
-//Tile sprites
-//Testing Sprites. Plan to change later to environmental tiles
+
+//The different tile sprites
 const int TILE_RED = 0;
 const int TILE_GREEN = 1;
 const int TILE_BLUE = 2;
@@ -33,45 +33,47 @@ const int TILE_BOTTOMLEFT = 9;
 const int TILE_LEFT = 10;
 const int TILE_TOPLEFT = 11;
 
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
-
-
-
+LTexture gDotTexture;
+LTexture gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
 
+
+//The tile
 class Tile
 {
-	public:
-		Tile(int x, int y, int tileType);
+    public:
+        //Initializes position and type
+        Tile( int x, int y, int tileType );
 
-		void render( SDL_Rect& camera);
+        //Shows the tile
+        void render( SDL_Rect& camera );
 
-		int getType();
-		SDL_Rect getBox();
+        //Get the tile type
+        int getType();
 
-private:
-	//the attributes of the tile
-	SDL_Rect mBox;
-	//The tile type
-	int mType;
+        //Get the collision box
+        SDL_Rect getBox();
+
+    private:
+        //The attributes of the tile
+        SDL_Rect mBox;
+
+        //The tile type
+        int mType;
 };
-//inits SDL and creates window
+
 bool init();
+
 //Loads media
-bool loadMedia();
-//Shuts down SDL and frees media
-void close();
-//Box collision for camera
-bool checkCollision( SDL_Rect a, SDL_Rect b);
-//collision against set of tils
-//bool touchesWall( SDL_Rect box, Tile* tiles[]);
+bool loadMedia( Tile* tiles[] );
+//Box collision detector
+bool checkCollision( SDL_Rect a, SDL_Rect b );
+
+//Checks collision box against set of tiles
+bool touchesWall( SDL_Rect box, Tile* tiles[] );
 
 //Sets tiles from tile map
-bool setTiles ( Tile *tiles[]);
+bool setTiles( Tile *tiles[] );
 
 
 #endif
