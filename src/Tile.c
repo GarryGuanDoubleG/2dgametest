@@ -1,6 +1,9 @@
 #include "Tile.h"
 
 //code based on lazyfoo's tile generation
+LTexture gDotTexture;
+LTexture gTileTexture;
+SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ] ;
 
 Tile::Tile(int x, int y, int tileType){
 	
@@ -21,10 +24,6 @@ void Tile::render(SDL_Rect &camera){
 
 }
 
-bool init(){
-
-	return false;
-}
 
 bool loadMedia(){
 	return false;

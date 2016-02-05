@@ -60,12 +60,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Garry\Documents\Visual Studio 2010\SDL 2\includes;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL 2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\Garry\Documents\Visual Studio 2010\SDL 2\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL 2\Libs;$(LibraryPath)</LibraryPath>
     <OutDir>../</OutDir>
-    <ReferencePath>C:\Users\Garry\Documents\Visual Studio 2010\SDL 2\Libs;$(ReferencePath)</ReferencePath>
+    <ReferencePath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL 2\Libs;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\djkehoe\Ironsoft Studios\libs\include;$(IncludePath)</IncludePath>

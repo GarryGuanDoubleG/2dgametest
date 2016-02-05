@@ -1,10 +1,9 @@
 #ifndef _TILE_H_
 #define _TILE_H_
 
-#include "LTexture.h"
 #include <string>
 #include <fstream>
-
+#include "LTexture.h"
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -33,10 +32,9 @@ const int TILE_BOTTOMLEFT = 9;
 const int TILE_LEFT = 10;
 const int TILE_TOPLEFT = 11;
 
-LTexture gDotTexture;
-LTexture gTileTexture;
-SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
-
+extern LTexture  gDotTexture;
+extern LTexture  gTileTexture;
+extern SDL_Rect  gTileClips[ TOTAL_TILE_SPRITES ];
 
 //The tile
 class Tile
@@ -62,7 +60,6 @@ class Tile
         int mType;
 };
 
-bool init();
 
 //Loads media
 bool loadMedia( Tile* tiles[] );

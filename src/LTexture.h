@@ -8,6 +8,15 @@
 
 //Texture wrapper class obtained from lazyfoo.net
 //copyrighted by lazyfoo
+
+//The window we'll be rendering to
+extern SDL_Window* gWindow;
+//The window renderer
+extern SDL_Renderer* gRenderer;
+extern TTF_Font *gFont;
+
+
+//Scene textures
 class LTexture
 {
 	public:
@@ -53,13 +62,9 @@ class LTexture
 		int mHeight;
 };
 
+bool init();
 //Frees media and shuts down SDL
 void close();
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
-TTF_Font *gFont = NULL;
-//Scene textures
+
 
 #endif
