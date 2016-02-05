@@ -69,7 +69,7 @@ void Init_All()
     bgcolor,
     0);
 
-  InitMouse();,
+  InitMouse();
   atexit(CleanUpAll);
 }
 

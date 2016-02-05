@@ -13,9 +13,27 @@
   <ItemGroup>
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\graphics.c" />
+    <ClCompile Include="..\src\LTexture.c" />
+    <ClCompile Include="..\src\Tile.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h" />
+    <ClInclude Include="..\src\LTexture.h" />
+    <ClInclude Include="..\src\Tile.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tile.resx">
+      <DependentUpon>Tile.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7FDED120-6E7E-4B36-A32B-C84298D67EDE}</ProjectGuid>
@@ -68,6 +86,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
