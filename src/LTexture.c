@@ -6,8 +6,6 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 TTF_Font *gFont = NULL;
 
-
-
 LTexture::LTexture()
 {
 	//Initialize
@@ -24,10 +22,7 @@ LTexture::~LTexture()
 
 //gg edit
 bool init(){
-	gWindow = get_gt_window();
-	gRenderer = get_gt_renderer();
-
-	return gWindow && gRenderer;
+	return false;
 }
 //end
 
@@ -71,7 +66,6 @@ bool LTexture::loadFromFile( std::string path )
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
-
 #ifdef _SDL_TTF_H
 bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor )
 {

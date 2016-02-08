@@ -54,6 +54,12 @@ enum colors {Red = 1,Green = 2,Blue = 3,Yellow = 4,Orange = 5,Violet = 6,Brown =
                LightGreen = 18,LightBlue = 19,LightYellow = 20,LightOrange = 21,LightViolet = 22,LightBrown = 23,LightGrey = 24,
                Black = 25,White = 26,Tan = 27,Gold = 28,Silver = 29,YellowGreen = 30,Cyan = 31,Magenta = 32};
 
+extern SDL_Window   *   __gt_graphics_main_window;
+extern SDL_Renderer *   __gt_graphics_renderer;
+extern SDL_Texture  *   __gt_graphics_texture;
+extern SDL_Surface  *   __gt_graphics_surface;
+extern SDL_Surface  *   __gt_graphics_temp_buffer;
+
 typedef struct Sprite_T
 {
   SDL_Surface *image;		/*pointer to the actual image in memory*/
@@ -95,12 +101,4 @@ void NextFrame();
 void InitMouse();
 void DrawMouse();
 
-//GG edits
-//getting handle on DJ's static graphics
-SDL_Window * get_gt_window();
-SDL_Renderer * get_gt_renderer();
-SDL_Texture * get_gt_texture();
-SDL_Surface * get_gt_Surface();
-SDL_Surface * get_gt_buffer();
-//end
 #endif

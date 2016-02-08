@@ -2,9 +2,11 @@
 #define _LTexture_H
 
 #include "graphics.h"
+#include "SDL_ttf.h"
 #include <stdio.h>
 #include <string>
 #include <fstream>
+
 
 //Texture wrapper class obtained from lazyfoo.net
 //copyrighted by lazyfoo
@@ -14,7 +16,6 @@ extern SDL_Window* gWindow;
 //The window renderer
 extern SDL_Renderer* gRenderer;
 extern TTF_Font *gFont;
-
 
 //Scene textures
 class LTexture

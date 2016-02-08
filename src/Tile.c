@@ -29,7 +29,7 @@ bool loadMedia(){
 	return false;
 }
 
-bool checkCollision(){
+bool checkCollision( SDL_Rect a, SDL_Rect b ){
 	return false;
 }
 

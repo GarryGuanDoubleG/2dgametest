@@ -22,11 +22,11 @@ Sprite *Msprite;
 int NumSprites;
 Uint32 NOW;					/*the current time since program started*/
 
-static SDL_Window   *   __gt_graphics_main_window = NULL;
-static SDL_Renderer *   __gt_graphics_renderer = NULL;
-static SDL_Texture  *   __gt_graphics_texture = NULL;
-static SDL_Surface  *   __gt_graphics_surface = NULL;
-static SDL_Surface  *   __gt_graphics_temp_buffer = NULL;
+SDL_Window   *   __gt_graphics_main_window = NULL;
+SDL_Renderer *   __gt_graphics_renderer = NULL;
+SDL_Texture  *   __gt_graphics_texture = NULL;
+SDL_Surface  *   __gt_graphics_surface = NULL;
+SDL_Surface  *   __gt_graphics_temp_buffer = NULL;
 
 
 /*some data on the video settings that can be useful for a lot of functions*/
