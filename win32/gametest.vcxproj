@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Downloads\sprite.c" />
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\graphics.c" />
     <ClCompile Include="..\src\LTexture.c" />
     <ClCompile Include="..\src\Tile.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Downloads\sprite.h" />
     <ClInclude Include="..\src\graphics.h" />
     <ClInclude Include="..\src\LTexture.h" />
     <ClInclude Include="..\src\Tile.h" />
@@ -27,11 +29,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Tile.resx">
-      <DependentUpon>Tile.h</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7FDED120-6E7E-4B36-A32B-C84298D67EDE}</ProjectGuid>
@@ -60,12 +57,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL 2\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\includes;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL 2\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Garry\Documents\Visual Studio 2010\Projects\2dgametest\Libs;$(LibraryPath)</LibraryPath>
     <OutDir>../</OutDir>
-    <ReferencePath>C:\Users\Garry Guan\Documents\Visual Studio 2010\SDL 2\Libs;$(ReferencePath)</ReferencePath>
+    <ReferencePath>$(ProjectDir)\Libs;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\djkehoe\Ironsoft Studios\libs\include;$(IncludePath)</IncludePath>

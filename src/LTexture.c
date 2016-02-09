@@ -26,7 +26,7 @@ bool init(){
 }
 //end
 
-bool LTexture::loadFromFile( std::string path )
+bool loadFromFile( std::string path )
 {
 	//Get rid of preexisting texture
 	free();
@@ -67,7 +67,7 @@ bool LTexture::loadFromFile( std::string path )
 	return mTexture != NULL;
 }
 #ifdef _SDL_TTF_H
-bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor )
+bool loadFromRenderedText( std::string textureText, SDL_Color textColor )
 {
 	//Get rid of preexisting texture
 	free();
@@ -103,7 +103,7 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 }
 #endif
 
-void LTexture::free()
+void free()
 {
 	//Free texture if it exists
 	if( mTexture != NULL )
@@ -115,25 +115,25 @@ void LTexture::free()
 	}
 }
 
-void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
+void setColor( Uint8 red, Uint8 green, Uint8 blue )
 {
 	//Modulate texture rgb
 	SDL_SetTextureColorMod( mTexture, red, green, blue );
 }
 
-void LTexture::setBlendMode( SDL_BlendMode blending )
+void setBlendMode( SDL_BlendMode blending )
 {
 	//Set blending function
 	SDL_SetTextureBlendMode( mTexture, blending );
 }
 		
-void LTexture::setAlpha( Uint8 alpha )
+void setAlpha( Uint8 alpha )
 {
 	//Modulate texture alpha
 	SDL_SetTextureAlphaMod( mTexture, alpha );
 }
 
-void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
+void render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
 {
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
@@ -149,12 +149,12 @@ void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* ce
 	SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
 }
 
-int LTexture::getWidth()
+int getWidth()
 {
 	return mWidth;
 }
 
-int LTexture::getHeight()
+int getHeight()
 {
 	return mHeight;
 }
