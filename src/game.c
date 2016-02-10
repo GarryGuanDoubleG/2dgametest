@@ -4,6 +4,7 @@
 #include "SDL_image.h"
 #include "graphics.h"
 #include "Tile.h"
+#include "sprite.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
