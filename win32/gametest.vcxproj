@@ -13,13 +13,17 @@
   <ItemGroup>
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\graphics.c" />
+    <ClCompile Include="..\src\simple_logger.c" />
     <ClCompile Include="..\src\sprite.c" />
     <ClCompile Include="..\src\Tile.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h" />
+    <ClInclude Include="..\src\simple_logger.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,12 +59,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\SDL 2\includes;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\Garry\Documents\Visual Studio 2010\Projects\2dgametest\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\..\..\SDL 2\Libs;$(LibraryPath)</LibraryPath>
     <OutDir>../</OutDir>
-    <ReferencePath>$(ProjectDir)\Libs;$(ReferencePath)</ReferencePath>
+    <ReferencePath>$(ProjectDir)..\..\..\SDL 2\Libs;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\djkehoe\Ironsoft Studios\libs\include;$(IncludePath)</IncludePath>
