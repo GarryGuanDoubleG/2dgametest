@@ -54,6 +54,8 @@ enum colors {Red = 1,Green = 2,Blue = 3,Yellow = 4,Orange = 5,Violet = 6,Brown =
                LightGreen = 18,LightBlue = 19,LightYellow = 20,LightOrange = 21,LightViolet = 22,LightBrown = 23,LightGrey = 24,
                Black = 25,White = 26,Tan = 27,Gold = 28,Silver = 29,YellowGreen = 30,Cyan = 31,Magenta = 32};
 
+extern const int SCREEN_HEIGHT;
+extern const int SCREEN_WIDTH;
 
 extern SDL_Surface *buffer; /*pointer to the background image buffer*/
 extern SDL_Surface *videobuffer; /*pointer to the draw buffer*/

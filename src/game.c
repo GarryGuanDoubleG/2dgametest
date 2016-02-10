@@ -26,16 +26,17 @@ int main(int argc, char *argv[])
   int tx = 0,ty = 0;
   const Uint8 *keys;
   char imagepath[512];
-  SDL_Rect srcRect={0,0,800,600};
+  SDL_Rect srcRect={0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
+
   Init_All();
-  temp = IMG_Load("images/bgtest.png");/*notice that the path is part of the filename*/
-  if(temp != NULL)
+  /*temp = IMG_Load("images/bgtest.png");/*notice that the path is part of the filename*/
+  /*if(temp != NULL)
   {
       printf("temp image loaded successfully\n");
       SDL_BlitSurface(temp,NULL,buffer,NULL);
   }
   gt_graphics_render_surface_to_screen(temp,srcRect,0,0);
-  SDL_FreeSurface(temp);
+  SDL_FreeSurface(temp);*/
   done = 0;
   do
   {
@@ -63,15 +64,16 @@ void Init_All()
 {
 	float bgcolor[] = {1,1,1,1};
   Init_Graphics(
-	"Game Test",
-    800,
-    400,
-    800,
-    400,
+	"Conquest",
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
     bgcolor,
     0);
   //GG edit
   sprite_initialize_system();
+  tile_init_system();
   InitMouse2();
   atexit(CleanUpAll);
 }

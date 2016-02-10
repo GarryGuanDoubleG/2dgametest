@@ -6,6 +6,9 @@
 
 #define MaxSprites    255
 
+const int SCREEN_HEIGHT = 1120;
+const int SCREEN_WIDTH = 1200;
+
 struct
 {
 	Uint32 state;
