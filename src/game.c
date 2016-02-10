@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
   do
   {
     ResetBuffer();
-    DrawMouse();
+    DrawMouse2();
     NextFrame();
     SDL_PumpEvents();
     keys = SDL_GetKeyboardState(NULL);
@@ -70,8 +70,9 @@ void Init_All()
     400,
     bgcolor,
     0);
-
-  InitMouse();
+  //GG edit
+  sprite_initialize_system();
+  InitMouse2();
   atexit(CleanUpAll);
 }
 
