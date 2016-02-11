@@ -23,8 +23,6 @@ public:
 
 extern Tile *tile_list;
 
-
-
 void tile_init_system();
 void tile_load(char *filename);
 void tile_set();

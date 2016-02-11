@@ -18,11 +18,11 @@
     <ClCompile Include="..\src\Tile.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\entity.h" />
     <ClInclude Include="..\src\graphics.h" />
     <ClInclude Include="..\src\simple_logger.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
-    <ClInclude Include="entity.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>

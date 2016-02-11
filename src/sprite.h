@@ -26,7 +26,7 @@ extern Sprite2* Sprite_Mouse;
 void sprite_initialize_system();
 void sprite_close_system();
 
-Sprite2 *sprite_load(char *filename);
+Sprite2 *sprite_load(char *filename, int width, int height);
 void sprite_free(Sprite2 *sprite);
 void sprite_draw(Sprite2 *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY);
 

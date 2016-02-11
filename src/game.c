@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
   do
   {
     ResetBuffer();
+	SDL_RenderClear(__gt_graphics_renderer);//clear screen
+	tile_render(NULL);
     DrawMouse2();
     NextFrame();
     SDL_PumpEvents();
@@ -49,6 +51,7 @@ int main(int argc, char *argv[])
     {
         done = 1;
     }
+	SDL_RenderPresent(__gt_graphics_renderer);
   }while(!done);
   exit(0);		/*technically this will end the program, but the compiler likes all functions that can return a value TO return a value*/
   return 0;

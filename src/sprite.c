@@ -15,7 +15,7 @@ struct
 
 void InitMouse2()
 {
-  Sprite_Mouse = sprite_load("images/mouse.png");
+  Sprite_Mouse = sprite_load("images/mouse.png", 16,16);
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
@@ -26,7 +26,7 @@ void DrawMouse2()
 {
   int mx,my;
   SDL_GetMouseState(&mx,&my);
-  if(Sprite_Mouse != NULL) 
+  if(Sprite_Mouse != NULL)
 	  sprite_draw(Sprite_Mouse,Mouse2.frame,__gt_graphics_renderer,mx,my);
   else
 	  printf("Sprite_Mouse did not load properly");
@@ -59,7 +59,7 @@ void sprite_close_system()
 		sprite_free(spriteList+i);
 }
 
-Sprite2 *sprite_load(char *filename)
+Sprite2 *sprite_load(char *filename, int width, int height)
 {
 	SDL_Texture * newTexture = NULL;
 	SDL_Surface * loadedSurface = NULL;
@@ -75,7 +75,7 @@ Sprite2 *sprite_load(char *filename)
 		printf("Surface was not loaded in sprite_load");
 		return NULL;
 	}
-	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );
 
 	newTexture = SDL_CreateTextureFromSurface(__gt_graphics_renderer, loadedSurface);
 	if(!newTexture){
@@ -87,8 +87,8 @@ Sprite2 *sprite_load(char *filename)
 		if((spriteList + i)->image == NULL){
 			spriteList[i].refCount = 1;
 			//Get image dimensions
-			spriteList[i].imageW = loadedSurface->w;
-			spriteList[i].imageH = loadedSurface->h;
+			spriteList[i].imageW = width;
+			spriteList[i].imageH = height;
 			//global count
 			sprite_count++;
 			spriteList[i].image = newTexture;
