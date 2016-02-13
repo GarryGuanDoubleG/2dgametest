@@ -3,8 +3,9 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "graphics.h"
-#include "Tile.h"
 #include "sprite.h"
+#include "Tile.h"
+#include "player.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
@@ -42,15 +43,20 @@ int main(int argc, char *argv[])
   {
     ResetBuffer();
 	SDL_RenderClear(__gt_graphics_renderer);//clear screen
+	//render or draw functions go here
+	//draw functions should go in order from background first to player draw calls last
 	tile_render(NULL);
     DrawMouse2();
+	player_draw();
     NextFrame();
+	//end
     SDL_PumpEvents();
     keys = SDL_GetKeyboardState(NULL);
     if(keys[SDL_SCANCODE_ESCAPE])
     {
         done = 1;
     }
+
 	SDL_RenderPresent(__gt_graphics_renderer);
   }while(!done);
   exit(0);		/*technically this will end the program, but the compiler likes all functions that can return a value TO return a value*/
@@ -75,7 +81,9 @@ void Init_All()
     bgcolor,
     0);
   //GG edit
-  sprite_initialize_system();
+  sprite_initialize_system(); // allocates memory for all sprites
+  entity_initialize_system();//allocate memory for all entities
+  player_init(); //creates player entity
   tile_init_system();
   InitMouse2();
   atexit(CleanUpAll);

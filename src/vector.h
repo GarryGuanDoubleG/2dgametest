@@ -8,7 +8,7 @@
 typedef struct{
 	float x;/**< the x component of the vector */
 	float y;/**< the y component of the vector */
-}Vect2D;
+}Vec2d;
 
 typedef struct{
 	union {float x; /**< the x component of the vector */
@@ -17,7 +17,7 @@ typedef struct{
 		   float g;}; /**< the green component of the color */
 	union {float z; /**< the z component of the vector */
 		   float b;}; /**< the blue component of the color */
-}Vect3d;
+}Vec3d;
 
 typedef struct{
 	union {float x; 
@@ -28,13 +28,12 @@ typedef struct{
 		   float b;};
 	union {float w; 
 		   float a;};
-}Vect4d
+}Vec4d;
 
-#define vec2d.add(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
-#define vec3d.add(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
-#define vec3d.add(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
+float GetLength2d(Vec2d v);
+float GetLength3d(Vec3d v);
 
-	/*
+/*
 void (add*)();
 float (getLength*)();
 void set();

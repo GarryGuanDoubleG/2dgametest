@@ -11,19 +11,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\entity.c" />
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\graphics.c" />
+    <ClCompile Include="..\src\player.c" />
     <ClCompile Include="..\src\simple_logger.c" />
     <ClCompile Include="..\src\sprite.c" />
     <ClCompile Include="..\src\Tile.c" />
+    <ClCompile Include="..\src\vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\entity.h" />
     <ClInclude Include="..\src\graphics.h" />
+    <ClInclude Include="..\src\player.h" />
     <ClInclude Include="..\src\simple_logger.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="..\src\vector.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -3,7 +3,7 @@
 const int TOTAL_TILES = 210;//15x14 Tile Map
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
-const int TILE_GRASS1 = 0;
+const int TILE_GRASS1 = 0;//type. Should be made into an enum or macro
 
 Tile *tile_list = NULL;
 SDL_Texture * tile_sprite_grass = NULL;

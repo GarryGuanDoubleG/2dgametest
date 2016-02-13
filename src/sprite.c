@@ -15,6 +15,10 @@ struct
 
 void InitMouse2()
 {
+  if(!SDL_ShowCursor(false)){
+	  printf("Could not hide mouse");
+  }
+
   Sprite_Mouse = sprite_load("images/mouse.png", 16,16);
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
@@ -66,13 +70,12 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 	Sprite2* new_sprite;
 	int i;
 	if(!filename){
-		printf("Filename in Sprite is Null");
+		fprintf(stdout,"Filename in Sprite is Null\n");
 		return NULL;
 	}
-
 	loadedSurface = IMG_Load(filename);
 	if(!loadedSurface){
-		printf("Surface was not loaded in sprite_load");
+		fprintf(stdout,"Surface was not loaded in sprite_load\n");
 		return NULL;
 	}
 	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );

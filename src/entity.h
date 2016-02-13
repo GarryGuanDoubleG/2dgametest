@@ -3,41 +3,34 @@
 #include "vector.h"
 #include "sprite.h"
 
-typedef struct Vector2D{
-	float x,y;
-	void (add*)();
-	float (getLength*)();
-	void set();
-	void negate();
-	void scale();
-	void rotate();
-	void normalize();
-	void crossProduct();
-}
-typedef struct Vector3D{
-
-}
-
-Typedef struct Entity_S
+/** @brief main entity structure for all interactable objects 
+    / characters in the game
+*   
+*/
+typedef struct Entity_S
 {
 	int inuse;
-	Sprite2 * sprite,
-	int frame,
-	Vect2d position;
-	Vect2d velocity;
+	Sprite2 * sprite;
+	int frame;
+	Vec2d position;
+	Vec2d velocity;
 	//audio library
-	int health, maxhealth,
-	int inventory[],
-	int stamina,
-	int state,
-	int velocityX, velocityY,
-	void (think*)(struct Entity_S *self);
-	void free();
-	void initialize_system();
-	void load();
-	void close();
-	void draw(int x, int y);
+	int health, maxhealth;
+	int *inventory;
+	int stamina;
+	int state;
+	void (*think)(struct Entity_S *self);
+}entity;
 
-}Entity;
+extern const int MAX_ENTITY;
+extern entity *entityList;
+extern int entity_count;
+
+void entity_free(entity * ent);
+void entity_initialize_system();
+entity *entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int state);
+void entity_close();
+void entity_draw(entity *ent, int x, int y);
+
 
 #endif
