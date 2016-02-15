@@ -9,8 +9,8 @@ extern const int PLAYER_HEIGHT;
 extern const int PLAYER_WIDTH;
 void player_init();
 void player_draw();
-void player_think();
-
+void player_think(entity *self);
+void player_move(SDL_Event e);
 
 
 #endif

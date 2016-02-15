@@ -9,7 +9,8 @@ struct
 {
 	Uint32 state;
 	Uint32 shown;
-	Uint32 frame;
+	Uint32 frame_horizontal;
+	Uint32 frame_vertical;
 	Uint16  x, y;
 }Mouse2;
 
@@ -23,7 +24,7 @@ void InitMouse2()
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
-  Mouse2.frame = 0;
+  Mouse2.frame_horizontal = Mouse2.frame_vertical = 0;
 }
 
 void DrawMouse2()
@@ -31,11 +32,14 @@ void DrawMouse2()
   int mx,my;
   SDL_GetMouseState(&mx,&my);
   if(Sprite_Mouse != NULL)
-	  sprite_draw(Sprite_Mouse,Mouse2.frame,__gt_graphics_renderer,mx,my);
+	  sprite_draw(Sprite_Mouse,Mouse2.frame_horizontal, Mouse2.frame_vertical,__gt_graphics_renderer,mx,my);
   else
 	  printf("Sprite_Mouse did not load properly");
 
-  Mouse2.frame = (Mouse2.frame + 1)%16;
+  Mouse2.frame_horizontal = (Mouse2.frame_horizontal + 1)%16;
+  if(Mouse2.frame_horizontal == 0){
+	  Mouse2.frame_vertical = (Mouse2.frame_vertical +1)%3;
+  }
   Mouse2.x = mx;
   Mouse2.y = my;
 }
@@ -128,11 +132,11 @@ void sprite_free(Sprite2 *sprite)
   lying around*/
 }
 
-void sprite_draw(Sprite2 *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY)
+void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
-	SDL_Rect src = { frame%sprite->fpl * sprite->imageW, 
-					 frame/sprite->fpl * sprite->imageH, 
+	SDL_Rect src = { frame_horizontal * sprite->imageW, 
+					 frame_vertical * sprite->imageH, 
 					 sprite->imageW, sprite->imageH};
 	SDL_Rect dest = { drawX, drawY, sprite->imageW, sprite->imageH};
 

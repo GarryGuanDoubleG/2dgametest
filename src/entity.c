@@ -11,7 +11,10 @@ void entity_initialize_system(){
 	entityList = (entity *)malloc(sizeof(entity) * MAX_ENTITY);
 	memset(entityList, 0, sizeof(entity)* MAX_ENTITY);
 
-	for(i = 0; i < MAX_ENTITY; i++)entityList[i].sprite = NULL;
+	for(i = 0; i < MAX_ENTITY; i++){
+		entityList[i].sprite = NULL;
+		entityList[i].inuse = false;
+	}
 	atexit(entity_close);
 
 }
@@ -36,10 +39,13 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 
-	SDL_Rect * src = NULL;
+	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, x, y);
+
+	/*SDL_Rect * src = NULL;
 	SDL_Rect dest = {x, y, ent->sprite->imageW, ent->sprite->imageH};
 
 	SDL_RenderCopy(__gt_graphics_renderer, ent->sprite->image, NULL, &dest);//replace null with main camera
+	*/
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location

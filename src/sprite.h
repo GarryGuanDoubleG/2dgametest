@@ -28,6 +28,6 @@ void sprite_close_system();
 
 Sprite2 *sprite_load(char *filename, int width, int height);
 void sprite_free(Sprite2 *sprite);
-void sprite_draw(Sprite2 *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY);
+void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY);
 
 #endif
