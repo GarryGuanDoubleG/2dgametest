@@ -11,7 +11,10 @@ void entity_initialize_system(){
 	entityList = (entity *)malloc(sizeof(entity) * MAX_ENTITY);
 	memset(entityList, 0, sizeof(entity)* MAX_ENTITY);
 
-	for(i = 0; i < MAX_ENTITY; i++)entityList[i].sprite = NULL;
+	for(i = 0; i < MAX_ENTITY; i++){
+		entityList[i].sprite = NULL;
+		entityList[i].inuse = false;
+	}
 	atexit(entity_close);
 
 }
@@ -36,7 +39,11 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 
+<<<<<<< HEAD
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
+=======
+	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, x, y);
+>>>>>>> f938880194512dc5de165eac4f3db7c7e5ae0628
 
 	/*SDL_Rect * src = NULL;
 	SDL_Rect dest = {x, y, ent->sprite->imageW, ent->sprite->imageH};

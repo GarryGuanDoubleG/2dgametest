@@ -11,8 +11,13 @@ typedef struct Entity_S
 {
 	int inuse;
 	Sprite2 * sprite;
+<<<<<<< HEAD
 	int frame_horizontal,
 		frame_vertical;
+=======
+	int frame_horizontal;
+	int frame_vertical;
+>>>>>>> f938880194512dc5de165eac4f3db7c7e5ae0628
 	Vec2d position;
 	Vec2d velocity;
 	//audio library

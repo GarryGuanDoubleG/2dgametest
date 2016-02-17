@@ -4,6 +4,7 @@
 #include "SDL_image.h"
 #include "graphics.h"
 #include "sprite.h"
+#include "entity.h"
 #include "Tile.h"
 #include "player.h"
 
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
   SDL_Surface *temp = NULL;
   int done;
   int tx = 0,ty = 0;
+  int i;
   const Uint8 *keys;
   char imagepath[512];
   SDL_Rect srcRect={0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
@@ -55,10 +57,23 @@ int main(int argc, char *argv[])
 	//end
     SDL_PumpEvents();
     keys = SDL_GetKeyboardState(NULL);
-    if(keys[SDL_SCANCODE_ESCAPE])
-    {
-        done = 1;
-    }
+	//taken from lazyfoo
+	while( SDL_PollEvent( &e) != 0){
+		if(e.type == SDL_QUIT)
+			done = 1;
+		else
+			player_move(e);
+	}
+
+	for(i = 0; i < MAX_ENTITY; i++){
+		if(!entityList[i].inuse)
+			break;
+		entityList[i].think(&entityList[i]);
+	}
+		if(keys[SDL_SCANCODE_ESCAPE])
+		{
+			done = 1;
+		}
 
 	SDL_RenderPresent(__gt_graphics_renderer);
   }while(!done);
