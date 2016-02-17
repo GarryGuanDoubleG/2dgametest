@@ -3,18 +3,16 @@
 Sprite2			*spriteList = NULL;
 int				sprite_count = 0;
 Sprite2			*Sprite_Mouse;
-int		SPRITE_MAX = 0;
+static int		SPRITE_MAX = 0;
 
 struct
 {
 	Uint32 state;
 	Uint32 shown;
-<<<<<<< HEAD
-	Uint32 frame_horizontal, frame_vertical;
-=======
+
 	Uint32 frame_horizontal;
 	Uint32 frame_vertical;
->>>>>>> f938880194512dc5de165eac4f3db7c7e5ae0628
+
 	Uint16  x, y;
 }Mouse2;
 
@@ -28,11 +26,9 @@ void InitMouse2()
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
-<<<<<<< HEAD
-  Mouse2.frame_horizontal = Mouse2.frame_vertical =  0;
-=======
+
   Mouse2.frame_horizontal = Mouse2.frame_vertical = 0;
->>>>>>> f938880194512dc5de165eac4f3db7c7e5ae0628
+
 }
 
 void DrawMouse2()
@@ -45,14 +41,9 @@ void DrawMouse2()
 	  printf("Sprite_Mouse did not load properly");
 
   Mouse2.frame_horizontal = (Mouse2.frame_horizontal + 1)%16;
-<<<<<<< HEAD
   if(Mouse2.frame_horizontal == 0)
-	  Mouse2.frame_vertical = (Mouse2.frame_vertical + 1)%2;
-=======
-  if(Mouse2.frame_horizontal == 0){
-	  Mouse2.frame_vertical = (Mouse2.frame_vertical +1)%3;
-  }
->>>>>>> f938880194512dc5de165eac4f3db7c7e5ae0628
+	  Mouse2.frame_vertical = (Mouse2.frame_vertical + 1)%3;
+
   Mouse2.x = mx;
   Mouse2.y = my;
 }
@@ -78,11 +69,14 @@ void sprite_initialize_system(int max_sprites)
 void sprite_close_system()
 {
 	int i;
-	Sprite2 ** target = NULL;
+	Sprite2  **target = NULL;
+	Sprite2 *ptr = NULL;
 	for(i = 0; i < SPRITE_MAX; i++){
 		if( spriteList[i].refCount > 0){
 			//target = spriteList[i];
-			sprite_free(&spriteList[i]);
+			ptr = &spriteList[i];
+			target = &ptr;
+			sprite_free(target);
 		}
 	}	
 }
@@ -102,7 +96,7 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 	}
 
 	for(i = 0; i < SPRITE_MAX; i++){
-		if(strcmp(spriteList[i].filename, filename)== true){
+		if(!strcmp(spriteList[i].filename, filename)){
 			fprintf(stdout,"Sprite has already been loaded");
 			return NULL;
 		}
@@ -145,9 +139,9 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 
 }
 
-void sprite_free(Sprite2 * sprite)
+void sprite_free(Sprite2 ** sprite)
 {
-	Sprite2 *target = sprite;
+	Sprite2 * target = *sprite;
 	if(!sprite) return;
 	//if(!*sprite) return;
   
@@ -171,11 +165,9 @@ void sprite_free(Sprite2 * sprite)
 void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
-<<<<<<< HEAD
-	SDL_Rect src = { frame_horizontal % sprite->fpl * sprite->imageW, 
-=======
+
 	SDL_Rect src = { frame_horizontal * sprite->imageW, 
->>>>>>> f938880194512dc5de165eac4f3db7c7e5ae0628
+
 					 frame_vertical * sprite->imageH, 
 					 sprite->imageW, sprite->imageH};
 	SDL_Rect dest = { drawX, drawY, sprite->imageW, sprite->imageH};

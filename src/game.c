@@ -62,10 +62,10 @@ int main(int argc, char *argv[])
 		if(e.type == SDL_QUIT)
 			done = 1;
 		else
-			player_move(e);
+			player_move(&e);
 	}
 
-	for(i = 0; i < MAX_ENTITY; i++){
+	for(i = 0; i < ENTITY_MAX; i++){
 		if(!entityList[i].inuse)
 			break;
 		entityList[i].think(&entityList[i]);
