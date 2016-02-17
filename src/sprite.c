@@ -3,13 +3,13 @@
 Sprite2			*spriteList = NULL;
 int				sprite_count = 0;
 Sprite2			*Sprite_Mouse;
-const int		SPRITE_MAX= 1000;
+int		SPRITE_MAX = 0;
 
 struct
 {
 	Uint32 state;
 	Uint32 shown;
-	Uint32 frame;
+	Uint32 frame_horizontal, frame_vertical;
 	Uint16  x, y;
 }Mouse2;
 
@@ -23,7 +23,7 @@ void InitMouse2()
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
-  Mouse2.frame = 0;
+  Mouse2.frame_horizontal = Mouse2.frame_vertical =  0;
 }
 
 void DrawMouse2()
@@ -31,27 +31,31 @@ void DrawMouse2()
   int mx,my;
   SDL_GetMouseState(&mx,&my);
   if(Sprite_Mouse != NULL)
-	  sprite_draw(Sprite_Mouse,Mouse2.frame,__gt_graphics_renderer,mx,my);
+	  sprite_draw(Sprite_Mouse,Mouse2.frame_horizontal, Mouse2.frame_vertical,__gt_graphics_renderer,mx,my);
   else
 	  printf("Sprite_Mouse did not load properly");
 
-  Mouse2.frame = (Mouse2.frame + 1)%16;
+  Mouse2.frame_horizontal = (Mouse2.frame_horizontal + 1)%16;
+  if(Mouse2.frame_horizontal == 0)
+	  Mouse2.frame_vertical = (Mouse2.frame_vertical + 1)%2;
   Mouse2.x = mx;
   Mouse2.y = my;
 }
 
-void sprite_initialize_system()
+void sprite_initialize_system(int max_sprites)
 {
 	int i;
-	if( SPRITE_MAX == 0 )
+	if( max_sprites <= 0 )
 	{
-		printf("wtf"); 
+		fprintf(stdout, "The maximum number of sprites cannot be 0");
 		return;
 	}
+	SPRITE_MAX = max_sprites;
 	sprite_count = 0;
 	spriteList = (Sprite2 *)malloc(sizeof(Sprite2) * SPRITE_MAX);
 	memset(spriteList, 0, sizeof(Sprite2) * SPRITE_MAX);
 	for(i = 0;i < SPRITE_MAX;i++)spriteList[i].image= NULL;
+
 
 	atexit(sprite_close_system);
 }
@@ -59,8 +63,13 @@ void sprite_initialize_system()
 void sprite_close_system()
 {
 	int i;
-	for(i = 0; i < SPRITE_MAX; i++)
-		sprite_free(spriteList+i);
+	Sprite2 ** target = NULL;
+	for(i = 0; i < SPRITE_MAX; i++){
+		if( spriteList[i].refCount > 0){
+			//target = spriteList[i];
+			sprite_free(&spriteList[i]);
+		}
+	}	
 }
 
 Sprite2 *sprite_load(char *filename, int width, int height)
@@ -69,9 +78,19 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 	SDL_Surface * loadedSurface = NULL;
 	Sprite2* new_sprite;
 	int i;
+	if(!spriteList){
+		fprintf(stdout, "Sprite List is null");
+	}
 	if(!filename){
 		fprintf(stdout,"Filename in Sprite is Null\n");
 		return NULL;
+	}
+
+	for(i = 0; i < SPRITE_MAX; i++){
+		if(strcmp(spriteList[i].filename, filename)== true){
+			fprintf(stdout,"Sprite has already been loaded");
+			return NULL;
+		}
 	}
 	loadedSurface = IMG_Load(filename);
 	if(!loadedSurface){
@@ -111,28 +130,34 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 
 }
 
-void sprite_free(Sprite2 *sprite)
+void sprite_free(Sprite2 * sprite)
 {
-  sprite->refCount--;
+	Sprite2 *target = sprite;
+	if(!sprite) return;
+	//if(!*sprite) return;
+  
+	target->refCount--;
 
-  if(sprite->refCount == 0)
-  {
-	  strcpy(sprite->filename,"\0");
-		 /*just to be anal retentive, check to see if the image is already freed*/
-	  if(sprite->image != NULL)
-		  SDL_DestroyTexture(sprite->image);
+	if(target->refCount == 0)
+	{
+		strcpy(target->filename,"\0");
+			/*just to be anal retentive, check to see if the image is already freed*/
+		if(target->image != NULL)
+			SDL_DestroyTexture(target->image);
+		memset(target, 0, sizeof(Sprite2));
 
-	  sprite->image = NULL;
-  }
+		target->image = NULL;
+	}
+	target = NULL;
  /*and then lets make sure we don't leave any potential seg faults 
   lying around*/
 }
 
-void sprite_draw(Sprite2 *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY)
+void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
-	SDL_Rect src = { frame%sprite->fpl * sprite->imageW, 
-					 frame/sprite->fpl * sprite->imageH, 
+	SDL_Rect src = { frame_horizontal % sprite->fpl * sprite->imageW, 
+					 frame_vertical * sprite->imageH, 
 					 sprite->imageW, sprite->imageH};
 	SDL_Rect dest = { drawX, drawY, sprite->imageW, sprite->imageH};
 

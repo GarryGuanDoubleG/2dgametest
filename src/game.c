@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
   const Uint8 *keys;
   char imagepath[512];
   SDL_Rect srcRect={0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
+  SDL_Event e;
 
   Init_All();
   /*temp = IMG_Load("images/bgtest.png");/*notice that the path is part of the filename*/
@@ -48,6 +49,8 @@ int main(int argc, char *argv[])
 	tile_render(NULL);
     DrawMouse2();
 	player_draw();
+	while(SDL_PollEvent(&e) != 0)
+		player_move (&e);
     NextFrame();
 	//end
     SDL_PumpEvents();
@@ -81,7 +84,7 @@ void Init_All()
     bgcolor,
     0);
   //GG edit
-  sprite_initialize_system(); // allocates memory for all sprites
+  sprite_initialize_system(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
   player_init(); //creates player entity
   tile_init_system();

@@ -36,10 +36,13 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 
-	SDL_Rect * src = NULL;
+	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
+
+	/*SDL_Rect * src = NULL;
 	SDL_Rect dest = {x, y, ent->sprite->imageW, ent->sprite->imageH};
 
 	SDL_RenderCopy(__gt_graphics_renderer, ent->sprite->image, NULL, &dest);//replace null with main camera
+	*/
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
