@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
     SDL_PumpEvents();
     keys = SDL_GetKeyboardState(NULL);
 	//taken from lazyfoo
+	//handles generally keyboard inputs
 	while( SDL_PollEvent( &e) != 0){
 		if(e.type == SDL_QUIT)
 			done = 1;
@@ -65,11 +66,9 @@ int main(int argc, char *argv[])
 			player_move(&e);
 	}
 
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse)
-			break;
-		entityList[i].think(&entityList[i]);
-	}
+	entity_update_all();
+	entity_think_all();
+
 		if(keys[SDL_SCANCODE_ESCAPE])
 		{
 			done = 1;

@@ -38,6 +38,7 @@ entity *entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 void entity_close();
 void entity_draw(entity *ent, int x, int y);
 void entity_update();
+void entity_update_all();
 //in class
 /*
  *@brief return a pointer to an empty entity structure

@@ -19,6 +19,7 @@
     <ClCompile Include="..\src\sprite.c" />
     <ClCompile Include="..\src\Tile.c" />
     <ClCompile Include="..\src\vector.c" />
+    <ClCompile Include="..\src\weapon.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\entity.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
     <ClInclude Include="..\src\vector.h" />
+    <ClInclude Include="..\src\weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

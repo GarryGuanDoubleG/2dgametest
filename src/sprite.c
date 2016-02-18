@@ -22,7 +22,7 @@ void InitMouse2()
 	  printf("Could not hide mouse");
   }
 
-  Sprite_Mouse = sprite_load("images/mouse.png", 16,16);
+  Sprite_Mouse = sprite_load("images/mouse.png", 16,16, NULL,NULL);
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
@@ -81,7 +81,7 @@ void sprite_close_system()
 	}	
 }
 
-Sprite2 *sprite_load(char *filename, int width, int height)
+Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH)
 {
 	SDL_Texture * newTexture = NULL;
 	SDL_Surface * loadedSurface = NULL;
@@ -103,7 +103,7 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 	}
 	loadedSurface = IMG_Load(filename);
 	if(!loadedSurface){
-		fprintf(stdout,"Surface was not loaded in sprite_load\n");
+		fprintf(stdout,"%s was not loaded in sprite_load\n",filename);
 		return NULL;
 	}
 	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );
@@ -118,16 +118,16 @@ Sprite2 *sprite_load(char *filename, int width, int height)
 		if((spriteList + i)->image == NULL){
 			spriteList[i].refCount = 1;
 			//Get image dimensions
-			spriteList[i].imageW = width;
-			spriteList[i].imageH = height;
+			spriteList[i].imageW = img_width;
+			spriteList[i].imageH = img_height;
 			//global count
 			sprite_count++;
 			spriteList[i].image = newTexture;
 			strncpy(spriteList[i].filename,filename,20);
 			spriteList[i].fpl = 16;//frames per line. May have to change later
 
-			spriteList[i].frameW = spriteList[i].imageW;
-			spriteList[i].frameH = spriteList[i].imageH;
+			spriteList[i].frameW = frameW > 0 ? frameW : img_width;
+			spriteList[i].frameH = frameH > 0 ? frameH : img_height;
 			if(sprite_count +1 >= SPRITE_MAX){
 				printf("Uh oh, max sprites reached!");
 				exit(1);
@@ -170,7 +170,7 @@ void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_
 
 					 frame_vertical * sprite->imageH, 
 					 sprite->imageW, sprite->imageH};
-	SDL_Rect dest = { drawX, drawY, sprite->imageW, sprite->imageH};
+	SDL_Rect dest = { drawX, drawY, sprite->frameW, sprite->frameH};
 
 	SDL_RenderCopy(renderer,sprite->image, &src, &dest);
 }
