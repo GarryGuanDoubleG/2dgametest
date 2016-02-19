@@ -10,7 +10,6 @@ char* player_char_file = "images/player/BODY_male.png";
 #define WEAP_DAGGER 5
 #define WEAP_RAPIER 6
 
-
 entity* player = NULL;
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
@@ -23,6 +22,9 @@ static player_anim player_AnimThrust;
 static player_anim player_AnimSpellcast;
 static player_anim player_AnimWalk;
 static player_anim *player_current_anim;//keeps track of which animation we're using
+
+weapon weapon_curr;
+
 //taken from lazyfoo
 //order of up,left,down,right are listed in order to match frame vertical in player.png
 enum KeyPressSurfaces{
@@ -57,29 +59,53 @@ void player_init(){
 	player_current_anim = &player_AnimWalk;
 	//initialize slash
 	player_anim anim = {player_sprite};
+	anim.head = sprite_load("images/player/head chain hood.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.chest = sprite_load("images/player/chest chain.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.legs = sprite_load("images/player/legs chain.png",PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.body = player->sprite;
+	anim.fpl = player->sprite->fpl;
 	player_AnimWalk = anim;
-	player_AnimWalk.fpl = player->sprite->fpl;
-
+	//slash
 	anim.body = sprite_load("images/player/slash/body slash.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.head = sprite_load("images/player/slash/head chain hood.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.chest = sprite_load("images/player/slash/chest chain.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.legs = sprite_load("images/player/slash/legs chain.png",PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	anim.fpl = 5;
 	player_AnimSlash = anim;
-
+	//bow
 	anim.body = sprite_load("images/player/bow/body bow.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	anim.fpl = 13;
 	player_AnimBow = anim;
+
+	weapon weap = {NULL};
+	weap.image = sprite_load("images/player/slash/weapon longsword.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	weapon_curr = weap;
 }
 void player_draw(){
 	//need to add other equipment
 	entity_draw(player,player->position.x,player->position.y);
+	sprite_draw(player_current_anim->chest,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	sprite_draw(player_current_anim->legs,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	sprite_draw(player_current_anim->head,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	if(player_current_anim == &player_AnimSlash){
+		sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+		slog("Drawing Slash Weapon");
+	}
 }
 
 void player_update(entity *self){
-	player->sprite = player_current_anim->body;
-	if(player_current_anim == &player_AnimWalk) //if walking, dont reset animation
+	if(player_current_anim == &player_AnimWalk){ //if walking, dont reset animation
+		player->sprite = player_current_anim->body;
 		return;
+	}
+	if(player->sprite != player_current_anim->body){
+		slog("Sprite is not equal to player current anim");
+		player->sprite = player_current_anim->body;
+	}
 	//checks if animation played through at least once
 	slog("Frame Pos = %i", player->frame_horizontal *player->sprite->imageW);
-	if(player->frame_horizontal > player->sprite->fpl)
+	slog("Frame_horizontal is %i, FPL is %i",player->frame_horizontal, player_current_anim->fpl);
+	if(player->frame_horizontal >= player_current_anim->fpl)
 	{
 		player->frame_horizontal = 0;
 		slog("resetting frame_horizontal");
@@ -108,7 +134,7 @@ void player_move(SDL_Event *e){
 			player->position.y +=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_down;
-        break;
+			break;
         case SDLK_LEFT:
 			player->position.x -= 5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
@@ -135,9 +161,12 @@ void player_attack(SDL_Event *e){
 		case SDLK_SPACE:
 			fprintf(stdout,"Hit Space");
 			//if(player_struct.weapon == WEAP_SWORD)
-			player_current_anim = &player_AnimSlash;
-			player->sprite->fpl = player_AnimSlash.fpl;
-			player->frame_horizontal = 0;//reset it;
+			if(player_current_anim != &player_AnimSlash)
+			{
+				player_current_anim = &player_AnimSlash;
+				player->sprite->fpl = player_AnimSlash.fpl;
+				player->frame_horizontal = 0;//reset it;
+			}
 			break;
 		default:
 			break;

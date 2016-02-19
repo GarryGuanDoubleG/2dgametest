@@ -24,7 +24,7 @@ typedef struct{
 	int frame_horizontal;
 	int frame_vertical;
 	int fpl;// applies to player and armor
-	Sprite2 image;/*<image to render on top of player*/
+	Sprite2 *image;/*<image to render on top of player*/
 }weapon;
  
 
