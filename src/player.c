@@ -3,14 +3,8 @@
 
 char* player_char_file = "images/player/BODY_male.png";
 
-#define WEAP_SWORD  1
-#define WEAP_BOW	2
-#define WEAP_SPEAR  3
-#define WEAP_STAFF	4
-#define WEAP_DAGGER 5
-#define WEAP_RAPIER 6
-
 entity* player = NULL;
+Weapon weapon_curr;
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
 const int PLAYER_FRAMEH = 128;
@@ -23,7 +17,7 @@ static player_anim player_AnimSpellcast;
 static player_anim player_AnimWalk;
 static player_anim *player_current_anim;//keeps track of which animation we're using
 
-weapon weapon_curr;
+
 
 //taken from lazyfoo
 //order of up,left,down,right are listed in order to match frame vertical in player.png
@@ -73,13 +67,13 @@ void player_init(){
 	anim.fpl = 5;
 	player_AnimSlash = anim;
 	//bow
-	anim.body = sprite_load("images/player/bow/body bow.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	anim.body = sprite_load("images/player/bow/body bow.png", PLAYERH, PLAYERH, PLAYER_FRAMEW*3, PLAYER_FRAMEH);
 	anim.fpl = 13;
 	player_AnimBow = anim;
 
-	weapon weap = {NULL};
-	weap.image = sprite_load("images/player/slash/weapon longsword.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	weapon_curr = weap;
+	/*weapon weap = {NULL};
+	weap.image = sprite_load("images/player/slash/weapon longsword.png", 192, 192, PLAYER_FRAMEW*3,PLAYER_FRAMEH*3);
+	weapon_curr = weap;*/
 }
 void player_draw(){
 	//need to add other equipment
@@ -88,7 +82,8 @@ void player_draw(){
 	sprite_draw(player_current_anim->legs,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	sprite_draw(player_current_anim->head,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	if(player_current_anim == &player_AnimSlash){
-		sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+		//sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - weapon_curr.image->frameW/3,player->position.y - weapon_curr.image->frameH/3);
+		sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
 		slog("Drawing Slash Weapon");
 	}
 }
@@ -99,16 +94,12 @@ void player_update(entity *self){
 		return;
 	}
 	if(player->sprite != player_current_anim->body){
-		slog("Sprite is not equal to player current anim");
 		player->sprite = player_current_anim->body;
 	}
 	//checks if animation played through at least once
-	slog("Frame Pos = %i", player->frame_horizontal *player->sprite->imageW);
-	slog("Frame_horizontal is %i, FPL is %i",player->frame_horizontal, player_current_anim->fpl);
 	if(player->frame_horizontal >= player_current_anim->fpl)
 	{
 		player->frame_horizontal = 0;
-		slog("resetting frame_horizontal");
 		player_current_anim = &player_AnimWalk;
 		player->sprite->fpl = player_AnimWalk.fpl;
 	}
