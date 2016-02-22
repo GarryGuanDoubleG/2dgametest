@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\armor.c" />
     <ClCompile Include="..\src\entity.c" />
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\graphics.c" />
@@ -22,6 +23,7 @@
     <ClCompile Include="..\src\weapon.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\armor.h" />
     <ClInclude Include="..\src\entity.h" />
     <ClInclude Include="..\src\graphics.h" />
     <ClInclude Include="..\src\player.h" />

@@ -17,8 +17,6 @@ static player_anim player_AnimSpellcast;
 static player_anim player_AnimWalk;
 static player_anim *player_current_anim;//keeps track of which animation we're using
 
-
-
 //taken from lazyfoo
 //order of up,left,down,right are listed in order to match frame vertical in player.png
 enum KeyPressSurfaces{

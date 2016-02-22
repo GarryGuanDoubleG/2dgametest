@@ -29,6 +29,15 @@
 #define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
 #define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
 
+int rect_collide(SDL_Rect a, SDL_Rect b){
+	if((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&
+		(a.y + a.h > b.y ) && (b.y + b.h > a.y)){
+			return true;
+	}
+
+	return false;
+}
+
 float GetLength2d(Vec2d v){
 	return sqrt( (v.x * v.x + v.y * v.y));
 }

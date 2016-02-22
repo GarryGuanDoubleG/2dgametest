@@ -49,5 +49,6 @@ void entity_think_all();
 void entity_update();
 void entity_draw_all();
 void entity_close_all();
+int entity_collide(entity *a, entity*b);
 
 #endif

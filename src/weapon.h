@@ -3,6 +3,7 @@
 #include "sprite.h"
 #include "vector.h"
 #include "simple_logger.h"
+
 #define WEAP_SWORD  1
 #define WEAP_BOW	2
 #define WEAP_SPEAR  3

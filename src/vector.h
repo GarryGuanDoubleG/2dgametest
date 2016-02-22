@@ -1,6 +1,7 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
+#include "SDL.h"
 /**
 *@brief a simple 2d vector structure
 */
@@ -32,6 +33,7 @@ typedef struct{
 
 float GetLength2d(Vec2d v);
 float GetLength3d(Vec3d v);
+int rect_collide(SDL_Rect a, SDL_Rect b);
 
 /*
 void (add*)();
