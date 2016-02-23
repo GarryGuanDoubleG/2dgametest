@@ -107,8 +107,8 @@ int entity_collide(entity *a, entity*b)
 {
 	SDL_Rect aB, bB;
 
-	ab = rect{a->position.x, a->position.y, a->frameW, a->frameH};
-	bB = rect{b->position.x, b->position.y, b->frameW, b->frameH};
+	aB = {a->position.x, a->position.y, a->frameW, a->frameH};
+	bB = SDL_Rect{b->position.x, b->position.y, b->frameW, b->frameH};
 
 	return rect_collide(aB,bB);
 }
