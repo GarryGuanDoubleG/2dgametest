@@ -42,8 +42,18 @@ void weapon_load_all(){
 	for(i = 0; i < (sizeof weaponlist)/sizeof(Weapon); i++){
 		weaponlist[i].image = sprite_load(weaponlist[i].filepath,weaponlist[i].imageW,weaponlist[i].imageH,weaponlist[i].frameW,weaponlist[i].frameH);
 	}
-
+	atexit(weapon_close_all);
 }
+
+void weapon_close_all(){
+	int i;
+
+	for(i = 0; i < (sizeof weaponlist)/sizeof(Weapon); i++){
+		SDL_DestroyTexture(weaponlist[i].image->image);
+		weaponlist[i].image = NULL;
+	}
+}
+
 Weapon *getWeapon(char *weap_name)
 {
 	int i;
@@ -63,3 +73,4 @@ Weapon *getWeapon(char *weap_name)
 	return NULL;
 
 }
+

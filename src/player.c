@@ -4,19 +4,14 @@
 char* player_char_file = "images/player/BODY_male.png";
 
 entity* player = NULL;
-Weapon weapon_curr;
+
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
 const int PLAYER_FRAMEH = 128;
 const int PLAYER_FRAMEW = 128;
 
-static player_anim player_AnimSlash;
-static player_anim player_AnimBow;
-static player_anim player_AnimThrust;
-static player_anim player_AnimSpellcast;
-static player_anim player_AnimWalk;
-static player_anim *player_current_anim;//keeps track of which animation we're using
-
+static player_equip PlayerEquip;
+static int animCurrent;//used to determine current animation
 //taken from lazyfoo
 //order of up,left,down,right are listed in order to match frame vertical in player.png
 enum KeyPressSurfaces{
@@ -40,71 +35,93 @@ void player_init(){
 	Sprite2 *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
 
+	animCurrent = WALK;
 	player = entity_load(player_sprite,pos, 100, 100, 0 );
+	PlayerEquip.body->image = player->sprite;
 	player->frame_horizontal = 1;
 	player->frame_vertical = 2;
 	player->think = player_think;
 	player->update = player_update;
 
+	weapon_load_all();
+	armor_load_all();
 
-	//initialize animations
-	player_current_anim = &player_AnimWalk;
-	//initialize slash
-	player_anim anim = {player_sprite};
-	anim.head = sprite_load("images/player/head chain hood.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.chest = sprite_load("images/player/chest chain.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.legs = sprite_load("images/player/legs chain.png",PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.body = player->sprite;
-	anim.fpl = player->sprite->fpl;
-	player_AnimWalk = anim;
-	//slash
-	anim.body = sprite_load("images/player/slash/body slash.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.head = sprite_load("images/player/slash/head chain hood.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.chest = sprite_load("images/player/slash/chest chain.png", PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.legs = sprite_load("images/player/slash/legs chain.png",PLAYERH, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	anim.fpl = 5;
-	player_AnimSlash = anim;
-	//bow
-	anim.body = sprite_load("images/player/bow/body bow.png", PLAYERH, PLAYERH, PLAYER_FRAMEW*3, PLAYER_FRAMEH);
-	anim.fpl = 13;
-	player_AnimBow = anim;
-
-	/*weapon weap = {NULL};
-	weap.image = sprite_load("images/player/slash/weapon longsword.png", 192, 192, PLAYER_FRAMEW*3,PLAYER_FRAMEH*3);
-	weapon_curr = weap;*/
+	PlayerEquip.weapon = getWeapon("longsword");
+	PlayerEquip.head = getArmor("head chain hood");
 }
+void player_draw_equip(){
+	if(PlayerEquip.body){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.body), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.feet){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.feet), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.hands){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.hands), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.head){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.head), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.torso){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.torso), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.chest){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.chest), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.shoulders){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.shoulders), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+
+	if(PlayerEquip.weapon && animCurrent != WALK){
+		//sword sprites are 192x192 pixels, need offset
+		if(PlayerEquip.weapon->type == WEAP_SWORD){
+			sprite_draw(PlayerEquip.weapon->image, player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
+		}
+		else{ //draw on player instead
+			sprite_draw(PlayerEquip.weapon->image, player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+		}
+	}
+}
+
 void player_draw(){
 	//need to add other equipment
 	entity_draw(player,player->position.x,player->position.y);
-	sprite_draw(player_current_anim->chest,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	/*sprite_draw(player_current_anim->chest,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	sprite_draw(player_current_anim->legs,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
-	sprite_draw(player_current_anim->head,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	sprite_draw(player_current_anim->head,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);*/
+
+	player_draw_equip();
+
+	/*
+
 	if(player_current_anim == &player_AnimSlash){
 		//sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - weapon_curr.image->frameW/3,player->position.y - weapon_curr.image->frameH/3);
 		sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
 		slog("Drawing Slash Weapon");
-	}
+	}*/
 }
 
+
+
 void player_update(entity *self){
-	if(player_current_anim == &player_AnimWalk){ //if walking, dont reset animation
-		player->sprite = player_current_anim->body;
+	if(animCurrent == WALK){ //if walking, dont reset animation
+		//player->sprite->fpl = PlayerEquip.body->image->fpl;
 		return;
 	}
-	if(player->sprite != player_current_anim->body){
+	/*if(player->sprite != player_current_anim->body){
 		player->sprite = player_current_anim->body;
-	}
+	}*/
+
 	//checks if animation played through at least once
-	if(player->frame_horizontal >= player_current_anim->fpl)
+	if(player->frame_horizontal >= PlayerEquip.fpl)
 	{
 		player->frame_horizontal = 0;
-		player_current_anim = &player_AnimWalk;
-		player->sprite->fpl = player_AnimWalk.fpl;
+		animCurrent = WALK;
+		player->sprite->fpl = PlayerEquip.body->image->fpl;
 	}
 	else{
 		player->frame_horizontal += 1;
 	}
-
 }
 
 void player_move(SDL_Event *e){
@@ -112,6 +129,7 @@ void player_move(SDL_Event *e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
 	}
+
 	switch( e->key.keysym.sym )
     {
         case SDLK_UP:
@@ -150,10 +168,11 @@ void player_attack(SDL_Event *e){
 		case SDLK_SPACE:
 			fprintf(stdout,"Hit Space");
 			//if(player_struct.weapon == WEAP_SWORD)
-			if(player_current_anim != &player_AnimSlash)
+			if(animCurrent != SLASH)
 			{
-				player_current_anim = &player_AnimSlash;
-				player->sprite->fpl = player_AnimSlash.fpl;
+				animCurrent = SLASH;
+				PlayerEquip.fpl = PlayerEquip.weapon->fpl;
+				player->sprite->fpl = PlayerEquip.fpl;
 				player->frame_horizontal = 0;//reset it;
 			}
 			break;

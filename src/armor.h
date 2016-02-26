@@ -9,12 +9,25 @@
 #define ARMOR_CLOTH 1
 #define ARMOR_LEATEHR 2
 
+#define WALK 10
+#define SLASH 11
+#define BOW  12
+#define THRUST 13
+#define SPELLCAST 14
+
+
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 extern const int ARMOR_MAX;
 
 typedef struct{
-	char * filepath;
+	//filepaths for loading
+	char * walk;
+	char * slash;
+	char * bow;
+	char * thrust;
+	char * spellcast;
+	//name
 	char * name;
 
 	int imageH,imageW;
@@ -39,8 +52,9 @@ typedef struct{
 	Sprite2 *image_spellcast;
 }Armor;
 
-void armor_init(char * name);
-
+void armor_load_all();
+Armor *getArmor(char *name);
+Sprite2 *getArmorAnim(int anim,Armor * myArmor);
 
 
 #endif
