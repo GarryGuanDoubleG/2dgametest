@@ -20,13 +20,15 @@ enum KeyPressSurfaces{
    face_down,
    face_right
 };
-struct{ // player inventory
-	Uint32 weapon;
-	Uint32 head;
-	Uint32 hands;
-	Uint32 chest;
-	Uint32 spell;
-}player_struct;
+
+struct {
+	Sprite2 *image;
+	Sprite2 *image_slash;
+	Sprite2 *image_bow;
+	Sprite2 *image_thrust;
+	Sprite2 *image_spell;
+}playerBody;
+
 
 //end
 void player_init(){
@@ -34,10 +36,13 @@ void player_init(){
 	Vec2d pos = {500,500};
 	Sprite2 *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
-
 	animCurrent = WALK;
 	player = entity_load(player_sprite,pos, 100, 100, 0 );
-	PlayerEquip.body->image = player->sprite;
+
+	playerBody.image = player->sprite;
+	playerBody.image_slash = sprite_load("images/player/slash/body slash.png",PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	playerBody.image_slash->fpl = 5;
+
 	player->frame_horizontal = 1;
 	player->frame_vertical = 2;
 	player->think = player_think;
@@ -50,9 +55,6 @@ void player_init(){
 	PlayerEquip.head = getArmor("head chain hood");
 }
 void player_draw_equip(){
-	if(PlayerEquip.body){
-		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.body), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
-	}
 	if(PlayerEquip.feet){
 		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.feet), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
@@ -117,7 +119,8 @@ void player_update(entity *self){
 	{
 		player->frame_horizontal = 0;
 		animCurrent = WALK;
-		player->sprite->fpl = PlayerEquip.body->image->fpl;
+		player->sprite = playerBody.image;
+		player->sprite->fpl = playerBody.image->fpl;
 	}
 	else{
 		player->frame_horizontal += 1;
@@ -174,6 +177,7 @@ void player_attack(SDL_Event *e){
 				PlayerEquip.fpl = PlayerEquip.weapon->fpl;
 				player->sprite->fpl = PlayerEquip.fpl;
 				player->frame_horizontal = 0;//reset it;
+				player->sprite = playerBody.image_slash;
 			}
 			break;
 		default:

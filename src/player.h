@@ -13,7 +13,6 @@ extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
 typedef struct{ // player animation with equippables
-	Armor * body;
 	Armor * feet;
 	Armor * hands;
 	Armor * head;

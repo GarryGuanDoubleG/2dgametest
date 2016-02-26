@@ -51,7 +51,7 @@ Armor *getArmor(char *name){
 	int i;
 
 	for(i = 0; i < sizeof(armorList)/sizeof(Armor); i++){
-		if(strcmp(armorList[i].name, name)){
+		if(!strcmp(armorList[i].name, name)){
 			return &armorList[i];
 		}
 	}
