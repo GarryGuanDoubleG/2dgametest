@@ -3,6 +3,7 @@
 
 #include "sprite.h"
 #include "vector.h"
+#include "simple_logger.h"
 
 #define ARMOR_CHAIN 0
 #define ARMOR_CLOTH 1
@@ -10,6 +11,7 @@
 
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
+extern const int ARMOR_MAX;
 
 typedef struct{
 	char * filepath;
@@ -36,5 +38,9 @@ typedef struct{
 	Sprite2 *image_thrust;
 	Sprite2 *image_spellcast;
 }Armor;
+
+void armor_init(char * name);
+
+
 
 #endif

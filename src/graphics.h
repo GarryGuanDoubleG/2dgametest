@@ -7,7 +7,6 @@
  *			to handle sprites and graphics.
  */
 
-
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
@@ -78,7 +77,6 @@ typedef struct Sprite_T
   int color1,color2,color3;		/*if the file was palette swapped these are the colors that were changed*/
   int used;					/*used by the maintanenc functions to keep track of how many times a single sprite is being used*/
 }Sprite;
-
 
 void Init_Graphics(
 	char *windowName,

@@ -105,10 +105,8 @@ void entity_update_all(){
 
 int entity_collide(entity *a, entity*b)
 {
-	SDL_Rect aB, bB;
-
-	aB = {a->position.x, a->position.y, a->frameW, a->frameH};
-	bB = SDL_Rect{b->position.x, b->position.y, b->frameW, b->frameH};
+	SDL_Rect aB = {a->position.x, a->position.y, a->sprite->frameW, a->sprite->frameH};
+	SDL_Rect bB = {b->position.x, b->position.y, b->sprite->frameW, b->sprite->frameH};
 
 	return rect_collide(aB,bB);
 }
