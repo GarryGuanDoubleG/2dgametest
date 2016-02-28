@@ -7,6 +7,7 @@
 #include "entity.h"
 #include "Tile.h"
 #include "player.h"
+#include "monster_ai.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
   SDL_Rect srcRect={0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
   SDL_Event e;
 
+
   Init_All();
   /*temp = IMG_Load("images/bgtest.png");/*notice that the path is part of the filename*/
   /*if(temp != NULL)
@@ -51,6 +53,12 @@ int main(int argc, char *argv[])
 	tile_render(NULL);
     DrawMouse2();
 	player_draw();
+
+	monster_spawn(Monster::grue);
+	entity_update_all();
+	entity_think_all();
+	MONSTER_SPAWN_TIMER -= 1;
+
 	while(SDL_PollEvent(&e) != 0)
 		player_move (&e);
     NextFrame();
@@ -65,9 +73,6 @@ int main(int argc, char *argv[])
 		else
 			player_move(&e);
 	}
-
-	entity_update_all();
-	entity_think_all();
 
 		if(keys[SDL_SCANCODE_ESCAPE])
 		{

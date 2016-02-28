@@ -15,7 +15,6 @@
 #define THRUST 13
 #define SPELLCAST 14
 
-
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 extern const int ARMOR_MAX;

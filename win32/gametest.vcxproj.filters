@@ -45,6 +45,9 @@
     <ClCompile Include="..\src\armor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\monster_ai.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\armor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\monster_ai.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

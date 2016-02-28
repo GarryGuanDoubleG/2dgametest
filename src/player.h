@@ -32,6 +32,4 @@ void player_think(entity *self);
 void player_update(entity *self);
 void player_attack(SDL_Event *e);
 
-
-
 #endif

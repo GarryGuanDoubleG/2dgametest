@@ -15,9 +15,10 @@ typedef struct Entity_S
 	int frame_vertical;
 	Vec2d position;
 	Vec2d velocity;
+	SDL_Rect boundBox; // used for collision
 	//audio library
 	int health, maxhealth;
-	int *inventory;
+	int inventory;
 	int stamina;
 	int state;
 	int nextThink;/*<Time index for next think */
