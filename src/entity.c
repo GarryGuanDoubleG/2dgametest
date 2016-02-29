@@ -110,3 +110,29 @@ int entity_collide(entity *a, entity*b)
 
 	return rect_collide(aB,bB);
 }
+
+int weapon_collision(SDL_Rect weap, entity *a{
+}
+
+void entity_check_collision_all(){
+
+	int i = 0;
+	entity *curr, *next;
+	int found_next;
+
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		if(!entityList[i].update){
+			continue;
+		}
+		if(!curr){
+			curr = &entityList[i];
+		}
+		else if(found_next){
+			next = &entityList[i];
+		}
+		
+		entity_collide(curr, next);
+}

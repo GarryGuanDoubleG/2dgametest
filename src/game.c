@@ -46,11 +46,13 @@ int main(int argc, char *argv[])
   done = 0;
   do
   {
-    ResetBuffer();
-	SDL_RenderClear(__gt_graphics_renderer);//clear screen
-	//render or draw functions go here
+	   //render or draw functions go here
 	//draw functions should go in order from background first to player draw calls last
-	tile_render(NULL);
+    ResetBuffer();
+    SDL_RenderClear(__gt_graphics_renderer);//clear screen
+    tile_render(NULL);
+	
+	
     DrawMouse2();
 	player_draw();
 

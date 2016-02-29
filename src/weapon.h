@@ -25,6 +25,10 @@ typedef struct{
 	int imageH,imageW;
 	int frameW, frameH;
 	Vec2d offset;//offset from wielder
+	SDL_Rect boundUp;
+	SDL_Rect boundDown;
+	SDL_Rect boundLeft;
+	SDL_Rect boundRight;
 	//only need offset if using custom weapon not from same creator
 
 	int ranged;//shoot projectile

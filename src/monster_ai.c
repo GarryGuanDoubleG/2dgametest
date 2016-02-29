@@ -5,12 +5,10 @@
 int const MONSTER_TIMER = 600;
 int MONSTER_SPAWN_TIMER = 600;// used for timing how often monsters are spawned
 #define GRUE_TIMER 300
-
+time_t t;
 
 void grue_think(entity* self){
 	int randomNum;
-	time_t t;
-
 
 	if(!self){
 		slog("Entity is NULL. Cannot THINK");
@@ -23,8 +21,7 @@ void grue_think(entity* self){
 	else{
 		self->nextThink = self->thinkRate;
 	}
-
-	srand((unsigned)time(&t));
+	
 	randomNum = rand() % 15;
 
 	if(self->state == STATE_PATROL){
@@ -117,6 +114,7 @@ entity * grue_spawn(){
 
 entity *monster_spawn(int type){
 	entity *ent_new;//sprite of monster to spawn
+	srand((unsigned)time(&t));
 
 	if(MONSTER_SPAWN_TIMER <= 0){
 		MONSTER_SPAWN_TIMER = MONSTER_TIMER;
