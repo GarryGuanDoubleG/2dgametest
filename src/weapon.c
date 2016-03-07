@@ -10,8 +10,8 @@ Weapon weaponlist[] =
 		{PLAYER_FRAMEW*3,PLAYER_FRAMEH*3},//offset
 		{-PLAYER_FRAMEW/2,-PLAYER_FRAMEH/2,PLAYER_FRAMEW*3,PLAYER_FRAMEH},//bounding up
 		{-PLAYER_FRAMEW/2, PLAYER_FRAMEH/2,PLAYER_FRAMEW*3,PLAYER_FRAMEH},//down
-		{},//bounding left right
-		{},
+		{0,0,PLAYER_FRAMEW*3,PLAYER_FRAMEH},//bounding right
+		{-PLAYER_FRAMEW*3,0, PLAYER_FRAMEW*3, PLAYER_FRAMEH},//bounding left
 
 		false,//not ranged
 		10, // 10 base damage

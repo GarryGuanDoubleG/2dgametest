@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 int const MONSTER_TIMER = 600;
-int MONSTER_SPAWN_TIMER = 600;// used for timing how often monsters are spawned
-#define GRUE_TIMER 300
+int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
+#define GRUE_TIMER 6000
 time_t t;
 
 void grue_think(entity* self){
@@ -84,7 +84,7 @@ entity * grue_spawn(){
 	entity * ent_grue = NULL;
 	Vec2d pos = {400,400};
 	Vec2d vel = {-5,0};
-
+	SDL_Rect boundBox = {grue_frameW*.1f,grue_frameH *.1f, grue_frameW, grue_frameH};
 	if( (MONSTER_SPAWN_TIMER % (GRUE_TIMER)) != 0){
 		return NULL;
 	}
@@ -108,6 +108,7 @@ entity * grue_spawn(){
 	ent_grue->touch = grue_touch;
 	ent_grue->update = grue_update;
 	ent_grue->state = STATE_PATROL;
+	ent_grue->boundBox = boundBox;
 
 	return ent_grue;
 }

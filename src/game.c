@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 	monster_spawn(Monster::grue);
 	entity_update_all();
 	entity_think_all();
+	entity_check_collision_all();
 	MONSTER_SPAWN_TIMER -= 1;
 
 	while(SDL_PollEvent(&e) != 0)

@@ -18,6 +18,7 @@
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
+
 typedef struct{
 	char * filepath;
 	char * name;
@@ -42,6 +43,9 @@ typedef struct{
 	int frame_vertical;
 	int fpl;// applies to player and armor
 	Sprite2 *image;/*<image to render on top of player*/
+	//add stuff that doesn't need to be initialized here
+	int active;
+	Vec2d owner_pos;
 }Weapon;
 
 

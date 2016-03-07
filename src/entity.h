@@ -2,11 +2,19 @@
 #define _ENTITY_H_
 #include "vector.h"
 #include "sprite.h"
-
+#include "weapon.h"
 /** @brief main entity structure for all interactable objects 
     / characters in the game
 *   
 */
+enum Dir{
+   UP,
+   LEFT,
+   DOWN,
+   RIGHT,
+};
+
+
 typedef struct Entity_S
 {
 	int inuse;
@@ -19,6 +27,9 @@ typedef struct Entity_S
 	//audio library
 	int health, maxhealth;
 	int inventory;
+	int face_dir;
+	Weapon *weapon;
+
 	int stamina;
 	int state;
 	int nextThink;/*<Time index for next think */
@@ -51,5 +62,6 @@ void entity_update();
 void entity_draw_all();
 void entity_close_all();
 int entity_collide(entity *a, entity*b);
+void entity_check_collision_all();
 
 #endif

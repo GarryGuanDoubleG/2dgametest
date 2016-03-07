@@ -33,15 +33,19 @@ struct {
 //end
 void player_init(){
 	int i = 0;
-	Vec2d pos = {500,500};
+	Vec2d pos = {100,100};
+	SDL_Rect bound = {PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.7f, PLAYER_FRAMEH*.7f};
+
 	Sprite2 *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
 	animCurrent = WALK;
 	player = entity_load(player_sprite,pos, 100, 100, 0 );
+	slog("Player: X: %i Y: %i", player->position.x, player->position.y);
 
 	playerBody.image = player->sprite;
 	playerBody.image_slash = sprite_load("images/player/slash/body slash.png",PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	playerBody.image_slash->fpl = 5;
+	player->boundBox = bound;
 
 	player->frame_horizontal = 1;
 	player->frame_vertical = 2;
@@ -52,6 +56,9 @@ void player_init(){
 	armor_load_all();
 
 	PlayerEquip.weapon = getWeapon("longsword");
+	player->weapon = PlayerEquip.weapon;
+	player->weapon->owner_pos.x = pos.x;
+	player->weapon->owner_pos.y = pos.y;
 	PlayerEquip.head = getArmor("head chain hood");
 }
 void player_draw_equip(){
@@ -121,6 +128,7 @@ void player_update(entity *self){
 		animCurrent = WALK;
 		player->sprite = playerBody.image;
 		player->sprite->fpl = playerBody.image->fpl;
+		player->weapon->active = false;
 	}
 	else{
 		player->frame_horizontal += 1;
@@ -178,6 +186,7 @@ void player_attack(SDL_Event *e){
 				player->sprite->fpl = PlayerEquip.fpl;
 				player->frame_horizontal = 0;//reset it;
 				player->sprite = playerBody.image_slash;
+				player->weapon->active = true;			
 			}
 			break;
 		default:
