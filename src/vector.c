@@ -1,5 +1,6 @@
 #include "vector.h"
 #include <math.h>
+<<<<<<< Updated upstream
 
 #define Vec2dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
@@ -29,21 +30,39 @@
 #define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
 #define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
 
+=======
+/*
+>>>>>>> Stashed changes
 int rect_collide(SDL_Rect a, SDL_Rect b){
 	if((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&
 		(a.y + a.h > b.y ) && (b.y + b.h > a.y)){
 			return true;
 	}
-
 	return false;
 }
 
+int rect_collide(Rect_f a, Rect_f b){
+	if((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&
+		(a.y + a.h > b.y ) && (b.y + b.h > a.y)){
+			return true;
+	}
+	return false;
+}
+
+int rect_collide(SDL_Rect a, Rect_f b){
+	if((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&
+		(a.y + a.h > b.y ) && (b.y + b.h > a.y)){
+			return true;
+	}
+	return false;
+}*/
+
 float GetLength2d(Vec2d v){
-	return sqrt( (v.x * v.x + v.y * v.y));
+	return sqrt( (double)(v.x * v.x) + (double)(v.y * v.y));
 }
 
 float GetLength3d(Vec3d v){
-	return sqrt( (v.x * v.x + v.y * v.y + v.z * v.z));
+	return sqrt( (double)(v.x * v.x) + (double)(v.y * v.y) + (double)(v.z * v.z));
 }
 
 float Normalize2d(Vec2d &v){
@@ -67,4 +86,15 @@ float Normalize3d(Vec3d &v){
 	v.y = v.z / ilength;
 
 	return length;
+<<<<<<< Updated upstream
+=======
+}
+
+float Vec2dDistanceSQ(Vec2d a, Vec2d b){
+	return (b.x - a.x) *(b.x -a.x) + (b.y - a.y) * (b.y - a.y);
+}
+
+float Vec2dDistance(Vec2d a, Vec2d b){
+	return sqrt((double)((b.x - a.x) *(b.x -a.x)) + (double)((b.y - a.y) * (b.y - a.y)));
+>>>>>>> Stashed changes
 }

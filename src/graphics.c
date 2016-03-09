@@ -6,9 +6,14 @@
 
 #define MaxSprites    255
 
+<<<<<<< Updated upstream
 const int SCREEN_HEIGHT = 720;
 const int SCREEN_WIDTH = 1080;
 
+=======
+const int SCREEN_HEIGHT = 1200;
+const int SCREEN_WIDTH = 1440;
+>>>>>>> Stashed changes
 
 struct
 {
@@ -882,4 +887,8 @@ SDL_Surface * get_gt_Surface(){
 }
 SDL_Surface * get_gt_buffer(){
 	return __gt_graphics_temp_buffer;
+}
+
+SDL_Renderer * graphics_get_renderer(){
+	return __gt_graphics_renderer;
 }

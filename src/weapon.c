@@ -2,12 +2,23 @@
 
 Weapon weaponlist[] = 
 {
+	//longsword
 	{
 		"images/player/slash/weapon longsword.png",//filepath
 		"longsword",
+<<<<<<< Updated upstream
 		192,192,
 		PLAYER_FRAMEW*3,PLAYER_FRAMEH*3,//size of player frame. need to retrieve at init
 		{PLAYER_FRAMEW*3,PLAYER_FRAMEH*3},
+=======
+		192,192,//image size
+		PLAYER_FRAMEW*3,PLAYER_FRAMEH*3,//Frame width/height
+		{PLAYER_FRAMEW*3,PLAYER_FRAMEH*3},//offset
+		{-PLAYER_FRAMEW*1.5,-PLAYER_FRAMEH/2,PLAYER_FRAMEW*3,PLAYER_FRAMEH*1.6f},//bounding up
+		{-PLAYER_FRAMEW*1.5, PLAYER_FRAMEH/2,PLAYER_FRAMEW*3,PLAYER_FRAMEH*1.6f},//down
+		{PLAYER_FRAMEW/2,0,PLAYER_FRAMEW*3,PLAYER_FRAMEH},//bounding right
+		{-PLAYER_FRAMEW*3,0, PLAYER_FRAMEW*3, PLAYER_FRAMEH},//bounding left
+>>>>>>> Stashed changes
 
 		false,//not ranged
 		10, // 10 base damage

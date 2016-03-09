@@ -107,5 +107,7 @@ void ResetBuffer();
 void NextFrame();
 void InitMouse();
 void DrawMouse();
+//gg edit
+SDL_Renderer * graphics_get_renderer();
 
 #endif

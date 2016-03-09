@@ -7,6 +7,18 @@
     / characters in the game
 *   
 */
+<<<<<<< Updated upstream
+=======
+enum Dir{
+   UP,
+   LEFT,
+   DOWN,
+   RIGHT,
+};
+
+
+
+>>>>>>> Stashed changes
 typedef struct Entity_S
 {
 	int inuse;
@@ -25,6 +37,7 @@ typedef struct Entity_S
 	void (*think)(struct Entity_S *self);
 	void (*update)(struct Entity_S *self);
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);
+	void (*weapon_touch)(struct Entity_S *self, struct Entity_S *other);
 	void (*free)(struct Entity_S *self);
 }entity;
 
@@ -39,6 +52,7 @@ void entity_close();
 void entity_draw(entity *ent, int x, int y);
 void entity_update();
 void entity_update_all();
+void weapon_touch(entity *self, entity *other); // self will own the weapon
 //in class
 /*
  *@brief return a pointer to an empty entity structure
