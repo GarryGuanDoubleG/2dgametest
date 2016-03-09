@@ -19,18 +19,19 @@ extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
 
-typedef struct{
+typedef struct Weapon_S{
 	char * filepath;
 	char * name;
 
 	int imageH,imageW;
 	int frameW, frameH;
 	Vec2d offset;//offset from wielder
-	SDL_Rect boundUp;
-	SDL_Rect boundDown;
-	SDL_Rect boundLeft;
-	SDL_Rect boundRight;
-	//only need offset if using custom weapon not from same creator
+
+	Rect_f boundUp;
+	Rect_f boundDown;
+	Rect_f boundLeft;
+	Rect_f boundRight;
+	//only need offset if using custom weapon from different creator
 
 	int ranged;//shoot projectile
 	int damage;//base damage

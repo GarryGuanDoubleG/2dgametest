@@ -6,6 +6,7 @@
 
 #define MaxSprites    255
 
+
 const int SCREEN_HEIGHT = 800;
 const int SCREEN_WIDTH = 800;
 
@@ -881,4 +882,8 @@ SDL_Surface * get_gt_Surface(){
 }
 SDL_Surface * get_gt_buffer(){
 	return __gt_graphics_temp_buffer;
+}
+
+SDL_Renderer * graphics_get_renderer(){
+	return __gt_graphics_renderer;
 }

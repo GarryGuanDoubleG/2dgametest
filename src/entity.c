@@ -40,6 +40,7 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 			 entityList[i].sprite = sprite;
 			 entityList[i].position = pos;
 			 entityList[i].health = health;
+			 entityList[i].maxhealth = health;
 			 entityList[i].stamina = stamina;
 			 entityList[i].state = state;
 			 return &entityList[i];
@@ -49,12 +50,56 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 	return NULL;
 }
 
+//code based on post by MikeyPro on sdl forum
+//link: https://forums.libsdl.org/viewtopic.php?t=11040&sid=0c796abe9954dba84ee2814c32c85f5c
+
+void draw_health_bar(entity *self){
+	//percent health to draw
+	int barW = self->maxhealth;
+	int barH = 15;
+	int pw;
+	int px;
+	float percent = (float)self->health / (float)self->maxhealth; 
+	//rects to use as health bars
+	SDL_Rect fg_rect;
+	SDL_Rect bg_rect = {self->position.x + self->sprite->frameW/2 - barW/2, 
+		self->boundBox.y + self->position.y-barH, barW, barH};
+	//teal foreground for health
+	SDL_Color old; 
+	SDL_Color FGColor = {0, 255, 255, 255};
+	SDL_Color BGColor = {255, 0, 0, 255};
+	
+	percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;
+	pw = (int)((float)bg_rect.w * percent); 
+    px = bg_rect.x;
+
+	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
+	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
+	 {
+		slog("Failed to set render draw color");
+     }
+    if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))slog("Failed to Fill bg rect");
+    if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
+	{
+		slog("Failed to set render draw color");
+	}
+ 
+    fg_rect = bg_rect;
+	fg_rect.x = px;
+	fg_rect.w = pw;
+
+    if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))slog("Failed to Fill Rect");
+    if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
+	{
+		slog("Failed to set render draw color");
+	}
+}
+
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
-
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
-
-	/*SDL_Rect * src = NULL;
+	draw_health_bar(ent);
+	/*SDL_Rect * src =a NULL;
 	SDL_Rect dest = {x, y, ent->sprite->imageW, ent->sprite->imageH};
 
 	SDL_RenderCopy(__gt_graphics_renderer, ent->sprite->image, NULL, &dest);//replace null with main camera
@@ -99,13 +144,37 @@ void entity_update_all(){
 			continue;
 		}
 		entityList[i].update(&entityList[i]);
+
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
 			entityList[i].weapon->owner_pos.x = entityList[i].position.x;
 			entityList[i].weapon->owner_pos.y = entityList[i].position.y;
 		}
-
 	}
+}
+
+void entity_death(entity *self){
+	//death animation
+
+	//free
+	entity_free(self);
+}
+
+void weapon_touch(entity * self, entity *other)
+{
+	if (!self || !other)
+	{
+		slog("Self || Other is NULL");
+	}
+	//apply damage
+	other->health -= self->weapon->damage;
+	//check if dead
+	if(other->health <= 0)
+	{
+		slog("Entity health is now: %i", other->health);
+		entity_death(other);
+	}
+
 }
 
 int entity_collide(entity *a, entity*b)
@@ -118,25 +187,25 @@ int entity_collide(entity *a, entity*b)
 	return rect_collide(aB,bB);
 }
 
-int weapon_collision(Weapon *weap, entity *a, SDL_Rect bound)
+int weapon_collision(entity *self, entity *other, Rect_f bound)
 {
-	SDL_Rect aB = {a->position.x, a->position.y, a->sprite->frameW, a->sprite->frameH};
-	SDL_Rect bB = {weap->owner_pos.x + bound.x, weap->owner_pos.x + bound.y, bound.h, bound.w};
+	Rect_f aB = {(float)other->position.x + (float)other->boundBox.x, (float)other->position.y + other->boundBox.y, other->boundBox.w, other->boundBox.h};
+	Rect_f bB = {(float)self->position.x + bound.x, (float)self->position.y + bound.y, bound.w, bound.h};
 
-	slog("Wep Coll");
-	if(!weap || !a){
+	if(!self || !self->weapon || !other){
 		slog("NO weap or entity");
 		return false;
 	}
+	slog("Owner Pos: X: %i Y:%i\n Weapon Pos X:%f Y:%f\nEntity: X:%f Y:%f",self->position.x, self->position.y,bB.x, bB.y,aB.x, aB.y);
+	slog("Bounds Range X:%f - %f Y:%f - %f", bB.x, bB.x + bB.w, bB.y,  bB.y + bB.h);
+	slog("Bound other: X:%f - %f Y:%f - %f", aB.x, aB.x + aB.w, aB.y,  aB.y + aB.h);
 
-	slog("Weapon Pos X:%i Y:%i", bB.x, bB.y);
-	int collide = rect_collide(bB, aB);
-	
-	if(collide){
-		slog("Collision");
+	if(rect_collide(bB, aB)){
+		slog("Weapon has collided");
+		weapon_touch(self, other);
+		return true;
 	}
-	
-	return collide;
+	return false;
 }
 
 void entity_check_collision_all(){
@@ -155,6 +224,7 @@ void entity_check_collision_all(){
 			continue;
 		}
 		curr = &entityList[i];
+
 		for(j = 0; j < ENTITY_MAX; j++){
 			if(!entityList[j].inuse){
 				continue;
@@ -183,16 +253,16 @@ void entity_check_collision_all(){
 			if(curr->weapon && curr->weapon->active){
 				switch(curr->weapon->face_dir){
 					case UP:
-							weapon_collision(curr->weapon, next, curr->weapon->boundUp);
+							weapon_collision(curr, next, curr->weapon->boundUp);
 							break;
 					case DOWN:
-							weapon_collision(curr->weapon, next, curr->weapon->boundDown);
+							weapon_collision(curr, next, curr->weapon->boundDown);
 							break;
 					case LEFT:
-							weapon_collision(curr->weapon, next, curr->weapon->boundLeft);
+							weapon_collision(curr, next, curr->weapon->boundLeft);
 							break;
 					case RIGHT:
-							weapon_collision(curr->weapon, next, curr->weapon->boundRight);
+							weapon_collision(curr, next, curr->weapon->boundRight);
 							break;
 					default:
 						break;

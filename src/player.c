@@ -177,7 +177,6 @@ void player_attack(SDL_Event *e){
 	switch( e->key.keysym.sym )
     {
 		case SDLK_SPACE:
-			fprintf(stdout,"Hit Space");
 			//if(player_struct.weapon == WEAP_SWORD)
 			if(animCurrent != SLASH)
 			{

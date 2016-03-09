@@ -4,7 +4,8 @@
 
 int const MONSTER_TIMER = 600;
 int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
-#define GRUE_TIMER 6000
+
+#define GRUE_TIMER 150
 time_t t;
 
 void grue_think(entity* self){
@@ -84,7 +85,9 @@ entity * grue_spawn(){
 	entity * ent_grue = NULL;
 	Vec2d pos = {400,400};
 	Vec2d vel = {-5,0};
-	SDL_Rect boundBox = {grue_frameW*.1f,grue_frameH *.1f, grue_frameW, grue_frameH};
+
+	SDL_Rect boundBox = {grue_frameW*.05f,0, grue_frameW*.95, grue_frameH};
+
 	if( (MONSTER_SPAWN_TIMER % (GRUE_TIMER)) != 0){
 		return NULL;
 	}

@@ -5,19 +5,25 @@
 /**
 *@brief a simple 2d vector structure
 */
-
+//SDL Rect using floats
 typedef struct{
-	float x;/**< the x component of the vector */
-	float y;/**< the y component of the vector */
+	float x;
+	float y;
+	float w;
+	float h;
+}Rect_f;
+typedef struct{
+	int x;/**< the x component of the vector */
+	int y;/**< the y component of the vector */
 }Vec2d;
 
 typedef struct{
-	union {float x; /**< the x component of the vector */
-		   float r;}; /**< the red component of the color */
-	union {float y;  /**< the y component of the vector */
-		   float g;}; /**< the green component of the color */
-	union {float z; /**< the z component of the vector */
-		   float b;}; /**< the blue component of the color */
+	union {int x; /**< the x component of the vector */
+		   int r;}; /**< the red component of the color */
+	union {int y;  /**< the y component of the vector */
+		   int g;}; /**< the green component of the color */
+	union {int z; /**< the z component of the vector */
+		   int b;}; /**< the blue component of the color */
 }Vec3d;
 
 typedef struct{
@@ -33,9 +39,16 @@ typedef struct{
 
 float GetLength2d(Vec2d v);
 float GetLength3d(Vec3d v);
+/*
 int rect_collide(SDL_Rect a, SDL_Rect b);
+
+int rect_collide(Rect_f a, Rect_f b);*/
+
+
 float Vec2dDistanceSQ(Vec2d a, Vec2d b);
 float Vec2dDistance(Vec2d a, Vec2d b);
+
+#define rect_collide(a,b) ( ((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&(a.y + a.h > b.y ) && (b.y + b.h > a.y)) ? true : false)
 
 #define Vec2dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
