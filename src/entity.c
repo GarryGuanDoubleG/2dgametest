@@ -99,9 +99,12 @@ void draw_health_bar(entity *self){
 
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
+	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
-	draw_health_bar(ent);
-
+	if(rect_collide(entRect, graphics_get_player_cam()))
+	{
+		draw_health_bar(ent);
+	}
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
@@ -182,22 +185,53 @@ int entity_collide(entity *a, entity*b)
 	return rect_collide(aB,bB);
 }
 
+void weapon_collide_draw_box(Rect_f self, Rect_f other)
+{
+ 
+	//rects to use as health bars
+	SDL_Rect bg_rect = {self.x,self.y,self.w,self.h};
+	SDL_Rect fg_rect = {other.x,other.y,other.w,other.h};
+	//teal foreground for health
+	SDL_Color old; 
+	SDL_Color FGColor = {0, 255, 255, 255}; // other
+	SDL_Color BGColor = {255, 0, 0, 255}; //weapon
+
+
+	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
+	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
+	 {
+		slog("Failed to set render draw color");
+     }
+    if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))slog("Failed to Fill bg rect");
+    if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
+	{
+		slog("Failed to set render draw color");
+	}
+ 
+    if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))slog("Failed to Fill Rect");
+    if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
+	{
+		slog("Failed to set render draw color");
+	}
+}
 int weapon_collision(entity *self, entity *other, Rect_f bound)
 {
 	Rect_f aB = {(float)other->position.x + (float)other->boundBox.x, (float)other->position.y + other->boundBox.y, other->boundBox.w, other->boundBox.h};
-	Rect_f bB = {(float)self->position.x + bound.x, (float)self->position.y + bound.y, bound.w, bound.h};
+	Rect_f bB = {(float)self->position.x + bound.x + self->weapon->boundOffset.x, (float)self->position.y + bound.y + self->weapon->boundOffset.y, bound.w, bound.h};
 
 	if(!self || !self->weapon || !other){
 		slog("NO weap or entity");
 		return false;
 	}
-	slog("Owner Pos: X: %i Y:%i\n Weapon Pos X:%f Y:%f\nEntity: X:%f Y:%f",self->position.x, self->position.y,bB.x, bB.y,aB.x, aB.y);
+	slog("wep bound is X:%f Y:%f W:%f H:%f",bound.x,bound.y,bound.w,bound.h);
+	/*slog("Owner Pos: X: %i Y:%i\n Weapon Pos X:%f Y:%f\nEntity: X:%f Y:%f",self->position.x, self->position.y,bB.x, bB.y,aB.x, aB.y);
 	slog("Bounds Range X:%f - %f Y:%f - %f", bB.x, bB.x + bB.w, bB.y,  bB.y + bB.h);
-	slog("Bound other: X:%f - %f Y:%f - %f", aB.x, aB.x + aB.w, aB.y,  aB.y + aB.h);
+	slog("Bound other: X:%f - %f Y:%f - %f", aB.x, aB.x + aB.w, aB.y,  aB.y + aB.h);*/
 
 	if(rect_collide(bB, aB)){
 		slog("Weapon has collided");
 		weapon_touch(self, other);
+	// weapon_collide_draw_box(bB,aB); used for visual collision box
 		return true;
 	}
 	return false;

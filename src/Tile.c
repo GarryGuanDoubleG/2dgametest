@@ -2,12 +2,14 @@
 #include "simple_logger.h"
 #include <math.h>
 
-const int TOTAL_TILES = 210;//15x14 Tile Map
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
+const int TOTAL_TILES_X = SCREEN_WIDTH/TILE_WIDTH * 3;
+const int TOTAL_TILES_Y = SCREEN_HEIGHT/TILE_HEIGHT * 3;
+const int TOTAL_TILES = TOTAL_TILES_X * TOTAL_TILES_Y ;//make a square 3 by 3 region of size screen
 
 Tile *tile_list = NULL;
-Destructable_Tile *tile_destrct = NULL;
+Destructable_Tile *dest_tile_list = NULL;
 Sprite2 * tile_sprite_grass = NULL;
 Sprite2 * tile_sprite_tree = NULL;
 
@@ -17,14 +19,11 @@ void tile_init_system(){
 		printf("Why is total tiles 0?");
 		return;
 	}
-
 	tile_list = (Tile*) malloc(sizeof(Tile)*TOTAL_TILES);
 	memset(tile_list,0, sizeof(Tile) * TOTAL_TILES);
 
-	SDL_Rect temp = {0,0,0,0};
-	for(i = 0; i < TOTAL_TILES; i++){
-		tile_list[i].mBox = temp;
-	}
+	dest_tile_list = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
+	memset(tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
 
 	tile_sprite_grass = tile_load("images/Grass01.png");
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
@@ -59,7 +58,6 @@ void tile_forest_gen(){
 	int x = 0, y = 0;
 	int size = 64; // 8 by 8 forest
 
-
 }
 
 void tile_set(){
@@ -68,17 +66,31 @@ void tile_set(){
 	Tile * tile;
 	//place the grass tile
 	for( i = 0; i < TOTAL_TILES; i++){
+
+		if(x >= TOTAL_TILES_X * TILE_WIDTH)
+		{
+			slog("Total Tiles X is < X");
+		} 
 		tile = (tile_list+i);
 		tile->mBox.x = x;
 		tile->mBox.y = y;
 		tile->mBox.w = TILE_WIDTH;
 		tile->mBox.h = TILE_HEIGHT;
 		tile->mType = TILE_GRASS1;//filler
-
+		
+		dest_tile_list[i].mBox = tile->mBox;
+		dest_tile_list[i].mType = TILE_TREE;
 		x += TILE_WIDTH;		
-		if (x >= SCREEN_WIDTH){
+		if (!(i % TOTAL_TILES_X)){
 			x = 0;
-			y += TILE_HEIGHT;
+			if(i != 0)
+			{
+				y += TILE_HEIGHT;
+			}
+			else
+			{
+				slog("i is 0");
+			}
 		}
 	}
 
@@ -96,12 +108,16 @@ void tile_render(SDL_Rect *camera){
 			printf("Tile is null while rendering");
 			return ;
 		}
-		SDL_Rect src = { tile->mBox.x,tile->mBox.y, 
-						 TILE_HEIGHT, 
-						 TILE_WIDTH};
-		SDL_Rect dest = { tile->mBox.x,tile->mBox.y, TILE_HEIGHT, TILE_WIDTH};
-
-		SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, NULL, &dest);
+		if(rect_collide(graphics_get_player_cam(), tile->mBox))
+		{
+			SDL_Rect src = graphics_get_player_cam();
+			SDL_Rect dest = { tile->mBox.x,tile->mBox.y, TILE_HEIGHT, TILE_WIDTH};
+			SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, &src, &dest);
+			if(dest_tile_list[i].mType == TILE_TREE)
+			{
+				SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_tree->image, &src, &dest);
+			}
+		}
 	}
 }
 

@@ -171,7 +171,11 @@ void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_
 					 sprite->imageW, sprite->imageH};
 	SDL_Rect dest = { drawX, drawY, sprite->frameW, sprite->frameH};
 
-	SDL_RenderCopy(renderer,sprite->image, &src, &dest);
+	if(rect_collide(graphics_get_player_cam(), dest))
+	{
+
+		SDL_RenderCopy(renderer,sprite->image, &src, &dest);
+	}
 }
 
 /*eol@eof*/

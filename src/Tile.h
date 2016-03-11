@@ -7,10 +7,14 @@
 #include "sprite.h"
 #include "Tile_define.h"
 
+extern const int SCREEN_HEIGHT;
+extern const int SCREEN_WIDTH;
 extern const int TOTAL_TILES;
 extern const int TILE_WIDTH;
 extern const int TILE_HEIGHT; 
 
+//can probably take out mBox and use array index for location
+//faster and less memory
 typedef struct{
 
 	SDL_Rect mBox;

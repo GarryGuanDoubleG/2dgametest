@@ -25,13 +25,14 @@ typedef struct Weapon_S{
 
 	int imageH,imageW;
 	int frameW, frameH;
-	Vec2d offset;//offset from wielder
+	//only need offset if using custom weapon not from same creator
+	Vec2d offset;//used only for centering image onto player
+	Vec2d boundOffset; // used for collision
 
 	Rect_f boundUp;
 	Rect_f boundDown;
 	Rect_f boundLeft;
 	Rect_f boundRight;
-	//only need offset if using custom weapon not from same creator
 
 	int ranged;//shoot projectile
 	int damage;//base damage
@@ -43,6 +44,7 @@ typedef struct Weapon_S{
 	int frame_horizontal;
 	int frame_vertical;
 	int fpl;// applies to player and armor
+
 	Sprite2 *image;/*<image to render on top of player*/
 	int active;
 }Weapon;

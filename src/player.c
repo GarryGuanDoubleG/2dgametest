@@ -33,7 +33,7 @@ struct {
 //end
 void player_init(){
 	int i = 0;
-	Vec2d pos = {100,100};
+	Vec2d pos = {SCREEN_WIDTH/2,SCREEN_HEIGHT/2};
 	SDL_Rect bound = {PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.7f, PLAYER_FRAMEH*.7f};
 
 	Sprite2 *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
@@ -110,6 +110,11 @@ void player_draw(){
 
 
 void player_update(entity *self){
+	SDL_Rect new_cam = {player->position.x - SCREEN_WIDTH/2, player->position.y - SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT};
+	
+	//update camera
+	graphics_update_player_cam(new_cam);
+	slog("Updated Player cam: X:%i, Y:%i W:%i H:%i", new_cam.x, new_cam.y, new_cam.w, new_cam.h);
 	if(animCurrent == WALK){ //if walking, dont reset animation
 		//player->sprite->fpl = PlayerEquip.body->image->fpl;
 		return;
@@ -130,6 +135,7 @@ void player_update(entity *self){
 	else{
 		player->frame_horizontal += 1;
 	}
+
 }
 
 void player_move(SDL_Event *e){
@@ -144,21 +150,25 @@ void player_move(SDL_Event *e){
 			player->position.y -=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_up;
+			player->face_dir = face_up;
 			break;
         case SDLK_DOWN:
 			player->position.y +=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_down;
+			player->face_dir = face_down;
 			break;
         case SDLK_LEFT:
 			player->position.x -= 5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_left;
+			player->face_dir = face_left;
 			break;
         case SDLK_RIGHT:
 			player->position.x +=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_right;
+			player->face_dir = face_right;
 			break;
         default:
 			player_attack(e);
