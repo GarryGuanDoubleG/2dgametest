@@ -1,5 +1,6 @@
 #include "entity.h"
 
+
 const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
@@ -141,12 +142,8 @@ void entity_update_all(){
 			continue;
 		}
 		entityList[i].update(&entityList[i]);
-<<<<<<< Updated upstream
-=======
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
-			entityList[i].weapon->owner_pos.x = entityList[i].position.x;
-			entityList[i].weapon->owner_pos.y = entityList[i].position.y;
 		}
 	}
 }
@@ -163,7 +160,6 @@ void weapon_touch(entity * self, entity *other)
 	if (!self || !other)
 	{
 		slog("Self || Other is NULL");
->>>>>>> Stashed changes
 	}
 	//apply damage
 	other->health -= self->weapon->damage;
@@ -178,12 +174,6 @@ void weapon_touch(entity * self, entity *other)
 
 int entity_collide(entity *a, entity*b)
 {
-<<<<<<< Updated upstream
-	SDL_Rect aB = {a->position.x, a->position.y, a->sprite->frameW, a->sprite->frameH};
-	SDL_Rect bB = {b->position.x, b->position.y, b->sprite->frameW, b->sprite->frameH};
-
-	return rect_collide(aB,bB);
-=======
 	SDL_Rect aB = {a->boundBox.x + a->position.x, a->boundBox.y + a->position.y, a->boundBox.w, a->boundBox.h};
 	SDL_Rect bB = {b->boundBox.x + b->position.x, b->boundBox.y + b->position.y, b->boundBox.w, b->boundBox.h};
 
@@ -275,5 +265,4 @@ void entity_check_collision_all(){
 			}
 		}
 	}
->>>>>>> Stashed changes
 }

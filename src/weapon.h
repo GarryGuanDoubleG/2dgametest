@@ -44,6 +44,7 @@ typedef struct Weapon_S{
 	int frame_vertical;
 	int fpl;// applies to player and armor
 	Sprite2 *image;/*<image to render on top of player*/
+	int active;
 }Weapon;
 
 

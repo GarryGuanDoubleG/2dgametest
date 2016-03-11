@@ -2,7 +2,7 @@
 #define _ENTITY_H_
 #include "vector.h"
 #include "sprite.h"
-
+#include "weapon.h"
 /** @brief main entity structure for all interactable objects 
     / characters in the game
 *   
@@ -14,6 +14,7 @@ enum Dir{
    RIGHT,
 };
 
+
 typedef struct Entity_S
 {
 	int inuse;
@@ -22,10 +23,13 @@ typedef struct Entity_S
 	int frame_vertical;
 	Vec2d position;
 	Vec2d velocity;
-	Rect_f boundBox;
+	SDL_Rect boundBox; // used for collision
 	//audio library
 	int health, maxhealth;
-	int *inventory;
+	int inventory;
+	int face_dir;
+	Weapon *weapon;
+
 	int stamina;
 	int state;
 	int nextThink;/*<Time index for next think */
@@ -33,7 +37,6 @@ typedef struct Entity_S
 	void (*think)(struct Entity_S *self);
 	void (*update)(struct Entity_S *self);
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);
-	void (*weapon_touch)(struct Entity_S *self, struct Entity_S *other);
 	void (*free)(struct Entity_S *self);
 }entity;
 
@@ -48,7 +51,6 @@ void entity_close();
 void entity_draw(entity *ent, int x, int y);
 void entity_update();
 void entity_update_all();
-void weapon_touch(entity *self, entity *other); // self will own the weapon
 //in class
 /*
  *@brief return a pointer to an empty entity structure
@@ -60,5 +62,6 @@ void entity_update();
 void entity_draw_all();
 void entity_close_all();
 int entity_collide(entity *a, entity*b);
+void entity_check_collision_all();
 
 #endif

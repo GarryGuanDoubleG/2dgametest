@@ -167,7 +167,6 @@ void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_
 	//Set rendering space and render to screen
 
 	SDL_Rect src = { frame_horizontal * sprite->imageW, 
-
 					 frame_vertical * sprite->imageH, 
 					 sprite->imageW, sprite->imageH};
 	SDL_Rect dest = { drawX, drawY, sprite->frameW, sprite->frameH};

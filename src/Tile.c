@@ -26,8 +26,8 @@ void tile_init_system(){
 		tile_list[i].mBox = temp;
 	}
 
-	tile_load("images/Grass01.png");
-	tile_load(PATH_TILE_TREE);
+	tile_sprite_grass = tile_load("images/Grass01.png");
+	tile_sprite_tree = tile_load(PATH_TILE_TREE);
 	tile_set();
 	tile_render(NULL);
 
@@ -110,5 +110,5 @@ void tile_close_system(){
 	for( i = 0; i < TOTAL_TILES; i++)
 		tile_free(tile_list+i);
 
-	SDL_DestroyTexture(tile_sprite_grass);
+	SDL_DestroyTexture(tile_sprite_grass->image);
 }

@@ -11,7 +11,6 @@ extern const int TOTAL_TILES;
 extern const int TILE_WIDTH;
 extern const int TILE_HEIGHT; 
 
-extern SDL_Texture * tile_sprite_grass;
 typedef struct{
 
 	SDL_Rect mBox;
@@ -26,7 +25,7 @@ typedef struct{
 extern Tile *tile_list;
 
 void tile_init_system();
-void tile_load(char *filename);
+Sprite2 * tile_load(char *filename);
 void tile_set();
 void tile_free(Tile *tile);
 void tile_render (SDL_Rect *camera);
