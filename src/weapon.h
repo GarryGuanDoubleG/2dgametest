@@ -18,25 +18,19 @@
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
-<<<<<<< Updated upstream
-typedef struct{
-=======
-
 typedef struct Weapon_S{
->>>>>>> Stashed changes
+
 	char * filepath;
 	char * name;
 
 	int imageH,imageW;
 	int frameW, frameH;
 	Vec2d offset;//offset from wielder
-<<<<<<< Updated upstream
-=======
+
 	Rect_f boundUp;
 	Rect_f boundDown;
 	Rect_f boundLeft;
 	Rect_f boundRight;
->>>>>>> Stashed changes
 	//only need offset if using custom weapon not from same creator
 
 	int ranged;//shoot projectile

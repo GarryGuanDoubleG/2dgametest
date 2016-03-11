@@ -30,6 +30,7 @@
     <ClInclude Include="..\src\simple_logger.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
+    <ClInclude Include="..\src\Tile_define.h" />
     <ClInclude Include="..\src\vector.h" />
     <ClInclude Include="..\src\weapon.h" />
   </ItemGroup>

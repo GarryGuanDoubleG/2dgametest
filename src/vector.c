@@ -1,6 +1,5 @@
 #include "vector.h"
 #include <math.h>
-<<<<<<< Updated upstream
 
 #define Vec2dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
@@ -30,7 +29,6 @@
 #define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
 #define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
 
-=======
 /*
 >>>>>>> Stashed changes
 int rect_collide(SDL_Rect a, SDL_Rect b){
@@ -86,8 +84,7 @@ float Normalize3d(Vec3d &v){
 	v.y = v.z / ilength;
 
 	return length;
-<<<<<<< Updated upstream
-=======
+
 }
 
 float Vec2dDistanceSQ(Vec2d a, Vec2d b){
@@ -96,5 +93,4 @@ float Vec2dDistanceSQ(Vec2d a, Vec2d b){
 
 float Vec2dDistance(Vec2d a, Vec2d b){
 	return sqrt((double)((b.x - a.x) *(b.x -a.x)) + (double)((b.y - a.y) * (b.y - a.y)));
->>>>>>> Stashed changes
 }

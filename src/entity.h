@@ -7,8 +7,6 @@
     / characters in the game
 *   
 */
-<<<<<<< Updated upstream
-=======
 enum Dir{
    UP,
    LEFT,
@@ -16,9 +14,6 @@ enum Dir{
    RIGHT,
 };
 
-
-
->>>>>>> Stashed changes
 typedef struct Entity_S
 {
 	int inuse;
@@ -27,6 +22,7 @@ typedef struct Entity_S
 	int frame_vertical;
 	Vec2d position;
 	Vec2d velocity;
+	Rect_f boundBox;
 	//audio library
 	int health, maxhealth;
 	int *inventory;

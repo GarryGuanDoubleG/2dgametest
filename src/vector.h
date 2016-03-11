@@ -78,7 +78,6 @@ float Vec2dDistance(Vec2d a, Vec2d b);
 #define VectorSet2d(v, x, y)	(v.x = x, v.y = y)
 #define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
 #define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
->>>>>>> Stashed changes
 
 /*
 void (add*)();

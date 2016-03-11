@@ -64,7 +64,7 @@ void draw_health_bar(entity *self){
 	//rects to use as health bars
 	SDL_Rect fg_rect;
 	SDL_Rect bg_rect = {self->position.x + self->sprite->frameW/2 - barW/2, 
-		self->boundBox.y + self->position.y-barH, barW, barH};
+	self->boundBox.y + self->position.y-barH, barW, barH};
 	//teal foreground for health
 	SDL_Color old; 
 	SDL_Color FGColor = {0, 255, 255, 255};
@@ -100,11 +100,7 @@ void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
 	draw_health_bar(ent);
-	/*SDL_Rect * src =a NULL;
-	SDL_Rect dest = {x, y, ent->sprite->imageW, ent->sprite->imageH};
 
-	SDL_RenderCopy(__gt_graphics_renderer, ent->sprite->image, NULL, &dest);//replace null with main camera
-	*/
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location

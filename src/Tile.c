@@ -1,12 +1,15 @@
 #include "Tile.h"
+#include "simple_logger.h"
+#include <math.h>
 
 const int TOTAL_TILES = 210;//15x14 Tile Map
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
-const int TILE_GRASS1 = 0;//type. Should be made into an enum or macro
 
 Tile *tile_list = NULL;
-SDL_Texture * tile_sprite_grass = NULL;
+Destructable_Tile *tile_destrct = NULL;
+Sprite2 * tile_sprite_grass = NULL;
+Sprite2 * tile_sprite_tree = NULL;
 
 void tile_init_system(){
 	int i;
@@ -24,15 +27,18 @@ void tile_init_system(){
 	}
 
 	tile_load("images/Grass01.png");
+	tile_load(PATH_TILE_TREE);
 	tile_set();
 	tile_render(NULL);
 
 	atexit(tile_close_system);
 }
 
-void tile_load(char *filename){
-
-	SDL_Surface * load_surface = IMG_Load(filename);
+Sprite2 * tile_load(char *filename)
+{
+	Sprite2 * sprite = sprite_load(filename, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+	return sprite;
+	/*SDL_Surface * load_surface = IMG_Load(filename);
 	if(!load_surface)
 	{
 		printf("Could not load grass tile sprite");
@@ -42,15 +48,25 @@ void tile_load(char *filename){
 
 	tile_sprite_grass = SDL_CreateTextureFromSurface(__gt_graphics_renderer, load_surface);
 	if(!tile_sprite_grass){
-		printf("Unable to create New Texture from Sprite Surface");
+		slog("Unable to create New Texture from Sprite Surface");
 		return ;
-	}
+	}*/
+
+}
+void tile_forest_gen(){
+	int i;
+	int start; //trees are square region, start location
+	int x = 0, y = 0;
+	int size = 64; // 8 by 8 forest
+
+
 }
 
 void tile_set(){
 	int i;
 	int x = 0,y = 0;
 	Tile * tile;
+	//place the grass tile
 	for( i = 0; i < TOTAL_TILES; i++){
 		tile = (tile_list+i);
 		tile->mBox.x = x;
@@ -65,6 +81,7 @@ void tile_set(){
 			y += TILE_HEIGHT;
 		}
 	}
+
 }
 
 void tile_free(Tile *tile){
@@ -84,7 +101,7 @@ void tile_render(SDL_Rect *camera){
 						 TILE_WIDTH};
 		SDL_Rect dest = { tile->mBox.x,tile->mBox.y, TILE_HEIGHT, TILE_WIDTH};
 
-		SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass, NULL, &dest);
+		SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, NULL, &dest);
 	}
 }
 
