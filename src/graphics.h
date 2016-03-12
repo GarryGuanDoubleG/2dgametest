@@ -7,11 +7,12 @@
  *			to handle sprites and graphics.
  */
 
+#include <stdio.h>
+#include "vector.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include <stdio.h>
-#include "vector.h"
+#include "simple_logger.h"
 /*Uint32*/
 #define Red_         0xDD0000
 #define Green_       0x00DD00

@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	//draw functions should go in order from background first to player draw calls last
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
-    tile_render(NULL);
+    tile_render();
 	
 	
     DrawMouse2();

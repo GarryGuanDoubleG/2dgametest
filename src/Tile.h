@@ -12,6 +12,8 @@ extern const int SCREEN_WIDTH;
 extern const int TOTAL_TILES;
 extern const int TILE_WIDTH;
 extern const int TILE_HEIGHT; 
+extern const int TOTAL_TILES_X;
+extern const int TOTAL_TILES_Y;
 
 //can probably take out mBox and use array index for location
 //faster and less memory
@@ -32,7 +34,7 @@ void tile_init_system();
 Sprite2 * tile_load(char *filename);
 void tile_set();
 void tile_free(Tile *tile);
-void tile_render (SDL_Rect *camera);
+void tile_render ();
 void tile_close_system();
 
 

@@ -63,48 +63,60 @@ void draw_health_bar(entity *self){
 	int px;
 	float percent = (float)self->health / (float)self->maxhealth; 
 	//rects to use as health bars
-	SDL_Rect fg_rect;
 	SDL_Rect bg_rect = {self->position.x + self->sprite->frameW/2 - barW/2, 
 	self->boundBox.y + self->position.y-barH, barW, barH};
+	SDL_Rect fg_rect;
 	//teal foreground for health
 	SDL_Color old; 
 	SDL_Color FGColor = {0, 255, 255, 255};
 	SDL_Color BGColor = {255, 0, 0, 255};
 	
-	percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;
-	pw = (int)((float)bg_rect.w * percent); 
-    px = bg_rect.x;
 
 	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
 	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
 	 {
 		slog("Failed to set render draw color");
      }
-    if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))slog("Failed to Fill bg rect");
+	if(!rect_collide(bg_rect, graphics_get_player_cam()))
+	{
+		SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00);
+		return;
+	}
+		bg_rect.x -= graphics_get_player_cam().x;
+		bg_rect.y -= graphics_get_player_cam().y;
+		fg_rect = bg_rect;
+		px = bg_rect.x;
+		percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;
+		pw = (int)((float)bg_rect.w * percent); 
+
+		if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))
+		{
+			slog("Failed to Fill bg rect");
+		}
     if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
 	{
 		slog("Failed to set render draw color");
 	}
  
-    fg_rect = bg_rect;
 	fg_rect.x = px;
 	fg_rect.w = pw;
+	if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))
+	{
+		slog("Failed to Fill Rect");
+	}
 
-    if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))slog("Failed to Fill Rect");
     if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
 	{
 		slog("Failed to set render draw color");
 	}
 }
+//end
 
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
-	if(rect_collide(entRect, graphics_get_player_cam()))
-	{
-		draw_health_bar(ent);
-	}
+	draw_health_bar(ent);
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
@@ -195,7 +207,6 @@ void weapon_collide_draw_box(Rect_f self, Rect_f other)
 	SDL_Color old; 
 	SDL_Color FGColor = {0, 255, 255, 255}; // other
 	SDL_Color BGColor = {255, 0, 0, 255}; //weapon
-
 
 	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
 	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))

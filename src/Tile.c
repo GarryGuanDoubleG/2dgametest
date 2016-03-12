@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "simple_logger.h"
+#include <time.h>
 #include <math.h>
 
 const int TILE_WIDTH = 80;
@@ -12,6 +13,7 @@ Tile *tile_list = NULL;
 Destructable_Tile *dest_tile_list = NULL;
 Sprite2 * tile_sprite_grass = NULL;
 Sprite2 * tile_sprite_tree = NULL;
+
 
 void tile_init_system(){
 	int i;
@@ -28,7 +30,7 @@ void tile_init_system(){
 	tile_sprite_grass = tile_load("images/Grass01.png");
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
 	tile_set();
-	tile_render(NULL);
+	tile_render();
 
 	atexit(tile_close_system);
 }
@@ -52,12 +54,32 @@ Sprite2 * tile_load(char *filename)
 	}*/
 
 }
-void tile_forest_gen(){
-	int i;
-	int start; //trees are square region, start location
-	int x = 0, y = 0;
-	int size = 64; // 8 by 8 forest
 
+//applies to whole map
+void tile_forest_gen(int start){
+	int i;
+	int x = 0, y = 0;
+}
+
+void tile_forest_gen()
+{
+	//start of top edge of forest
+	int start = rand() % TOTAL_TILES_X -1; //rand num from 0 to end of first row
+	tile_forest_gen(start);
+	//start on left edge of forest
+	start = rand() % TOTAL_TILES_Y + 1;
+	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
+	start = start * TOTAL_TILES_X;
+	tile_forest_gen(start);
+	//right edge
+	start = rand() % TOTAL_TILES_Y +1;
+	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
+	start = (start *TOTAL_TILES_X) - 1;
+	tile_forest_gen(start);
+	//bottom edge
+	start = rand() % TOTAL_TILES_X -1;
+	start += TOTAL_TILES - TOTAL_TILES_X;
+	tile_forest_gen(start);
 }
 
 void tile_set(){
@@ -67,10 +89,6 @@ void tile_set(){
 	//place the grass tile
 	for( i = 0; i < TOTAL_TILES; i++){
 
-		if(x >= TOTAL_TILES_X * TILE_WIDTH)
-		{
-			slog("Total Tiles X is < X");
-		} 
 		tile = (tile_list+i);
 		tile->mBox.x = x;
 		tile->mBox.y = y;
@@ -81,17 +99,12 @@ void tile_set(){
 		dest_tile_list[i].mBox = tile->mBox;
 		dest_tile_list[i].mType = TILE_TREE;
 		x += TILE_WIDTH;		
-		if (!(i % TOTAL_TILES_X)){
+		if(x >= TOTAL_TILES_X * TILE_WIDTH)
+		{
 			x = 0;
-			if(i != 0)
-			{
-				y += TILE_HEIGHT;
-			}
-			else
-			{
-				slog("i is 0");
-			}
-		}
+			slog("Total Tiles X is < X");
+			y += TILE_HEIGHT;
+		} 
 	}
 
 }
@@ -100,8 +113,9 @@ void tile_free(Tile *tile){
 	tile->mType = 0;
 }
 
-void tile_render(SDL_Rect *camera){
+void tile_render(){
 	int i;
+	SDL_Rect camera = graphics_get_player_cam();
 	for( i = 0; i < TOTAL_TILES; i++){
 		Tile * tile = (tile_list + i);
 		if(tile == NULL){
@@ -110,12 +124,11 @@ void tile_render(SDL_Rect *camera){
 		}
 		if(rect_collide(graphics_get_player_cam(), tile->mBox))
 		{
-			SDL_Rect src = graphics_get_player_cam();
-			SDL_Rect dest = { tile->mBox.x,tile->mBox.y, TILE_HEIGHT, TILE_WIDTH};
-			SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, &src, &dest);
+			SDL_Rect dest = { tile->mBox.x - camera.x,tile->mBox.y-camera.y, TILE_HEIGHT, TILE_WIDTH};
+			SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, NULL, &dest);
 			if(dest_tile_list[i].mType == TILE_TREE)
 			{
-				SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_tree->image, &src, &dest);
+				SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_tree->image, NULL, &dest);
 			}
 		}
 	}

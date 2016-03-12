@@ -92,29 +92,20 @@ void player_draw_equip(){
 
 void player_draw(){
 	//need to add other equipment
+	SDL_Rect pRect = {player->position.x, player->position.y, player->boundBox.w, player->boundBox.h};
+	SDL_Rect camRect = graphics_get_player_cam();
+	SDL_Color old; 
+	SDL_Color FGColor = {0, 255, 255, 255}; // other
+	SDL_Color BGColor = {255, 0, 0, 255}; //weapon
+
 	entity_draw(player,player->position.x,player->position.y);
-	/*sprite_draw(player_current_anim->chest,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
-	sprite_draw(player_current_anim->legs,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
-	sprite_draw(player_current_anim->head,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);*/
 
 	player_draw_equip();
 
-	/*
-	if(player_current_anim == &player_AnimSlash){
-		//sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - weapon_curr.image->frameW/3,player->position.y - weapon_curr.image->frameH/3);
-		sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
-		slog("Drawing Slash Weapon");
-	}*/
 }
 
-
-
 void player_update(entity *self){
-	SDL_Rect new_cam = {player->position.x - SCREEN_WIDTH/2, player->position.y - SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT};
-	
-	//update camera
-	graphics_update_player_cam(new_cam);
-	slog("Updated Player cam: X:%i, Y:%i W:%i H:%i", new_cam.x, new_cam.y, new_cam.w, new_cam.h);
+
 	if(animCurrent == WALK){ //if walking, dont reset animation
 		//player->sprite->fpl = PlayerEquip.body->image->fpl;
 		return;
@@ -137,13 +128,43 @@ void player_update(entity *self){
 	}
 
 }
+void player_update_camera()
+{
+	SDL_Rect new_cam;
+
+	new_cam.x = player->position.x - SCREEN_WIDTH/2;
+	new_cam.y = player->position.y - SCREEN_HEIGHT/2;
+	new_cam.w = SCREEN_WIDTH;
+	new_cam.h = SCREEN_HEIGHT;
+
+	if(new_cam.x < 0)
+	{
+		new_cam.x = 0;
+	}
+	if(new_cam.y < 0)
+	{
+		new_cam.y = 0;
+	}
+	if( new_cam.x > TOTAL_TILES_X * TILE_WIDTH - new_cam.w)
+	{
+		slog("X > level");
+		new_cam.x = TOTAL_TILES_X * TILE_WIDTH - new_cam.w;
+	}
+	if( new_cam.y > TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h)
+	{
+		slog("Y > level");
+		new_cam.y = TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h;
+	}
+	//update camera
+	graphics_update_player_cam(new_cam);
+}
 
 void player_move(SDL_Event *e){
+
 	if(!e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
 	}
-
 	switch( e->key.keysym.sym )
     {
         case SDLK_UP:
@@ -174,6 +195,8 @@ void player_move(SDL_Event *e){
 			player_attack(e);
 			break;
     }
+	player_update_camera();
+
 }
 
 void player_attack(SDL_Event *e){

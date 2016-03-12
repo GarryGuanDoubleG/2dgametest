@@ -903,4 +903,5 @@ SDL_Rect graphics_get_player_cam()
 void graphics_update_player_cam(SDL_Rect player_cam)
 {
 	graphics_player_camera = player_cam;
+	
 }
