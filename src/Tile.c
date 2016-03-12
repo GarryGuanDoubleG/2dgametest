@@ -55,10 +55,140 @@ Sprite2 * tile_load(char *filename)
 
 }
 
-//applies to whole map
-void tile_forest_gen(int start){
+int score_move(int move)
+{
+	int score = 0;
+
+	if( move > TOTAL_TILES_X -1)
+	{
+		if(tile_list[move - TOTAL_TILES_X].mType == TILE_ROAD)
+		{
+			score += 2;
+		}
+	}
+	else{ score++; }  // edge tile increases score by 1
+
+	if( move < TOTAL_TILES - TOTAL_TILES_X -1)
+	{
+		if(tile_list[move + TOTAL_TILES_X].mType == TILE_ROAD)
+		{
+			score +=2;
+		}
+	}
+	else { score++; }
+
+	if(move % TOTAL_TILES_X != 0)
+	{
+		if(tile_list[move - 1].mType == TILE_ROAD)
+		{
+			score +=2;
+		}
+	}
+	else {score++;}
+	if(move % (TOTAL_TILES_X - 1) != 0)
+	{
+		if(tile_list[move + 1].mType == TILE_ROAD)
+		{
+			score +=2;
+		}
+	}
+	else {score++;}
+	
+	if(tile_list[move].mType == TILE_ROAD)
+	{
+		score += 4;
+	}
+
+	return score;
+}
+int tile_forest_walk(int moves[])
+{
+	int min;
+	int score[] = {-1,-1,-1,-1};
+	int new_node = -1;
 	int i;
-	int x = 0, y = 0;
+	
+	score[0] = score_move(moves[0]);
+	score[1] = score_move(moves[1]);
+	score[2] = score_move(moves[2]);
+	score[3] = score_move(moves[3]);
+	
+	min = score[0];
+	min = MIN(min, score[1]);
+	min = MIN(min, score[2]);
+	min = MIN(min, score[3]);
+
+	for(i = 0; i < 4; i++)//4 is number of moves
+	{
+		if(score[i] == min)
+		{
+			if(new_node == -1)
+			{
+				new_node = moves[i];
+			}
+			else
+			{
+				int a = 0, b = 0;
+				int random_num;
+				a = DISTANCE_CENTER(new_node);
+				b = DISTANCE_CENTER(moves[i]);
+				//higher chance if closer to center
+				if(a < b)
+				{
+					//give smaller num 66% chance of being new move
+					random_num = rand() % 9;
+					new_node = random_num <= 5 ? new_node : moves[i];
+				}
+				else if ( b < a)
+				{
+					random_num = rand() % 9;
+					new_node = random_num <=5 ? moves[i] : new_node;
+				}
+				else
+				{
+					random_num = rand() % 1;
+					new_node = random_num == 0 ? moves[i] : new_node;
+				}
+			}
+		}
+	}
+
+	return new_node;
+
+}
+//applies to whole map
+void tile_forest_gen(int start)
+{
+	int i = start;
+	int done = false;
+	int lifespan = TOTAL_TILES/2;
+	//-1 means can't move to that node
+	tile_list[i].mType = TILE_ROAD;
+
+	while(lifespan-- > 0)
+	{
+		int moves[4] = {i-1,i+1,i-TOTAL_TILES_X,i + TOTAL_TILES_X}; // left,right,up,down a tile on map
+		if(i%TOTAL_TILES_X == 0)
+		{
+			moves[0] = -1;
+		}
+		if((i + 1)%TOTAL_TILES_X == 0)
+		{
+			moves[1] = -1;
+		}
+		if(i < TOTAL_TILES_X == 0)
+		{
+			moves[2] = -1;
+		}
+		if( i > TOTAL_TILES - TOTAL_TILES_X)
+		{
+			moves[3] = -1;
+		}
+		i = tile_forest_walk(moves);
+		tile_list[i].mType = i;
+		dest_tile_list[i].mType = i;
+		slog("New Move is %i ", i);
+	}
 }
 
 void tile_forest_gen()
@@ -107,12 +237,12 @@ void tile_set(){
 		} 
 	}
 
-}
+	tile_forest_gen();
 
+}
 void tile_free(Tile *tile){
 	tile->mType = 0;
 }
-
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();

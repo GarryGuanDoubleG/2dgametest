@@ -63,5 +63,6 @@ void entity_draw_all();
 void entity_close_all();
 int entity_collide(entity *a, entity*b);
 void entity_check_collision_all();
+void weapon_collision(entity *owner);
 
 #endif

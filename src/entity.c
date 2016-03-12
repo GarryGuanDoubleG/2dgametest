@@ -234,6 +234,7 @@ int weapon_collision(entity *self, entity *other, Rect_f bound)
 		slog("NO weap or entity");
 		return false;
 	}
+
 	slog("wep bound is X:%f Y:%f W:%f H:%f",bound.x,bound.y,bound.w,bound.h);
 	/*slog("Owner Pos: X: %i Y:%i\n Weapon Pos X:%f Y:%f\nEntity: X:%f Y:%f",self->position.x, self->position.y,bB.x, bB.y,aB.x, aB.y);
 	slog("Bounds Range X:%f - %f Y:%f - %f", bB.x, bB.x + bB.w, bB.y,  bB.y + bB.h);
@@ -248,13 +249,50 @@ int weapon_collision(entity *self, entity *other, Rect_f bound)
 	return false;
 }
 
-void entity_check_collision_all(){
+void weapon_collision(entity *owner)
+{
+	int i;
 
+	if(!owner || !owner->weapon)
+	{
+		slog("Entity or Weapon is NULL. No Collision");
+	}
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		if(!entityList[i].update){
+			continue;
+		}
+		if(owner == &entityList[i]){
+			continue;
+		}
+		if(owner->weapon && owner->weapon->active){
+			switch(owner->weapon->face_dir){
+				case UP:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundUp);
+						break;
+				case DOWN:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundDown);
+						break;
+				case LEFT:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundLeft);
+						break;
+				case RIGHT:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundRight);
+						break;
+				default:
+					break;
+			}
+		}
+	}
+}
+void entity_check_collision_all()
+{
 	int i = 0;
 	int j = 0;
 	entity *curr = NULL;
 	entity *next = NULL;
-	int found_next;
 
 	for(i = 0; i < ENTITY_MAX; i++){
 		if(!entityList[i].inuse){
@@ -284,30 +322,7 @@ void entity_check_collision_all(){
 			{
 				continue;
 			}
-			if(entity_collide(curr, next))
-			{
-				/*slog("Ent: A X:%i Y: %i\n Ent B X: %i Y: %i", 
-					curr->position.x, curr->position.y, next->position.x, next->position.y);
-				slog("Collision!");*/
-			}
-			if(curr->weapon && curr->weapon->active){
-				switch(curr->weapon->face_dir){
-					case UP:
-							weapon_collision(curr, next, curr->weapon->boundUp);
-							break;
-					case DOWN:
-							weapon_collision(curr, next, curr->weapon->boundDown);
-							break;
-					case LEFT:
-							weapon_collision(curr, next, curr->weapon->boundLeft);
-							break;
-					case RIGHT:
-							weapon_collision(curr, next, curr->weapon->boundRight);
-							break;
-					default:
-						break;
-				}
-			}
+			entity_collide(curr, next);			
 		}
 	}
 }

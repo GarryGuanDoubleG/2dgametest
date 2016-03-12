@@ -126,7 +126,6 @@ void player_update(entity *self){
 	else{
 		player->frame_horizontal += 1;
 	}
-
 }
 void player_update_camera()
 {
@@ -216,7 +215,8 @@ void player_attack(SDL_Event *e){
 				player->sprite->fpl = PlayerEquip.fpl;
 				player->frame_horizontal = 0;//reset it;
 				player->sprite = playerBody.image_slash;
-				player->weapon->active = true;			
+				player->weapon->active = true;		
+				weapon_collision(player);
 			}
 			break;
 		default:

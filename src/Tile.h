@@ -29,6 +29,7 @@ typedef struct{
 	int mType;
 }Destructable_Tile;
 extern Tile *tile_list;
+extern Destructable_Tile *dest_tile_list;
 
 void tile_init_system();
 Sprite2 * tile_load(char *filename);
@@ -37,6 +38,7 @@ void tile_free(Tile *tile);
 void tile_render ();
 void tile_close_system();
 
-
+#define MIN(a,b) (a < b ? a : b)
+#define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
 #endif
 
