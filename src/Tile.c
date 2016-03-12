@@ -31,7 +31,6 @@ void tile_init_system(){
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
 	tile_set();
 	tile_render();
-
 	atexit(tile_close_system);
 }
 
@@ -193,8 +192,12 @@ void tile_forest_gen(int start)
 
 void tile_forest_gen()
 {
+	int start;
+	srand(time(NULL));
+	start = 0;
+	tile_forest_gen(start);
 	//start of top edge of forest
-	int start = rand() % TOTAL_TILES_X -1; //rand num from 0 to end of first row
+	start = rand() % TOTAL_TILES_X -1; //rand num from 0 to end of first row
 	tile_forest_gen(start);
 	//start on left edge of forest
 	start = rand() % TOTAL_TILES_Y + 1;
