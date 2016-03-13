@@ -4,6 +4,7 @@
 
 int const MONSTER_TIMER = 600;
 int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
+<<<<<<< Updated upstream
 
 #define GRUE_TIMER 150
 time_t t;
@@ -116,6 +117,10 @@ entity * grue_spawn(){
 	return ent_grue;
 }
 
+=======
+time_t t;
+
+>>>>>>> Stashed changes
 entity *monster_spawn(int type){
 	entity *ent_new;//sprite of monster to spawn
 	srand((unsigned)time(&t));

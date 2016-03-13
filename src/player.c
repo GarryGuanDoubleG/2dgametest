@@ -51,6 +51,7 @@ void player_init(){
 	player->frame_vertical = 2;
 	player->think = player_think;
 	player->update = player_update;
+	player->player = true;
 
 	weapon_load_all();
 	armor_load_all();

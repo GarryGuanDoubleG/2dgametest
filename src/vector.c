@@ -1,5 +1,6 @@
 #include "vector.h"
 #include <math.h>
+#include "simple_logger.h"
 
 #define Vec2dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
@@ -56,7 +57,11 @@ int rect_collide(SDL_Rect a, Rect_f b){
 }*/
 
 float GetLength2d(Vec2d v){
-	return sqrt( (double)(v.x * v.x) + (double)(v.y * v.y));
+	float number = (v.x * v.x) + (v.y * v.y);
+	slog("number: %f v.x%i v.y%i", number,v.x,v.y);
+	number = sqrt((double)number);
+	slog("sqrt: %f", number);
+	return number;
 }
 
 float GetLength3d(Vec3d v){
@@ -64,18 +69,26 @@ float GetLength3d(Vec3d v){
 }
 
 float Normalize2d(Vec2d &v){
-	float length, ilength;	
+	float length;
+	int ilen;
 	length = GetLength2d(v);
-	ilength = 1/length;
+	ilen = (int)length;
+	if(length == 0)
+	{
+		slog("length is 0");
+		slog("vel is x%i y%i", v.x, v.y);
+		return length;
+	}
 	
-	v.x = v.x / ilength;
-	v.y = v.y / ilength;
+	v.x = v.x / ilen;
+	v.y = v.y / ilen;
+	slog("ilen: %i length:%f vel x:%i y:%i",ilen, length, v.x, v.y);
 
 	return length;
 }
 
-float Normalize3d(Vec3d &v){
-	float length, ilength;	
+int Normalize3d(Vec3d &v){
+	int length, ilength;	
 	length = GetLength3d(v);
 	ilength = 1/length;
 	
@@ -92,4 +105,12 @@ float Vec2dDistanceSQ(Vec2d a, Vec2d b){
 
 float Vec2dDistance(Vec2d a, Vec2d b){
 	return sqrt((double)((b.x - a.x) *(b.x -a.x)) + (double)((b.y - a.y) * (b.y - a.y)));
+}
+
+Vec2d VectorScale(Vec2d in, Vec2d out, float scale)
+{
+	out.x = in.x * scale;
+	out.y = in.y * scale;
+
+	return out;
 }

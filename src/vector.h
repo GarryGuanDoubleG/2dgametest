@@ -13,8 +13,8 @@ typedef struct{
 	float h;
 }Rect_f;
 typedef struct{
-	int x;/**< the x component of the vector */
-	int y;/**< the y component of the vector */
+	float x;/**< the x component of the vector */
+	float y;/**< the y component of the vector */
 }Vec2d;
 
 typedef struct{
@@ -78,5 +78,21 @@ float Vec2dDistance(Vec2d a, Vec2d b);
 #define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
 #define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
 
+<<<<<<< Updated upstream
+=======
+#define Vector
+
+float Normalize2d(Vec2d &v); // returns length
+Vec2d VectorScale(Vec2d in, Vec2d out, float scale);
+/*
+void (add*)();
+float (getLength*)();
+void set();
+void negate();
+void scale();
+void rotate();
+void normalize();
+void crossProduct();*/
+>>>>>>> Stashed changes
 
 #endif

@@ -1,5 +1,9 @@
 #include "entity.h"
+<<<<<<< Updated upstream
 #include "simple_logger.h"
+=======
+
+>>>>>>> Stashed changes
 const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
@@ -43,6 +47,7 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 			 entityList[i].maxhealth = health;
 			 entityList[i].stamina = stamina;
 			 entityList[i].state = state;
+			 entityList[i].player = false; //set to true on player init
 			 return &entityList[i];
 			 break;
 		 }
@@ -269,5 +274,24 @@ void entity_check_collision_all(){
 				}
 			}
 		}
+	}
+}
+
+//player 
+entity * entity_get_player()
+{
+	int i;
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		if(!entityList[i].update){
+			continue;
+		}
+		if(!entityList[i].player)
+		{
+			continue;
+		}
+		return &entityList[i];
 	}
 }
