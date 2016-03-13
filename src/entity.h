@@ -66,12 +66,9 @@ void entity_draw_all();
 void entity_close_all();
 int entity_collide(entity *a, entity*b);
 void entity_check_collision_all();
-<<<<<<< Updated upstream
-=======
 void weapon_collision(entity *owner);
 //player 
 
 entity * entity_get_player();
->>>>>>> Stashed changes
 
 #endif

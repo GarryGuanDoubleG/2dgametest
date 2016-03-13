@@ -6,14 +6,8 @@
 
 #define MaxSprites    255
 
-<<<<<<< Updated upstream
-
-const int SCREEN_HEIGHT = 800;
-const int SCREEN_WIDTH = 800;
-=======
 const int SCREEN_HEIGHT = 600;
 const int SCREEN_WIDTH = 1440;
->>>>>>> Stashed changes
 
 struct
 {

@@ -1,9 +1,7 @@
 #include "entity.h"
-<<<<<<< Updated upstream
 #include "simple_logger.h"
-=======
 
->>>>>>> Stashed changes
+
 const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
