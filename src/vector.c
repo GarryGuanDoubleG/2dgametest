@@ -1,6 +1,9 @@
 #include "vector.h"
 #include <math.h>
+<<<<<<< HEAD
 #include "simple_logger.h"
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 
 #define Vec2dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
@@ -30,7 +33,10 @@
 #define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
 #define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 /*
 int rect_collide(SDL_Rect a, SDL_Rect b){
 	if((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&
@@ -97,6 +103,10 @@ int Normalize3d(Vec3d &v){
 	v.y = v.z / ilength;
 
 	return length;
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }
 
 float Vec2dDistanceSQ(Vec2d a, Vec2d b){
@@ -105,6 +115,7 @@ float Vec2dDistanceSQ(Vec2d a, Vec2d b){
 
 float Vec2dDistance(Vec2d a, Vec2d b){
 	return sqrt((double)((b.x - a.x) *(b.x -a.x)) + (double)((b.y - a.y) * (b.y - a.y)));
+<<<<<<< HEAD
 }
 
 Vec2d VectorScale(Vec2d in, Vec2d out, float scale)
@@ -113,4 +124,6 @@ Vec2d VectorScale(Vec2d in, Vec2d out, float scale)
 	out.y = in.y * scale;
 
 	return out;
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }

@@ -6,7 +6,11 @@
 
 #define MaxSprites    255
 
+<<<<<<< HEAD
 const int SCREEN_HEIGHT = 600;
+=======
+const int SCREEN_HEIGHT =1200;
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 const int SCREEN_WIDTH = 1440;
 
 struct
@@ -30,6 +34,8 @@ SDL_Renderer *   __gt_graphics_renderer = NULL;
 SDL_Texture  *   __gt_graphics_texture = NULL;
 SDL_Surface  *   __gt_graphics_surface = NULL;
 SDL_Surface  *   __gt_graphics_temp_buffer = NULL;
+//gg edit
+static SDL_Rect		graphics_player_camera;
 
 
 /*some data on the video settings that can be useful for a lot of functions*/
@@ -51,6 +57,7 @@ void Init_Graphics(
     int fullscreen)
 {
     Uint32 flags = 0;
+	SDL_Rect camera = {0,0, SCREEN_WIDTH, SCREEN_HEIGHT};
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         printf("Unable to initilaize SDL system: %s",SDL_GetError());
@@ -131,6 +138,8 @@ void Init_Graphics(
         gt_graphics_close();
         return;
     }
+	//gg edit
+	graphics_player_camera = camera;
         
     atexit(gt_graphics_close);
     printf("graphics initialized\n");
@@ -180,10 +189,13 @@ void gt_graphics_render_surface_to_screen(SDL_Surface *surface,SDL_Rect srcRect,
     dstRect.y = y;
     dstRect.w = srcRect.w;
     dstRect.h = srcRect.h;
-    SDL_RenderCopy(__gt_graphics_renderer,
+	if(rect_collide(graphics_player_camera, dstRect))
+	{
+		SDL_RenderCopy(__gt_graphics_renderer,
                      __gt_graphics_texture,
                      &srcRect,
                      &dstRect);
+	}
 }
 
 
@@ -885,4 +897,15 @@ SDL_Surface * get_gt_buffer(){
 
 SDL_Renderer * graphics_get_renderer(){
 	return __gt_graphics_renderer;
+}
+
+SDL_Rect graphics_get_player_cam()
+{
+	return graphics_player_camera;
+}
+
+void graphics_update_player_cam(SDL_Rect player_cam)
+{
+	graphics_player_camera = player_cam;
+	
 }

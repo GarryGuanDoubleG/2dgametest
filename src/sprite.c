@@ -165,14 +165,18 @@ void sprite_free(Sprite2 ** sprite)
 void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
-
+	SDL_Rect camera = graphics_get_player_cam();
 	SDL_Rect src = { frame_horizontal * sprite->imageW, 
-
 					 frame_vertical * sprite->imageH, 
 					 sprite->imageW, sprite->imageH};
 	SDL_Rect dest = { drawX, drawY, sprite->frameW, sprite->frameH};
 
-	SDL_RenderCopy(renderer,sprite->image, &src, &dest);
+	if(rect_collide(camera, dest))
+	{
+		dest.x -= camera.x;
+		dest.y -= camera.y;
+		SDL_RenderCopy(renderer,sprite->image, &src, &dest);
+	}
 }
 
 /*eol@eof*/

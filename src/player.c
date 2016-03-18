@@ -33,7 +33,11 @@ struct {
 //end
 void player_init(){
 	int i = 0;
+<<<<<<< HEAD
 	Vec2d pos = {100,100};
+=======
+	Vec2d pos = {SCREEN_WIDTH/2,SCREEN_HEIGHT/2};
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 	SDL_Rect bound = {PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.7f, PLAYER_FRAMEH*.7f};
 
 	Sprite2 *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
@@ -55,6 +59,7 @@ void player_init(){
 
 	weapon_load_all();
 	armor_load_all();
+<<<<<<< HEAD
 
 	PlayerEquip.weapon = getWeapon("longsword");
 	player->weapon = PlayerEquip.weapon;
@@ -92,10 +97,54 @@ void player_draw_equip(){
 		}
 	}
 }
+=======
+
+	PlayerEquip.weapon = getWeapon("longsword");
+	player->weapon = PlayerEquip.weapon;
+	PlayerEquip.head = getArmor("head chain hood");
+}
+void player_draw_equip(){
+	if(PlayerEquip.feet){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.feet), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.hands){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.hands), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.head){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.head), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.torso){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.torso), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.chest){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.chest), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+	if(PlayerEquip.shoulders){
+		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.shoulders), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+	}
+
+	if(PlayerEquip.weapon && animCurrent != WALK){
+		//sword sprites are 192x192 pixels, need offset
+		if(PlayerEquip.weapon->type == WEAP_SWORD){
+			sprite_draw(PlayerEquip.weapon->image, player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
+		}
+		else{ //draw on player instead
+			sprite_draw(PlayerEquip.weapon->image, player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
+		}
+	}
+}
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 
 void player_draw(){
 	//need to add other equipment
+	SDL_Rect pRect = {player->position.x, player->position.y, player->boundBox.w, player->boundBox.h};
+	SDL_Rect camRect = graphics_get_player_cam();
+	SDL_Color old; 
+	SDL_Color FGColor = {0, 255, 255, 255}; // other
+	SDL_Color BGColor = {255, 0, 0, 255}; //weapon
+
 	entity_draw(player,player->position.x,player->position.y);
+<<<<<<< HEAD
 	/*sprite_draw(player_current_anim->chest,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	sprite_draw(player_current_anim->legs,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	sprite_draw(player_current_anim->head,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);*/
@@ -109,11 +158,20 @@ void player_draw(){
 		sprite_draw(weapon_curr.image,player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
 		slog("Drawing Slash Weapon");
 	}*/
+=======
+
+	player_draw_equip();
+
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }
 
 
 
 void player_update(entity *self){
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 	if(animCurrent == WALK){ //if walking, dont reset animation
 		//player->sprite->fpl = PlayerEquip.body->image->fpl;
 		return;
@@ -134,9 +192,43 @@ void player_update(entity *self){
 	else{
 		player->frame_horizontal += 1;
 	}
+<<<<<<< HEAD
+=======
+}
+void player_update_camera()
+{
+	SDL_Rect new_cam;
+
+	new_cam.x = player->position.x - SCREEN_WIDTH/2;
+	new_cam.y = player->position.y - SCREEN_HEIGHT/2;
+	new_cam.w = SCREEN_WIDTH;
+	new_cam.h = SCREEN_HEIGHT;
+
+	if(new_cam.x < 0)
+	{
+		new_cam.x = 0;
+	}
+	if(new_cam.y < 0)
+	{
+		new_cam.y = 0;
+	}
+	if( new_cam.x > TOTAL_TILES_X * TILE_WIDTH - new_cam.w)
+	{
+		slog("X > level");
+		new_cam.x = TOTAL_TILES_X * TILE_WIDTH - new_cam.w;
+	}
+	if( new_cam.y > TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h)
+	{
+		slog("Y > level");
+		new_cam.y = TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h;
+	}
+	//update camera
+	graphics_update_player_cam(new_cam);
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }
 
 void player_move(SDL_Event *e){
+
 	if(!e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
@@ -148,26 +240,32 @@ void player_move(SDL_Event *e){
 			player->position.y -=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_up;
+			player->face_dir = face_up;
 			break;
         case SDLK_DOWN:
 			player->position.y +=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_down;
+			player->face_dir = face_down;
 			break;
         case SDLK_LEFT:
 			player->position.x -= 5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_left;
+			player->face_dir = face_left;
 			break;
         case SDLK_RIGHT:
 			player->position.x +=5;
 			player->frame_horizontal = (player->frame_horizontal + 1)%player->sprite->fpl;
 			player->frame_vertical = face_right;
+			player->face_dir = face_right;
 			break;
         default:
 			player_attack(e);
 			break;
     }
+	player_update_camera();
+
 }
 
 void player_attack(SDL_Event *e){
@@ -178,6 +276,7 @@ void player_attack(SDL_Event *e){
 	switch( e->key.keysym.sym )
     {
 		case SDLK_SPACE:
+			fprintf(stdout,"Hit Space");
 			//if(player_struct.weapon == WEAP_SWORD)
 			if(animCurrent != SLASH)
 			{
@@ -186,7 +285,12 @@ void player_attack(SDL_Event *e){
 				player->sprite->fpl = PlayerEquip.fpl;
 				player->frame_horizontal = 0;//reset it;
 				player->sprite = playerBody.image_slash;
+<<<<<<< HEAD
 				player->weapon->active = true;			
+=======
+				player->weapon->active = true;		
+				weapon_collision(player);
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 			}
 			break;
 		default:

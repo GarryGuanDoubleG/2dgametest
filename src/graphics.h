@@ -7,11 +7,12 @@
  *			to handle sprites and graphics.
  */
 
+#include <stdio.h>
+#include "vector.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include <stdio.h>
-
+#include "simple_logger.h"
 /*Uint32*/
 #define Red_         0xDD0000
 #define Green_       0x00DD00
@@ -68,6 +69,7 @@ extern SDL_Texture  *   __gt_graphics_texture;
 extern SDL_Surface  *   __gt_graphics_surface;
 extern SDL_Surface  *   __gt_graphics_temp_buffer;
 
+
 typedef struct Sprite_T
 {
   SDL_Surface *image;		/*pointer to the actual image in memory*/
@@ -107,7 +109,11 @@ void ResetBuffer();
 void NextFrame();
 void InitMouse();
 void DrawMouse();
+//player camera updated in player update
+SDL_Rect graphics_get_player_cam();
+void graphics_update_player_cam( SDL_Rect player_cam );
 //gg edit
 SDL_Renderer * graphics_get_renderer();
+
 
 #endif

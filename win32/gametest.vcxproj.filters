@@ -48,9 +48,12 @@
     <ClCompile Include="..\src\monster_ai.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\src\grue.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\graphics.h">
@@ -80,6 +83,7 @@
     <ClInclude Include="..\src\armor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\src\monster_ai.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +91,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\monster_define.h">
+=======
+    <ClInclude Include="..\src\Tile_define.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\monster_ai.h">
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

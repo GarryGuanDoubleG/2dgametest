@@ -5,9 +5,18 @@
 #include "entity.h"
 #include "vector.h"
 #include "simple_logger.h"
+<<<<<<< HEAD
 #include "monster_define.h"
 #include "grue.h"
 
+=======
+
+//states the ai is in
+#define STATE_IDLE		100 // walking around or standing still
+#define STATE_PATROL		101 // walking around
+#define STATE_AGGRO		102 //actively attacking player
+#define STATE_SEEK		103 //trying to find player
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 //monster types
 enum Monster{
 	grue,
@@ -18,6 +27,19 @@ entity *monster_spawn(int type);
 void monster_think(entity *self);
 void monster_update(entity *self);
 
+<<<<<<< HEAD
 extern int MONSTER_SPAWN_TIMER;
 
+=======
+#define sprite_grue_filepath "images/Grue/GrueGrin.png"
+#define grue_imageW  56
+#define grue_imageH  71
+#define grue_frameW  101
+#define grue_frameH  127
+
+extern int MONSTER_SPAWN_TIMER;
+
+
+
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 #endif

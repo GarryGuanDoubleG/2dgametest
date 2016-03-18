@@ -2,6 +2,7 @@
 #include "simple_logger.h"
 
 
+
 const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
@@ -64,49 +65,60 @@ void draw_health_bar(entity *self){
 	int px;
 	float percent = (float)self->health / (float)self->maxhealth; 
 	//rects to use as health bars
-	SDL_Rect fg_rect;
 	SDL_Rect bg_rect = {self->position.x + self->sprite->frameW/2 - barW/2, 
-		self->boundBox.y + self->position.y-barH, barW, barH};
+	self->boundBox.y + self->position.y-barH, barW, barH};
+	SDL_Rect fg_rect;
 	//teal foreground for health
 	SDL_Color old; 
 	SDL_Color FGColor = {0, 255, 255, 255};
 	SDL_Color BGColor = {255, 0, 0, 255};
 	
-	percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;
-	pw = (int)((float)bg_rect.w * percent); 
-    px = bg_rect.x;
 
 	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
 	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
 	 {
 		slog("Failed to set render draw color");
      }
-    if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))slog("Failed to Fill bg rect");
+	if(!rect_collide(bg_rect, graphics_get_player_cam()))
+	{
+		SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00);
+		return;
+	}
+		bg_rect.x -= graphics_get_player_cam().x;
+		bg_rect.y -= graphics_get_player_cam().y;
+		fg_rect = bg_rect;
+		px = bg_rect.x;
+		percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;
+		pw = (int)((float)bg_rect.w * percent); 
+
+		if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))
+		{
+			slog("Failed to Fill bg rect");
+		}
     if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
 	{
 		slog("Failed to set render draw color");
 	}
  
-    fg_rect = bg_rect;
 	fg_rect.x = px;
 	fg_rect.w = pw;
+	if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))
+	{
+		slog("Failed to Fill Rect");
+	}
 
-    if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))slog("Failed to Fill Rect");
     if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
 	{
 		slog("Failed to set render draw color");
 	}
 }
+//end
 
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
+	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
 	draw_health_bar(ent);
-	/*SDL_Rect * src =a NULL;
-	SDL_Rect dest = {x, y, ent->sprite->imageW, ent->sprite->imageH};
-
-	SDL_RenderCopy(__gt_graphics_renderer, ent->sprite->image, NULL, &dest);//replace null with main camera
-	*/
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
@@ -147,11 +159,12 @@ void entity_update_all(){
 			continue;
 		}
 		entityList[i].update(&entityList[i]);
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
-			entityList[i].weapon->owner_pos.x = entityList[i].position.x;
-			entityList[i].weapon->owner_pos.y = entityList[i].position.y;
 		}
 	}
 }
@@ -190,34 +203,102 @@ int entity_collide(entity *a, entity*b)
 	return rect_collide(aB,bB);
 }
 
+void weapon_collide_draw_box(Rect_f self, Rect_f other)
+{
+ 
+	//rects to use as health bars
+	SDL_Rect bg_rect = {self.x,self.y,self.w,self.h};
+	SDL_Rect fg_rect = {other.x,other.y,other.w,other.h};
+	//teal foreground for health
+	SDL_Color old; 
+	SDL_Color FGColor = {0, 255, 255, 255}; // other
+	SDL_Color BGColor = {255, 0, 0, 255}; //weapon
+
+	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
+	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
+	 {
+		slog("Failed to set render draw color");
+     }
+    if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))slog("Failed to Fill bg rect");
+    if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
+	{
+		slog("Failed to set render draw color");
+	}
+ 
+    if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))slog("Failed to Fill Rect");
+    if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
+	{
+		slog("Failed to set render draw color");
+	}
+}
 int weapon_collision(entity *self, entity *other, Rect_f bound)
 {
 	Rect_f aB = {(float)other->position.x + (float)other->boundBox.x, (float)other->position.y + other->boundBox.y, other->boundBox.w, other->boundBox.h};
-	Rect_f bB = {(float)self->position.x + bound.x, (float)self->position.y + bound.y, bound.w, bound.h};
+	Rect_f bB = {(float)self->position.x + bound.x + self->weapon->boundOffset.x, (float)self->position.y + bound.y + self->weapon->boundOffset.y, bound.w, bound.h};
 
 	if(!self || !self->weapon || !other){
 		slog("NO weap or entity");
 		return false;
 	}
-	slog("Owner Pos: X: %i Y:%i\n Weapon Pos X:%f Y:%f\nEntity: X:%f Y:%f",self->position.x, self->position.y,bB.x, bB.y,aB.x, aB.y);
+
+	slog("wep bound is X:%f Y:%f W:%f H:%f",bound.x,bound.y,bound.w,bound.h);
+	/*slog("Owner Pos: X: %i Y:%i\n Weapon Pos X:%f Y:%f\nEntity: X:%f Y:%f",self->position.x, self->position.y,bB.x, bB.y,aB.x, aB.y);
 	slog("Bounds Range X:%f - %f Y:%f - %f", bB.x, bB.x + bB.w, bB.y,  bB.y + bB.h);
-	slog("Bound other: X:%f - %f Y:%f - %f", aB.x, aB.x + aB.w, aB.y,  aB.y + aB.h);
+	slog("Bound other: X:%f - %f Y:%f - %f", aB.x, aB.x + aB.w, aB.y,  aB.y + aB.h);*/
 
 	if(rect_collide(bB, aB)){
 		slog("Weapon has collided");
 		weapon_touch(self, other);
+	// weapon_collide_draw_box(bB,aB); used for visual collision box
 		return true;
 	}
 	return false;
 }
 
-void entity_check_collision_all(){
+void weapon_collision(entity *owner)
+{
+	int i;
 
+	if(!owner || !owner->weapon)
+	{
+		slog("Entity or Weapon is NULL. No Collision");
+	}
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		if(!entityList[i].update){
+			continue;
+		}
+		if(owner == &entityList[i]){
+			continue;
+		}
+		if(owner->weapon && owner->weapon->active){
+			switch(owner->weapon->face_dir){
+				case UP:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundUp);
+						break;
+				case DOWN:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundDown);
+						break;
+				case LEFT:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundLeft);
+						break;
+				case RIGHT:
+						weapon_collision(owner, &entityList[i], owner->weapon->boundRight);
+						break;
+				default:
+					break;
+			}
+		}
+	}
+}
+void entity_check_collision_all()
+{
 	int i = 0;
 	int j = 0;
 	entity *curr = NULL;
 	entity *next = NULL;
-	int found_next;
 
 	for(i = 0; i < ENTITY_MAX; i++){
 		if(!entityList[i].inuse){
@@ -247,32 +328,10 @@ void entity_check_collision_all(){
 			{
 				continue;
 			}
-			if(entity_collide(curr, next))
-			{
-				/*slog("Ent: A X:%i Y: %i\n Ent B X: %i Y: %i", 
-					curr->position.x, curr->position.y, next->position.x, next->position.y);
-				slog("Collision!");*/
-			}
-			if(curr->weapon && curr->weapon->active){
-				switch(curr->weapon->face_dir){
-					case UP:
-							weapon_collision(curr, next, curr->weapon->boundUp);
-							break;
-					case DOWN:
-							weapon_collision(curr, next, curr->weapon->boundDown);
-							break;
-					case LEFT:
-							weapon_collision(curr, next, curr->weapon->boundLeft);
-							break;
-					case RIGHT:
-							weapon_collision(curr, next, curr->weapon->boundRight);
-							break;
-					default:
-						break;
-				}
-			}
+			entity_collide(curr, next);			
 		}
 	}
+<<<<<<< HEAD
 }
 
 //player 
@@ -292,4 +351,6 @@ entity * entity_get_player()
 		}
 		return &entityList[i];
 	}
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }

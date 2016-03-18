@@ -7,7 +7,10 @@
     / characters in the game
 *   
 */
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 enum Dir{
    UP,
    LEFT,
@@ -15,6 +18,10 @@ enum Dir{
    RIGHT,
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 typedef struct Entity_S
 {
 	int inuse;
@@ -28,7 +35,10 @@ typedef struct Entity_S
 	int health, maxhealth;
 	int inventory;
 	int face_dir;
+<<<<<<< HEAD
 	int player;
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 	Weapon *weapon;
 
 	int stamina;
@@ -38,7 +48,6 @@ typedef struct Entity_S
 	void (*think)(struct Entity_S *self);
 	void (*update)(struct Entity_S *self);
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);
-	void (*weapon_touch)(struct Entity_S *self, struct Entity_S *other);
 	void (*free)(struct Entity_S *self);
 }entity;
 
@@ -53,7 +62,6 @@ void entity_close();
 void entity_draw(entity *ent, int x, int y);
 void entity_update();
 void entity_update_all();
-void weapon_touch(entity *self, entity *other); // self will own the weapon
 //in class
 /*
  *@brief return a pointer to an empty entity structure
@@ -67,8 +75,11 @@ void entity_close_all();
 int entity_collide(entity *a, entity*b);
 void entity_check_collision_all();
 void weapon_collision(entity *owner);
+<<<<<<< HEAD
 //player 
 
 entity * entity_get_player();
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 
 #endif

@@ -12,6 +12,7 @@ typedef struct{
 	float w;
 	float h;
 }Rect_f;
+
 typedef struct{
 	float x;/**< the x component of the vector */
 	float y;/**< the y component of the vector */

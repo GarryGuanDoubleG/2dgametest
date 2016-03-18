@@ -15,7 +15,10 @@
     <ClCompile Include="..\src\entity.c" />
     <ClCompile Include="..\src\game.c" />
     <ClCompile Include="..\src\graphics.c" />
+<<<<<<< HEAD
     <ClCompile Include="..\src\grue.c" />
+=======
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
     <ClCompile Include="..\src\monster_ai.c" />
     <ClCompile Include="..\src\player.c" />
     <ClCompile Include="..\src\simple_logger.c" />
@@ -28,13 +31,18 @@
     <ClInclude Include="..\src\armor.h" />
     <ClInclude Include="..\src\entity.h" />
     <ClInclude Include="..\src\graphics.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\src\grue.h" />
     <ClInclude Include="..\src\monster_ai.h" />
     <ClInclude Include="..\src\monster_define.h" />
+=======
+    <ClInclude Include="..\src\monster_ai.h" />
+>>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
     <ClInclude Include="..\src\player.h" />
     <ClInclude Include="..\src\simple_logger.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
+    <ClInclude Include="..\src\Tile_define.h" />
     <ClInclude Include="..\src\vector.h" />
     <ClInclude Include="..\src\weapon.h" />
   </ItemGroup>
