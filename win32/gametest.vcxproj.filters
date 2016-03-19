@@ -40,6 +40,12 @@
     <ClCompile Include="..\src\HUD.c">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\inventory.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\items.c">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\armor.h">
@@ -82,6 +88,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\HUD.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\inventory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\items.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\items_define.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

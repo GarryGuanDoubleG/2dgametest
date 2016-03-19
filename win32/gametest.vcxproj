@@ -17,6 +17,8 @@
     <ClCompile Include="..\src\graphics.c" />
     <ClCompile Include="..\src\grue.c" />
     <ClCompile Include="..\src\HUD.c" />
+    <ClCompile Include="..\src\inventory.c" />
+    <ClCompile Include="..\src\items.c" />
     <ClCompile Include="..\src\monster_ai.c" />
     <ClCompile Include="..\src\player.c" />
     <ClCompile Include="..\src\simple_logger.c" />
@@ -31,6 +33,9 @@
     <ClInclude Include="..\src\graphics.h" />
     <ClInclude Include="..\src\grue.h" />
     <ClInclude Include="..\src\HUD.h" />
+    <ClInclude Include="..\src\inventory.h" />
+    <ClInclude Include="..\src\items.h" />
+    <ClInclude Include="..\src\items_define.h" />
     <ClInclude Include="..\src\monster_ai.h" />
     <ClInclude Include="..\src\monster_define.h" />
     <ClInclude Include="..\src\player.h" />
