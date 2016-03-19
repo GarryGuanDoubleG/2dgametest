@@ -27,7 +27,7 @@ void tile_init_system(){
 	dest_tile_list = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
 	memset(tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
 
-	tile_sprite_grass = tile_load("images/Grass01.png");
+	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
 	tile_set();
 	tile_render();

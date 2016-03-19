@@ -1,37 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\src\armor.c" />
-    <ClCompile Include="..\src\entity.c" />
-    <ClCompile Include="..\src\game.c" />
-    <ClCompile Include="..\src\graphics.c" />
-    <ClCompile Include="..\src\grue.c" />
-    <ClCompile Include="..\src\monster_ai.c" />
-    <ClCompile Include="..\src\player.c" />
-    <ClCompile Include="..\src\simple_logger.c" />
-    <ClCompile Include="..\src\sprite.c" />
-    <ClCompile Include="..\src\Tile.c" />
-    <ClCompile Include="..\src\vector.c" />
-    <ClCompile Include="..\src\weapon.c" />
+    <ClCompile Include="..\src\armor.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entity.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\grue.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\monster_ai.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\player.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\simple_logger.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sprite.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Tile.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vector.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\weapon.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\HUD.c">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\armor.h" />
-    <ClInclude Include="..\src\entity.h" />
-    <ClInclude Include="..\src\graphics.h" />
-    <ClInclude Include="..\src\grue.h" />
-    <ClInclude Include="..\src\monster_ai.h" />
-    <ClInclude Include="..\src\monster_define.h" />
-    <ClInclude Include="..\src\player.h" />
-    <ClInclude Include="..\src\simple_logger.h" />
-    <ClInclude Include="..\src\sprite.h" />
-    <ClInclude Include="..\src\Tile.h" />
-    <ClInclude Include="..\src\Tile_define.h" />
-    <ClInclude Include="..\src\vector.h" />
-    <ClInclude Include="..\src\weapon.h" />
+    <ClInclude Include="..\src\armor.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entity.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\grue.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\monster_ai.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\monster_define.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\simple_logger.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sprite.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Tile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Tile_define.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\weapon.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vector.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\HUD.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
       <UniqueIdentifier>{09504301-a5bb-4be1-a4c0-b5d39e01eb29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{d99ef4a0-b446-4cd0-81f4-18345c8af223}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

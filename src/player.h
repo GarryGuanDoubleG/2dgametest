@@ -5,6 +5,7 @@
 #include "weapon.h"
 #include "armor.h"
 #include "Tile.h"
+#include "HUD.h"
 
 extern entity *player;
 extern char * player_char_file;

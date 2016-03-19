@@ -10,4 +10,5 @@
 //
 
 #define PATH_TILE_TREE "images/terrain/terrain_atlas_tree.png"
+#define PATH_TILE_GRASS "images/terrain/Grass01.png"
 #endif

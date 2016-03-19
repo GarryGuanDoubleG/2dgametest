@@ -109,6 +109,7 @@ void Init_All()
   entity_initialize_system();//allocate memory for all entities
   tile_init_system();
   player_init(); //creates player entity
+  hud_init();
   InitMouse2();
   atexit(CleanUpAll);
 }

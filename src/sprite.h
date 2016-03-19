@@ -17,8 +17,8 @@ typedef struct
 	int refCount;/**<keeps track of how many times sprite was referenced**/
 	char filename[128];/**<name of image sprite has loaded*/
 	SDL_Texture *image;/**<Texture created when image is loaded*/
-	int imageW, imageH;
-	int frameW, frameH;
+	float imageW, imageH;
+	float frameW, frameH;
 	int fpl;
 }Sprite2;
 

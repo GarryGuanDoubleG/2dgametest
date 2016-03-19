@@ -98,9 +98,8 @@ void player_draw(){
 	entity_draw(player,player->position.x,player->position.y);
 
 	player_draw_equip();
+	hud_draw(graphics_get_player_cam(),player->health, player->health * 2, 30, 100);
 }
-
-
 
 void player_update(entity *self)
 {
@@ -195,6 +194,9 @@ void player_move(SDL_Event *e){
 			player->frame_vertical = face_right;
 			player->face_dir = face_right;
 			break;
+		case SDL_SCANCODE_S:
+			set_hud_state(HUD_state::inventory1);
+			break;
         default:
 			player_attack(e);
 			break;
@@ -231,6 +233,10 @@ void player_attack(SDL_Event *e){
 			
 }
 
+void player_draw_hud()
+{
+
+}
 
 void player_think(entity* self){
 
