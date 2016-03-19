@@ -18,34 +18,22 @@
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
-<<<<<<< HEAD
-
-typedef struct Weapon_S{
-=======
 typedef struct Weapon_S{
 
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 	char * filepath;
 	char * name;
 
 	int imageH,imageW;
 	int frameW, frameH;
-<<<<<<< HEAD
-	Vec2d offset;//offset from wielder
-=======
+
 	//only need offset if using custom weapon not from same creator
 	Vec2d offset;//used only for centering image onto player
 	Vec2d boundOffset; // used for collision
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 
 	Rect_f boundUp;
 	Rect_f boundDown;
 	Rect_f boundLeft;
 	Rect_f boundRight;
-<<<<<<< HEAD
-	//only need offset if using custom weapon from different creator
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 
 	int ranged;//shoot projectile
 	int damage;//base damage
@@ -59,13 +47,7 @@ typedef struct Weapon_S{
 	int fpl;// applies to player and armor
 
 	Sprite2 *image;/*<image to render on top of player*/
-<<<<<<< HEAD
-	//add stuff that doesn't need to be initialized here
 	int active;
-	Vec2d owner_pos;
-=======
-	int active;
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }Weapon;
 
 

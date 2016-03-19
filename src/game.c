@@ -50,12 +50,7 @@ int main(int argc, char *argv[])
 	//draw functions should go in order from background first to player draw calls last
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
-<<<<<<< HEAD
-    tile_render(NULL);
-=======
     tile_render();
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
-	
 	
     DrawMouse2();
 	player_draw();
@@ -112,8 +107,8 @@ void Init_All()
   //GG edit
   sprite_initialize_system(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
-  player_init(); //creates player entity
   tile_init_system();
+  player_init(); //creates player entity
   InitMouse2();
   atexit(CleanUpAll);
 }

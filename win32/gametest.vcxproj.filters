@@ -1,103 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="..\src\armor.c" />
+    <ClCompile Include="..\src\entity.c" />
+    <ClCompile Include="..\src\game.c" />
+    <ClCompile Include="..\src\graphics.c" />
+    <ClCompile Include="..\src\grue.c" />
+    <ClCompile Include="..\src\monster_ai.c" />
+    <ClCompile Include="..\src\player.c" />
+    <ClCompile Include="..\src\simple_logger.c" />
+    <ClCompile Include="..\src\sprite.c" />
+    <ClCompile Include="..\src\Tile.c" />
+    <ClCompile Include="..\src\vector.c" />
+    <ClCompile Include="..\src\weapon.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\graphics.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Tile.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\sprite.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\simple_logger.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\vector.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entity.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\player.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\weapon.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\armor.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\monster_ai.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\src\grue.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
+    <ClInclude Include="..\src\armor.h" />
+    <ClInclude Include="..\src\entity.h" />
+    <ClInclude Include="..\src\graphics.h" />
+    <ClInclude Include="..\src\grue.h" />
+    <ClInclude Include="..\src\monster_ai.h" />
+    <ClInclude Include="..\src\monster_define.h" />
+    <ClInclude Include="..\src\player.h" />
+    <ClInclude Include="..\src\simple_logger.h" />
+    <ClInclude Include="..\src\sprite.h" />
+    <ClInclude Include="..\src\Tile.h" />
+    <ClInclude Include="..\src\Tile_define.h" />
+    <ClInclude Include="..\src\vector.h" />
+    <ClInclude Include="..\src\weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\simple_logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\weapon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\armor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\src\monster_ai.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\grue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\monster_define.h">
-=======
-    <ClInclude Include="..\src\Tile_define.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\monster_ai.h">
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{09504301-a5bb-4be1-a4c0-b5d39e01eb29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -159,10 +159,7 @@ void entity_update_all(){
 			continue;
 		}
 		entityList[i].update(&entityList[i]);
-<<<<<<< HEAD
 
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
 		}
@@ -331,7 +328,6 @@ void entity_check_collision_all()
 			entity_collide(curr, next);			
 		}
 	}
-<<<<<<< HEAD
 }
 
 //player 
@@ -351,6 +347,4 @@ entity * entity_get_player()
 		}
 		return &entityList[i];
 	}
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 }

@@ -6,7 +6,7 @@
 #include "graphics.h"
 #include "sprite.h"
 #include "Tile_define.h"
-
+#include "vector.h"
 extern const int SCREEN_HEIGHT;
 extern const int SCREEN_WIDTH;
 extern const int TOTAL_TILES;
@@ -14,6 +14,8 @@ extern const int TILE_WIDTH;
 extern const int TILE_HEIGHT; 
 extern const int TOTAL_TILES_X;
 extern const int TOTAL_TILES_Y;
+extern const int PLAYER_FRAMEW;
+extern const int PLAYER_FRAMEH;
 
 //can probably take out mBox and use array index for location
 //faster and less memory
@@ -37,6 +39,8 @@ void tile_set();
 void tile_free(Tile *tile);
 void tile_render ();
 void tile_close_system();
+Tile tile_start();
+int tile_collision(Vec2d pos, SDL_Rect bound);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))

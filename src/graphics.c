@@ -6,11 +6,8 @@
 
 #define MaxSprites    255
 
-<<<<<<< HEAD
-const int SCREEN_HEIGHT = 600;
-=======
+
 const int SCREEN_HEIGHT =1200;
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 const int SCREEN_WIDTH = 1440;
 
 struct

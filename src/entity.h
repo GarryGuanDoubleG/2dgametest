@@ -7,10 +7,8 @@
     / characters in the game
 *   
 */
-<<<<<<< HEAD
 
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
+
 enum Dir{
    UP,
    LEFT,
@@ -18,10 +16,7 @@ enum Dir{
    RIGHT,
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
 typedef struct Entity_S
 {
 	int inuse;
@@ -35,12 +30,9 @@ typedef struct Entity_S
 	int health, maxhealth;
 	int inventory;
 	int face_dir;
-<<<<<<< HEAD
 	int player;
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
-	Weapon *weapon;
 
+	Weapon *weapon;
 	int stamina;
 	int state;
 	int nextThink;/*<Time index for next think */
@@ -75,11 +67,6 @@ void entity_close_all();
 int entity_collide(entity *a, entity*b);
 void entity_check_collision_all();
 void weapon_collision(entity *owner);
-<<<<<<< HEAD
-//player 
 
 entity * entity_get_player();
-=======
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
-
 #endif

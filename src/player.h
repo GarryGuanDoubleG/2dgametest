@@ -4,11 +4,8 @@
 #include "entity.h"
 #include "weapon.h"
 #include "armor.h"
-<<<<<<< HEAD
-
-=======
 #include "Tile.h"
->>>>>>> dd49caf5a836fff8af35af5dc64e0ef2a6369553
+
 extern entity *player;
 extern char * player_char_file;
 extern const int PLAYERH;

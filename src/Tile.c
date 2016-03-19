@@ -3,8 +3,8 @@
 #include <time.h>
 #include <math.h>
 
-const int TILE_WIDTH = 80;
-const int TILE_HEIGHT = 80;
+const int TILE_WIDTH = PLAYER_FRAMEH;
+const int TILE_HEIGHT = PLAYER_FRAMEW;
 const int TOTAL_TILES_X = SCREEN_WIDTH/TILE_WIDTH * 3;
 const int TOTAL_TILES_Y = SCREEN_HEIGHT/TILE_HEIGHT * 3;
 const int TOTAL_TILES = TOTAL_TILES_X * TOTAL_TILES_Y ;//make a square 3 by 3 region of size screen
@@ -38,20 +38,6 @@ Sprite2 * tile_load(char *filename)
 {
 	Sprite2 * sprite = sprite_load(filename, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 	return sprite;
-	/*SDL_Surface * load_surface = IMG_Load(filename);
-	if(!load_surface)
-	{
-		printf("Could not load grass tile sprite");
-		return;
-	}
-	SDL_SetColorKey( load_surface, SDL_TRUE, SDL_MapRGBA( load_surface->format, 0, 0xFF, 0xFF,0xFF ) );
-
-	tile_sprite_grass = SDL_CreateTextureFromSurface(__gt_graphics_renderer, load_surface);
-	if(!tile_sprite_grass){
-		slog("Unable to create New Texture from Sprite Surface");
-		return ;
-	}*/
-
 }
 
 int score_move(int move)
@@ -163,6 +149,7 @@ void tile_forest_gen(int start)
 	int lifespan = TOTAL_TILES/2;
 	//-1 means can't move to that node
 	tile_list[i].mType = TILE_ROAD;
+	dest_tile_list[i].mType = TILE_ROAD;
 
 	while(lifespan-- > 0)
 	{
@@ -239,9 +226,7 @@ void tile_set(){
 			y += TILE_HEIGHT;
 		} 
 	}
-
 	tile_forest_gen();
-
 }
 void tile_free(Tile *tile){
 	tile->mType = 0;
@@ -270,7 +255,48 @@ void tile_render(){
 void tile_close_system(){
 	int i;
 	for( i = 0; i < TOTAL_TILES; i++)
+	{
 		tile_free(tile_list+i);
+	}
 
 	SDL_DestroyTexture(tile_sprite_grass->image);
+}
+
+Tile tile_start()
+{
+	int i;
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
+		if(tile_list[i].mType == TILE_ROAD)
+		{
+			return tile_list[i];
+		}
+	}
+}
+
+int tile_collision(Vec2d pos, SDL_Rect bound)
+{
+	int i;
+	Rect_f player_pos = {pos.x + bound.x, pos.y + bound.y, bound.w, bound.h};
+	Rect_f tile_bound;
+
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
+		tile_bound.x = tile_list[i].mBox.x;
+		tile_bound.y = tile_list[i].mBox.y;
+		tile_bound.w = tile_list[i].mBox.w;
+		tile_bound.h = tile_list[i].mBox.h;
+
+		if(rect_collide(player_pos, tile_bound))
+		{
+			if(dest_tile_list[i].mType == TILE_TREE)
+			{
+				slog("Player bound X:%f-%f Y:%f-%f. Tile:X%f-%f Y%f-%f", player_pos.x, player_pos.x+player_pos.w, player_pos.y, player_pos.y + player_pos.h,
+																		tile_bound.x, tile_bound.x + tile_bound.w, tile_bound.y, tile_bound.y + tile_bound.h);
+				return false;
+			}
+		}
+	}
+	slog("True");
+	return true;
 }
