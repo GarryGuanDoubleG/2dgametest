@@ -25,7 +25,7 @@ void tile_init_system(){
 	memset(tile_list,0, sizeof(Tile) * TOTAL_TILES);
 
 	dest_tile_list = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
-	memset(tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
+	memset(dest_tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
 
 	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
@@ -217,6 +217,7 @@ void tile_set(){
 		
 		dest_tile_list[i].mBox = tile->mBox;
 		dest_tile_list[i].mType = TILE_TREE;
+		dest_tile_list[i].hits = 5;
 		x += TILE_WIDTH;		
 		if(x >= TOTAL_TILES_X * TILE_WIDTH)
 		{

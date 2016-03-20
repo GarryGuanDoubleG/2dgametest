@@ -50,16 +50,16 @@ int main(int argc, char *argv[])
 	//draw functions should go in order from background first to player draw calls last
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
+	
+	tile_render();	
+	player_draw();
+	DrawMouse2();
 
 	monster_spawn(Monster::grue);
 	entity_update_all();
 	entity_think_all();
 	entity_check_collision_all();
 	MONSTER_SPAWN_TIMER -= 1;
-
-	tile_render();	
-	player_draw();
-	DrawMouse2();
 
 	while(SDL_PollEvent(&e) != 0)
 		player_move (&e);

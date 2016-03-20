@@ -98,7 +98,7 @@ void player_draw(){
 	entity_draw(player,player->position.x,player->position.y);
 
 	player_draw_equip();
-	hud_draw(graphics_get_player_cam(),player->health, player->health * 2, 30, 100);
+	//hud_draw(graphics_get_player_cam(),player->health, player->health * 2, 30, 100);
 }
 
 void player_update(entity *self)

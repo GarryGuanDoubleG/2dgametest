@@ -46,9 +46,10 @@ int tile_collision(Vec2d pos, SDL_Rect bound);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
+/*
 #define UP 0
 #define LEFT 1
 #define DOWN 2
-#define RIGHT 3
+#define RIGHT 3*/
 #endif
 
