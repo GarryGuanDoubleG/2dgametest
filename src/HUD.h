@@ -32,23 +32,23 @@ void set_hud_state(HUD_state state);
 #define BAR_MANA_IMG_H 32
 #define BAR_BG_IMG_H 0
 
-#define HUD_BAR_DRAW_X 20
-#define HUD_BAR_DRAW_Y SCREEN_WIDTH*.75f
+#define HUD_BAR_DRAW_X 10
+#define HUD_BAR_DRAW_Y SCREEN_HEIGHT*.85f
 
 #define HUD_MENU_GRID_PATH "images/HUD/HUD_grid.png"
 #define HUD_MENU_IMG_W 407
 #define HUD_MENU_IMG_H 313
-#define HUD_MENU_FRAME_W SCREEN_WIDTH/3
-#define HUD_MENU_FRAME_H SCREEN_HEIGHT/4
+#define HUD_MENU_FRAME_W 400
+#define HUD_MENU_FRAME_H 300
 #define HUD_MENU_DRAW_X SCREEN_WIDTH - HUD_MENU_FRAME_W
 #define HUD_MENU_DRAW_Y (SCREEN_HEIGHT - HUD_MENU_FRAME_H)
 #define HUD_MENU_COL 4
 #define HUD_MENU_ROW 3
 
-#define HUD_GRID_OFFSET_X 50
+#define HUD_GRID_OFFSET_X 35
 #define HUD_GRID_OFFSET_Y 45
-#define HUD_GRIDBOX_W 100
-#define HUD_GRIDBOX_H 90
+#define HUD_GRIDBOX_W 87
+#define HUD_GRIDBOX_H 84
 
 #define HUD_ITEM_BAG_PATH "images/HUD/HUD_item_bag_icon.png"
 #define HUD_ITEM_BAG_IMG_W 56
