@@ -62,7 +62,6 @@ void sprite_initialize_system(int max_sprites)
 	memset(spriteList, 0, sizeof(Sprite2) * SPRITE_MAX);
 	for(i = 0;i < SPRITE_MAX;i++)spriteList[i].image= NULL;
 
-
 	atexit(sprite_close_system);
 }
 

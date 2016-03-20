@@ -173,7 +173,6 @@ void tile_forest_gen(int start)
 		i = tile_forest_walk(moves);
 		tile_list[i].mType = i;
 		dest_tile_list[i].mType = i;
-		slog("New Move is %i ", i);
 	}
 }
 
@@ -231,6 +230,7 @@ void tile_set(){
 void tile_free(Tile *tile){
 	tile->mType = 0;
 }
+
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();
@@ -260,6 +260,7 @@ void tile_close_system(){
 	}
 
 	SDL_DestroyTexture(tile_sprite_grass->image);
+	SDL_DestroyTexture(tile_sprite_tree->image);
 }
 
 Tile tile_start()
@@ -291,12 +292,98 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 		{
 			if(dest_tile_list[i].mType == TILE_TREE)
 			{
-				slog("Player bound X:%f-%f Y:%f-%f. Tile:X%f-%f Y%f-%f", player_pos.x, player_pos.x+player_pos.w, player_pos.y, player_pos.y + player_pos.h,
-																		tile_bound.x, tile_bound.x + tile_bound.w, tile_bound.y, tile_bound.y + tile_bound.h);
 				return false;
 			}
 		}
 	}
-	slog("True");
 	return true;
 }
+/*
+int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
+{
+	int i;
+	int curr_tile;
+	int is_tree = false;
+	int tree_index;
+	Rect_f player_pos = {pos.x + bound.x+bound.w/2, pos.y + bound.y + bound.h/2, bound.w/2, bound.h/2};
+	Rect_f tile_bound;
+
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
+		tile_bound.x = tile_list[i].mBox.x;
+		tile_bound.y = tile_list[i].mBox.y;
+		tile_bound.w = tile_list[i].mBox.w;
+		tile_bound.h = tile_list[i].mBox.h;
+		
+		if(rect_collide(player_pos, tile_bound))
+		{
+			curr_tile = i;
+			break;
+		}
+	}
+
+	switch(face_dir)
+	{
+		case UP:
+			slog("Up");
+			if(curr_tile < TOTAL_TILES_X)
+			{
+				return false;
+			}
+			if (dest_tile_list[curr_tile - TOTAL_TILES_X].mType == TILE_TREE)
+			{
+				is_tree = true;
+				tree_index = curr_tile - TOTAL_TILES_X;
+			}
+			break;
+		case DOWN:
+			slog("Down");
+			if(curr_tile > TOTAL_TILES - TOTAL_TILES_X)
+			{
+				return false;
+			}
+			if(dest_tile_list[curr_tile + TOTAL_TILES_X].mType == TILE_TREE)
+			{
+				is_tree = true;
+				tree_index = curr_tile + TOTAL_TILES_X;
+			}
+			break;
+		case LEFT:
+			slog("Left");
+			if(curr_tile % TOTAL_TILES_X == 0)
+			{
+				return false;
+			}
+			if (dest_tile_list[curr_tile - 1].mType == TILE_TREE)
+			{
+				is_tree = true;
+				tree_index = curr_tile - 1;
+			}
+			break;
+		case RIGHT:
+			slog("Right");
+			if(curr_tile % (TOTAL_TILES_X -1 ) == 0)
+			{
+				return false;
+			}
+			if(dest_tile_list[curr_tile + 1].mType == TILE_TREE)
+			{
+				tree_index = curr_tile + 1;
+				is_tree = true;
+			}
+			break;
+		default:
+			break;
+	}
+
+	if(is_tree)
+	{
+		dest_tile_list[tree_index].hits -= 1;
+		if( dest_tile_list[tree_index].hits == 0)
+		{
+			dest_tile_list[tree_index].mType = NULL;
+		}
+	}
+	slog("Is tree is %s", is_tree ? "TRUE" : "False");
+	return is_tree;
+}*/

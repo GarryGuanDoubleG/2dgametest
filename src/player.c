@@ -82,7 +82,7 @@ void player_draw_equip(){
 		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.shoulders), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 
-	if(PlayerEquip.weapon && animCurrent != WALK){
+	if(PlayerEquip.weapon && PlayerEquip.weapon->active && animCurrent == SLASH ){
 		//sword sprites are 192x192 pixels, need offset
 		if(PlayerEquip.weapon->type == WEAP_SWORD){
 			sprite_draw(PlayerEquip.weapon->image, player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);
@@ -167,7 +167,7 @@ void player_move(SDL_Event *e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
 	}
-
+	
 	switch( e->key.keysym.sym )
     {
         case SDLK_UP:
@@ -194,9 +194,6 @@ void player_move(SDL_Event *e){
 			player->frame_vertical = face_right;
 			player->face_dir = face_right;
 			break;
-		case SDL_SCANCODE_S:
-			set_hud_state(HUD_state::inventory1);
-			break;
         default:
 			player_attack(e);
 			break;
@@ -212,8 +209,20 @@ void player_attack(SDL_Event *e){
 	}
 	switch( e->key.keysym.sym )
     {
-		case SDLK_SPACE:
-			fprintf(stdout,"Hit Space");
+		case SDLK_i:
+			set_hud_state(HUD_state::inventory1);
+			break;
+		/*case SDLK_f:
+			slog("Press F");
+			if(animCurrent != SLASH && player_tree_collision())
+			{
+				animCurrent = SLASH;
+				player->sprite->fpl = playerBody.image_slash->fpl;
+				player->sprite = playerBody.image_slash;
+				player->frame_horizontal = 0;//reset it;
+			}
+			break;*/
+		case SDLK_SPACE:			
 			//if(player_struct.weapon == WEAP_SWORD)
 			if(animCurrent != SLASH)
 			{
@@ -222,7 +231,7 @@ void player_attack(SDL_Event *e){
 				player->sprite->fpl = PlayerEquip.fpl;
 				player->frame_horizontal = 0;//reset it;
 				player->sprite = playerBody.image_slash;
-
+				//used for collision
 				player->weapon->active = true;		
 				weapon_collision(player);
 			}
@@ -233,11 +242,18 @@ void player_attack(SDL_Event *e){
 			
 }
 
-void player_draw_hud()
+int player_tree_collision()
 {
+	if(!player || player->face_dir == NULL)
+	{ 
+		slog("No player or face direction");
+		return false;
+	}
+
+	return false;
+	//return tile_forage(player->position, player->boundBox, player->face_dir);
 
 }
-
 void player_think(entity* self){
 
 

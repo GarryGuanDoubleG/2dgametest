@@ -29,6 +29,7 @@ typedef struct{
 typedef struct{
 	SDL_Rect mBox;
 	int mType;
+	int hits;//how many hits left until collapse
 }Destructable_Tile;
 extern Tile *tile_list;
 extern Destructable_Tile *dest_tile_list;
@@ -41,8 +42,13 @@ void tile_render ();
 void tile_close_system();
 Tile tile_start();
 int tile_collision(Vec2d pos, SDL_Rect bound);
+//int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
+#define UP 0
+#define LEFT 1
+#define DOWN 2
+#define RIGHT 3
 #endif
 

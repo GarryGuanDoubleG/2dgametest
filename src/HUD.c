@@ -26,7 +26,6 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 	HUD_bar->frameW = BAR_FRAME_W;
 	sprite_draw(HUD_bar, 0, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
 	HUD_bar->frameW *= health_percent;
-	slog("Health frameW = %f", HUD_bar->frameW);
 	sprite_draw(HUD_bar, 0, 1, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
 	HUD_bar->frameW = BAR_FRAME_W;
 	sprite_draw(HUD_bar, 0, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y + HUD_bar->frameH);
@@ -38,7 +37,7 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 	if(hud_state_curr == main_menu)
 	{
 		sprite_draw(HUD_item_bag, 0, 0, graphics_get_renderer(), camera.x + HUD_ITEM_BAG_DRAW_X, camera.y + HUD_ITEM_BAG_DRAW_Y);
-		sprite_draw(HUD_axe, 0, 0, graphics_get_renderer(), camera.x + HUD_AXE_DRAW_X, HUD_AXE_DRAW_Y);
+		sprite_draw(HUD_axe, 0, 0, graphics_get_renderer(), camera.x + HUD_AXE_DRAW_X, camera.y + HUD_AXE_DRAW_Y);
 	}
 	if(hud_state_curr == inventory1)
 	{
