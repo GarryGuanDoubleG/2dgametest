@@ -8,6 +8,7 @@
 #include "Tile.h"
 #include "player.h"
 #include "monster_ai.h"
+#include "items.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
@@ -110,6 +111,8 @@ void Init_All()
   tile_init_system();
   player_init(); //creates player entity
   hud_init();
+  item_load_all();
+  inventory_init();
   InitMouse2();
   atexit(CleanUpAll);
 }

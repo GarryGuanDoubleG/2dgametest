@@ -22,6 +22,8 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 
 	float health_percent = health / max_health;
 	float mana_percent = mana / max_mana;
+
+	int i;
 	
 	HUD_bar->frameW = BAR_FRAME_W;
 	sprite_draw(HUD_bar, 0, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
@@ -41,7 +43,22 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 	}
 	if(hud_state_curr == inventory1)
 	{
+		for(i = 0; i < inv_bag_size; i++)		
+		{
+			int draw_x = HUD_GRID_OFFSET_X + HUD_MENU_DRAW_X + camera.x;
+			int draw_y = HUD_GRID_OFFSET_Y + HUD_MENU_DRAW_Y + camera.y;
 
+			if(!inv_items[i].inuse)
+			{
+				continue;
+			}
+
+			draw_x += HUD_GRIDBOX_W * (i % HUD_MENU_COL); 
+			draw_y += HUD_GRIDBOX_H * (i / HUD_MENU_COL); 
+
+			sprite_draw(inv_items[i].icon, 0, 0, graphics_get_renderer(), draw_x, draw_y);
+		}
+		
 	}
 
 }

@@ -7,6 +7,8 @@
 #include "sprite.h"
 #include "Tile_define.h"
 #include "vector.h"
+#include "inventory.h"
+
 extern const int SCREEN_HEIGHT;
 extern const int SCREEN_WIDTH;
 extern const int TOTAL_TILES;
@@ -42,14 +44,17 @@ void tile_render ();
 void tile_close_system();
 Tile tile_start();
 int tile_collision(Vec2d pos, SDL_Rect bound);
-//int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
+int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
-/*
+
+//couldn't put enum dir here, defined them manually
+
 #define UP 0
 #define LEFT 1
 #define DOWN 2
-#define RIGHT 3*/
+#define RIGHT 3
+
 #endif
 

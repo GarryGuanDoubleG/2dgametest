@@ -98,7 +98,7 @@ void player_draw(){
 	entity_draw(player,player->position.x,player->position.y);
 
 	player_draw_equip();
-	//hud_draw(graphics_get_player_cam(),player->health, player->health * 2, 30, 100);
+	hud_draw(graphics_get_player_cam(),player->health, player->health * 2, 30, 100);
 }
 
 void player_update(entity *self)
@@ -116,7 +116,7 @@ void player_update(entity *self)
 		return;
 	}
 	//checks if animation played through at least once
-	if(player->frame_horizontal >= PlayerEquip.fpl)
+	if(player->frame_horizontal >= player->sprite->fpl)
 	{
 		player->frame_horizontal = 0;
 		animCurrent = WALK;
@@ -212,7 +212,7 @@ void player_attack(SDL_Event *e){
 		case SDLK_i:
 			set_hud_state(HUD_state::inventory1);
 			break;
-		/*case SDLK_f:
+		case SDLK_f:
 			slog("Press F");
 			if(animCurrent != SLASH && player_tree_collision())
 			{
@@ -221,7 +221,7 @@ void player_attack(SDL_Event *e){
 				player->sprite = playerBody.image_slash;
 				player->frame_horizontal = 0;//reset it;
 			}
-			break;*/
+			break;
 		case SDLK_SPACE:			
 			//if(player_struct.weapon == WEAP_SWORD)
 			if(animCurrent != SLASH)
@@ -244,17 +244,17 @@ void player_attack(SDL_Event *e){
 
 int player_tree_collision()
 {
-	if(!player || player->face_dir == NULL)
+	if(!player)
 	{ 
 		slog("No player or face direction");
 		return false;
 	}
 
-	return false;
-	//return tile_forage(player->position, player->boundBox, player->face_dir);
+	return tile_forage(player->position, player->boundBox, player->face_dir);
 
 }
-void player_think(entity* self){
+void player_think(entity* self)
+{
 
 
 }

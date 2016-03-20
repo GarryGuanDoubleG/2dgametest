@@ -7,8 +7,8 @@
 #define MaxSprites    255
 
 
-const int SCREEN_HEIGHT =1200;
-const int SCREEN_WIDTH = 1440;
+const int SCREEN_HEIGHT = 720;
+const int SCREEN_WIDTH = 1280;
 
 struct
 {

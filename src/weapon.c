@@ -29,6 +29,8 @@ Weapon weaponlist[] =
 		5,//5 frames per line
 
 		NULL,//image set during init
+		false, // active
+		false, // inuse
 	},
 
 };

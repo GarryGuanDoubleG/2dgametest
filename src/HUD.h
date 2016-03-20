@@ -2,6 +2,7 @@
 #define _HUD_H_
 #include "sprite.h"
 #include "simple_logger.h"
+#include "inventory.h"
 
 extern Sprite2 * health_bar;
 extern Sprite2 * mana_bar;
@@ -41,8 +42,10 @@ void set_hud_state(HUD_state state);
 #define HUD_MENU_FRAME_H SCREEN_HEIGHT/4
 #define HUD_MENU_DRAW_X SCREEN_WIDTH - HUD_MENU_FRAME_W
 #define HUD_MENU_DRAW_Y (SCREEN_HEIGHT - HUD_MENU_FRAME_H)
+#define HUD_MENU_COL 4
+#define HUD_MENU_ROW 3
 
-#define HUD_GRID_OFFSET_X 45
+#define HUD_GRID_OFFSET_X 50
 #define HUD_GRID_OFFSET_Y 45
 #define HUD_GRIDBOX_W 100
 #define HUD_GRIDBOX_H 90

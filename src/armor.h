@@ -49,6 +49,9 @@ typedef struct{
 	Sprite2 *image_bow;
 	Sprite2 *image_thrust;
 	Sprite2 *image_spellcast;
+
+	int active;
+	int inuse;
 }Armor;
 
 void armor_load_all();

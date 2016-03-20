@@ -228,6 +228,7 @@ void tile_set(){
 	}
 	tile_forest_gen();
 }
+
 void tile_free(Tile *tile){
 	tile->mType = 0;
 }
@@ -299,7 +300,7 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 	}
 	return true;
 }
-/*
+
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 {
 	int i;
@@ -383,8 +384,9 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 		if( dest_tile_list[tree_index].hits == 0)
 		{
 			dest_tile_list[tree_index].mType = NULL;
+			inventory_add("wood");
 		}
 	}
 	slog("Is tree is %s", is_tree ? "TRUE" : "False");
 	return is_tree;
-}*/
+}

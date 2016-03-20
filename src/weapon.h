@@ -48,6 +48,7 @@ typedef struct Weapon_S{
 
 	Sprite2 *image;/*<image to render on top of player*/
 	int active;
+	int inuse;
 }Weapon;
 
 
