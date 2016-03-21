@@ -390,3 +390,69 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 	slog("Is tree is %s", is_tree ? "TRUE" : "False");
 	return is_tree;
 }
+
+int tile_get_tile_number(Vec2d pos)
+{
+	int i;
+	Rect_f self_pos = { pos.x, pos.y, 0,0};
+	Rect_f tile_box;
+	for(i = 0; i < TOTAL_TILES; i++)
+	{
+		tile_box.x = tile_list[i].mBox.x;
+		tile_box.y = tile_list[i].mBox.y;
+		tile_box.w = tile_list[i].mBox.w;
+		tile_box.h = tile_list[i].mBox.h;
+
+		if(rect_collide(tile_box, self_pos))
+		{
+			return i;
+		}
+	}
+
+}
+int * tile_get_heuristic(int start)
+{
+	int side = 20; //20 by 20
+	int start_left = side/2;
+	int start_right = side/2;
+	int start_up = side/2;
+	int start_down = side/2; 
+	int tile_num = start;
+	int i;
+	
+	while(tile_num %(TOTAL_TILES_X) != 0 && start_left != 0)
+	{
+		tile_num--;
+		start_left--;
+	}
+	start_left = tile_num;
+	tile_num = start;
+
+	while(tile_num %(TOTAL_TILES_X-1) != 0 && start_right != 0)
+	{
+		tile_num--;
+		start_right--;
+	}
+	start_right = tile_num;
+	tile_num = start;
+
+	while(tile_num > (TOTAL_TILES_X) && start_up != 0)
+	{
+		tile_num -= TOTAL_TILES_X;
+		start_up--;
+	}
+	start_up = tile_num;
+	tile_num = start;
+	while(tile_num < (TOTAL_TILES - TOTAL_TILES_X) && start_down != 0)
+	{
+		tile_num += TOTAL_TILES_X;
+		start_down--;
+	}
+	start_down = tile_num;
+
+	for(i = start_left; i < start_right; i++)
+	{
+
+	}
+
+}

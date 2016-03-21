@@ -23,6 +23,7 @@
 #define spider01_imageH 32
 #define spider01_frameW 64
 #define spider01_frameH 32
+#define SPIDER01_VELOCITY_AGGRO 5
 #define SPIDER_TYPE_MAIN 1
 #define SPIDER01_THINK_RATE 30
 #define SPIDER01_TIMER 600

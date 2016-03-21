@@ -20,7 +20,7 @@ void grue_think(entity* self){
 	
 	randomNum = rand() % 15;
 
-	if(Vec2dDistanceSQ(self_pos,player_pos) < (500 * 500))
+	if(Vec2dDistanceSQ(self_pos,player_pos) < (100 * 100))
 	{
 		self->state = STATE_AGGRO;
 	}
