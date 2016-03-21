@@ -1,13 +1,12 @@
 #ifndef _MONSTER_H_
 #define _MONSTER_H_
-
 #include "sprite.h"
 #include "entity.h"
 #include "vector.h"
 #include "simple_logger.h"
 #include "monster_define.h"
 #include "grue.h"
-
+#include "spider.h"
 
 //states the ai is in
 #define STATE_IDLE		100 // walking around or standing still
@@ -26,11 +25,11 @@ void monster_update(entity *self);
 
 extern int MONSTER_SPAWN_TIMER;
 
-#define sprite_grue_filepath "images/Grue/GrueGrin.png"
-#define grue_imageW  56
-#define grue_imageH  71
-#define grue_frameW  101
-#define grue_frameH  127
+#define SPRITE_GRUE_FILEPATH "images/Grue/GrueGrin.png"
+#define GRUE_IMAGEW  56
+#define GRUE_IMAGEH  71
+#define GRUE_FRAMEW  101
+#define GRUE_FRAMEH  127
 
 
 #endif

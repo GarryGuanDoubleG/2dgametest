@@ -131,9 +131,11 @@ void entity_close(){ //deallocates all entities
 	int i;
 	for(i = 0; i < ENTITY_MAX; i++){
 		 if(entityList[i].inuse == true){
+			 SDL_DestroyTexture(entityList[i].sprite->image);
 			 entity_free(&entityList[i]);	
 		 }
 	}
+	delete entityList;
 }
 
 void entity_think_all(){

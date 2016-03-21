@@ -222,7 +222,6 @@ void tile_set(){
 		if(x >= TOTAL_TILES_X * TILE_WIDTH)
 		{
 			x = 0;
-			slog("Total Tiles X is < X");
 			y += TILE_HEIGHT;
 		} 
 	}
@@ -231,6 +230,12 @@ void tile_set(){
 
 void tile_free(Tile *tile){
 	tile->mType = 0;
+	delete tile;
+}
+void dest_tile_free(Destructable_Tile *dest_tile)
+{
+	delete dest_tile;
+	dest_tile = NULL;
 }
 
 void tile_render(){
@@ -259,7 +264,11 @@ void tile_close_system(){
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		tile_free(tile_list+i);
+		dest_tile_free(dest_tile_list + i);
 	}
+
+	delete(tile_list);
+	delete(dest_tile_list);
 
 	SDL_DestroyTexture(tile_sprite_grass->image);
 	SDL_DestroyTexture(tile_sprite_tree->image);
@@ -425,9 +434,25 @@ void slog_heuristic(int size, int **tile_list)
 		slog("Tile Heuristic Index: %i Score is %i", tile_list[i][0], tile_list[i][1]);
 	}
 }
-int ** tile_get_heuristic(int start, int target)
+
+void tile_list_heuristic_free(int row, int col, int **curr_tile_list)
+{
+	int i;
+
+	for(i = 0; i < row; i++)
+	{
+		delete(curr_tile_list[i]);
+	}
+
+	delete(curr_tile_list);
+
+}
+
+int ** tile_get_heuristic(int start, int target, int **curr_tile_list)
 {
 	const int side = 20; //20 by 20
+	const int col = 2;
+	const int row = side;
 	int move_left = 0;
 	int move_right = 0;
 	int move_up = 0;
@@ -436,8 +461,25 @@ int ** tile_get_heuristic(int start, int target)
 	int i;
 	int j;
 	int tile_index;
-	int **tile_list; // tile index and heuristic score
+	int **tile_list; // 2d array with tile index and heuristic score
 	
+	if(curr_tile_list)
+	{
+		tile_list_heuristic_free(row, col, curr_tile_list);
+	}
+
+	tile_list = (int**)malloc(side * sizeof(int *));
+	for(i = 0; i < side; i++)
+	{
+		tile_list[i] = (int*)malloc(2 * sizeof(int)); 
+	}
+
+	for(i = 0; i < side; i++)
+	{
+		tile_list[i][0] = -1;
+		tile_list[i][1] = -1;
+	}
+
 	while(tile_num %(TOTAL_TILES_X) != 0 && move_left < side/2)
 	{
 		tile_num--;

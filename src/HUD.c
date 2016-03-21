@@ -7,6 +7,29 @@ Sprite2 * HUD_axe;
 
 static HUD_state hud_state_curr;
 
+void hud_close()
+{
+	if(HUD_bar)
+	{
+		SDL_DestroyTexture(HUD_bar->image);
+	}
+
+	if(HUD_menu)
+	{
+		SDL_DestroyTexture(HUD_menu->image);
+	}
+
+	if(HUD_item_bag)
+	{
+		SDL_DestroyTexture(HUD_item_bag->image);
+	}
+
+	if(HUD_axe)
+	{
+		SDL_DestroyTexture(HUD_axe->image);
+	}
+}
+
 void hud_init()
 {
 	hud_state_curr = main_menu;
@@ -15,6 +38,8 @@ void hud_init()
 	HUD_menu = sprite_load(HUD_MENU_GRID_PATH, HUD_MENU_IMG_W, HUD_MENU_IMG_H, HUD_MENU_FRAME_W, HUD_MENU_FRAME_H);
 	HUD_item_bag = sprite_load(HUD_ITEM_BAG_PATH, HUD_ITEM_BAG_IMG_W, HUD_ITEM_BAG_IMG_H, HUD_ITEM_BAG_FRAME_W, HUD_ITEM_BAG_FRAME_H);
 	HUD_axe = sprite_load(HUD_AXE_PATH, HUD_AXE_IMG_W, HUD_AXE_IMG_H, HUD_AXE_FRAME_W, HUD_AXE_FRAME_H);
+	
+	atexit(hud_close);
 }
 
 void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float max_mana)

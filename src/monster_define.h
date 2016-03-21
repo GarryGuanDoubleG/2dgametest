@@ -9,22 +9,22 @@
 #define STATE_SEEK		103 //trying to find player
 
 //grue
-#define sprite_grue_filepath "images/Monsters/Grue/GrueGrin.png"
-#define grue_imageW  56
-#define grue_imageH  71
-#define grue_frameW  101
-#define grue_frameH  127
+#define SPRITE_GRUE_FILEPATH "images/Monsters/Grue/GrueGrin.png"
+#define GRUE_IMAGEW  56
+#define GRUE_IMAGEH  71
+#define GRUE_FRAMEW  101
+#define GRUE_FRAMEH  127
 #define GRUE_VELOCITY_AGGRO 8
 #define GRUE_TIMER 300
 #define GRUE_THINK_RATE 30
 
-#define sprite_spider01_filepath "images/Monsters/Spider/spider01.png"
-#define spider01_imageW 640
-#define spider01_imageH 32
-#define spider01_frameW 64
-#define spider01_frameH 32
+#define SPRITE_SPIDER01_FILEPATH "images/Monsters/Spider/spider01.png"
+#define SPIDER01_IMAGEW 64
+#define SPIDER01_IMAGEH 64
+#define SPIDER01_FRAMEW 64
+#define SPIDER01_FRAMEH 64
 #define SPIDER01_VELOCITY_AGGRO 5
-#define SPIDER_TYPE_MAIN 1
+#define TYPE_SPIDER_01 1
 #define SPIDER01_THINK_RATE 30
 #define SPIDER01_TIMER 600
 

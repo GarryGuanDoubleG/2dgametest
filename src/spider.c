@@ -29,8 +29,9 @@ void spider_think(entity *self)
 	
 	randomNum = rand() % 15;
 
-	if(Vec2dDistanceSQ(self_pos,player_pos) < (100 * 100))
+	if(Vec2dDistanceSQ(self_pos,player_pos) < (300 * 300))
 	{
+		slog("Spider state AGGRO");
 		self->state = STATE_AGGRO;
 	}
 	else { self->state = STATE_PATROL; }
@@ -44,6 +45,8 @@ void spider_think(entity *self)
 		distance = Normalize2d(spider_dir);
 		spider_dir = VectorScale(spider_dir, spider_dir,SPIDER01_VELOCITY_AGGRO);
 		self->velocity = distance != 0 ? spider_dir : self->velocity;
+
+		aStar_search(self->position, entity_get_player()->position);
 	}
 
 	else if(self->state == STATE_PATROL){
@@ -97,7 +100,8 @@ void spider_onDeath(entity *self)
 
 entity * spider_spawn(int type)
 {
-	if(type == SPIDER_TYPE_MAIN)
+	slog("spider_spawn");
+	if(type == TYPE_SPIDER_01)
 	{
 		return spider01_spawn();
 	}
@@ -106,20 +110,17 @@ entity * spider01_spawn()
 {
 	Sprite2 * sprite_spider01;
 	entity * ent_spider01 = NULL;
-	Vec2d pos = {400,400};
+	Vec2d pos = {0,0};
 	Vec2d vel = {-5,0};
-	SDL_Rect boundBox = {spider01_frameW*.1f,spider01_frameH *.2f, spider01_frameW, spider01_frameH};
-	if( (MONSTER_SPAWN_TIMER % (GRUE_TIMER)) != 0){
-		return NULL;
-	}
-	slog("Timer: %i", MONSTER_SPAWN_TIMER);
-	slog("Monster Spawn Timer mod MonsterSpawn Timer is %i " , (MONSTER_SPAWN_TIMER % (GRUE_TIMER)));
-	sprite_spider01 = sprite_load(sprite_spider01_filepath, spider01_imageW, spider01_imageH, spider01_frameW, spider01_frameH);
+	SDL_Rect boundBox = {SPIDER01_FRAMEW*.1f,SPIDER01_FRAMEH *.2f, SPIDER01_FRAMEW, SPIDER01_FRAMEH};
+
+	slog("Spider01 spawn");
+	sprite_spider01 = sprite_load(SPRITE_SPIDER01_FILEPATH, SPIDER01_IMAGEW, SPIDER01_IMAGEH, SPIDER01_FRAMEW, SPIDER01_FRAMEH);
 	sprite_spider01->fpl = 10;//2 frames per line
 	ent_spider01 = entity_load(sprite_spider01, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_spider01){
-		slog("Could not spawn GRUE");
+		slog("Could not spawn Spider01");
 		return NULL;
 	}
 	//each frame is a single direction

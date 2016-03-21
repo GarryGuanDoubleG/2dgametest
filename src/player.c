@@ -149,12 +149,10 @@ void player_update_camera()
 	}
 	if( new_cam.x > TOTAL_TILES_X * TILE_WIDTH - new_cam.w)
 	{
-		slog("X > level");
 		new_cam.x = TOTAL_TILES_X * TILE_WIDTH - new_cam.w;
 	}
 	if( new_cam.y > TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h)
 	{
-		slog("Y > level");
 		new_cam.y = TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h;
 	}
 	//update camera

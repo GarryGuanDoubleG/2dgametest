@@ -6,6 +6,7 @@ int const MONSTER_TIMER = 600;
 int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
 
 time_t t;
+int g_spawned_spider = true;
 
 entity *monster_spawn(int type){
 	entity *ent_new;//sprite of monster to spawn
@@ -24,6 +25,11 @@ entity *monster_spawn(int type){
 	}
 	if(ent_new){
 		return ent_new;
+	}
+	if(g_spawned_spider)
+	{
+		spider_spawn(TYPE_SPIDER_01);
+		g_spawned_spider = !g_spawned_spider;
 	}
 
 	//slog("Could not spawn monster type: %i", type);

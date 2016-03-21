@@ -3,18 +3,11 @@
 #include "vector.h"
 #include "sprite.h"
 #include "weapon.h"
+#include "pathfinding.h"
 /** @brief main entity structure for all interactable objects 
     / characters in the game
 *   
 */
-
-
-enum Dir{
-   UP,
-   LEFT,
-   DOWN,
-   RIGHT,
-};
 
 
 typedef struct Entity_S

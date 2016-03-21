@@ -48,6 +48,8 @@ void item_close_all(){
 		itemList[i].icon = NULL;
 		itemList[i].item_model = NULL;
 	}
+
+	delete(itemList);
 }
 
 item *getItem(char *item_name)
