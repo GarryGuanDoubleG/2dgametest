@@ -16,9 +16,9 @@ typedef struct PATH_S
 {
 	void (*push)( path_node node);
 	void (*pop)();
-	int **tile_path_list;
-}path;
+	tile_heuristic *tile_path_list;
+}Path;
 
-void aStar_search(Vec2d start, Vec2d goal);
+void aStar_search(int aggro_range, Vec2d start, Vec2d goal, Path &path_self);
 
 #endif

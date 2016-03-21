@@ -18,6 +18,14 @@ void inventory_close()
 		inv_items[i].icon = NULL;
 		inv_items[i].item_model = NULL;
 	}
+	for(i = 0; i < WEAPONS_MAX; i++){
+		inv_weapons[i].inuse = false;
+		delete(inv_weapons[i].name);
+		delete(inv_weapons[i].filepath);
+	}
+	delete inv_items;
+	delete inv_weapons;
+	delete inv_armors;
 }
 
 void inventory_init()
@@ -44,7 +52,7 @@ void inventory_init()
 	for(i = 0; i < ITEMS_MAX; i++){
 		inv_armors[i].inuse = false;
 	}
-
+	
 	atexit(inventory_close);
 }
 

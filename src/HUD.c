@@ -9,25 +9,7 @@ static HUD_state hud_state_curr;
 
 void hud_close()
 {
-	if(HUD_bar)
-	{
-		SDL_DestroyTexture(HUD_bar->image);
-	}
-
-	if(HUD_menu)
-	{
-		SDL_DestroyTexture(HUD_menu->image);
-	}
-
-	if(HUD_item_bag)
-	{
-		SDL_DestroyTexture(HUD_item_bag->image);
-	}
-
-	if(HUD_axe)
-	{
-		SDL_DestroyTexture(HUD_axe->image);
-	}
+	HUD_bar = HUD_menu = HUD_item_bag = HUD_axe = NULL;
 }
 
 void hud_init()

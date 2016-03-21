@@ -26,11 +26,11 @@ entity *monster_spawn(int type){
 	if(ent_new){
 		return ent_new;
 	}
-	if(g_spawned_spider)
+	/*if(g_spawned_spider)
 	{
-		spider_spawn(TYPE_SPIDER_01);
+		//spider_spawn(TYPE_SPIDER_01);
 		g_spawned_spider = !g_spawned_spider;
-	}
+	}*/
 
 	//slog("Could not spawn monster type: %i", type);
 	return NULL;

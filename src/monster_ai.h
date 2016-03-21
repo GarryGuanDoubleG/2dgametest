@@ -25,11 +25,6 @@ void monster_update(entity *self);
 
 extern int MONSTER_SPAWN_TIMER;
 
-#define SPRITE_GRUE_FILEPATH "images/Grue/GrueGrin.png"
-#define GRUE_IMAGEW  56
-#define GRUE_IMAGEH  71
-#define GRUE_FRAMEW  101
-#define GRUE_FRAMEH  127
 
 
 #endif

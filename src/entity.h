@@ -4,6 +4,7 @@
 #include "sprite.h"
 #include "weapon.h"
 #include "pathfinding.h"
+#include "Tile.h"
 /** @brief main entity structure for all interactable objects 
     / characters in the game
 *   
@@ -24,6 +25,8 @@ typedef struct Entity_S
 	int inventory;
 	int face_dir;
 	int player;
+	int aggro_range;//distance before state aggressive, in tiles
+	Path path;
 
 	Weapon *weapon;
 	int stamina;

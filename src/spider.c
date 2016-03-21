@@ -46,7 +46,7 @@ void spider_think(entity *self)
 		spider_dir = VectorScale(spider_dir, spider_dir,SPIDER01_VELOCITY_AGGRO);
 		self->velocity = distance != 0 ? spider_dir : self->velocity;
 
-		aStar_search(self->position, entity_get_player()->position);
+	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 
 	else if(self->state == STATE_PATROL){
@@ -135,6 +135,7 @@ entity * spider01_spawn()
 	ent_spider01->onDeath = spider_onDeath;
 	ent_spider01->state = STATE_PATROL;
 	ent_spider01->boundBox = boundBox;
+	ent_spider01->aggro_range = 9;//10 tiles
 
 	return ent_spider01;
 }

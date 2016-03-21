@@ -78,6 +78,7 @@ void sprite_close_system()
 			sprite_free(target);
 		}
 	}	
+	delete spriteList;
 }
 
 Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH)
@@ -153,7 +154,6 @@ void sprite_free(Sprite2 ** sprite)
 		if(target->image != NULL)
 			SDL_DestroyTexture(target->image);
 		memset(target, 0, sizeof(Sprite2));
-
 		target->image = NULL;
 	}
 	target = NULL;

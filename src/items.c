@@ -45,11 +45,11 @@ void item_close_all(){
 	for(i = 0; i < (sizeof itemList)/sizeof(item); i++){
 		SDL_DestroyTexture(itemList[i].icon->image);
 		SDL_DestroyTexture(itemList[i].item_model->image);
+
 		itemList[i].icon = NULL;
 		itemList[i].item_model = NULL;
 	}
 
-	delete(itemList);
 }
 
 item *getItem(char *item_name)

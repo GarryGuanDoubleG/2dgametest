@@ -16,6 +16,7 @@ void entity_initialize_system(){
 	for(i = 0; i < ENTITY_MAX; i++){
 		entityList[i].sprite = NULL;
 		entityList[i].inuse = false;
+		entityList[i].path.tile_path_list = NULL;
 	}
 	atexit(entity_close);
 
@@ -125,6 +126,11 @@ void entity_free(entity* ent){ //makes entity->inuse false so new ent can be ini
 	ent->inuse = false;
 	ent->sprite = NULL;
 	entity_count--;
+	if(ent->path.tile_path_list)
+	{
+		tile_list_heuristic_free(ent->path.tile_path_list);
+	}
+	delete(ent->path.tile_path_list);
 }
 
 void entity_close(){ //deallocates all entities
@@ -157,6 +163,25 @@ void entity_update_all(){
 		if(!entityList[i].inuse){
 			continue;
 		}
+		
+		if(entityList[i].position.x < 0 ) 
+		{
+			entityList[i].position.x =0;
+		}
+		if(entityList[i].position.x > TOTAL_TILES_X * TILE_WIDTH)
+		{
+			entityList[i].position.x  = TOTAL_TILES_X * TILE_WIDTH - entityList[i].sprite->frameW;
+		}
+
+		if(entityList[i].position.y < 0 ) 
+		{
+			entityList[i].position.y =0;
+		}
+		if(entityList[i].position.y > TOTAL_TILES_Y * TILE_HEIGHT)
+		{
+			entityList[i].position.y  = TOTAL_TILES_Y * TILE_HEIGHT - entityList[i].sprite->frameH;
+		}
+
 		if(!entityList[i].update){
 			continue;
 		}
