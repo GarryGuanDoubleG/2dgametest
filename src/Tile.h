@@ -49,7 +49,6 @@ int tile_get_tile_number(Vec2d pos);
 int * tile_get_heuristic(int index);
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
-
 //couldn't put enum dir here, defined them manually
 #define UP 0
 #define LEFT 1
