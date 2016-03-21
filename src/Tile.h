@@ -46,7 +46,8 @@ Tile tile_start();
 int tile_collision(Vec2d pos, SDL_Rect bound);
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 int tile_get_tile_number(Vec2d pos);
-int * tile_get_heuristic(int index);
+int * tile_get_heuristic(int start);
+
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
 
