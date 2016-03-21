@@ -9,7 +9,7 @@
 #define STATE_SEEK		103 //trying to find player
 
 //grue
-#define sprite_grue_filepath "images/Grue/GrueGrin.png"
+#define sprite_grue_filepath "images/Monsters/Grue/GrueGrin.png"
 #define grue_imageW  56
 #define grue_imageH  71
 #define grue_frameW  101
