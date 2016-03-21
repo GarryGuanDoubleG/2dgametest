@@ -272,9 +272,14 @@ Tile tile_start()
 	{
 		if(tile_list[i].mType == TILE_ROAD)
 		{
-			return tile_list[i];
+			if(rand() % 20 <= 5 && i != 0)
+			{
+				return tile_list[i];
+			}
 		}
 	}
+
+	return tile_list[0];
 }
 
 int tile_collision(Vec2d pos, SDL_Rect bound)
@@ -389,4 +394,185 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 	}
 	slog("Is tree is %s", is_tree ? "TRUE" : "False");
 	return is_tree;
+}
+
+
+int tile_get_tile_number(Vec2d pos)
+{
+	int i;
+	Rect_f self_pos = { pos.x, pos.y, 0,0};
+
+	Rect_f tile_box;
+	for(i = 0; i < TOTAL_TILES; i++)
+	{
+		tile_box.x = tile_list[i].mBox.x;
+		tile_box.y = tile_list[i].mBox.y;
+		tile_box.w = tile_list[i].mBox.w;
+		tile_box.h = tile_list[i].mBox.h;
+
+		if(rect_collide(tile_box, self_pos))
+		{
+			return i;
+		}
+	}
+
+	return false;
+}
+
+void slog_heuristic(int size, int start, int target, tile_heuristic *tile_list)
+{
+	int i;
+
+	if(!tile_list)
+	{
+		slog("Tile Heuristic is NULL");
+	}
+
+	for(i = 0; i < (size); i++)
+	{
+		slog("Tile Heuristic Index: %i Score is %i", tile_list->tile_index[i], tile_list->distance_to_target[i]);
+		slog("Start: %i Target:%i", start, target);
+	}
+}
+
+void tile_list_heuristic_free(tile_heuristic * tile_list)
+{
+	if(!tile_list)
+	{
+		return;
+	}
+	if(tile_list->distance_to_target)
+	{
+		delete(tile_list->distance_to_target);
+	}
+	if(tile_list->tile_index)
+	{
+		delete(tile_list->tile_index);
+	}
+	if(tile_list)
+	{
+		delete(tile_list);
+	}
+}
+
+tile_heuristic * tile_get_heuristic(int size, int start, int target)
+{
+	const int side = size; //square region of size * size
+	int move_left = 0;
+	int move_right = 0;
+	int move_up = 0;
+	int move_down = 0; 
+	int tile_num = start;
+	int i;
+	int j;
+	int tile_index;
+	int temp_index;
+	// 2d array with tile index and heuristic score
+	tile_heuristic *tile_list = NULL;
+
+	tile_list = (tile_heuristic*)malloc(sizeof(tile_heuristic));
+	memset(tile_list, 0, sizeof(tile_list));
+
+	tile_list->distance_to_target = (int*)malloc(sizeof(int)* size * size);
+	memset(tile_list->distance_to_target, 0, sizeof(int)* size * size);
+	tile_list->tile_index = (int*)malloc(sizeof(int) * size * size);
+	memset(tile_list->tile_index, 0, sizeof(int) * size * size);
+	tile_list->size = size;
+
+	if(start == target)
+	{
+		slog("Start == Target");
+		tile_list->distance_to_target = NULL;
+		tile_list->tile_index = NULL;
+		tile_list->size = 0;
+		delete(tile_list);
+		return NULL;
+	}
+
+	for(i = 0; i < size; i++)
+	{
+		tile_list->distance_to_target[i] = -1;
+		tile_list->tile_index[i] = -1;
+	}
+	
+	while(tile_num %(TOTAL_TILES_X) != 0 && move_left < side/2)
+	{
+		tile_num--;
+		move_left++;
+	}
+	tile_num = start;
+
+	while(tile_num %(TOTAL_TILES_X-1) != 0 && move_right < side/2)
+	{
+		tile_num--;
+		move_right++;
+	}
+	tile_num = start;
+
+	while(tile_num > (TOTAL_TILES_X) && move_up < side/2)
+	{
+		tile_num -= TOTAL_TILES_X;
+		move_up++;
+	}
+	tile_num = start;
+	while(tile_num < (TOTAL_TILES - TOTAL_TILES_X) && move_down < side/2)
+	{
+		tile_num += TOTAL_TILES_X;
+		move_down++;
+	}
+	
+	for(j = 0; j < (move_up + move_down+ 1); j++)//traverse vertical tile list
+	{
+		tile_index = start - move_left - (TOTAL_TILES_X * (move_up - j));
+
+		for(i = 0; i < move_left + move_right + 1; i++) // traverse horizontal tile list
+		{
+			int count = 0;
+			int before_vertical_index;
+			temp_index = tile_index;
+
+			int diff = (tile_index % TOTAL_TILES_X);
+			int target_diff = (target % TOTAL_TILES_X);
+
+			if((tile_index % TOTAL_TILES_X) < (target % TOTAL_TILES_X))// each tile index moves to target and counts
+			{
+				while(temp_index % TOTAL_TILES_X < target % TOTAL_TILES_X)
+				{
+					temp_index++;
+					count++;
+				}
+			}
+			else
+			{
+				while((temp_index % TOTAL_TILES_X) > (target % TOTAL_TILES_X))
+				{
+					temp_index--;
+					count++;
+				}
+
+			}
+			before_vertical_index = temp_index;
+			while(temp_index != target) // check if target is in same row as start
+			{
+				if(temp_index > target)
+				{
+					temp_index -= TOTAL_TILES_X;
+					count++;
+				}
+				else
+				{
+					temp_index += TOTAL_TILES_X;
+					count++;
+				}
+			}
+
+			tile_list->tile_index[i+j] = tile_index;
+			tile_list->distance_to_target[i+j] = count;
+
+			tile_index++;
+		}
+	}
+	
+	//slog_heuristic(side, start, target, tile_list);
+	return tile_list;
 }

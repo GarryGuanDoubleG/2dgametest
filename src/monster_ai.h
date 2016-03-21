@@ -7,7 +7,7 @@
 #include "simple_logger.h"
 #include "monster_define.h"
 #include "grue.h"
-
+#include "spider.h"
 
 //states the ai is in
 #define STATE_IDLE		100 // walking around or standing still

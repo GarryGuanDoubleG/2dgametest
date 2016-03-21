@@ -124,7 +124,9 @@ void entity_draw(entity *ent, int x, int y){
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
 	ent->inuse = false;
 	ent->sprite = NULL;
+	ent->path.next = NULL;
 	entity_count--;
+
 }
 
 void entity_close(){ //deallocates all entities
@@ -134,6 +136,7 @@ void entity_close(){ //deallocates all entities
 			 entity_free(&entityList[i]);	
 		 }
 	}
+	memset(entityList, 0, sizeof(entity) * ENTITY_MAX);
 }
 
 void entity_think_all(){
@@ -155,9 +158,28 @@ void entity_update_all(){
 		if(!entityList[i].inuse){
 			continue;
 		}
+
+		if(entityList[i].position.x < 0 ) 
+		{
+			entityList[i].position.x =0;
+		}
+		if(entityList[i].position.x + entityList[i].sprite->frameW > TOTAL_TILES_X * TILE_WIDTH)
+		{
+			entityList[i].position.x  = TOTAL_TILES_X * TILE_WIDTH - entityList[i].sprite->frameW;
+		}
+		if(entityList[i].position.y < 0 ) 
+		{
+			entityList[i].position.y =0;
+		}
+		if(entityList[i].position.y + entityList[i].sprite->frameH > TOTAL_TILES_Y * TILE_HEIGHT)
+		{
+			entityList[i].position.y  = TOTAL_TILES_Y * TILE_HEIGHT - entityList[i].sprite->frameH;
+		}
+
 		if(!entityList[i].update){
 			continue;
 		}
+
 		entityList[i].update(&entityList[i]);
 
 		if(entityList[i].weapon){

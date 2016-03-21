@@ -6,7 +6,7 @@ int const MONSTER_TIMER = 600;
 int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
 
 time_t t;
-
+int g_spawned_spider = true;
 entity *monster_spawn(int type){
 	entity *ent_new;//sprite of monster to spawn
 	srand((unsigned)time(&t));
@@ -22,6 +22,9 @@ entity *monster_spawn(int type){
 	if(type == Monster::grue){
 		 ent_new = grue_spawn();
 	}
+	spider_spawn(TYPE_SPIDER_01);
+
+
 	if(ent_new){
 		return ent_new;
 	}

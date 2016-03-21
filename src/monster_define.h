@@ -18,4 +18,14 @@
 #define GRUE_TIMER 300
 #define GRUE_THINK_RATE 30
 
+#define SPRITE_SPIDER01_FILEPATH "images/Monsters/Spider/spider01.png"
+#define SPIDER01_IMAGEW 64
+#define SPIDER01_IMAGEH 64
+#define SPIDER01_FRAMEW 64
+#define SPIDER01_FRAMEH 64
+#define SPIDER01_VELOCITY_AGGRO 5
+#define TYPE_SPIDER_01 1
+#define SPIDER01_THINK_RATE 30
+#define SPIDER01_TIMER 300
+
 #endif

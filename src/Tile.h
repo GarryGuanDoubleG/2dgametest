@@ -33,6 +33,13 @@ typedef struct{
 	int mType;
 	int hits;//how many hits left until collapse
 }Destructable_Tile;
+
+typedef struct{
+	int *tile_index;
+	int *distance_to_target;
+	int size;
+}tile_heuristic;
+
 extern Tile *tile_list;
 extern Destructable_Tile *dest_tile_list;
 
@@ -43,8 +50,12 @@ void tile_free(Tile *tile);
 void tile_render ();
 void tile_close_system();
 Tile tile_start();
+int tile_get_type(int index);
 int tile_collision(Vec2d pos, SDL_Rect bound);
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
+int tile_get_tile_number(Vec2d pos);
+void tile_list_heuristic_free(tile_heuristic * tile_list);
+tile_heuristic * tile_get_heuristic(int size, int start, int target);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))

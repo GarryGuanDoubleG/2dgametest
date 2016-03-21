@@ -139,7 +139,7 @@ void player_update_camera()
 	new_cam.w = SCREEN_WIDTH;
 	new_cam.h = SCREEN_HEIGHT;
 
-	if(new_cam.x < 0)
+	/*if(new_cam.x < 0)
 	{
 		new_cam.x = 0;
 	}
@@ -149,14 +149,12 @@ void player_update_camera()
 	}
 	if( new_cam.x > TOTAL_TILES_X * TILE_WIDTH - new_cam.w)
 	{
-		slog("X > level");
 		new_cam.x = TOTAL_TILES_X * TILE_WIDTH - new_cam.w;
 	}
 	if( new_cam.y > TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h)
 	{
-		slog("Y > level");
 		new_cam.y = TOTAL_TILES_Y * TILE_HEIGHT - new_cam.h;
-	}
+	}*/
 	//update camera
 	graphics_update_player_cam(new_cam);
 }

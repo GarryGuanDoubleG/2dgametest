@@ -20,8 +20,10 @@
     <ClCompile Include="..\src\inventory.c" />
     <ClCompile Include="..\src\items.c" />
     <ClCompile Include="..\src\monster_ai.c" />
+    <ClCompile Include="..\src\path_find.c" />
     <ClCompile Include="..\src\player.c" />
     <ClCompile Include="..\src\simple_logger.c" />
+    <ClCompile Include="..\src\spider.c" />
     <ClCompile Include="..\src\sprite.c" />
     <ClCompile Include="..\src\Tile.c" />
     <ClCompile Include="..\src\vector.c" />
@@ -38,8 +40,10 @@
     <ClInclude Include="..\src\items_define.h" />
     <ClInclude Include="..\src\monster_ai.h" />
     <ClInclude Include="..\src\monster_define.h" />
+    <ClInclude Include="..\src\path_find.h" />
     <ClInclude Include="..\src\player.h" />
     <ClInclude Include="..\src\simple_logger.h" />
+    <ClInclude Include="..\src\spider.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\Tile.h" />
     <ClInclude Include="..\src\Tile_define.h" />

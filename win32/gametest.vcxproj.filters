@@ -46,6 +46,12 @@
     <ClCompile Include="..\src\items.c">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\spider.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\path_find.c">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\armor.h">
@@ -97,6 +103,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\items_define.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\spider.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\path_find.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
