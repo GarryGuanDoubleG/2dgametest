@@ -410,49 +410,105 @@ int tile_get_tile_number(Vec2d pos)
 	}
 
 }
-int * tile_get_heuristic(int start)
+
+void slog_heuristic(int size, int **tile_list)
 {
-	int side = 20; //20 by 20
-	int start_left = side/2;
-	int start_right = side/2;
-	int start_up = side/2;
-	int start_down = side/2; 
+	int i;
+
+	if(!tile_list)
+	{
+		slog("Tile Heuristic is NULL");
+	}
+
+	for(i = 0; i < (size * size); i++)
+	{
+		slog("Tile Heuristic Index: %i Score is %i", tile_list[i][0], tile_list[i][1]);
+	}
+}
+int ** tile_get_heuristic(int start, int target)
+{
+	const int side = 20; //20 by 20
+	int move_left = 0;
+	int move_right = 0;
+	int move_up = 0;
+	int move_down = 0; 
 	int tile_num = start;
 	int i;
+	int j;
+	int tile_index;
+	int **tile_list; // tile index and heuristic score
 	
-	while(tile_num %(TOTAL_TILES_X) != 0 && start_left != 0)
+	while(tile_num %(TOTAL_TILES_X) != 0 && move_left < side/2)
 	{
 		tile_num--;
-		start_left--;
+		move_left++;
 	}
-	start_left = tile_num;
 	tile_num = start;
 
-	while(tile_num %(TOTAL_TILES_X-1) != 0 && start_right != 0)
+	while(tile_num %(TOTAL_TILES_X-1) != 0 && move_right < side/2)
 	{
 		tile_num--;
-		start_right--;
+		move_right++;
 	}
-	start_right = tile_num;
 	tile_num = start;
 
-	while(tile_num > (TOTAL_TILES_X) && start_up != 0)
+	while(tile_num > (TOTAL_TILES_X) && move_up < side/2)
 	{
 		tile_num -= TOTAL_TILES_X;
-		start_up--;
+		move_up++;
 	}
-	start_up = tile_num;
 	tile_num = start;
-	while(tile_num < (TOTAL_TILES - TOTAL_TILES_X) && start_down != 0)
+	while(tile_num < (TOTAL_TILES - TOTAL_TILES_X) && move_down < side/2)
 	{
 		tile_num += TOTAL_TILES_X;
-		start_down--;
+		move_down++;
 	}
-	start_down = tile_num;
 
-	for(i = start_left; i < start_right; i++)
+	tile_index = start - move_left - (TOTAL_TILES_X * move_up);
+
+	for(j = 0; j < (move_up + move_down); j++)//traverse vertical tile list
 	{
+		for(i = 0; i < move_left + move_right; i++) // traverse horizontal tile list
+		{
+			int count = 0; // heuristic move count
+			int temp_index = tile_index;
+			int found = false;
+			if(tile_index % TOTAL_TILES_X > (target % TOTAL_TILES_X))// each tile index moves to target and counts
+			{
+				while(temp_index % TOTAL_TILES_X < target % TOTAL_TILES_X)
+				{
+					temp_index++;
+					count++;
+				}
+			}
+			else
+			{
+				while(temp_index % TOTAL_TILES_X > target % TOTAL_TILES_X)
+				{
+					temp_index--;
+					count++;
+				}
+			}
+			while(temp_index != target) // check if target is in same row as start
+			{
+				if(temp_index > target)
+				{
+					temp_index -= TOTAL_TILES_X;
+					count++;
+				}
+				else
+				{
+					temp_index += TOTAL_TILES_X;
+					count++;
+				}
+			}
+			tile_list[i+j][0] = tile_index;
+			tile_list[i+j][1] = count;
 
+		}
+		tile_index = start - move_left - (TOTAL_TILES_X * (move_up - j));
 	}
 
+	slog_heuristic(side, tile_list);
+	return tile_list;
 }
