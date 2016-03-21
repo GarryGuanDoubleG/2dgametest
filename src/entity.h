@@ -41,6 +41,7 @@ typedef struct Entity_S
 	void (*update)(struct Entity_S *self);
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);
 	void (*free)(struct Entity_S *self);
+	void (*onDeath)(struct Entity_S *self);
 }entity;
 
 extern const int ENTITY_MAX;
