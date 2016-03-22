@@ -27,6 +27,7 @@ entity * entity_new(){
 		if(entityList[i].inuse == true){
 			continue;
 		}
+		path_free(entityList[i].path);
 		memset(&entityList[i], 0, sizeof(entity));
 		entityList[i].inuse = true;
 		return (&entityList[i]);
@@ -47,6 +48,7 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 			 entityList[i].stamina = stamina;
 			 entityList[i].state = state;
 			 entityList[i].player = false; //set to true on player init
+			 entityList[i].followPath = ent_follow_path;
 			 return &entityList[i];
 			 break;
 		 }
@@ -124,7 +126,7 @@ void entity_draw(entity *ent, int x, int y){
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
 	ent->inuse = false;
 	ent->sprite = NULL;
-	ent->path.next = NULL;
+	path_free(ent->path);
 	entity_count--;
 
 }
@@ -369,4 +371,52 @@ entity * entity_get_player()
 		}
 		return &entityList[i];
 	}
+}
+
+void ent_follow_path(entity *self)
+{
+	Vec2d tile_pos;
+	Vec2d tile_center_pos;
+	Vec2d self_center_pos = { ENT_CENTER_X(self), ENT_CENTER_Y(self)};
+	Vec2d new_vel;
+
+	int distance;
+	if(!self) 
+	{
+		return;
+	}
+	if(!self->path)
+	{
+		tile_pos = tile_get_pos(tile_get_tile_number(self_center_pos));
+		tile_center_pos.x = TILE_CENTER_X(tile_pos);
+		tile_center_pos.y = TILE_CENTER_Y(tile_pos);
+		Vec2dSub(self_center_pos,tile_center_pos,new_vel);
+		Normalize2d(new_vel);
+		VectorScale(new_vel, new_vel, 5);
+		self->velocity = new_vel;
+		slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
+		return;
+	}
+	else
+	{
+		 tile_pos = tile_get_pos(self->path->tile_index);
+		 tile_center_pos.x = TILE_CENTER_X(tile_pos);
+		 tile_center_pos.y = TILE_CENTER_Y(tile_pos);
+	}
+
+	if((TILE_CENTER_X(tile_pos) == ENT_CENTER_X(self)) && 
+	   TILE_CENTER_Y(tile_pos) == ENT_CENTER_Y(self) )
+	{
+		path_free_node(self->path);
+		self->followPath(self);
+	}
+	else
+	{	
+		Vec2dSub(tile_center_pos, self_center_pos, new_vel);
+		Normalize2d(new_vel);
+		VectorScale(new_vel, new_vel, 5);
+		self->velocity = new_vel;
+		slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
+	}
+
 }

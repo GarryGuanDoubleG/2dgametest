@@ -222,7 +222,6 @@ void tile_set(){
 		if(x >= TOTAL_TILES_X * TILE_WIDTH)
 		{
 			x = 0;
-			slog("Total Tiles X is < X");
 			y += TILE_HEIGHT;
 		} 
 	}
@@ -233,6 +232,10 @@ void tile_free(Tile *tile){
 	tile->mType = 0;
 }
 
+int tile_get_type(int index)
+{
+	return tile_list[index].mType;
+}
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();
@@ -455,6 +458,12 @@ void tile_list_heuristic_free(tile_heuristic * tile_list)
 	}
 }
 
+float tile_dist_to_target(int start, int target)
+{
+	Vec2d vec_start = { tile_list[start].mBox.x, tile_list[start].mBox.y };
+	Vec2d vec_target = { tile_list[target].mBox.x, tile_list[target].mBox.y };
+	return Vec2dDistance(vec_start, vec_target);
+}
 tile_heuristic * tile_get_heuristic(int size, int start, int target)
 {
 	const int side = size; //square region of size * size
@@ -478,6 +487,8 @@ tile_heuristic * tile_get_heuristic(int size, int start, int target)
 	tile_list->tile_index = (int*)malloc(sizeof(int) * size * size);
 	memset(tile_list->tile_index, 0, sizeof(int) * size * size);
 	tile_list->size = size;
+	tile_list->start = start;
+	tile_list->target = target;
 
 	if(start == target)
 	{
@@ -575,4 +586,11 @@ tile_heuristic * tile_get_heuristic(int size, int start, int target)
 	
 	//slog_heuristic(side, start, target, tile_list);
 	return tile_list;
+}
+
+Vec2d tile_get_pos(int index)
+{
+	Vec2d tile_pos = {tile_list[index].mBox.x, tile_list[index].mBox.y };
+
+	return tile_pos;	
 }

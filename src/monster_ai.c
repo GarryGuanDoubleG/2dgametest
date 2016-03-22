@@ -22,8 +22,9 @@ entity *monster_spawn(int type){
 	if(type == Monster::grue){
 		 ent_new = grue_spawn();
 	}
-	spider_spawn(TYPE_SPIDER_01);
-
+	if(type == Monster::spider01){
+		 ent_new = spider01_spawn();
+	}
 
 	if(ent_new){
 		return ent_new;

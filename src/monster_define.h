@@ -2,6 +2,11 @@
 #define _MONSTER_DEFINE_H_
 //generic monster stats
 
+//monster enum
+enum Monster{
+	grue,
+	spider01,
+};
 //states the ai is in
 #define STATE_IDLE		100 // walking around or standing still
 #define STATE_PATROL		101 // walking around
@@ -26,6 +31,6 @@
 #define SPIDER01_VELOCITY_AGGRO 5
 #define TYPE_SPIDER_01 1
 #define SPIDER01_THINK_RATE 30
-#define SPIDER01_TIMER 300
+#define SPIDER01_TIMER 1000//spawn rate
 
 #endif

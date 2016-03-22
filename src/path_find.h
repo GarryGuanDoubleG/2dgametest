@@ -4,11 +4,15 @@
 #include "vector.h"
 typedef struct Path_S
 {
+	Path_S *parent;
 	Path_S *next;
-	int move;
+	int tile_index;
+	float h_val;//distance to target tile
+	float g_val;//all movement costs are the same because you can't move diagonally
+	float f_val;
 }Path;
-
-void getPath(const int size, Vec2d *start, Vec2d *target);
-
+void path_free_node(Path *path);
+void path_free(Path *path);
+Path* getPath(int size, Vec2d *start, Vec2d *target, Path *curr_path);
 #define MAX_PATH_SIZE 100
 #endif

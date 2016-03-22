@@ -15,9 +15,7 @@
 #define STATE_AGGRO		102 //actively attacking player
 #define STATE_SEEK		103 //trying to find player
 //monster types
-enum Monster{
-	grue,
-};
+
 extern entity *player;
 
 entity *monster_spawn(int type);

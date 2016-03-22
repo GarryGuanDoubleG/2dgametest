@@ -45,8 +45,9 @@ typedef struct Entity_S
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);
 	void (*free)(struct Entity_S *self);
 	void (*onDeath)(struct Entity_S *self);
+	void (*followPath)(struct Entity_S *self);
 
-	Path path;
+	Path *path;
 }entity;
 
 extern const int ENTITY_MAX;
@@ -60,6 +61,7 @@ void entity_close();
 void entity_draw(entity *ent, int x, int y);
 void entity_update();
 void entity_update_all();
+void ent_follow_path(entity *self);
 //in class
 /*
  *@brief return a pointer to an empty entity structure
@@ -75,4 +77,8 @@ void entity_check_collision_all();
 void weapon_collision(entity *owner);
 
 entity * entity_get_player();
+
+#define ENT_CENTER_X(a) (a->position.x + a->sprite->frameW/2)
+#define ENT_CENTER_Y(a) (a->position.y + a->sprite->frameH/2)
+
 #endif

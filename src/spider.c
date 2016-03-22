@@ -44,15 +44,8 @@ void spider_think(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		int distance;
-		spider_dir.x = player_pos.x - self_pos.x;
-		spider_dir.y = player_pos.y - self_pos.y;
-
-		distance = Normalize2d(spider_dir);
-		spider_dir = VectorScale(spider_dir, spider_dir,SPIDER01_VELOCITY_AGGRO);
-		self->velocity = distance != 0 ? spider_dir : self->velocity;
-
-		getPath(self->aggro_range, &self->position, &entity_get_player()->position);
+		self->path = getPath(self->aggro_range, &self->position, &entity_get_player()->position,self->path);
+		self->followPath(self);
 	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 
@@ -107,8 +100,8 @@ void spider_onDeath(entity *self)
 
 entity * spider_spawn(int type)
 {
-	//slog("spider_spawn");
-	if(type == TYPE_SPIDER_01)
+	slog("spider_spawn");
+	if(type == Monster::spider01)
 	{
 		return spider01_spawn();
 	}
@@ -119,13 +112,15 @@ entity * spider01_spawn()
 	entity * ent_spider01 = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
-	Vec2d vel = {-5,0};
+	Vec2d vel = {0,0};
 	SDL_Rect boundBox = {SPIDER01_FRAMEW*.1f,SPIDER01_FRAMEH *.2f, SPIDER01_FRAMEW, SPIDER01_FRAMEH};
-	if( (MONSTER_SPAWN_TIMER % (SPIDER01_TIMER)) != 0);
+
+	if( (MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
 	{	
 		return NULL;
 	}
-	slog("Spawn timer: %i Spider Timer %i", MONSTER_SPAWN_TIMER, SPIDER01_TIMER);
+
+	slog("spider: x%f y%f", pos.x, pos.y);
 	sprite_spider01 = sprite_load(SPRITE_SPIDER01_FILEPATH, SPIDER01_IMAGEW, SPIDER01_IMAGEH, SPIDER01_FRAMEW, SPIDER01_FRAMEH);
 	sprite_spider01->fpl = 10;//2 frames per line
 	ent_spider01 = entity_load(sprite_spider01, pos, 100, 25, STATE_PATROL);
