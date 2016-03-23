@@ -44,7 +44,7 @@ int score_move(int move)
 {
 	int score = 0;
 
-	if( move > TOTAL_TILES_X -1)
+	if( TILE_CAN_MOVE_UP(move))
 	{
 		if(tile_list[move - TOTAL_TILES_X].mType == TILE_ROAD)
 		{
@@ -53,7 +53,7 @@ int score_move(int move)
 	}
 	else{ score++; }  // edge tile increases score by 1
 
-	if( move < TOTAL_TILES - TOTAL_TILES_X -1)
+	if(TILE_CAN_MOVE_DOWN(move))
 	{
 		if(tile_list[move + TOTAL_TILES_X].mType == TILE_ROAD)
 		{
@@ -62,7 +62,7 @@ int score_move(int move)
 	}
 	else { score++; }
 
-	if(move % TOTAL_TILES_X != 0)
+	if(TILE_CAN_MOVE_LEFT(move))
 	{
 		if(tile_list[move - 1].mType == TILE_ROAD)
 		{
@@ -70,7 +70,7 @@ int score_move(int move)
 		}
 	}
 	else {score++;}
-	if(move % (TOTAL_TILES_X - 1) != 0)
+	if(TILE_CAN_MOVE_RIGHT(move))
 	{
 		if(tile_list[move + 1].mType == TILE_ROAD)
 		{
@@ -146,33 +146,33 @@ void tile_forest_gen(int start)
 {
 	int i = start;
 	int done = false;
-	int lifespan = TOTAL_TILES/2;
+	int lifespan = TOTAL_TILES/10;
 	//-1 means can't move to that node
 	tile_list[i].mType = TILE_ROAD;
 	dest_tile_list[i].mType = TILE_ROAD;
 
 	while(lifespan-- > 0)
 	{
-		int moves[4] = {i-1,i+1,i-TOTAL_TILES_X,i + TOTAL_TILES_X}; // left,right,up,down a tile on map
-		if(i%TOTAL_TILES_X == 0)
+		int moves[4] = {i-1, i+1, i-TOTAL_TILES_X, i + TOTAL_TILES_X}; // left,right,up,down a tile on map
+		if(!TILE_CAN_MOVE_LEFT(i))
 		{
 			moves[0] = -1;
 		}
-		if((i + 1)%TOTAL_TILES_X == 0)
+		if(!TILE_CAN_MOVE_RIGHT(i))
 		{
 			moves[1] = -1;
 		}
-		if(i < TOTAL_TILES_X == 0)
+		if(!TILE_CAN_MOVE_UP(i))
 		{
 			moves[2] = -1;
 		}
-		if( i > TOTAL_TILES - TOTAL_TILES_X)
+		if(!TILE_CAN_MOVE_DOWN(i))
 		{
 			moves[3] = -1;
 		}
 		i = tile_forest_walk(moves);
-		tile_list[i].mType = i;
-		dest_tile_list[i].mType = i;
+		tile_list[i].mType = TILE_ROAD;
+		dest_tile_list[i].mType = TILE_ROAD;
 	}
 }
 
@@ -201,6 +201,15 @@ void tile_forest_gen()
 	tile_forest_gen(start);
 }
 
+void slog_dest_tree_list()
+{
+	int i;
+	for(i = 0; i < 120; i++)
+	{
+		slog( "Index:%i TYPE:%i", i, dest_tile_list[i].mType);
+	}
+}
+
 void tile_set(){
 	int i;
 	int x = 0,y = 0;
@@ -226,6 +235,8 @@ void tile_set(){
 		} 
 	}
 	tile_forest_gen();
+
+	slog_dest_tree_list();
 }
 
 void tile_free(Tile *tile){
@@ -234,8 +245,52 @@ void tile_free(Tile *tile){
 
 int tile_get_type(int index)
 {
-	return tile_list[index].mType;
+	return dest_tile_list[index].mType;
 }
+int tile_to_tile_dist(int tile_1, int tile_2)
+{
+	int move_left = 0, move_right = 0, move_down = 0, move_up = 0;
+	int start = tile_1;
+	Vec2d t1_pos = tile_get_pos(tile_1);
+	Vec2d t2_pos = tile_get_pos(tile_2);
+
+	if(t2_pos.x < t1_pos.x)
+	{
+		while(tile_1 % (TOTAL_TILES_X) != 0 && tile_get_pos(tile_2).x <  tile_get_pos(tile_1).x )
+		{
+			tile_1--;
+			move_left++;
+		}
+		tile_1 = start;
+	}
+	else if(t2_pos.x > t1_pos.x)
+	{
+		while(tile_1 %(TOTAL_TILES_X-1) != 0 && tile_get_pos(tile_2).x >  tile_get_pos(tile_1).x )
+		{
+			tile_1--;
+			move_right++;
+		}
+		tile_1 = start;
+	}
+	if(t2_pos.y < t1_pos.y)
+	{
+		while(tile_1 > (TOTAL_TILES_X) && tile_get_pos(tile_2).y <  tile_get_pos(tile_1).y)
+		{
+			tile_1 -= TOTAL_TILES_X;
+			move_up++;
+		}
+		tile_1 = start;
+	}
+	if(t2_pos.y > t1_pos.y)
+	while(tile_1 < (TOTAL_TILES - TOTAL_TILES_X) && tile_get_pos(tile_2).y >  tile_get_pos(tile_1).y)
+	{
+		tile_1 += TOTAL_TILES_X;
+		move_down++;
+	}
+	
+	return move_left + move_right + move_up + move_down;
+}
+
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();
@@ -263,6 +318,8 @@ void tile_close_system(){
 	{
 		tile_free(tile_list+i);
 	}
+	memset(tile_list, 0, sizeof(Tile) * TOTAL_TILES);
+	memset(tile_list, 0, sizeof(Destructable_Tile) * TOTAL_TILES);
 
 	SDL_DestroyTexture(tile_sprite_grass->image);
 	SDL_DestroyTexture(tile_sprite_tree->image);
@@ -302,11 +359,11 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 		{
 			if(dest_tile_list[i].mType == TILE_TREE)
 			{
-				return false;
+				return true;
 			}
 		}
 	}
-	return true;
+	return false;
 }
 
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
@@ -400,12 +457,12 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 }
 
 
-int tile_get_tile_number(Vec2d pos)
+int tile_get_tile_number(Vec2d pos, SDL_Rect bound)
 {
 	int i;
-	Rect_f self_pos = { pos.x, pos.y, 0,0};
-
+	Vec2d bound_pos = {pos.x + bound.x + bound.w/2, pos.y + bound.y + bound.h/2};
 	Rect_f tile_box;
+
 	for(i = 0; i < TOTAL_TILES; i++)
 	{
 		tile_box.x = tile_list[i].mBox.x;
@@ -413,13 +470,14 @@ int tile_get_tile_number(Vec2d pos)
 		tile_box.w = tile_list[i].mBox.w;
 		tile_box.h = tile_list[i].mBox.h;
 
-		if(rect_collide(tile_box, self_pos))
+		if(bound_pos.x >= tile_box.x && bound_pos.x <= tile_box.x + tile_box.w &&
+			bound_pos.y >= tile_box.y && bound_pos.y <= tile_box.y + tile_box.h )
 		{
 			return i;
 		}
 	}
 
-	return false;
+	return -1;
 }
 
 void slog_heuristic(int size, int start, int target, tile_heuristic *tile_list)

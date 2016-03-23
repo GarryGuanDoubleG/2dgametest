@@ -55,7 +55,9 @@ void tile_close_system();
 
 Tile tile_start();
 int tile_get_type(int index);
-int tile_get_tile_number(Vec2d pos);
+int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
+//number of tiles(non diagonal) between two tiles
+int tile_to_tile_dist(int tile_1, int tile_2);
 
 int tile_collision(Vec2d pos, SDL_Rect bound);
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
@@ -77,7 +79,7 @@ tile_heuristic * tile_get_heuristic(int size, int start, int target);
 
 #define TILE_CAN_MOVE_LEFT(a)  (a % TOTAL_TILES_X !=0 ? true: false)
 #define TILE_CAN_MOVE_RIGHT(a) (( a % (TOTAL_TILES_X-1) !=0 || a == 0) ? true: false)
-#define TILE_CAN_MOVE_DOWN(a) (a > TOTAL_TILES - TOTAL_TILES_X ? true : false )
+#define TILE_CAN_MOVE_DOWN(a) (a < TOTAL_TILES - TOTAL_TILES_X ? true : false )
 #define TILE_CAN_MOVE_UP(a) (a >= TOTAL_TILES_X ? true : false)
 //takes vec2d
 #define TILE_CENTER_X(a) (a.x + TILE_WIDTH/2)

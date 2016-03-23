@@ -3,13 +3,22 @@
 void spider_update(entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
-	Vec2dAdd(self->position, self->velocity, new_pos);
-	entity_draw(self,self->position.x, self->position.y);
 
-	if(tile_collision(new_pos, self->boundBox))
+	if(self->state == STATE_AGGRO)
+	{
+		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		self->followPath(self);
+		Vec2dAdd(self->position, self->velocity, self->position);
+	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
+	}
+	else if(!tile_collision(new_pos, self->boundBox))
 	{
 		self->position = new_pos;
 	}
+
+	entity_draw(self,self->position.x, self->position.y);
+
+
 }
 
 void spider_touch(entity *self, entity *other)
@@ -35,7 +44,7 @@ void spider_think(entity *self)
 	
 	randomNum = rand() % 15;
 
-	if(Vec2dDistanceSQ(self_pos,player_pos) < (300 * 300))
+	if(Vec2dDistanceSQ(self_pos,player_pos) < (TILE_WIDTH * TILE_HEIGHT) * self->aggro_range *self->aggro_range)
 	{
 		slog("Spider state AGGRO");
 		self->state = STATE_AGGRO;
@@ -44,8 +53,7 @@ void spider_think(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		self->path = getPath(self->aggro_range, &self->position, &entity_get_player()->position,self->path);
-		self->followPath(self);
+		self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
 	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 
@@ -71,24 +79,24 @@ void spider_think(entity *self)
 	//setting which sprite to use depending on direction
 	if(self->velocity.x != 0){
 		if(self->velocity.x >= 0){
-			self->frame_horizontal = 0;
-			self->frame_vertical = 0;
+			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+			self->frame_vertical = 3;//hard coded based on sprite
 		}
 		else
 		{
-			self->frame_horizontal = 0;
+			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
 			self->frame_vertical = 1;
 		}
 	}
 	else{
 		if(self->velocity.y >= 0){
-			self->frame_horizontal = 0;
-			self->frame_vertical = 1;
+			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+			self->frame_vertical = 0;
 		}
 		else
 		{
-			self->frame_horizontal = 1;
-			self->frame_vertical = 0;
+			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+			self->frame_vertical = 2;
 		}		
 	}
 }
@@ -141,7 +149,7 @@ entity * spider01_spawn()
 	ent_spider01->onDeath = spider_onDeath;
 	ent_spider01->state = STATE_PATROL;
 	ent_spider01->boundBox = boundBox;
-	ent_spider01->aggro_range = 10;//10 tiles
+	ent_spider01->aggro_range = SPIDER01_AGGRO_RANGE;//10 tiles
 
 	return ent_spider01;
 }

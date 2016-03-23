@@ -3,6 +3,7 @@
 #include "vector.h"
 #include "sprite.h"
 #include "weapon.h"
+#include "monster_define.h"
 #include "Tile.h"
 #include "path_find.h"
 /** @brief main entity structure for all interactable objects 

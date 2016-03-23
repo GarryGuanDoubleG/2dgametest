@@ -27,7 +27,7 @@ entity * entity_new(){
 		if(entityList[i].inuse == true){
 			continue;
 		}
-		path_free(entityList[i].path);
+//		path_free(entityList[i].path);
 		memset(&entityList[i], 0, sizeof(entity));
 		entityList[i].inuse = true;
 		return (&entityList[i]);
@@ -49,6 +49,7 @@ entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int stat
 			 entityList[i].state = state;
 			 entityList[i].player = false; //set to true on player init
 			 entityList[i].followPath = ent_follow_path;
+			 entityList[i].path = NULL;
 			 return &entityList[i];
 			 break;
 		 }
@@ -150,6 +151,10 @@ void entity_think_all(){
 		if(!entityList[i].think){
 			continue;
 		}
+		/*if(entityList[i].path)
+		{
+			path_free(entityList[i].path);
+		}*/
 		entityList[i].think(&entityList[i]);
 	}
 }
@@ -159,6 +164,10 @@ void entity_update_all(){
 	for(i = 0; i < ENTITY_MAX; i++){
 		if(!entityList[i].inuse){
 			continue;
+		}
+		if(!entityList[i].sprite)
+		{
+			entity_free(&entityList[i]);
 		}
 
 		if(entityList[i].position.x < 0 ) 
@@ -378,43 +387,82 @@ void ent_follow_path(entity *self)
 	Vec2d tile_pos;
 	Vec2d tile_center_pos;
 	Vec2d self_center_pos = { ENT_CENTER_X(self), ENT_CENTER_Y(self)};
+	Vec2d player_center_pos = { ENT_CENTER_X(entity_get_player()), ENT_CENTER_Y(entity_get_player()) };
 	Vec2d new_vel;
+	//smaller bounds mean closer
+	Rect_f tile_bound = {-1,-1, TILE_WIDTH/3, TILE_HEIGHT/3};
+	Rect_f self_bound = {self->position.x + self->boundBox.x, self->position.y + self->boundBox.y,
+						 self->boundBox.w, self->boundBox.h};
+	float x;
+	float y;
 
 	int distance;
 	if(!self) 
 	{
 		return;
 	}
+	if(self->state != STATE_AGGRO)
+	{
+		return;
+	}
 	if(!self->path)
 	{
-		tile_pos = tile_get_pos(tile_get_tile_number(self_center_pos));
-		tile_center_pos.x = TILE_CENTER_X(tile_pos);
-		tile_center_pos.y = TILE_CENTER_Y(tile_pos);
-		Vec2dSub(self_center_pos,tile_center_pos,new_vel);
+		slog("No Path");
+		return;
+		/*Vec2dSub(self_center_pos,player_center_pos,new_vel);
 		Normalize2d(new_vel);
-		VectorScale(new_vel, new_vel, 5);
+		VectorScale(new_vel, new_vel, 10);
 		self->velocity = new_vel;
 		slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
-		return;
+		x = new_vel.x;
+		y = new_vel.y;
+		while((x * x + y * y) < 25)
+		{
+			//VectorScale(new_vel, new_vel, 2);
+			x *= 2;
+			y *= 2;
+		}
+		new_vel.x = x;
+		new_vel.y = y;
+		return;*/
 	}
 	else
 	{
+		slog("Next is: %i", self->path->tile_index);
+		slog("Player is %i", tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox));
 		 tile_pos = tile_get_pos(self->path->tile_index);
+
 		 tile_center_pos.x = TILE_CENTER_X(tile_pos);
 		 tile_center_pos.y = TILE_CENTER_Y(tile_pos);
+
+		 tile_bound.x = tile_center_pos.x;
+		 tile_bound.y = tile_center_pos.y;
 	}
 
-	if((TILE_CENTER_X(tile_pos) == ENT_CENTER_X(self)) && 
-	   TILE_CENTER_Y(tile_pos) == ENT_CENTER_Y(self) )
+/*	if((TILE_CENTER_X(tile_pos) == ENT_CENTER_X(self)) && 
+	   TILE_CENTER_Y(tile_pos) == ENT_CENTER_Y(self) )*/
+	if(rect_collide(tile_bound, self_bound))
 	{
-		path_free_node(self->path);
-		self->followPath(self);
+		slog("rect collide");
+		path_free_node(&(self->path));
+		self->velocity.x = 0;
+		self->velocity.y = 0;
 	}
 	else
 	{	
 		Vec2dSub(tile_center_pos, self_center_pos, new_vel);
 		Normalize2d(new_vel);
 		VectorScale(new_vel, new_vel, 5);
+		x = new_vel.x;
+		y = new_vel.y;
+		while((x * x + y * y) < 49)
+		{
+			//VectorScale(new_vel, new_vel, 2);
+			x *= 2;
+			y *= 2;
+		}
+		new_vel.x = x;
+		new_vel.y = y;
 		self->velocity = new_vel;
 		slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
 	}

@@ -29,8 +29,9 @@ enum Monster{
 #define SPIDER01_FRAMEW 64
 #define SPIDER01_FRAMEH 64
 #define SPIDER01_VELOCITY_AGGRO 5
+#define SPIDER01_AGGRO_RANGE 5
 #define TYPE_SPIDER_01 1
 #define SPIDER01_THINK_RATE 30
-#define SPIDER01_TIMER 1000//spawn rate
+#define SPIDER01_TIMER 100//spawn rate
 
 #endif

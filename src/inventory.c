@@ -18,6 +18,14 @@ void inventory_close()
 		inv_items[i].icon = NULL;
 		inv_items[i].item_model = NULL;
 	}
+	memset(inv_items, 0, sizeof(item)* ITEMS_MAX);
+	free(inv_items);
+
+	memset(inv_weapons, 0, sizeof(Weapon)* WEAPONS_MAX);
+	free(inv_weapons);
+	memset(inv_armors, 0, sizeof(Armor)* ARMORS_MAX);
+	free(inv_armors);
+
 }
 
 void inventory_init()
@@ -25,7 +33,7 @@ void inventory_init()
 	int i;
 
 	inv_items = (item*)malloc(sizeof(item) * ITEMS_MAX);
-	memset(inv_items, 0, sizeof(item)* ITEMS_MAX);
+	if(inv_items)memset(inv_items, 0, sizeof(item)* ITEMS_MAX);
 
 	inv_weapons = (Weapon*)malloc(sizeof(Weapon) * WEAPONS_MAX);
 	memset(inv_weapons, 0, sizeof(Weapon)* WEAPONS_MAX);

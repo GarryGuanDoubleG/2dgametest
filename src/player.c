@@ -104,7 +104,7 @@ void player_draw(){
 void player_update(entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
-	if(tile_collision(new_pos, player->boundBox))
+	if(!tile_collision(new_pos, player->boundBox))
 	{
 		player->position = new_pos;
 	}
