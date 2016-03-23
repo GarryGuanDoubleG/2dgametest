@@ -1,6 +1,5 @@
 #ifndef _MONSTER_H_
 #define _MONSTER_H_
-
 #include "sprite.h"
 #include "entity.h"
 #include "vector.h"

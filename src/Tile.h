@@ -63,9 +63,11 @@ int tile_collision(Vec2d pos, SDL_Rect bound);
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
 void tile_list_heuristic_free(tile_heuristic * tile_list);
+int tile_structure_collision(Rect_f structure);
 float tile_dist_to_target(int start, int target);
 Vec2d tile_get_pos(int index);
 tile_heuristic * tile_get_heuristic(int size, int start, int target);
+void tile_make_bound(Rect_f structure);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))

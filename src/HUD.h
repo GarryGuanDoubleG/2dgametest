@@ -21,7 +21,7 @@ enum HUD_state
 
 void hud_init();
 void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float max_mana);
-void set_hud_state(HUD_state state);
+int set_hud_state(HUD_state state);
 #define HEALTH_MANA_BAR_PATH "images/HUD/SleekBars.png"
 #define BAR_IMG_W 128 //original size of image
 #define BAR_IMG_H 32

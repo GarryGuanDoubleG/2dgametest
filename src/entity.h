@@ -41,7 +41,7 @@ typedef struct Entity_S
 	int player;
 	int aggro_range;
 	int team;
-
+	int damage;
 	Weapon *weapon;
 	int stamina;
 	int state;
@@ -63,12 +63,15 @@ extern int entity_count;
 
 void entity_free(entity * ent);
 void entity_initialize_system();
+int entity_structure_collision(Rect_f boundBox);
 entity *entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int state);
 void entity_close();
 void entity_draw(entity *ent, int x, int y);
 void entity_update();
 void entity_update_all();
 void ent_follow_path(entity *self);
+entity * ent_find_nearest_enemy(entity *self);
+entity * ent_find_nearest_teammate(entity *self);
 //in class
 /*
  *@brief return a pointer to an empty entity structure

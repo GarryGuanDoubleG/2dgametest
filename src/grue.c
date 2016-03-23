@@ -117,7 +117,7 @@ entity * grue_spawn(){
 	ent_grue->think = grue_think;
 	ent_grue->nextThink = 1;
 	ent_grue->thinkRate = GRUE_THINK_RATE;//think every 30 frames
-	ent_grue->touch = grue_touch;
+	//ent_grue->touch = grue_touch;
 	ent_grue->update = grue_update;
 	ent_grue->state = STATE_PATROL;
 	ent_grue->boundBox = boundBox;

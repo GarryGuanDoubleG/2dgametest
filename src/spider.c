@@ -157,7 +157,7 @@ entity * spider01_spawn()
 	ent_spider01->think = spider_think;
 	ent_spider01->nextThink = 1;
 	ent_spider01->thinkRate = SPIDER01_THINK_RATE;//think every 30 frames
-	ent_spider01->touch = spider_touch;
+//	ent_spider01->touch = spider_touch;
 	ent_spider01->update = spider_update;
 	ent_spider01->onDeath = spider_onDeath;
 	ent_spider01->state = STATE_PATROL;

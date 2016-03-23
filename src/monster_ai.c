@@ -6,7 +6,16 @@ int const MONSTER_TIMER = 6000;
 int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
 
 time_t t;
-int g_spawned_spider = true;
+
+void monster_touch(entity *self, entity *other)
+{
+	if(self->team != other->team)
+	{
+		other->health -= self->damage;
+	}
+
+}
+
 entity *monster_spawn(int type){
 	entity *ent_new;//sprite of monster to spawn
 	srand((unsigned)time(&t));
@@ -19,6 +28,7 @@ entity *monster_spawn(int type){
 		slog("Unidentified monster spawn type: %i", type);
 		return NULL;
 	}
+	
 	if(type == Monster::grue){
 		 ent_new = grue_spawn();
 	}
@@ -33,8 +43,12 @@ entity *monster_spawn(int type){
 	{
 		ent_new = orc_spawn();
 	}
-	ent_new->team = TEAM_ENEMY;
+
 	if(ent_new){
+
+		ent_new->team = TEAM_ENEMY;
+		ent_new->touch = monster_touch;
+		ent_new->damage = 1;//dummy value
 		return ent_new;
 	}
 

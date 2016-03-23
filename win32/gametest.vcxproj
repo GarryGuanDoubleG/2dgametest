@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\archer.c" />
     <ClCompile Include="..\src\armor.c" />
     <ClCompile Include="..\src\entity.c" />
     <ClCompile Include="..\src\game.c" />
@@ -24,14 +25,19 @@
     <ClCompile Include="..\src\orc.c" />
     <ClCompile Include="..\src\path_find.c" />
     <ClCompile Include="..\src\player.c" />
+    <ClCompile Include="..\src\sara.c" />
     <ClCompile Include="..\src\simple_logger.c" />
     <ClCompile Include="..\src\spider.c" />
     <ClCompile Include="..\src\sprite.c" />
+    <ClCompile Include="..\src\structures.c" />
+    <ClCompile Include="..\src\support_ai.c" />
+    <ClCompile Include="..\src\supp_angel.c" />
     <ClCompile Include="..\src\Tile.c" />
     <ClCompile Include="..\src\vector.c" />
     <ClCompile Include="..\src\weapon.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\arccher.h" />
     <ClInclude Include="..\src\armor.h" />
     <ClInclude Include="..\src\entity.h" />
     <ClInclude Include="..\src\graphics.h" />
@@ -46,9 +52,15 @@
     <ClInclude Include="..\src\orc.h" />
     <ClInclude Include="..\src\path_find.h" />
     <ClInclude Include="..\src\player.h" />
+    <ClInclude Include="..\src\sara.h" />
     <ClInclude Include="..\src\simple_logger.h" />
     <ClInclude Include="..\src\spider.h" />
     <ClInclude Include="..\src\sprite.h" />
+    <ClInclude Include="..\src\structures.h" />
+    <ClInclude Include="..\src\structure_define.h" />
+    <ClInclude Include="..\src\support_ai.h" />
+    <ClInclude Include="..\src\support_define.h" />
+    <ClInclude Include="..\src\supp_angel.h" />
     <ClInclude Include="..\src\Tile.h" />
     <ClInclude Include="..\src\Tile_define.h" />
     <ClInclude Include="..\src\vector.h" />

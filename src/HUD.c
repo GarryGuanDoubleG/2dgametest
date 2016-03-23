@@ -63,7 +63,16 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 
 }
  
-void set_hud_state(HUD_state state)
+int set_hud_state(HUD_state state)
 {
-	hud_state_curr = state;
+	if(hud_state_curr == state)
+	{
+		hud_state_curr = HUD_state::main_menu;
+		return false;
+	}
+	else
+	{
+		hud_state_curr = state;
+		return true;
+	}
 }

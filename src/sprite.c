@@ -26,9 +26,13 @@ void InitMouse2()
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
-
   Mouse2.frame_horizontal = Mouse2.frame_vertical = 0;
 
+}
+Vec2d get_mouse_pos()
+{
+	Vec2d mouse_pos = {Mouse2.x, Mouse2.y};
+	return mouse_pos;
 }
 
 void DrawMouse2()
@@ -36,7 +40,7 @@ void DrawMouse2()
   int mx,my;
   SDL_GetMouseState(&mx,&my);
   if(Sprite_Mouse != NULL)
-	  sprite_draw(Sprite_Mouse,Mouse2.frame_horizontal, Mouse2.frame_vertical,__gt_graphics_renderer,mx,my);
+	  sprite_draw(Sprite_Mouse,Mouse2.frame_horizontal, Mouse2.frame_vertical,__gt_graphics_renderer,graphics_get_player_cam().x + mx, graphics_get_player_cam().y + my);
   else
 	  printf("Sprite_Mouse did not load properly");
 

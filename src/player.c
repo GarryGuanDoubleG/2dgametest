@@ -12,6 +12,8 @@ const int PLAYER_FRAMEW = 128;
 
 static player_equip PlayerEquip;
 static int animCurrent;//used to determine current animation
+static int in_build_mode_01 = false;
+static int selecting_struct = false;
 //taken from lazyfoo
 //order of up,left,down,right are listed in order to match frame vertical in player.png
 enum KeyPressSurfaces{
@@ -54,6 +56,7 @@ void player_init(){
 	player->think = player_think;
 	player->update = player_update;
 	player->player = true;
+	player->team = TEAM_PLAYER;
 
 	weapon_load_all();
 	armor_load_all();
@@ -62,6 +65,7 @@ void player_init(){
 	player->weapon = PlayerEquip.weapon;
 	PlayerEquip.head = getArmor("head chain hood");
 }
+
 void player_draw_equip(){
 	if(PlayerEquip.feet){
 		sprite_draw(getArmorAnim(animCurrent, PlayerEquip.feet), player->frame_horizontal, player->frame_vertical,__gt_graphics_renderer,player->position.x,player->position.y);
@@ -98,7 +102,7 @@ void player_draw(){
 	entity_draw(player,player->position.x,player->position.y);
 
 	player_draw_equip();
-	hud_draw(graphics_get_player_cam(),player->health, player->health * 2, 30, 100);
+	hud_draw(graphics_get_player_cam(),player->health, player->maxhealth, player->stamina, player->stamina);
 }
 
 void player_update(entity *self)
@@ -205,21 +209,47 @@ void player_attack(SDL_Event *e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
 	}
-	switch( e->key.keysym.sym )
-    {
-		case SDLK_i:
-			set_hud_state(HUD_state::inventory1);
-			break;
-		case SDLK_f:
-			slog("Press F");
-			if(animCurrent != SLASH && player_tree_collision())
+	switch(e->type){
+		case SDL_MOUSEBUTTONDOWN:
+			if(selecting_struct)
 			{
-				animCurrent = SLASH;
-				player->sprite->fpl = playerBody.image_slash->fpl;
-				player->sprite = playerBody.image_slash;
-				player->frame_horizontal = 0;//reset it;
+				selecting_struct = false;
+				set_hud_state(HUD_state::inventory1);
+				structure_place();
+			}
+		break;
+		case SDL_KEYDOWN:
+			switch( e->key.keysym.sym )
+			  {
+				case SDLK_i:
+					set_hud_state(HUD_state::inventory1);
+					break;
+				case SDLK_b:
+					in_build_mode_01 = set_hud_state(HUD_state::build1);
+					break;
+				case SDLK_v:
+					if(in_build_mode_01)
+					{
+						structure_select(struct_type::main_base01);
+						selecting_struct =!selecting_struct;
+					}
+				case SDLK_f:
+					slog("Press F");
+					if(animCurrent != SLASH && player_tree_collision())
+					{
+						animCurrent = SLASH;
+						player->sprite->fpl = playerBody.image_slash->fpl;
+						player->sprite = playerBody.image_slash;
+						player->frame_horizontal = 0;//reset it;
+					}
+					break;
 			}
 			break;
+		default:
+			break;
+	}
+	switch( e->key.keysym.sym )
+    {
 		case SDLK_SPACE:			
 			//if(player_struct.weapon == WEAP_SWORD)
 			if(animCurrent != SLASH)
@@ -236,8 +266,7 @@ void player_attack(SDL_Event *e){
 			break;
 		default:
 			break;
-	}
-			
+	}			
 }
 
 int player_tree_collision()

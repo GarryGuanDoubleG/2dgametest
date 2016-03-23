@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "graphics.h"
@@ -8,7 +9,9 @@
 #include "Tile.h"
 #include "player.h"
 #include "monster_ai.h"
+#include "support_ai.h"
 #include "items.h"
+#include "structures.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
@@ -58,11 +61,17 @@ int main(int argc, char *argv[])
 
 //	monster_spawn(Monster::grue);
 //	monster_spawn(Monster::spider01);
-	monster_spawn(Monster::mino);
-	monster_spawn(Monster::orc);
+	monster_spawn(Monster::mino);		
+	monster_spawn(Monster::orc);	
+	support_spawn(Support::sara);	
+	support_spawn(Support::healer);	
+	support_spawn(Support::archer);
+
 	entity_update_all();
 	entity_think_all();
 	entity_check_collision_all();
+	struct_update_all();
+
 	MONSTER_SPAWN_TIMER -= 1;
 
 	while(SDL_PollEvent(&e) != 0)
@@ -108,12 +117,14 @@ void Init_All()
     SCREEN_HEIGHT,
     bgcolor,
     0);
-  //GG edit
+ 
+  srand(time(NULL)); 
   sprite_initialize_system(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
   tile_init_system();
   player_init(); //creates player entity
   hud_init();
+  structure_init_system();
   item_load_all();
   inventory_init();
   InitMouse2();

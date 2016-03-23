@@ -121,7 +121,10 @@ void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
 	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
-	draw_health_bar(ent);
+	if(!ent->player)
+	{
+		draw_health_bar(ent);
+	}
 }
 
 void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
@@ -161,6 +164,8 @@ void entity_think_all(){
 
 void entity_update_all(){
 	int i = 0;
+	Vec2d new_pos;
+	Vec2d old_pos;
 	for(i = 0; i < ENTITY_MAX; i++){
 		if(!entityList[i].inuse){
 			continue;
@@ -192,7 +197,10 @@ void entity_update_all(){
 		}
 
 		entityList[i].update(&entityList[i]);
-
+		if(entityList[i].health <= 0 && !entityList[i].player)
+		{
+			entity_free(&entityList[i]);
+		}
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
 		}
@@ -213,7 +221,10 @@ void weapon_touch(entity * self, entity *other)
 		slog("Self || Other is NULL");
 	}
 	//apply damage
-	other->health -= self->weapon->damage;
+	if(other->team != self->team)
+	{
+		other->health -= self->weapon->damage;
+	}
 	//check if dead
 	if(other->health <= 0)
 	{
@@ -222,7 +233,26 @@ void weapon_touch(entity * self, entity *other)
 	}
 
 }
+int entity_structure_collision(Rect_f boundBox)
+{
+	int i;
+	Rect_f ent_rect;
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		ent_rect.x = entityList[i].position.x + entityList[i].boundBox.x;
+		ent_rect.y = entityList[i].position.y + entityList[i].boundBox.y;
+		ent_rect.w = entityList[i].boundBox.w;
+		ent_rect.h = entityList[i].boundBox.h;
 
+		if(rect_collide(boundBox, ent_rect) && !entityList[i].player);
+		{
+			return true;
+		}
+	}
+	return false;
+}
 int entity_collide(entity *a, entity*b)
 {
 	SDL_Rect aB = {a->boundBox.x + a->position.x, a->boundBox.y + a->position.y, a->boundBox.w, a->boundBox.h};
@@ -354,11 +384,17 @@ void entity_check_collision_all()
 				continue;
 			}
 			next = &entityList[j];
-			if((!next || !curr) && curr == next )
+			if((!next || !curr) || curr == next )
 			{
 				continue;
 			}
-			entity_collide(curr, next);			
+			if(entity_collide(curr, next))
+			{
+				if(curr->touch)
+				{				
+					curr->touch(curr, next);
+				}
+			}
 		}
 	}
 }
@@ -407,7 +443,7 @@ void ent_follow_path(entity *self)
 	}
 	if(!self->path)
 	{
-		slog("No Path");
+	//	slog("No Path");
 		return;
 		/*Vec2dSub(self_center_pos,player_center_pos,new_vel);
 		Normalize2d(new_vel);
@@ -428,8 +464,8 @@ void ent_follow_path(entity *self)
 	}
 	else
 	{
-		slog("Next is: %i", self->path->tile_index);
-		slog("Player is %i", tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox));
+		/*slog("Next is: %i", self->path->tile_index);
+		slog("Player is %i", tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox));*/
 		 tile_pos = tile_get_pos(self->path->tile_index);
 
 		 tile_center_pos.x = TILE_CENTER_X(tile_pos);
@@ -443,7 +479,7 @@ void ent_follow_path(entity *self)
 	   TILE_CENTER_Y(tile_pos) == ENT_CENTER_Y(self) )*/
 	if(rect_collide(tile_bound, self_bound))
 	{
-		slog("rect collide");
+//		slog("rect collide");
 		path_free_node(&(self->path));
 		self->velocity.x = 0;
 		self->velocity.y = 0;
@@ -464,7 +500,84 @@ void ent_follow_path(entity *self)
 		new_vel.x = x;
 		new_vel.y = y;
 		self->velocity = new_vel;
-		slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
+	//	slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
 	}
 
 }
+
+entity * ent_find_nearest_enemy(entity *self)
+{
+	int i;
+	float min_dist = 99999;
+	float distance;
+	int ent_index = -1;
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		if(entityList[i].team == self->team)
+		{
+			continue;
+		}
+		if(&entityList[i] == self)
+		{
+			continue;
+		}
+
+		distance = Vec2dDistance(entityList[i].position, self->position);
+		if(min_dist > MIN(min_dist, distance))
+		{
+			min_dist = distance;
+			ent_index = i;
+		}
+	}
+	if(ent_index != -1)
+	{
+
+		return &entityList[ent_index];
+	}
+	else
+	{
+		return NULL;
+	}
+
+}
+
+entity * ent_find_nearest_teammate(entity *self)
+{
+	int i;
+	float min_dist = 99999;
+	float distance;
+	int ent_index = -1;
+	for(i = 0; i < ENTITY_MAX; i++){
+		if(!entityList[i].inuse){
+			continue;
+		}
+		if(entityList[i].team != self->team)
+		{
+			continue;
+		}
+		if(&entityList[i] == self)
+		{
+			continue;
+		}
+
+		distance = Vec2dDistance(entityList[i].position, self->position);
+		if(min_dist > MIN(min_dist, distance))
+		{
+			min_dist = distance;
+			ent_index = i;
+		}
+	}
+	if(ent_index != -1)
+	{
+
+		return &entityList[ent_index];
+	}
+	else
+	{
+		return NULL;
+	}
+
+}
+

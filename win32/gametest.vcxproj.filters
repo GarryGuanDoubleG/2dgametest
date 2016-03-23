@@ -58,6 +58,21 @@
     <ClCompile Include="..\src\orc.c">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\support_ai.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sara.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\supp_angel.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\archer.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\structures.c">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\armor.h">
@@ -121,6 +136,27 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\orc.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\support_ai.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\support_define.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sara.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\supp_angel.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\arccher.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\structures.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\structure_define.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

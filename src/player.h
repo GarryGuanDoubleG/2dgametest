@@ -6,6 +6,8 @@
 #include "armor.h"
 #include "Tile.h"
 #include "HUD.h"
+#include "structure_define.h"
+#include "structures.h"
 
 extern entity *player;
 extern char * player_char_file;

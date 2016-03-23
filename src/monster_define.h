@@ -16,6 +16,7 @@ enum Monster{
 #define grue_imageH  71
 #define grue_frameW  101
 #define grue_frameH  127
+
 #define GRUE_VELOCITY_AGGRO 8
 #define GRUE_TIMER 300
 #define GRUE_THINK_RATE 30

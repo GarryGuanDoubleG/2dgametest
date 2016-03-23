@@ -179,7 +179,7 @@ void tile_forest_gen(int start)
 void tile_forest_gen()
 {
 	int start;
-	srand(time(NULL));
+	
 	start = 0;
 	tile_forest_gen(start);
 	//start of top edge of forest
@@ -327,11 +327,13 @@ void tile_close_system(){
 
 Tile tile_start()
 {
+
 	int i;
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		if(tile_list[i].mType == TILE_ROAD)
 		{
+			
 			if(rand() % 20 <= 5 && i != 0)
 			{
 				return tile_list[i];
@@ -341,6 +343,35 @@ Tile tile_start()
 
 	return tile_list[0];
 }
+
+void tile_make_bound(Rect_f structure)
+{
+	int i;
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
+		if(dest_tile_list[i].mType != TILE_TREE && 
+			rect_collide(structure, dest_tile_list[i].mBox))
+		{
+			dest_tile_list[i].mType = TILE_TREE;//here for collision. need to make another type
+		}
+	}
+}
+
+int tile_structure_collision(Rect_f structure)
+{
+	
+	int i;
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
+		if(dest_tile_list[i].mType == TILE_TREE && 
+			rect_collide(structure, dest_tile_list[i].mBox))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 
 int tile_collision(Vec2d pos, SDL_Rect bound)
 {
@@ -521,129 +552,6 @@ float tile_dist_to_target(int start, int target)
 	Vec2d vec_start = { tile_list[start].mBox.x, tile_list[start].mBox.y };
 	Vec2d vec_target = { tile_list[target].mBox.x, tile_list[target].mBox.y };
 	return Vec2dDistance(vec_start, vec_target);
-}
-tile_heuristic * tile_get_heuristic(int size, int start, int target)
-{
-	const int side = size; //square region of size * size
-	int move_left = 0;
-	int move_right = 0;
-	int move_up = 0;
-	int move_down = 0; 
-	int tile_num = start;
-	int i;
-	int j;
-	int tile_index;
-	int temp_index;
-	// 2d array with tile index and heuristic score
-	tile_heuristic *tile_list = NULL;
-
-	tile_list = (tile_heuristic*)malloc(sizeof(tile_heuristic));
-	memset(tile_list, 0, sizeof(tile_list));
-
-	tile_list->distance_to_target = (int*)malloc(sizeof(int)* size * size);
-	memset(tile_list->distance_to_target, 0, sizeof(int)* size * size);
-	tile_list->tile_index = (int*)malloc(sizeof(int) * size * size);
-	memset(tile_list->tile_index, 0, sizeof(int) * size * size);
-	tile_list->size = size;
-	tile_list->start = start;
-	tile_list->target = target;
-
-	if(start == target)
-	{
-		slog("Start == Target");
-		tile_list->distance_to_target = NULL;
-		tile_list->tile_index = NULL;
-		tile_list->size = 0;
-		delete(tile_list);
-		return NULL;
-	}
-
-	for(i = 0; i < size; i++)
-	{
-		tile_list->distance_to_target[i] = -1;
-		tile_list->tile_index[i] = -1;
-	}
-	
-	while(tile_num %(TOTAL_TILES_X) != 0 && move_left < side/2)
-	{
-		tile_num--;
-		move_left++;
-	}
-	tile_num = start;
-
-	while(tile_num %(TOTAL_TILES_X-1) != 0 && move_right < side/2)
-	{
-		tile_num--;
-		move_right++;
-	}
-	tile_num = start;
-
-	while(tile_num > (TOTAL_TILES_X) && move_up < side/2)
-	{
-		tile_num -= TOTAL_TILES_X;
-		move_up++;
-	}
-	tile_num = start;
-	while(tile_num < (TOTAL_TILES - TOTAL_TILES_X) && move_down < side/2)
-	{
-		tile_num += TOTAL_TILES_X;
-		move_down++;
-	}
-	
-	for(j = 0; j < (move_up + move_down+ 1); j++)//traverse vertical tile list
-	{
-		tile_index = start - move_left - (TOTAL_TILES_X * (move_up - j));
-
-		for(i = 0; i < move_left + move_right + 1; i++) // traverse horizontal tile list
-		{
-			int count = 0;
-			int before_vertical_index;
-			temp_index = tile_index;
-
-			int diff = (tile_index % TOTAL_TILES_X);
-			int target_diff = (target % TOTAL_TILES_X);
-
-			if((tile_index % TOTAL_TILES_X) < (target % TOTAL_TILES_X))// each tile index moves to target and counts
-			{
-				while(temp_index % TOTAL_TILES_X < target % TOTAL_TILES_X)
-				{
-					temp_index++;
-					count++;
-				}
-			}
-			else
-			{
-				while((temp_index % TOTAL_TILES_X) > (target % TOTAL_TILES_X))
-				{
-					temp_index--;
-					count++;
-				}
-
-			}
-			before_vertical_index = temp_index;
-			while(temp_index != target) // check if target is in same row as start
-			{
-				if(temp_index > target)
-				{
-					temp_index -= TOTAL_TILES_X;
-					count++;
-				}
-				else
-				{
-					temp_index += TOTAL_TILES_X;
-					count++;
-				}
-			}
-
-			tile_list->tile_index[i+j] = tile_index;
-			tile_list->distance_to_target[i+j] = count;
-
-			tile_index++;
-		}
-	}
-	
-	//slog_heuristic(side, start, target, tile_list);
-	return tile_list;
 }
 
 Vec2d tile_get_pos(int index)
