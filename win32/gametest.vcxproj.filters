@@ -52,6 +52,12 @@
     <ClCompile Include="..\src\path_find.c">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\minotaur.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\orc.c">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\armor.h">
@@ -109,6 +115,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\path_find.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\minotaur.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\orc.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

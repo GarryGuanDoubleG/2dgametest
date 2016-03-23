@@ -18,7 +18,12 @@ enum Dir{
    DOWN,
    RIGHT,
 };*/
-
+#define TEAM_PLAYER 1
+#define TEAM_ENEMY  0
+#define STATE_IDLE		100 // walking around or standing still
+#define STATE_PATROL		101 // walking around
+#define STATE_AGGRO		102 //actively attacking player
+#define STATE_SEEK		103 //trying to find player
 
 typedef struct Entity_S
 {
@@ -35,6 +40,7 @@ typedef struct Entity_S
 	int face_dir;
 	int player;
 	int aggro_range;
+	int team;
 
 	Weapon *weapon;
 	int stamina;

@@ -6,12 +6,9 @@
 enum Monster{
 	grue,
 	spider01,
+	mino,
+	orc,
 };
-//states the ai is in
-#define STATE_IDLE		100 // walking around or standing still
-#define STATE_PATROL		101 // walking around
-#define STATE_AGGRO		102 //actively attacking player
-#define STATE_SEEK		103 //trying to find player
 
 //grue
 #define sprite_grue_filepath "images/Monsters/Grue/GrueGrin.png"
@@ -32,6 +29,29 @@ enum Monster{
 #define SPIDER01_AGGRO_RANGE 5
 #define TYPE_SPIDER_01 1
 #define SPIDER01_THINK_RATE 30
-#define SPIDER01_TIMER 100//spawn rate
+#define SPIDER01_TIMER 300//spawn rate
 
+#define SPRITE_MINO_FILEPATH "images/Monsters/MINO.png"
+#define MINO_IMAGEW 48
+#define MINO_IMAGEH 48
+#define MINO_FRAMEW 96
+#define MINO_FRAMEH 96
+#define MINO_FPL 10
+#define MINO_VELOCITY_AGGRO 5
+#define MINO_AGGRO_RANGE 5
+#define TYPE_MINO 2
+#define MINO_THINK_RATE 30
+#define MINO_TIMER 300//spawn rate
+
+#define SPRITE_ORC_FILEPATH "images/Monsters/orc.png"
+#define ORC_IMAGEW 32
+#define ORC_IMAGEH 32
+#define ORC_FRAMEW 96
+#define ORC_FRAMEH 96
+#define ORC_FPL    10
+#define ORC_VELOCITY_AGGRO 5
+#define ORC_AGGRO_RANGE 5
+#define TYPE_ORC 3
+#define ORC_THINK_RATE 30
+#define ORC_TIMER 300//spawn rate
 #endif

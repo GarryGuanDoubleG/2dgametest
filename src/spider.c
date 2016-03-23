@@ -17,8 +17,6 @@ void spider_update(entity *self)
 	}
 
 	entity_draw(self,self->position.x, self->position.y);
-
-
 }
 
 void spider_touch(entity *self, entity *other)
@@ -27,6 +25,7 @@ void spider_touch(entity *self, entity *other)
 void spider_think(entity *self)
 {
 	int randomNum;
+	int distance;
 	Vec2d self_pos =  {self->position.x, self->position.y};
 	Vec2d player_pos = {entity_get_player()->position.x, entity_get_player()->position.y};
 	Vec2d spider_dir;
@@ -53,7 +52,21 @@ void spider_think(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		if(tile_to_tile_dist(tile_get_tile_number(self->position, self->boundBox), tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox)) <= 1)
+		{
+			spider_dir.x = player_pos.x - self_pos.x;
+			spider_dir.y = player_pos.y - self_pos.y;
+
+			distance = Normalize2d(spider_dir);
+			spider_dir = VectorScale(spider_dir, spider_dir, GRUE_VELOCITY_AGGRO);
+			self->velocity = distance != 0 ? spider_dir : self->velocity;
+			path_free(self->path);
+			self->path = NULL;
+		}
+		else
+		{
+			self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		}
 	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 

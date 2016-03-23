@@ -57,7 +57,9 @@ int main(int argc, char *argv[])
 	DrawMouse2();
 
 //	monster_spawn(Monster::grue);
-	monster_spawn(Monster::spider01);
+//	monster_spawn(Monster::spider01);
+	monster_spawn(Monster::mino);
+	monster_spawn(Monster::orc);
 	entity_update_all();
 	entity_think_all();
 	entity_check_collision_all();

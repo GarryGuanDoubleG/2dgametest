@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "monster_ai.h"
 
-int const MONSTER_TIMER = 600;
+int const MONSTER_TIMER = 6000;
 int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
 
 time_t t;
@@ -25,7 +25,15 @@ entity *monster_spawn(int type){
 	if(type == Monster::spider01){
 		 ent_new = spider01_spawn();
 	}
-
+	if(type == Monster::mino)
+	{
+		ent_new = mino_spawn();
+	}
+	if(type == Monster::orc)
+	{
+		ent_new = orc_spawn();
+	}
+	ent_new->team = TEAM_ENEMY;
 	if(ent_new){
 		return ent_new;
 	}

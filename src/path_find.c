@@ -323,7 +323,6 @@ Path* getPath(int size, Vec2d *start, SDL_Rect start_bound, SDL_Rect target_boun
 		path_free(curr_path);
 	}
 
-
 	for(i =0; i < MAX_PATH_SIZE; i++)
 	{
 		closed_list[i].tile_index = closed_list[i].f_val = init.f_val; //high value to make sorting easier
