@@ -64,6 +64,7 @@ void player_init(){
 	PlayerEquip.weapon = getWeapon("longsword");
 	player->weapon = PlayerEquip.weapon;
 	PlayerEquip.head = getArmor("head chain hood");
+	PlayerEquip.chest = getArmor("chest chain");
 }
 
 void player_draw_equip(){
@@ -131,7 +132,6 @@ void player_update(entity *self)
 	else{
 		player->frame_horizontal += 1;
 	}
-
 }
 
 void player_update_camera()

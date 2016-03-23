@@ -25,6 +25,27 @@ Armor armorList[] =
 		-1, //fame vertical
 	},
 
+	{
+		"images/player/chest chain.png", // filepath
+		"images/player/slash/chest chain.png",
+		"images/player/bow/chain hood.png",
+		"images/player/thrust/head chain hood.png",
+		"images/player/spell/head chain hood.png",
+		 "chest chain", // name
+		 64,64,//image width & height
+		 PLAYER_FRAMEW, PLAYER_FRAMEH, //frame
+		{0,0},//offset
+		3,
+		3,
+
+		-1,
+		ARMOR_CHAIN,
+		true,
+		
+		-1,// frame horizontal
+		-1, //fame vertical
+	},
+
 };
 
 void armor_load_all(){

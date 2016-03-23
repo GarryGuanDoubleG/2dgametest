@@ -59,8 +59,8 @@ int main(int argc, char *argv[])
 	player_draw();
 	DrawMouse2();
 
-//	monster_spawn(Monster::grue);
-//	monster_spawn(Monster::spider01);
+	monster_spawn(Monster::grue);
+	monster_spawn(Monster::spider01);
 	monster_spawn(Monster::mino);		
 	monster_spawn(Monster::orc);	
 	support_spawn(Support::sara);	
