@@ -245,6 +245,10 @@ void tile_free(Tile *tile){
 
 int tile_get_type(int index)
 {
+	if(index < 0 || index > TOTAL_TILES)
+	{
+		return -1;
+	}
 	return dest_tile_list[index].mType;
 }
 int tile_to_tile_dist(int tile_1, int tile_2)
@@ -334,7 +338,7 @@ Tile tile_start()
 		if(tile_list[i].mType == TILE_ROAD)
 		{
 			
-			if(rand() % 20 <= 5 && i != 0)
+			if(rand() % 20 <= 1 && i != 0)
 			{
 				return tile_list[i];
 			}
