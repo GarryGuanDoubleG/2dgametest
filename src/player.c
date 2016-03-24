@@ -233,6 +233,18 @@ void player_attack(SDL_Event *e){
 						structure_select(struct_type::main_base01);
 						selecting_struct =!selecting_struct;
 					}
+				case SDLK_m:
+					if(in_build_mode_01)
+					{
+						structure_select(struct_type::wall_01);
+						selecting_struct =!selecting_struct;
+					}
+				case SDLK_t:
+					if(in_build_mode_01)
+					{
+						structure_select(struct_type::tower_01);
+						selecting_struct =!selecting_struct;
+					}
 				case SDLK_f:
 					slog("Press F");
 					if(animCurrent != SLASH && player_tree_collision())

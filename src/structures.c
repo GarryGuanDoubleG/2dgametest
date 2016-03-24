@@ -149,6 +149,17 @@ void structure_select(int type)
 		Sprite2 *struct_sprite = sprite_load(SPRITE_MAIN_BASE01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
+	if(type == struct_type::wall_01)
+	{
+		Sprite2 *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		selected_struct = struct_load(struct_sprite, 1000, 100, type);
+	}
+	if(type == struct_type::tower_01)
+	{
+		Sprite2 *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		selected_struct = struct_load(struct_sprite, 1000, 100, type);
+	}
+
 	selected_struct->boundBox.x = 0;
 	selected_struct->boundBox.y = 0;
 	selected_struct->boundBox.w = selected_struct->sprite->frameW;

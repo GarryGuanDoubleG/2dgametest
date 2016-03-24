@@ -13,4 +13,17 @@ enum struct_type{
 #define SPRITE_FRAME_W TILE_WIDTH  * 2
 #define SPRITE_FRAME_H TILE_HEIGHT * 2
 
+#define SPRITE_WALL01_FILEPATH "images/structures/wall_01.png"
+#define SPRITE_IMAGE_W 66
+#define SPRITE_IMAGE_H 160
+#define SPRITE_FRAME_W TILE_WIDTH  * 2
+#define SPRITE_FRAME_H TILE_HEIGHT * 2
+
+#define SPRITE_TOWER01_FILEPATH "images/structures/tower_01.png"
+#define SPRITE_IMAGE_W 100
+#define SPRITE_IMAGE_H 160
+#define SPRITE_FRAME_W TILE_WIDTH  * 2
+#define SPRITE_FRAME_H TILE_HEIGHT * 2
+
+
 #endif

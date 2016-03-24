@@ -77,10 +77,10 @@ int i;
 	}
 
 	type = tile_get_type(curr - TOTAL_TILES_X);
-	int in_c_list = !in_closed_list(size, curr - TOTAL_TILES_X);
+	int in_c_list = !check_closed_list(size, curr - TOTAL_TILES_X);
 	int can_move = TILE_CAN_MOVE_UP(curr);
 	if(TILE_CAN_MOVE_UP(curr) && tile_get_type(curr - TOTAL_TILES_X) != TILE_TREE
-							  && !in_closed_list(size, curr - TOTAL_TILES_X))
+							  && !check_closed_list(size, curr - TOTAL_TILES_X))
 	{
 		option = curr - TOTAL_TILES_X;
 
@@ -95,7 +95,7 @@ int i;
 		new_node->tile_index = min == up.f_val ? option : new_node->tile_index;*/
 //	}
 	/*type = tile_get_type(curr - TOTAL_TILES_X);
-	int in_c_list = !in_closed_list(size, curr - 1);
+	int in_c_list = !check_closed_list(size, curr - 1);
 	int can_move = TILE_CAN_MOVE_LEFT(curr);
 	if(TILE_CAN_MOVE_LEFT(curr) && tile_get_type(curr -1) != TILE_TREE && !in_c_list )
 	{
@@ -112,7 +112,7 @@ int i;
 
 
 	type = tile_get_type(curr + 1);
-	in_c_list = !in_closed_list(size, curr + 1);
+	in_c_list = !check_closed_list(size, curr + 1);
 	can_move = TILE_CAN_MOVE_RIGHT(curr);
 
 	if(TILE_CAN_MOVE_RIGHT(curr) && tile_get_type(curr + 1) != TILE_TREE  && !in_c_list )
@@ -131,7 +131,7 @@ int i;
 	/*}
 
 	type = tile_get_type(curr + TOTAL_TILES_X);
-	in_c_list = !in_closed_list(size, curr +TOTAL_TILES_X);
+	in_c_list = !check_closed_list(size, curr +TOTAL_TILES_X);
 	can_move = TILE_CAN_MOVE_DOWN(curr);
 
 	if(TILE_CAN_MOVE_DOWN(curr) && tile_get_type(curr + TOTAL_TILES_X) != TILE_TREE 
