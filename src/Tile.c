@@ -225,7 +225,7 @@ void tile_set(){
 		tile->mType = TILE_GRASS1;//filler
 		
 		dest_tile_list[i].mBox = tile->mBox;
-		dest_tile_list[i].mType = TILE_TREE;
+		dest_tile_list[i].mType = TILE_ROAD;
 		dest_tile_list[i].hits = 5;
 		x += TILE_WIDTH;		
 		if(x >= TOTAL_TILES_X * TILE_WIDTH)
@@ -271,7 +271,7 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 	{
 		while(tile_1 %(TOTAL_TILES_X-1) != 0 && tile_get_pos(tile_2).x >  tile_get_pos(tile_1).x )
 		{
-			tile_1--;
+			tile_1++;
 			move_right++;
 		}
 		tile_1 = start;

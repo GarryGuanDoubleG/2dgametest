@@ -108,12 +108,19 @@ void add_closed_list(int size, Path path)
 			if(closed_list[i].f_val == -1)
 			{
 				closed_list[i] = path;
+				break;
 			}
+		
+		}
+
+		for(i = 0; i < size - 1; i++)
+		{
 			if(open_list[i].tile_index == path.tile_index)
 			{
 				open_list[i].tile_index = open_list[i].f_val = -1;
 				sort_open_list(size);
 			}
+		
 		}
 	}
 }
@@ -197,10 +204,13 @@ Path *get_path(int curr, int size, int target, int max_g_val, Path *parent)
 	//bfs a * approach
 	path->tile_index = curr;
 	path->next = path->parent = NULL;
+	int dist = tile_to_tile_dist(curr, target);
 	if(curr == target || tile_to_tile_dist(curr, target) == 1)
 	{
+		path->tile_index = target;
 		return path;
 	}
+
 	add_closed_list(size, *path);
 	options = get_moves(curr);
 	for( i = 0; i < 4; i++)
