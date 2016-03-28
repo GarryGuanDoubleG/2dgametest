@@ -91,11 +91,12 @@ void angel_think(entity *self)
 		self->velocity.y = 0;
 		angel_heal_mode(self, teammate);
 		slog("Head Mode");
-	//	self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
 	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 
 	else if(self->state == STATE_PATROL){
+
 		if(randomNum<= 5){
 			self->velocity.x = 5;
 		}
