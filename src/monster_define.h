@@ -29,8 +29,8 @@ enum Monster{
 #define SPIDER01_VELOCITY_AGGRO 5
 #define SPIDER01_AGGRO_RANGE 5
 #define TYPE_SPIDER_01 1
-#define SPIDER01_THINK_RATE 30
-#define SPIDER01_TIMER 300//spawn rate
+#define SPIDER01_THINK_RATE 15
+#define SPIDER01_TIMER 100//spawn rate
 
 #define SPRITE_MINO_FILEPATH "images/Monsters/MINO.png"
 #define MINO_IMAGEW 48
