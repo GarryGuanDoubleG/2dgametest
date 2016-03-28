@@ -225,7 +225,7 @@ void tile_set(){
 		tile->mType = TILE_GRASS1;//filler
 		
 		dest_tile_list[i].mBox = tile->mBox;
-		dest_tile_list[i].mType = TILE_ROAD;
+		dest_tile_list[i].mType = TILE_TREE;
 		dest_tile_list[i].hits = 5;
 		x += TILE_WIDTH;		
 		if(x >= TOTAL_TILES_X * TILE_WIDTH)
