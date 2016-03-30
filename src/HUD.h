@@ -4,10 +4,22 @@
 #include "simple_logger.h"
 #include "inventory.h"
 
+/**
+* @brief pointer to sprite of player's health bar that HUD updates based on current health
+*/
 extern Sprite2 * health_bar;
+/**
+* @brief pointer to sprite of player's mana bar that HUD updates based on current mana
+*/
 extern Sprite2 * mana_bar;
+/**
+* @brief pointer to sprite of background of health and mana bars
+*/
 extern Sprite2 * bg_bar;
 
+/**
+* @brief states of the HUD to determine what to display in the menu HUD element
+*/
 enum HUD_state
 {
 	main_menu,
@@ -18,10 +30,25 @@ enum HUD_state
 	build1,
 	build2,
 };
-
+/*
+* @brief loads the sprites for the hud into memory and stores a handle on them
+*/
 void hud_init();
+/**
+* @brief renders the hud on the screen relative to the camera position
+* @param camera position to use for drawing relative location. Health & max health to determine the fill length of health bar. Same with mana
+*/
 void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float max_mana);
+/**
+* @brief changes the state of the hud and returns whether hud was already in the state
+* @param state to set HUD's state
+* @return returns 1 or 0 based on whether HUD was already in the parameter state
+*/
 int set_hud_state(HUD_state state);
+/**
+* @brief define terms for all HUD elements including filepath, image Width and height, and frame width and height
+* of health & mana bar, in game menu and icons
+*/
 #define HEALTH_MANA_BAR_PATH "images/HUD/SleekBars.png"
 #define BAR_IMG_W 128 //original size of image
 #define BAR_IMG_H 32

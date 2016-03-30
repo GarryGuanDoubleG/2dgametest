@@ -153,7 +153,7 @@ entity * angel_spawn()
 	Vec2d vel = {0,0};
 	SDL_Rect boundBox = {MINO_FRAMEW*.1f,MINO_FRAMEH *.2f, MINO_FRAMEW*.8, MINO_FRAMEH*.8};
 
-	if( (MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
+	if( (G_MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
 	{	
 		return NULL;
 	}

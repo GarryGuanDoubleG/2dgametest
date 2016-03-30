@@ -8,6 +8,6 @@
 
 entity * angel_spawn();
 
-extern int MONSTER_SPAWN_TIMER;
+extern int G_MONSTER_SPAWN_TIMER;
 
 #endif

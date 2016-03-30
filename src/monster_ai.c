@@ -3,7 +3,7 @@
 #include "monster_ai.h"
 
 int const MONSTER_TIMER = 6000;
-int MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
+int G_MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawned
 
 time_t t;
 
@@ -20,8 +20,8 @@ entity *monster_spawn(int type){
 	entity *ent_new;//sprite of monster to spawn
 	srand((unsigned)time(&t));
 
-	if(MONSTER_SPAWN_TIMER <= 0){
-		MONSTER_SPAWN_TIMER = MONSTER_TIMER;
+	if(G_MONSTER_SPAWN_TIMER <= 0){
+		G_MONSTER_SPAWN_TIMER = MONSTER_TIMER;
 	}
 
 	if(type < 0){

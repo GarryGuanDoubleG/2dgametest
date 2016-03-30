@@ -136,7 +136,7 @@ entity * spider01_spawn()
 	Vec2d vel = {0,0};
 	SDL_Rect boundBox = {SPIDER01_FRAMEW*.1f,SPIDER01_FRAMEH *.2f, SPIDER01_FRAMEW, SPIDER01_FRAMEH};
 
-	if( (MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
+	if( (G_MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
 	{	
 		return NULL;
 	}

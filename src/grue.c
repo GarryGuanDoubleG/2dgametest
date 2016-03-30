@@ -97,11 +97,11 @@ entity * grue_spawn(){
 	Vec2d pos = {400,400};
 	Vec2d vel = {-5,0};
 	SDL_Rect boundBox = {grue_frameW*.1f,grue_frameH *.1f, grue_frameW, grue_frameH};
-	if( (MONSTER_SPAWN_TIMER % (GRUE_TIMER)) != 0){
+	if( (G_MONSTER_SPAWN_TIMER % (GRUE_TIMER)) != 0){
 		return NULL;
 	}
-	slog("Timer: %i", MONSTER_SPAWN_TIMER);
-	slog("Monster Spawn Timer mod MonsterSpawn Timer is %i " , (MONSTER_SPAWN_TIMER % (GRUE_TIMER)));
+	slog("Timer: %i", G_MONSTER_SPAWN_TIMER);
+	slog("Monster Spawn Timer mod MonsterSpawn Timer is %i " , (G_MONSTER_SPAWN_TIMER % (GRUE_TIMER)));
 	sprite_grue = sprite_load(sprite_grue_filepath, grue_imageW, grue_imageH, grue_frameW, grue_frameH);
 	sprite_grue->fpl = 1;//2 frames per line
 	ent_grue = entity_load(sprite_grue, pos, 150, 25, STATE_PATROL);

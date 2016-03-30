@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 	entity_check_collision_all();
 	struct_update_all();
 
-	MONSTER_SPAWN_TIMER -= 1;
+	G_MONSTER_SPAWN_TIMER -= 1;
 
 	while(SDL_PollEvent(&e) != 0)
 		player_move (&e);
@@ -100,12 +100,6 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-void CleanUpAll()
-{
-  CloseSprites();
-  /*any other cleanup functions can be added here*/ 
-}
-
 void Init_All()
 {
 	float bgcolor[] = {1,1,1,1};
@@ -128,7 +122,6 @@ void Init_All()
   item_load_all();
   inventory_init();
   InitMouse2();
-  atexit(CleanUpAll);
 }
 
 int getImagePathFromFile(char *filepath,char * filename)

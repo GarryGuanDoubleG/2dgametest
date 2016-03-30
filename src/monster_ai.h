@@ -12,14 +12,19 @@
 //states the ai is in
 
 //monster types
-
+/**
+* @brief entity pointer to the player used for finding paths
+*/
 extern entity *player;
-
+/**
+* @brief calls on monster spawning function based on type to be spawned
+*/
 entity *monster_spawn(int type);
-void monster_think(entity *self);
-void monster_update(entity *self);
 
-extern int MONSTER_SPAWN_TIMER;
+/**
+* @brief Countdown timer used for modulo division specific spawn rate
+*/
+extern int G_MONSTER_SPAWN_TIMER;
 
 
 

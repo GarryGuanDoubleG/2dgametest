@@ -117,7 +117,7 @@ entity * orc_spawn()
 	Vec2d vel = {0,0};
 	SDL_Rect boundBox = {ORC_FRAMEW*.1f,ORC_FRAMEH *.2f, ORC_FRAMEW*.8, ORC_FRAMEH*.8};
 
-	if( (MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
+	if( (G_MONSTER_SPAWN_TIMER % SPIDER01_TIMER) != 0)
 	{	
 		return NULL;
 	}

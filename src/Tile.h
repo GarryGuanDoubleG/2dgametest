@@ -20,54 +20,76 @@ extern const int TOTAL_TILES_Y;
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
-//can probably take out mBox and use array index for location
-//faster and less memory
+/**
+* @brief tile structure with tile dimensions and type to be rendered
+*/
 typedef struct{
 
-	SDL_Rect mBox;
+	SDL_Rect mBox; /**< SDL_Rect with position and dimensions.*/
 	//Type of tile
-	int mType;
+	int mType; /**< int type of the tile*/
 }Tile;
-
+/**
+* @brief destructable tiles to be rendered over base layer tiles
+* applies collision on entites and can be destroyed with special skills for resources
+*/
 typedef struct{
-	SDL_Rect mBox;
-	int mType;
-	int hits;//how many hits left until collapse
+	SDL_Rect mBox; /**< SDL_Rect with position and dimensions.*/
+	int mType;/**< int type of the tile*/
+	int hits;/**< int how many hits left until destroyed */
 }Destructable_Tile;
 
-typedef struct{
-	int *tile_index;
-	int *distance_to_target;
-	int size;
-	int start;
-	int target;
-}tile_heuristic;
-
+/**
+* @brief list of all tiles in the game instance
+*/
 extern Tile *tile_list;
+/**
+* @brief list of all destructable tiles in the game instance
+*/
 extern Destructable_Tile *dest_tile_list;
-
+/**
+* @brief loads tile sprites into memeory
+*/
 void tile_init_system();
+/**
+* @brief loads tile sprite from filepath
+* @param cstring filepath of tile
+*/
 Sprite2 * tile_load(char *filename);
+/**
+* @brief sets the type and mbox of all tiles
+*/
 void tile_set();
+/**
+* @brief frees tile from memory
+*/
 void tile_free(Tile *tile);
-void tile_render ();
+/**
+* @brief renders tile onto screen
+*/
+void tile_render();
+/**
+* @brief frees all tiles in the tilelist
+*/
 void tile_close_system();
 
+/**
+* @brief Used to start procedurally generating the world.
+* Chooses start location on each edge of the map and starts a manicured drunken man's walk towards the center of the map 
+* man's path becomes roads
+*/
 Tile tile_start();
 int tile_get_type(int index);
 int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
 //number of tiles(non diagonal) between two tiles
-int tile_to_tile_dist(int tile_1, int tile_2);
-
-int tile_collision(Vec2d pos, SDL_Rect bound);
-int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
-
-void tile_list_heuristic_free(tile_heuristic * tile_list);
 int tile_structure_collision(Rect_f structure);
+int tile_collision(Vec2d pos, SDL_Rect bound);
+
 float tile_dist_to_target(int start, int target);
+int tile_to_tile_dist(int tile_1, int tile_2);
 Vec2d tile_get_pos(int index);
-tile_heuristic * tile_get_heuristic(int size, int start, int target);
-void tile_make_bound(Rect_f structure);
+
+int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
