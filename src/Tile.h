@@ -79,16 +79,55 @@ void tile_close_system();
 * man's path becomes roads
 */
 Tile tile_start();
+/**
+* @brief returns the tile type of a tile
+* @param int index for tile
+* @return int type of tile
+*/
 int tile_get_type(int index);
+/*
+* @brief gets the tile index based on entity position and bouding box
+* @param position of entity to match with tile position. Bounding box used for center postion of ent
+* @return int tile index matching position
+*/
 int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
-//number of tiles(non diagonal) between two tiles
-int tile_structure_collision(Rect_f structure);
-int tile_collision(Vec2d pos, SDL_Rect bound);
+/**
+* @brief checks if structure is on destructable tile
+* @param Rect_f of structure location and size
+* @returns true if structure collides with destructable tile
+*/
 
+int tile_structure_collision(Rect_f structure);
+/*
+* @brief returns true if tile collides with certain position and its bounding box
+* @param Vec2d position of collision. SDL_Rect bound to check entity collisions
+* @return true if position is collides with tile
+*/
+int tile_collision(Vec2d pos, SDL_Rect bound);
+/**
+* @brief returns the distance from two tiles
+* @param tile index of start tile. tile index of target tile
+* @return float distance between tiles
+*/
 float tile_dist_to_target(int start, int target);
+/*
+* @brief returns the number of tiles between two tiles
+* @param int tile_1 tile index of first tile. int tile_2 tile index of second tile
+* @return int number of tiles between tile_1 and tile_2
+*/
 int tile_to_tile_dist(int tile_1, int tile_2);
+/**
+* @brief gets the x and y position of a tile
+* @param int tile index 
+* @return Vec2d x and y position of tile
+*/
 Vec2d tile_get_pos(int index);
 
+/**
+* @brief used for damaging destructable tiles and returns true if destroyed
+* @param Vec2d position of caller, caller's bound box, and face direction
+* @return 1 if position and face direction match destructable tile
+*/
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
 #define MIN(a,b) (a < b ? a : b)
