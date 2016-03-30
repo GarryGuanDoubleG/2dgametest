@@ -1,76 +1,152 @@
-#ifndef _TILE_H_
-#define _TILE_H_
-
-#include <string>
+#ifndef _TILES_H_
+#define _TILES_H_
 #include <fstream>
-#include "LTexture.h"
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+#include <stdio.h>
+#include <string>
+#include <math.h>
+#include "graphics.h"
+#include "sprite.h"
+#include "Tile_define.h"
+#include "vector.h"
+#include "inventory.h"
 
-//The dimensions of the level
-const int LEVEL_WIDTH = 1280;
-const int LEVEL_HEIGHT = 960;
+extern const int SCREEN_HEIGHT;
+extern const int SCREEN_WIDTH;
+extern const int TOTAL_TILES;
+extern const int TILE_WIDTH;
+extern const int TILE_HEIGHT; 
+extern const int TOTAL_TILES_X;
+extern const int TOTAL_TILES_Y;
+extern const int PLAYER_FRAMEW;
+extern const int PLAYER_FRAMEH;
 
-//Tile constants
-const int TILE_WIDTH = 80;
-const int TILE_HEIGHT = 80;
-const int TOTAL_TILES = 192;
-const int TOTAL_TILE_SPRITES = 12;
+/**
+* @brief tile structure with tile dimensions and type to be rendered
+*/
+typedef struct{
 
-//The different tile sprites
-const int TILE_RED = 0;
-const int TILE_GREEN = 1;
-const int TILE_BLUE = 2;
-const int TILE_CENTER = 3;
-const int TILE_TOP = 4;
-const int TILE_TOPRIGHT = 5;
-const int TILE_RIGHT = 6;
-const int TILE_BOTTOMRIGHT = 7;
-const int TILE_BOTTOM = 8;
-const int TILE_BOTTOMLEFT = 9;
-const int TILE_LEFT = 10;
-const int TILE_TOPLEFT = 11;
+	SDL_Rect mBox; /**< SDL_Rect with position and dimensions.*/
+	//Type of tile
+	int mType; /**< int type of the tile*/
+}Tile;
+/**
+* @brief destructable tiles to be rendered over base layer tiles
+* applies collision on entites and can be destroyed with special skills for resources
+*/
+typedef struct{
+	SDL_Rect mBox; /**< SDL_Rect with position and dimensions.*/
+	int mType;/**< int type of the tile*/
+	int hits;/**< int how many hits left until destroyed */
+}Destructable_Tile;
 
-extern LTexture  gDotTexture;
-extern LTexture  gTileTexture;
-extern SDL_Rect  gTileClips[ TOTAL_TILE_SPRITES ];
+/**
+* @brief list of all tiles in the game instance
+*/
+extern Tile *tile_list;
+/**
+* @brief list of all destructable tiles in the game instance
+*/
+extern Destructable_Tile *dest_tile_list;
+/**
+* @brief loads tile sprites into memeory
+*/
+void tile_init_system();
+/**
+* @brief loads tile sprite from filepath
+* @param cstring filepath of tile
+*/
+Sprite2 * tile_load(char *filename);
+/**
+* @brief sets the type and mbox of all tiles
+*/
+void tile_set();
+/**
+* @brief frees tile from memory
+*/
+void tile_free(Tile *tile);
+/**
+* @brief renders tile onto screen
+*/
+void tile_render();
+/**
+* @brief frees all tiles in the tilelist
+*/
+void tile_close_system();
 
-//The tile
-class Tile
-{
-    public:
-        //Initializes position and type
-        Tile( int x, int y, int tileType );
+/**
+* @brief Used to start procedurally generating the world.
+* Chooses start location on each edge of the map and starts a manicured drunken man's walk towards the center of the map 
+* man's path becomes roads
+*/
+Tile tile_start();
+/**
+* @brief returns the tile type of a tile
+* @param int index for tile
+* @return int type of tile
+*/
+int tile_get_type(int index);
+/*
+* @brief gets the tile index based on entity position and bouding box
+* @param position of entity to match with tile position. Bounding box used for center postion of ent
+* @return int tile index matching position
+*/
+int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
+/**
+* @brief checks if structure is on destructable tile
+* @param Rect_f of structure location and size
+* @returns true if structure collides with destructable tile
+*/
 
-        //Shows the tile
-        void render( SDL_Rect& camera );
+int tile_structure_collision(Rect_f structure);
+/*
+* @brief returns true if tile collides with certain position and its bounding box
+* @param Vec2d position of collision. SDL_Rect bound to check entity collisions
+* @return true if position is collides with tile
+*/
+int tile_collision(Vec2d pos, SDL_Rect bound);
+/**
+* @brief returns the distance from two tiles
+* @param tile index of start tile. tile index of target tile
+* @return float distance between tiles
+*/
+float tile_dist_to_target(int start, int target);
+/*
+* @brief returns the number of tiles between two tiles
+* @param int tile_1 tile index of first tile. int tile_2 tile index of second tile
+* @return int number of tiles between tile_1 and tile_2
+*/
+int tile_to_tile_dist(int tile_1, int tile_2);
+/**
+* @brief gets the x and y position of a tile
+* @param int tile index 
+* @return Vec2d x and y position of tile
+*/
+Vec2d tile_get_pos(int index);
 
-        //Get the tile type
-        int getType();
+/**
+* @brief used for damaging destructable tiles and returns true if destroyed
+* @param Vec2d position of caller, caller's bound box, and face direction
+* @return 1 if position and face direction match destructable tile
+*/
+int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
-        //Get the collision box
-        SDL_Rect getBox();
+#define MIN(a,b) (a < b ? a : b)
+#define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
 
-    private:
-        //The attributes of the tile
-        SDL_Rect mBox;
+//couldn't put enum dir here, defined them manually
 
-        //The tile type
-        int mType;
-};
+#define UP 0
+#define LEFT 1
+#define DOWN 2
+#define RIGHT 3
 
-
-//Loads media
-bool loadMedia( Tile* tiles[] );
-//Box collision detector
-bool checkCollision( SDL_Rect a, SDL_Rect b );
-
-//Checks collision box against set of tiles
-bool touchesWall( SDL_Rect box, Tile* tiles[] );
-
-//Sets tiles from tile map
-bool setTiles( Tile *tiles[] );
-
+#define TILE_CAN_MOVE_LEFT(a)  (a % TOTAL_TILES_X !=0 ? true: false)
+#define TILE_CAN_MOVE_RIGHT(a) (( a % (TOTAL_TILES_X-1) !=0 || a == 0) ? true: false)
+#define TILE_CAN_MOVE_DOWN(a) (a < TOTAL_TILES - TOTAL_TILES_X ? true : false )
+#define TILE_CAN_MOVE_UP(a) (a >= TOTAL_TILES_X ? true : false)
+//takes vec2d
+#define TILE_CENTER_X(a) (a.x + TILE_WIDTH/2)
+#define TILE_CENTER_Y(a) (a.y + TILE_HEIGHT/2)
 
 #endif
+
