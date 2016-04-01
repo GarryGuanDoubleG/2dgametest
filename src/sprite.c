@@ -16,6 +16,9 @@ struct
 	Uint16  x, y;
 }Mouse2;
 
+/**
+* @brief intializes the sprite for the mouse
+*/
 void InitMouse2()
 {
   if(!SDL_ShowCursor(false)){
@@ -29,12 +32,19 @@ void InitMouse2()
   Mouse2.frame_horizontal = Mouse2.frame_vertical = 0;
 
 }
+/**
+* @brief retrieves the mouse x and y position
+* @return x and y position in a 2d vector
+*/
 Vec2d get_mouse_pos()
 {
 	Vec2d mouse_pos = {Mouse2.x, Mouse2.y};
 	return mouse_pos;
 }
 
+/**
+* @brief Draw the mouse onto the screen
+*/
 void DrawMouse2()
 {
   int mx,my;
@@ -52,6 +62,10 @@ void DrawMouse2()
   Mouse2.y = my;
 }
 
+/**
+* @brief allocates memory for a maximum 
+* @param int maximum number of sprites to have allocated during game
+*/
 void sprite_initialize_system(int max_sprites)
 {
 	int i;
@@ -69,6 +83,10 @@ void sprite_initialize_system(int max_sprites)
 	atexit(sprite_close_system);
 }
 
+/**
+* @brief deallocates the memory set during initialization
+*/
+
 void sprite_close_system()
 {
 	int i;
@@ -83,6 +101,13 @@ void sprite_close_system()
 		}
 	}	
 }
+
+/**
+* @brief loads a sprite from a filepath and initializses its sizes
+* @param filepath to find and load sprite, img width and height for size of clip of sprite to load
+  frame width and height for size of sprite in game
+  @return pointer to loaded sprite
+*/
 
 Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH)
 {
@@ -141,7 +166,9 @@ Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, 
 	}
 
 }
-
+/**
+* @brief frees the image loaded in the sprite and deallocates the memory for it
+*/
 void sprite_free(Sprite2 ** sprite)
 {
 	Sprite2 * target = *sprite;
@@ -161,9 +188,12 @@ void sprite_free(Sprite2 ** sprite)
 		target->image = NULL;
 	}
 	target = NULL;
- /*and then lets make sure we don't leave any potential seg faults 
-  lying around*/
 }
+
+/**
+* @brief draws the sprite onto the screen
+* @param Sprite2 pointer to draw, frame_horizontal frame # to play, frame-vertical - which frame to play, renderer of game, and x and y offset to draw
+*/
 
 void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
 {

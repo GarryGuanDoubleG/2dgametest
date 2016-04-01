@@ -67,7 +67,6 @@ void spider_think(entity *self)
 		{
 			self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
 		}
-	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 
 	else if(self->state == STATE_PATROL){
