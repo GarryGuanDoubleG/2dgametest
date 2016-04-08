@@ -13,6 +13,7 @@ Tile *tile_list = NULL;
 Destructable_Tile *dest_tile_list = NULL;
 Sprite2 * tile_sprite_grass = NULL;
 Sprite2 * tile_sprite_tree = NULL;
+int call_stack = 0;
 
 /**
 * @brief loads tile sprites to be loaded into game and calls tile set to set the tile map
@@ -35,7 +36,9 @@ void tile_init_system(){
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
 	tile_set();
 	tile_render();
+	slog("Adding exit tile close");
 	atexit(tile_close_system);
+	slog("Finished Tile Init");
 }
 
 /*
@@ -60,6 +63,7 @@ Sprite2 * tile_load(char *filename)
 int score_move(int move)
 {
 	int score = 0;
+	++call_stack;
 
 	if( TILE_CAN_MOVE_UP(move))
 	{
@@ -117,7 +121,8 @@ int tile_forest_walk(int moves[])
 	int score[] = {-1,-1,-1,-1};
 	int new_node = -1;
 	int i;
-	
+	++call_stack;
+
 	score[0] = score_move(moves[0]);
 	score[1] = score_move(moves[1]);
 	score[2] = score_move(moves[2]);
@@ -163,9 +168,7 @@ int tile_forest_walk(int moves[])
 			}
 		}
 	}
-
 	return new_node; // return new tile index
-
 }
 /*
 * @brief initiates the forest generation, setting the max number of tiles(lifespan) that can be set to road
@@ -180,6 +183,7 @@ void tile_forest_gen(int start)
 	//-1 means can't move to that node
 	tile_list[i].mType = TILE_ROAD;
 	dest_tile_list[i].mType = TILE_ROAD;
+	++call_stack;
 
 	while(lifespan-- > 0)
 	{
@@ -214,26 +218,34 @@ void tile_forest_gen(int start)
 void tile_forest_gen()
 {
 	int start;
-	
+	++call_stack;
+
 	start = 0;
+	slog("Starting FGEN 0 TILE: %i", start);
 	tile_forest_gen(start);
 	//start of top edge of forest
 	start = rand() % TOTAL_TILES_X -1; //rand num from 0 to end of first row
+	slog("Starting FGEN 2 TILE: %i", start);
 	tile_forest_gen(start);
 	//start on left edge of forest
 	start = rand() % TOTAL_TILES_Y + 1;
 	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
 	start = start * TOTAL_TILES_X;
+	slog("Starting FGEN 3 TILE: %i", start);
 	tile_forest_gen(start);
 	//right edge
 	start = rand() % TOTAL_TILES_Y +1;
 	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
 	start = (start *TOTAL_TILES_X) - 1;
+	slog("Starting FGEN 4 TILE: %i", start);
+
 	tile_forest_gen(start);
 	//bottom edge
 	start = rand() % TOTAL_TILES_X -1;
 	start += TOTAL_TILES - TOTAL_TILES_X;
+	slog("Starting FGEN 5 TILE: %i", start);
 	tile_forest_gen(start);
+	slog("Finished Gen");
 }
 /*
 * @brief used for displaying all the tile indexes of the map and its destructable tile type
@@ -241,7 +253,7 @@ void tile_forest_gen()
 void slog_dest_tree_list()
 {
 	int i;
-	for(i = 0; i < 120; i++)
+	for(i = 0; i < TOTAL_TILES; i++)
 	{
 		slog( "Index:%i TYPE:%i", i, dest_tile_list[i].mType);
 	}
@@ -355,7 +367,10 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();
-	for( i = 0; i < TOTAL_TILES; i++){
+	slog("Rendering!!");
+
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
 		Tile * tile = (tile_list + i);
 		if(tile == NULL){
 			printf("Tile is null while rendering");
@@ -371,22 +386,22 @@ void tile_render(){
 			}
 		}
 	}
+	slog("Call stack is %i", call_stack);
+	slog("Finished Rendering");
 }
 /**
 * @brief clears tile_list and sets values to 0(free)
 * frees the sprites used by the tile
 */
 void tile_close_system(){
-	int i;
-	for( i = 0; i < TOTAL_TILES; i++)
-	{
-		tile_free(tile_list+i);
-	}
+	slog("close system");
 	memset(tile_list, 0, sizeof(Tile) * TOTAL_TILES);
-	memset(tile_list, 0, sizeof(Destructable_Tile) * TOTAL_TILES);
-
-	SDL_DestroyTexture(tile_sprite_grass->image);
+	memset(dest_tile_list, 0, sizeof(Destructable_Tile) * TOTAL_TILES);
+	slog("finished closing tiles");
+/*
+	SDL_DestroyTexture(tile_sprite_grass->image);`
 	SDL_DestroyTexture(tile_sprite_tree->image);
+*/
 }
  
 /**

@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
 
   Init_All();
-
+  slog("Finished Init All()");
   done = 0;
   do
   {
@@ -43,22 +43,23 @@ int main(int argc, char *argv[])
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
 	
-	tile_render();	
+	/*tile_render();	
 	player_draw();
 	DrawMouse2();
-
+	*/
 	//monster_spawn(Monster::grue);
-	monster_spawn(Monster::spider01);
+	//monster_spawn(Monster::spider01);
 	/*monster_spawn(Monster::mino);		
 	monster_spawn(Monster::orc);	
 	support_spawn(Support::sara);	
 	support_spawn(Support::healer);	
 	support_spawn(Support::archer);
 	*/
-	entity_update_all();
+	/*entity_update_all();
 	entity_think_all();
 	entity_check_collision_all();
 	struct_update_all();
+	
 
 	G_MONSTER_SPAWN_TIMER -= 1;
 
@@ -67,21 +68,24 @@ int main(int argc, char *argv[])
     NextFrame();
 	//end
     SDL_PumpEvents();
-    keys = SDL_GetKeyboardState(NULL);
+   */ keys = SDL_GetKeyboardState(NULL);
 	//taken from lazyfoo
-	//handles generally keyboard inputs
+	//handles generally keyboard inputs	
+	
 	while( SDL_PollEvent( &e) != 0){
 		if(e.type == SDL_QUIT)
 			done = 1;
-		else
+/*		else
 			player_move(&e);
+			*/
+			
 	}
 
 		if(keys[SDL_SCANCODE_ESCAPE])
 		{
 			done = 1;
 		}
-
+		
 	SDL_RenderPresent(__gt_graphics_renderer);
   }while(!done);
   exit(0);		/*technically this will end the program, but the compiler likes all functions that can return a value TO return a value*/
@@ -106,10 +110,13 @@ void Init_All()
   sprite_initialize_system(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
   tile_init_system(); // allocate memory for tiles and generate map
-  player_init(); //creates player entity
+  /*player_init(); //creates player entity
   hud_init(); //loads hud sprites
-  structure_init_system();
+  /*structure_init_system();
   item_load_all(); //loads item imags into itemlist and allocates memory for new items
   inventory_init(); //allocates memory to store items
+  
   InitMouse2(); // loads mouse sprite into mem
+  */
+
 }
