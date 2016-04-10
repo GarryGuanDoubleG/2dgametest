@@ -9,8 +9,11 @@ const int TOTAL_TILES_X = SCREEN_WIDTH/TILE_WIDTH * 3;
 const int TOTAL_TILES_Y = SCREEN_HEIGHT/TILE_HEIGHT * 3;
 const int TOTAL_TILES = TOTAL_TILES_X * TOTAL_TILES_Y ;//make a square 3 by 3 region of size screen
 
+//array handle on tile types and coordinates on game
 Tile *tile_list = NULL;
 Destructable_Tile *dest_tile_list = NULL;
+//array of tile scores for procedural forest gen
+int * tile_list_scores = NULL; 
 Sprite2 * tile_sprite_grass = NULL;
 Sprite2 * tile_sprite_tree = NULL;
 int call_stack = 0;
@@ -31,6 +34,9 @@ void tile_init_system(){
 
 	dest_tile_list = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
 	memset(dest_tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
+
+	tile_list_scores = (int*) malloc(sizeof(int) * TOTAL_TILES);
+	memset(tile_list_scores, 0, sizeof(int) * TOTAL_TILES);
 
 	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
@@ -60,52 +66,26 @@ Sprite2 * tile_load(char *filename)
 * @param move is the tile being evaluated for becoming a road tile
 * @return int score of the move tile
 */
-int score_move(int move)
+void get_moves(int * moves, int size, int move)
 {
-	int score = 0;
 	++call_stack;
 
-	if( TILE_CAN_MOVE_UP(move))
+	if(!TILE_CAN_MOVE_LEFT(move))
 	{
-		if(tile_list[move - TOTAL_TILES_X].mType == TILE_ROAD)
-		{
-			score += 2;
-		}
+		moves[0] = -1;//cannot move to this tile if false
 	}
-	else{ score++; }  // edge tile increases score by 1
-
-	if(TILE_CAN_MOVE_DOWN(move))
+	if(!TILE_CAN_MOVE_RIGHT(move))
 	{
-		if(tile_list[move + TOTAL_TILES_X].mType == TILE_ROAD)
-		{
-			score +=2;
-		}
+		moves[1] = -1;
 	}
-	else { score++; }
-
-	if(TILE_CAN_MOVE_LEFT(move))
+	if(!TILE_CAN_MOVE_UP(move))
 	{
-		if(tile_list[move - 1].mType == TILE_ROAD)
-		{
-			score +=2;
-		}
+		moves[2] = -1;
 	}
-	else {score++;}
-	if(TILE_CAN_MOVE_RIGHT(move))
+	if(!TILE_CAN_MOVE_DOWN(move))
 	{
-		if(tile_list[move + 1].mType == TILE_ROAD)
-		{
-			score +=2;
-		}
+		moves[3] = -1;
 	}
-	else {score++;}
-	
-	if(tile_list[move].mType == TILE_ROAD)
-	{
-		score += 4;
-	}
-
-	return score;
 }
 
 /**
@@ -117,55 +97,47 @@ int score_move(int move)
 */
 int tile_forest_walk(int moves[])
 {
-	int min;
-	int score[] = {-1,-1,-1,-1};
+	int min = 999;
 	int new_node = -1;
 	int i;
+	int size = 4;
+	int move = -1;
 	++call_stack;
 
-	score[0] = score_move(moves[0]);
-	score[1] = score_move(moves[1]);
-	score[2] = score_move(moves[2]);
-	score[3] = score_move(moves[3]);
-	
-	min = score[0];
-	min = MIN(min, score[1]);
-	min = MIN(min, score[2]);
-	min = MIN(min, score[3]);
-
-	for(i = 0; i < 4; i++)//4 is number of moves
+	for(i = 0; i < size; i++)//4 is number of moves
 	{
-		if(score[i] == min)
+		int a = 0, b = 0;
+		int random_num;
+		int temp = min;
+		if(moves[i] == -1)
 		{
-			if(new_node == -1)
-			{
-				new_node = moves[i];
-			}
-			else
-			{
-				int a = 0, b = 0;
-				int random_num;
-				a = DISTANCE_CENTER(new_node);
-				b = DISTANCE_CENTER(moves[i]);
-				//tiles closer to the center have a higher chance of being the next move
-				if(a < b)
-				{
-					//give smaller num 66% chance of being new move
-					random_num = rand() % 9;
-					new_node = random_num <= 5 ? new_node : moves[i];
-				}
-				else if ( b < a)
-				{
-					random_num = rand() % 9;
-					new_node = random_num <=5 ? moves[i] : new_node;
-				}
-				//if both tiles are equally closer to the center, both have an equal chance of being next move
-				else
-				{
-					random_num = rand() % 1;
-					new_node = random_num == 0 ? moves[i] : new_node;
-				}
-			}
+			continue;
+		}		
+		min = MIN(min, tile_list_scores[moves[i]]);
+		if(temp > min)
+		{
+			new_node = moves[i];
+			continue;
+		}
+		a = DISTANCE_CENTER(new_node);
+		b = DISTANCE_CENTER(moves[i]);
+		//tiles closer to the center have a higher chance of being the next move
+		if(a < b)
+		{
+			//give smaller num 66% chance of being new move
+			random_num = rand() % 9;
+			new_node = random_num <= 5 ? new_node : moves[i];
+		}
+		else if ( b < a)
+		{
+			random_num = rand() % 9;
+			new_node = random_num <=5 ? moves[i] : new_node;
+		}
+		//if both tiles are equally closer to the center, both have an equal chance of being next move
+		else
+		{
+			random_num = rand() % 1;
+			new_node = random_num == 0 ? moves[i] : new_node;
 		}
 	}
 	return new_node; // return new tile index
@@ -179,32 +151,36 @@ void tile_forest_gen(int start)
 {
 	int i = start;
 	int done = false;
-	int lifespan = TOTAL_TILES/10;
+	int lifespan = TOTAL_TILES / 20;
 	//-1 means can't move to that node
 	tile_list[i].mType = TILE_ROAD;
 	dest_tile_list[i].mType = TILE_ROAD;
 	++call_stack;
 
-	while(lifespan-- > 0)
+	while( 0 < lifespan--)
 	{
 		int moves[4] = {i-1, i+1, i-TOTAL_TILES_X, i + TOTAL_TILES_X}; // left,right,up,down a tile on map
-		if(!TILE_CAN_MOVE_LEFT(i))
-		{
-			moves[0] = -1;//cannot move to this tile if false
-		}
-		if(!TILE_CAN_MOVE_RIGHT(i))
-		{
-			moves[1] = -1;
-		}
-		if(!TILE_CAN_MOVE_UP(i))
-		{
-			moves[2] = -1;
-		}
-		if(!TILE_CAN_MOVE_DOWN(i))
-		{
-			moves[3] = -1;
-		}
+		int j;
+
+		get_moves(moves, 4, i);//4 directions
 		i = tile_forest_walk(moves);
+		//update scores here
+		//road tiles have heur score +10
+		//adjacent tiles to road have score +3
+		tile_list_scores[i] += 10;
+		moves[0] = i - 1;
+		moves[1] = i + 1;
+		moves[2] = i - TOTAL_TILES_X;
+		moves[3] = i + TOTAL_TILES_X;
+		get_moves(moves, 4, i);//4 directions
+		for(j = 0; j < 4; j++)
+		{
+			if(moves[j] == -1)
+			{
+				continue;
+			}
+			tile_list_scores[moves[j]] += 3; 
+		}
 		tile_list[i].mType = TILE_ROAD;
 		dest_tile_list[i].mType = TILE_ROAD;
 	}
@@ -397,6 +373,7 @@ void tile_close_system(){
 	slog("close system");
 	memset(tile_list, 0, sizeof(Tile) * TOTAL_TILES);
 	memset(dest_tile_list, 0, sizeof(Destructable_Tile) * TOTAL_TILES);
+	memset(tile_list_scores, 0, sizeof(int) * TOTAL_TILES);
 	slog("finished closing tiles");
 /*
 	SDL_DestroyTexture(tile_sprite_grass->image);`
