@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
 	*/
 	entity_update_all();
 	entity_think_all();
-	//entity_check_collision_all();
-	struct_update_all();
+	entity_check_collision_all();
+//	struct_update_all();
 	
 
 	G_MONSTER_SPAWN_TIMER -= 1;
@@ -111,7 +111,7 @@ void Init_All()
   tile_init_system(); // allocate memory for tiles and generate map
   player_init(); //creates player entity
   hud_init(); //loads hud sprites
-  structure_init_system();
+//  structure_init_system();
   item_load_all(); //loads item imags into itemlist and allocates memory for new items
   inventory_init(); //allocates memory to store items
   

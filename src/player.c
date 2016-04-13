@@ -103,16 +103,16 @@ void player_draw(){
 	entity_draw(player,player->position.x,player->position.y);
 
 	player_draw_equip();
-	//hud_draw(graphics_get_player_cam(),player->health, player->maxhealth, player->stamina, player->stamina);
+	hud_draw(graphics_get_player_cam(),player->health, player->maxhealth, player->stamina, player->stamina);
 }
 
 void player_update(entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
-	/*if(!tile_collision(new_pos, player->boundBox))
+	if(!tile_collision(new_pos, player->boundBox))
 	{
 		player->position = new_pos;
-	}*/
+	}
 	player->position = new_pos;
 	player->velocity.x = 0;
 	player->velocity.y = 0;
@@ -256,6 +256,7 @@ void player_attack(SDL_Event *e){
 						player->frame_horizontal = 0;//reset it;
 					}
 					break;
+					
 			}
 			break;
 		default:

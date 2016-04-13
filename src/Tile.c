@@ -343,7 +343,6 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();
-	slog("Rendering!!");
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
@@ -362,8 +361,6 @@ void tile_render(){
 			}
 		}
 	}
-	slog("Call stack is %i", call_stack);
-	slog("Finished Rendering");
 }
 /**
 * @brief clears tile_list and sets values to 0(free)
@@ -406,27 +403,6 @@ Tile tile_start()
 }
 
 /**
-* @brief compares the bounding box of a structure and checks all tiles within its position is 
-* a tree tile
-* @param Rect_f for position and size of a strucutre 
-* @return true if structure collides with a tree
-*/
-int tile_structure_collision(Rect_f structure)
-{
-	
-	int i;
-	for( i = 0; i < TOTAL_TILES; i++)
-	{
-		if(dest_tile_list[i].mType == TILE_TREE && 
-			rect_collide(structure, dest_tile_list[i].mBox))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-/**
 * @brief checks to see if a position and bound collide with a tile
 * @param Vec2d position of entity, SDL_Rect bounding box to check collision
 * @return 1(true) if position & bound collide with a tree
@@ -439,10 +415,11 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
-		tile_bound.x = tile_list[i].mBox.x;
-		tile_bound.y = tile_list[i].mBox.y;
-		tile_bound.w = tile_list[i].mBox.w;
-		tile_bound.h = tile_list[i].mBox.h;
+		//offset to make tile collision more lenient
+		tile_bound.x = tile_list[i].mBox.x + TILE_WIDTH * .2f;
+		tile_bound.y = tile_list[i].mBox.y + TILE_HEIGHT * .2f;
+		tile_bound.w = tile_list[i].mBox.w * .6f;
+		tile_bound.h = tile_list[i].mBox.h * .8f;
 
 		if(rect_collide(player_pos, tile_bound))
 		{
