@@ -33,60 +33,60 @@ int main(int argc, char *argv[])
   SDL_Event e;
 
 
-  Init_All();
-  slog("Finished Init All()");
-  done = 0;
-  do
-  {
-	   //render or draw functions go here
-	//draw functions should go in order from background first to player draw calls last
-    ResetBuffer();
-    SDL_RenderClear(__gt_graphics_renderer);//clear screen
-	
-	tile_render();	
-	player_draw();
-	DrawMouse2();
-	
-	/*monster_spawn(Monster::grue);
-	monster_spawn(Monster::spider01);
-	monster_spawn(Monster::mino);		
-	monster_spawn(Monster::orc);	
-	support_spawn(Support::sara);	
-	support_spawn(Support::healer);	
-	support_spawn(Support::archer);
-	
-	*/
-	entity_update_all();
-	entity_think_all();
-	entity_check_collision_all();
-//	struct_update_all();
-	
-
-	G_MONSTER_SPAWN_TIMER -= 1;
-
-	while(SDL_PollEvent(&e) != 0)
-		player_move (&e);
-    NextFrame();
-	//end
-    SDL_PumpEvents();
-    keys = SDL_GetKeyboardState(NULL);
-	//taken from lazyfoo
-	//handles generally keyboard inputs	
-	
-	while( SDL_PollEvent( &e) != 0){
-		if(e.type == SDL_QUIT)
-			done = 1;
-    	else
-			player_move(&e);	
-	}
-
-		if(keys[SDL_SCANCODE_ESCAPE])
-		{
-			done = 1;
-		}
-		
-	SDL_RenderPresent(__gt_graphics_renderer);
-  }while(!done);
+//  Init_All();
+//  slog("Finished Init All()");
+//  done = 0;
+//  do
+//  {
+//	   //render or draw functions go here
+//	//draw functions should go in order from background first to player draw calls last
+//    ResetBuffer();
+//    SDL_RenderClear(__gt_graphics_renderer);//clear screen
+//	
+//	tile_render();	
+//	player_draw();
+//	DrawMouse2();
+//	
+//	/*monster_spawn(Monster::grue);
+//	monster_spawn(Monster::spider01);
+//	monster_spawn(Monster::mino);		
+//	monster_spawn(Monster::orc);	
+//	support_spawn(Support::sara);	
+//	support_spawn(Support::healer);	
+//	support_spawn(Support::archer);
+//	
+//	*/
+//	entity_update_all();
+//	entity_think_all();
+//	entity_check_collision_all();
+////	struct_update_all();
+//	
+//
+//	G_MONSTER_SPAWN_TIMER -= 1;
+//
+//	while(SDL_PollEvent(&e) != 0)
+//		player_move (&e);
+//    NextFrame();
+//	//end
+//    SDL_PumpEvents();
+//    keys = SDL_GetKeyboardState(NULL);
+//	//taken from lazyfoo
+//	//handles generally keyboard inputs	
+//	
+//	while( SDL_PollEvent( &e) != 0){
+//		if(e.type == SDL_QUIT)
+//			done = 1;
+//    	else
+//			player_move(&e);	
+//	}
+//
+//		if(keys[SDL_SCANCODE_ESCAPE])
+//		{
+//			done = 1;
+//		}
+//		
+//	SDL_RenderPresent(__gt_graphics_renderer);
+//  }while(!done);
   exit(0);		/*technically this will end the program, but the compiler likes all functions that can return a value TO return a value*/
   return 0;
 }
