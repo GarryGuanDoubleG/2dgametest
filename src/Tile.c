@@ -264,9 +264,9 @@ void tile_set(){
 			y += TILE_HEIGHT;
 		} 
 	}
-	tile_forest_gen(); // procedurally generate the world
+	//tile_forest_gen(); // procedurally generate the world
 
-	slog_dest_tree_list();
+	//slog_dest_tree_list();
 }
 /**
 * @brief frees the tile type to be reset

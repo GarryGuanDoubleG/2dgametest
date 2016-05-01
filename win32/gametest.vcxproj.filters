@@ -73,6 +73,21 @@
     <ClCompile Include="..\src\structures.c">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\types.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\json_parse.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dict.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\save.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\load.c">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\armor.h">
@@ -159,6 +174,21 @@
     <ClInclude Include="..\src\structure_define.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\save.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\types.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\json_parse.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dict.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\load.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -166,6 +196,9 @@
     </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{d99ef4a0-b446-4cd0-81f4-18345c8af223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Def">
+      <UniqueIdentifier>{383904bc-5f86-4659-a32a-961bebc2f425}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

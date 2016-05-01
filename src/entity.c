@@ -1,13 +1,15 @@
 #include "entity.h"
 #include "simple_logger.h"
+#include "load.h"
 
 const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
-
+Dict * entity_defs = NULL;// dictionary of all entity definitions
 void entity_initialize_system(){
 	int i;
-
+	Line key;
+	Dict * temp;
 	entityList = (entity *)malloc(sizeof(entity) * ENTITY_MAX);
 	memset(entityList, 0, sizeof(entity)* ENTITY_MAX);
 
@@ -15,6 +17,25 @@ void entity_initialize_system(){
 		entityList[i].sprite = NULL;
 		entityList[i].inuse = false;
 	}
+	slog("LOADING ENTITY DEF");
+	entity_defs = load_dict_from_file("/def/entity.def");
+	if(!entity_defs)
+	{
+		slog("Error, could not load entity def");
+	}
+	else if(entity_defs->data_type != DICT_HASH)
+	{
+		slog("Def file is not a hash");
+	}
+	else
+	{
+		for(i = 0; i < entity_defs->item_count; i++)
+		{
+			temp = dict_get_hash_nth(key, entity_defs, i);
+			slog("%i: \n%s \n%s", i, key, (const char*)temp->keyValue);
+		}
+	}
+	slog("FINISHED LOADING");
 	atexit(entity_close);
 
 }

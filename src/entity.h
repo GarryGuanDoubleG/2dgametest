@@ -6,6 +6,7 @@
 #include "monster_define.h"
 #include "Tile.h"
 #include "path_find.h"
+#include "dict.h"
 /**
 * @brief terms for which team an entity is on to determine who to attack
 */
