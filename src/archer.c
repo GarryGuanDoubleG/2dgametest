@@ -1,4 +1,4 @@
-#include "arccher.h"
+#include "archer.h"
 
 void archer_update(entity *self)
 {
