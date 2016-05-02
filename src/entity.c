@@ -18,7 +18,7 @@ void entity_initialize_system(){
 		entityList[i].inuse = false;
 	}
 	slog("LOADING ENTITY DEF");
-	entity_defs = load_dict_from_file("/def/entity.def");
+	entity_defs = load_dict_from_file("def/test.def");
 	if(!entity_defs)
 	{
 		slog("Error, could not load entity def");
