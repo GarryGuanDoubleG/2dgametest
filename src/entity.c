@@ -1,15 +1,15 @@
 #include "entity.h"
 #include "simple_logger.h"
-
-
+#include "load.h"
 
 const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
-
+Dict * entity_defs = NULL;// dictionary of all entity definitions
 void entity_initialize_system(){
 	int i;
-
+	Line key;
+	Dict * temp;
 	entityList = (entity *)malloc(sizeof(entity) * ENTITY_MAX);
 	memset(entityList, 0, sizeof(entity)* ENTITY_MAX);
 
@@ -17,6 +17,25 @@ void entity_initialize_system(){
 		entityList[i].sprite = NULL;
 		entityList[i].inuse = false;
 	}
+	slog("LOADING ENTITY DEF");
+	entity_defs = load_dict_from_file("def/test.def");
+	if(!entity_defs)
+	{
+		slog("Error, could not load entity def");
+	}
+	else if(entity_defs->data_type != DICT_HASH)
+	{
+		slog("Def file is not a hash");
+	}
+	else
+	{
+		for(i = 0; i < entity_defs->item_count; i++)
+		{
+			temp = dict_get_hash_nth(key, entity_defs, i);
+			slog("%i: \n%s \n%s", i, key, (const char*)temp->keyValue);
+		}
+	}
+	slog("FINISHED LOADING");
 	atexit(entity_close);
 
 }
@@ -34,11 +53,36 @@ entity * entity_new(){
 	}
 	return NULL;
 }
+//loads structure
+entity* struct_load(Sprite2 *sprite, int health, int defense, int type)
+{
+	int i;
+	for(i = 0; i < entity_count + 1; i++)
+	{
+		 if(entityList[i].inuse == false)
+		 {
+			 entity_count++;
+			 entityList[i].inuse = true;
+			 entityList[i].sprite = sprite;
+			 entityList[i].health = health;
+			 entityList[i].maxhealth = health;			 
+			 entityList[i].structure = true;
+			 entityList[i].placed = false;
+			 entityList[i].selected = false;
+			 
+			 return &entityList[i];
+			 break;
+		 }
+	}
+	return NULL;
+}
 
 entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int state){
 	int i;
-	for(i = 0; i < ENTITY_MAX; i++){
-		 if(entityList[i].inuse == false){
+	for(i = 0; i < entity_count + 1; i++)
+	{
+		 if(entityList[i].inuse == false)
+		 {
 			 entity_count++;
 			 entityList[i].inuse = true;
 			 entityList[i].sprite = sprite;
@@ -233,20 +277,18 @@ void weapon_touch(entity * self, entity *other)
 	}
 
 }
-int entity_structure_collision(Rect_f boundBox)
+int entity_check_collision(entity * self)
 {
 	int i;
-	Rect_f ent_rect;
-	for(i = 0; i < ENTITY_MAX; i++){
+	for(i = 0; i < entity_count + 1; i++){
 		if(!entityList[i].inuse){
 			continue;
 		}
-		ent_rect.x = entityList[i].position.x + entityList[i].boundBox.x;
-		ent_rect.y = entityList[i].position.y + entityList[i].boundBox.y;
-		ent_rect.w = entityList[i].boundBox.w;
-		ent_rect.h = entityList[i].boundBox.h;
-
-		if(rect_collide(boundBox, ent_rect) && !entityList[i].player);
+		if(&entityList[i] == self)
+		{
+			continue;
+		}
+		if(entity_collide(self, &entityList[i]))
 		{
 			return true;
 		}
@@ -353,6 +395,7 @@ void weapon_collision(entity *owner)
 		}
 	}
 }
+
 void entity_check_collision_all()
 {
 	int i = 0;

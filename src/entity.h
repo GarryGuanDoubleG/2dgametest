@@ -6,8 +6,7 @@
 #include "monster_define.h"
 #include "Tile.h"
 #include "path_find.h"
-
-
+#include "dict.h"
 /**
 * @brief terms for which team an entity is on to determine who to attack
 */
@@ -28,12 +27,15 @@
 typedef struct Entity_S
 {
 	int inuse; /**< used for memory allocation if not inuse*/
+	//animation & drawing
 	Sprite2 * sprite;/**<pointer to sprite of entities body or default animation*/
 	int frame_horizontal;/**<Tracks which frame horizontally should be rendered from the sprite. Used for playing next frame of animation**/
 	int frame_vertical; /**<Tracks which frame vertiaclly should be rendered from sprite. Used for determining which animation (or direction) should be played*/
+	//ent positions
 	Vec2d position; /**<stores x and y positional values of entity*/
 	Vec2d velocity; /**<x and y values that increment the positional value every frame*/
 	SDL_Rect boundBox; /**<x and y offsets from postion and accurate dimensions of an entity used for collision detection**/
+	//game mechanic
 	int health, maxhealth; /**health values to update hud and determine if entity is alive. health cannot be greater than max health*/
 	int inventory;/**<true if entity can hold items*/
 	int face_dir; /**<direction entity is currently facing - up, down, left, right. Some ents only face left or right*/
@@ -46,6 +48,12 @@ typedef struct Entity_S
 	int state; /**<int stores state to use for AI actions*/
 	int nextThink;/*<Time index for next think */
 	int thinkRate; /*<How often to run think */
+	//structures
+	int structure; /*< bool is a player building */
+	int placed; /*< bool is in game? */
+	int selected; /*< bool is player is placing building */
+	int struct_type;/*< int type of structure */
+	//end
 	void (*think)(struct Entity_S *self); /**<function pointer to think function to determine entity's actions*/
 	void (*update)(struct Entity_S *self); /**<function pointer to update function of specfic entity*/
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);/**<function pointer that triggers when entites collide with one another*/
@@ -73,13 +81,17 @@ extern int entity_count;
 */
 void entity_free(entity * ent);
 /*
-* brief initializes memory and allocates it to store maximum number of entities
+* @brief initializes memory and allocates it to store maximum number of entities
 */
 void entity_initialize_system();
 /**
-* brief checks collision of entity to structure
+* @brief checks collision of entity to structure
 */
-int entity_structure_collision(Rect_f boundBox);
+int entity_check_collision(entity *self);
+/*
+* @brief loads player buildable structure
+*/
+entity* struct_load(Sprite2 *sprite, int health, int defense, int type);
 /**
 * @brief loads entity values into entity list and returns pointer to address in list
 */

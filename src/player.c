@@ -113,6 +113,7 @@ void player_update(entity *self)
 	{
 		player->position = new_pos;
 	}
+	player->position = new_pos;
 	player->velocity.x = 0;
 	player->velocity.y = 0;
 
@@ -255,6 +256,7 @@ void player_attack(SDL_Event *e){
 						player->frame_horizontal = 0;//reset it;
 					}
 					break;
+					
 			}
 			break;
 		default:

@@ -9,11 +9,19 @@ const int TOTAL_TILES_X = SCREEN_WIDTH/TILE_WIDTH * 3;
 const int TOTAL_TILES_Y = SCREEN_HEIGHT/TILE_HEIGHT * 3;
 const int TOTAL_TILES = TOTAL_TILES_X * TOTAL_TILES_Y ;//make a square 3 by 3 region of size screen
 
+//array handle on tile types and coordinates on game
 Tile *tile_list = NULL;
 Destructable_Tile *dest_tile_list = NULL;
+//array of tile scores for procedural forest gen
+int * tile_list_scores = NULL; 
 Sprite2 * tile_sprite_grass = NULL;
 Sprite2 * tile_sprite_tree = NULL;
+int call_stack = 0;
 
+/**
+* @brief loads tile sprites to be loaded into game and calls tile set to set the tile map
+  Allocates memory for each tile in map and each destructable tile on the map
+*/
 
 void tile_init_system(){
 	int i;
@@ -27,12 +35,23 @@ void tile_init_system(){
 	dest_tile_list = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
 	memset(dest_tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
 
+	tile_list_scores = (int*) malloc(sizeof(int) * TOTAL_TILES);
+	memset(tile_list_scores, 0, sizeof(int) * TOTAL_TILES);
+
 	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
 	tile_set();
 	tile_render();
+	slog("Adding exit tile close");
 	atexit(tile_close_system);
+	slog("Finished Tile Init");
 }
+
+/*
+* @brief loads the tile sprite from filepath into memory
+* @param cstring for filepath to open
+* @return pointer to Sprite2
+*/
 
 Sprite2 * tile_load(char *filename)
 {
@@ -40,181 +59,192 @@ Sprite2 * tile_load(char *filename)
 	return sprite;
 }
 
-int score_move(int move)
+/*
+* @brief used for provide a huerestic on which tile is preferable to create a road tile
+* Tiles that are adjacent to roads have higher scores and are less desirable
+* tiles that are roads are extremely undesirable to become a road.
+* @param move is the tile being evaluated for becoming a road tile
+* @return int score of the move tile
+*/
+void get_moves(int * moves, int size, int move)
 {
-	int score = 0;
+	++call_stack;
 
-	if( TILE_CAN_MOVE_UP(move))
+	if(!TILE_CAN_MOVE_LEFT(move))
 	{
-		if(tile_list[move - TOTAL_TILES_X].mType == TILE_ROAD)
-		{
-			score += 2;
-		}
+		moves[0] = -1;//cannot move to this tile if false
 	}
-	else{ score++; }  // edge tile increases score by 1
-
-	if(TILE_CAN_MOVE_DOWN(move))
+	if(!TILE_CAN_MOVE_RIGHT(move))
 	{
-		if(tile_list[move + TOTAL_TILES_X].mType == TILE_ROAD)
-		{
-			score +=2;
-		}
+		moves[1] = -1;
 	}
-	else { score++; }
-
-	if(TILE_CAN_MOVE_LEFT(move))
+	if(!TILE_CAN_MOVE_UP(move))
 	{
-		if(tile_list[move - 1].mType == TILE_ROAD)
-		{
-			score +=2;
-		}
+		moves[2] = -1;
 	}
-	else {score++;}
-	if(TILE_CAN_MOVE_RIGHT(move))
+	if(!TILE_CAN_MOVE_DOWN(move))
 	{
-		if(tile_list[move + 1].mType == TILE_ROAD)
-		{
-			score +=2;
-		}
+		moves[3] = -1;
 	}
-	else {score++;}
-	
-	if(tile_list[move].mType == TILE_ROAD)
-	{
-		score += 4;
-	}
-
-	return score;
 }
+
+/**
+* @brief based on a manicured drunken man's walk
+* evaluates all adjacent nondiagonal tiles from the current tile and choose the lowest scoring 
+* tile to become a road tile
+* @param int array for 4 adjacent tiles to current tile
+* @return the tile index to move to
+*/
 int tile_forest_walk(int moves[])
 {
-	int min;
-	int score[] = {-1,-1,-1,-1};
+	int min = 999;
 	int new_node = -1;
 	int i;
-	
-	score[0] = score_move(moves[0]);
-	score[1] = score_move(moves[1]);
-	score[2] = score_move(moves[2]);
-	score[3] = score_move(moves[3]);
-	
-	min = score[0];
-	min = MIN(min, score[1]);
-	min = MIN(min, score[2]);
-	min = MIN(min, score[3]);
+	int size = 4;
+	int move = -1;
+	++call_stack;
 
-	for(i = 0; i < 4; i++)//4 is number of moves
+	for(i = 0; i < size; i++)//4 is number of moves
 	{
-		if(score[i] == min)
+		int a = 0, b = 0;
+		int random_num;
+		int temp = min;
+		if(moves[i] == -1)
 		{
-			if(new_node == -1)
-			{
-				new_node = moves[i];
-			}
-			else
-			{
-				int a = 0, b = 0;
-				int random_num;
-				a = DISTANCE_CENTER(new_node);
-				b = DISTANCE_CENTER(moves[i]);
-				//higher chance if closer to center
-				if(a < b)
-				{
-					//give smaller num 66% chance of being new move
-					random_num = rand() % 9;
-					new_node = random_num <= 5 ? new_node : moves[i];
-				}
-				else if ( b < a)
-				{
-					random_num = rand() % 9;
-					new_node = random_num <=5 ? moves[i] : new_node;
-				}
-				else
-				{
-					random_num = rand() % 1;
-					new_node = random_num == 0 ? moves[i] : new_node;
-				}
-			}
+			continue;
+		}		
+		min = MIN(min, tile_list_scores[moves[i]]);
+		if(temp > min)
+		{
+			new_node = moves[i];
+			continue;
+		}
+		a = DISTANCE_CENTER(new_node);
+		b = DISTANCE_CENTER(moves[i]);
+		//tiles closer to the center have a higher chance of being the next move
+		if(a < b)
+		{
+			//give smaller num 66% chance of being new move
+			random_num = rand() % 9;
+			new_node = random_num <= 5 ? new_node : moves[i];
+		}
+		else if ( b < a)
+		{
+			random_num = rand() % 9;
+			new_node = random_num <=5 ? moves[i] : new_node;
+		}
+		//if both tiles are equally closer to the center, both have an equal chance of being next move
+		else
+		{
+			random_num = rand() % 1;
+			new_node = random_num == 0 ? moves[i] : new_node;
 		}
 	}
-
-	return new_node;
-
+	return new_node; // return new tile index
 }
-//applies to whole map
+/*
+* @brief initiates the forest generation, setting the max number of tiles(lifespan) that can be set to road
+* sets the possible moves and send it to tile_forest_walk to be evaluated
+* @param int tile index to start the forest walk. 
+*/
 void tile_forest_gen(int start)
 {
 	int i = start;
 	int done = false;
-	int lifespan = TOTAL_TILES/10;
+	int lifespan = TOTAL_TILES / 20;
 	//-1 means can't move to that node
 	tile_list[i].mType = TILE_ROAD;
 	dest_tile_list[i].mType = TILE_ROAD;
+	++call_stack;
 
-	while(lifespan-- > 0)
+	while( 0 < lifespan--)
 	{
 		int moves[4] = {i-1, i+1, i-TOTAL_TILES_X, i + TOTAL_TILES_X}; // left,right,up,down a tile on map
-		if(!TILE_CAN_MOVE_LEFT(i))
-		{
-			moves[0] = -1;
-		}
-		if(!TILE_CAN_MOVE_RIGHT(i))
-		{
-			moves[1] = -1;
-		}
-		if(!TILE_CAN_MOVE_UP(i))
-		{
-			moves[2] = -1;
-		}
-		if(!TILE_CAN_MOVE_DOWN(i))
-		{
-			moves[3] = -1;
-		}
+		int j;
+
+		get_moves(moves, 4, i);//4 directions
 		i = tile_forest_walk(moves);
+		//update scores here
+		//road tiles have heur score +10
+		//adjacent tiles to road have score +3
+		tile_list_scores[i] += 10;
+		moves[0] = i - 1;
+		moves[1] = i + 1;
+		moves[2] = i - TOTAL_TILES_X;
+		moves[3] = i + TOTAL_TILES_X;
+		get_moves(moves, 4, i);//4 directions
+		for(j = 0; j < 4; j++)
+		{
+			if(moves[j] == -1)
+			{
+				continue;
+			}
+			tile_list_scores[moves[j]] += 3; 
+		}
 		tile_list[i].mType = TILE_ROAD;
 		dest_tile_list[i].mType = TILE_ROAD;
 	}
 }
-
+/**
+* @brief starts a manicured drunken man's walk across each edge of the map
+* start location is a randomly chosen tile on the edge
+* drunken man's walk moves in random directions towards the center
+* each tile the man walks on becomes a road tile
+*/
 void tile_forest_gen()
 {
 	int start;
-	
+	++call_stack;
+
 	start = 0;
+	slog("Starting FGEN 0 TILE: %i", start);
 	tile_forest_gen(start);
 	//start of top edge of forest
 	start = rand() % TOTAL_TILES_X -1; //rand num from 0 to end of first row
+	slog("Starting FGEN 2 TILE: %i", start);
 	tile_forest_gen(start);
 	//start on left edge of forest
 	start = rand() % TOTAL_TILES_Y + 1;
 	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
 	start = start * TOTAL_TILES_X;
+	slog("Starting FGEN 3 TILE: %i", start);
 	tile_forest_gen(start);
 	//right edge
 	start = rand() % TOTAL_TILES_Y +1;
 	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
 	start = (start *TOTAL_TILES_X) - 1;
+	slog("Starting FGEN 4 TILE: %i", start);
+
 	tile_forest_gen(start);
 	//bottom edge
 	start = rand() % TOTAL_TILES_X -1;
 	start += TOTAL_TILES - TOTAL_TILES_X;
+	slog("Starting FGEN 5 TILE: %i", start);
 	tile_forest_gen(start);
+	slog("Finished Gen");
 }
-
+/*
+* @brief used for displaying all the tile indexes of the map and its destructable tile type
+*/
 void slog_dest_tree_list()
 {
 	int i;
-	for(i = 0; i < 120; i++)
+	for(i = 0; i < TOTAL_TILES; i++)
 	{
 		slog( "Index:%i TYPE:%i", i, dest_tile_list[i].mType);
 	}
 }
 
+/**
+* @brief sets the whole map to have grass tiles and tree destructable tiles
+* future plans for procedurally setting the map include applying several layers of
+* perlin noise to create natural rock and river scenary.
+*/
 void tile_set(){
 	int i;
 	int x = 0,y = 0;
 	Tile * tile;
-	//place the grass tile
+	//place the grass tile for all tiles on the map
 	for( i = 0; i < TOTAL_TILES; i++){
 
 		tile = (tile_list+i);
@@ -223,7 +253,7 @@ void tile_set(){
 		tile->mBox.w = TILE_WIDTH;
 		tile->mBox.h = TILE_HEIGHT;
 		tile->mType = TILE_GRASS1;//filler
-		
+		//set destructable tile to be a tree by default
 		dest_tile_list[i].mBox = tile->mBox;
 		dest_tile_list[i].mType = TILE_TREE;
 		dest_tile_list[i].hits = 5;
@@ -234,15 +264,22 @@ void tile_set(){
 			y += TILE_HEIGHT;
 		} 
 	}
-	tile_forest_gen();
+	tile_forest_gen(); // procedurally generate the world
 
-	slog_dest_tree_list();
+	//slog_dest_tree_list();
 }
-
+/**
+* @brief frees the tile type to be reset
+* @param pointer to tile to free
+*/
 void tile_free(Tile *tile){
 	tile->mType = 0;
 }
 
+/**
+* @brief returns the type of a tile given its tile index
+* @param int tile index used to get tile type
+*/
 int tile_get_type(int index)
 {
 	if(index < 0 || index > TOTAL_TILES)
@@ -251,6 +288,12 @@ int tile_get_type(int index)
 	}
 	return dest_tile_list[index].mType;
 }
+
+/**
+* @brief calculates the distance between tiles by counting how many steps to move before one reaches the other 
+* @param indexes of both tiles in tile_list and calculate the tiles in between
+* @return number of tiles between another tile
+*/
 int tile_to_tile_dist(int tile_1, int tile_2)
 {
 	int move_left = 0, move_right = 0, move_down = 0, move_up = 0;
@@ -294,11 +337,15 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 	
 	return move_left + move_right + move_up + move_down;
 }
-
+/**
+* @brief draws the tiles on the screen using tile type as reference for which sprite to draw
+*/
 void tile_render(){
 	int i;
 	SDL_Rect camera = graphics_get_player_cam();
-	for( i = 0; i < TOTAL_TILES; i++){
+
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
 		Tile * tile = (tile_list + i);
 		if(tile == NULL){
 			printf("Tile is null while rendering");
@@ -315,23 +362,30 @@ void tile_render(){
 		}
 	}
 }
-
+/**
+* @brief clears tile_list and sets values to 0(free)
+* frees the sprites used by the tile
+*/
 void tile_close_system(){
-	int i;
-	for( i = 0; i < TOTAL_TILES; i++)
-	{
-		tile_free(tile_list+i);
-	}
+	slog("close system");
 	memset(tile_list, 0, sizeof(Tile) * TOTAL_TILES);
-	memset(tile_list, 0, sizeof(Destructable_Tile) * TOTAL_TILES);
-
-	SDL_DestroyTexture(tile_sprite_grass->image);
+	memset(dest_tile_list, 0, sizeof(Destructable_Tile) * TOTAL_TILES);
+	memset(tile_list_scores, 0, sizeof(int) * TOTAL_TILES);
+	slog("finished closing tiles");
+/*
+	SDL_DestroyTexture(tile_sprite_grass->image);`
 	SDL_DestroyTexture(tile_sprite_tree->image);
+*/
 }
+ 
+/**
+* @brief finds a road tile and gives it a twenty percent chance for an AI to start on
+* returns the first tile in the tile list by default
+* @return  copy of the tile a monster would start on 
+*/
 
 Tile tile_start()
 {
-
 	int i;
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
@@ -348,35 +402,11 @@ Tile tile_start()
 	return tile_list[0];
 }
 
-void tile_make_bound(Rect_f structure)
-{
-	int i;
-	for( i = 0; i < TOTAL_TILES; i++)
-	{
-		if(dest_tile_list[i].mType != TILE_TREE && 
-			rect_collide(structure, dest_tile_list[i].mBox))
-		{
-			dest_tile_list[i].mType = TILE_TREE;//here for collision. need to make another type
-		}
-	}
-}
-
-int tile_structure_collision(Rect_f structure)
-{
-	
-	int i;
-	for( i = 0; i < TOTAL_TILES; i++)
-	{
-		if(dest_tile_list[i].mType == TILE_TREE && 
-			rect_collide(structure, dest_tile_list[i].mBox))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-
+/**
+* @brief checks to see if a position and bound collide with a tile
+* @param Vec2d position of entity, SDL_Rect bounding box to check collision
+* @return 1(true) if position & bound collide with a tree
+*/
 int tile_collision(Vec2d pos, SDL_Rect bound)
 {
 	int i;
@@ -385,10 +415,11 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
-		tile_bound.x = tile_list[i].mBox.x;
-		tile_bound.y = tile_list[i].mBox.y;
-		tile_bound.w = tile_list[i].mBox.w;
-		tile_bound.h = tile_list[i].mBox.h;
+		//offset to make tile collision more lenient
+		tile_bound.x = tile_list[i].mBox.x + TILE_WIDTH * .2f;
+		tile_bound.y = tile_list[i].mBox.y + TILE_HEIGHT * .2f;
+		tile_bound.w = tile_list[i].mBox.w * .6f;
+		tile_bound.h = tile_list[i].mBox.h * .8f;
 
 		if(rect_collide(player_pos, tile_bound))
 		{
@@ -400,6 +431,13 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 	}
 	return false;
 }
+
+/**
+* @brief player has an ability to destroy(forage) a tree for wood
+* check if entity is facing a tree and collides with it
+* @param position of forager, SDL_Rect bounding box for collision against tree, int face direction to check if facing tree
+* @return tree if can forage
+*/
 
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 {
@@ -491,7 +529,11 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 	return is_tree;
 }
 
-
+/**
+* @brief finds the tile index of an entity based on the center of its body
+* @param Vec2d pos - x and y position of entity, SDL_Rect bound - used for collision and finding center
+* @return tile index of entity
+*/
 int tile_get_tile_number(Vec2d pos, SDL_Rect bound)
 {
 	int i;
@@ -515,14 +557,23 @@ int tile_get_tile_number(Vec2d pos, SDL_Rect bound)
 	return -1;
 }
 
-
+/**
+* @brief physical distance between two tiles
+* currently used for generating heuristics for pathing
+* @param tile index of two tiles
+* @return float distance between tile
+*/
 float tile_dist_to_target(int start, int target)
 {
 	Vec2d vec_start = { tile_list[start].mBox.x, tile_list[start].mBox.y };
 	Vec2d vec_target = { tile_list[target].mBox.x, tile_list[target].mBox.y };
 	return Vec2dDistance(vec_start, vec_target);
 }
-
+/**
+* @brief get the x and why position of a tile based on tile index in tile list
+* @param tile index of desired tile 
+* @return x and y position in a Vec2d of tile
+*/
 Vec2d tile_get_pos(int index)
 {
 	Vec2d tile_pos = {tile_list[index].mBox.x, tile_list[index].mBox.y };

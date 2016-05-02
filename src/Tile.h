@@ -91,13 +91,7 @@ int tile_get_type(int index);
 * @return int tile index matching position
 */
 int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
-/**
-* @brief checks if structure is on destructable tile
-* @param Rect_f of structure location and size
-* @returns true if structure collides with destructable tile
-*/
 
-int tile_structure_collision(Rect_f structure);
 /*
 * @brief returns true if tile collides with certain position and its bounding box
 * @param Vec2d position of collision. SDL_Rect bound to check entity collisions

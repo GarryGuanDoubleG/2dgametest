@@ -1,5 +1,8 @@
 #include "weapon.h"
-
+ 
+/*
+* global weapon list used for retrieving stats and sprites for new instances of the weapon
+*/
 Weapon weaponlist[] = 
 {
 	//longsword
@@ -35,7 +38,9 @@ Weapon weaponlist[] =
 
 };
 
-
+/**
+* @brief loads all the sprites in the weaponlist into memory to be retrieved immediately
+*/
 void weapon_load_all(){
 	int i;
 
@@ -44,7 +49,9 @@ void weapon_load_all(){
 	}
 	atexit(weapon_close_all);
 }
-
+/**
+* @brief frees all the sprites images that was allocated into memory during initialization
+*/
 void weapon_close_all(){
 	int i;
 
@@ -54,6 +61,11 @@ void weapon_close_all(){
 	}
 }
 
+/*
+* @brief retrieves a pointer to a weapon matching its name
+* @param name of weapon to search through weapon list
+* @return pointer to weapon matching the weapon name param. 
+*/
 Weapon *getWeapon(char *weap_name)
 {
 	int i;
