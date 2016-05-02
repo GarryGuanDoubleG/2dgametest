@@ -1,0 +1,16 @@
+{
+       "spider":
+	{
+	   "image": "images/Monsters/Spider/spider01.png",
+	   "imageW": 64,
+	   "imageH": 64,
+	   "frameW": 64,
+	   "frameH": 64,
+	   "health": 1000,
+           "velocity_aggro": 5,
+           "aggro_range": 5,
+           "type": 1,
+	   "think_rate" : 15,
+	   "spawn_timer" : 100
+        }
+}

@@ -2,6 +2,8 @@
 #define _AUDIO_H_
 #include "types.h"
 #include "dict.h"
+#include "sound.h"
+#include "music.h"
 
 /**
  * @brief initializes the audio system based
