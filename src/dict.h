@@ -19,6 +19,8 @@ typedef enum Dict_types_S
 	DICT_STRING,
 	DICT_LIST,
 	DICT_HASH,
+	DICT_SOUND,
+	DICT_MUSIC,
 	DICT_CUSTOM,	
 }Dict_Type;
 
@@ -55,6 +57,11 @@ void dict_free(Dict ** dict);
 */
 void dict_g_string_free(char * string);
 
+/**
+* @brief returns a newly allocated dictionary
+* @return returns a pointer to new dictionary
+*/
+Dict * dict_new();
 /*
 * @brief allocates and and creates a pointer to a new Ghash
 * @return NULL on error or a Dictionary of a GHashTable

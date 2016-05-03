@@ -40,7 +40,7 @@
     <IncludePath>$(JANSSON);$(JANSSON)\src;$(GLIB)\lib\glib-2.0\include;$(GLIB)\include\glib-2.0;$(ProjectDir)..\..\..\SDL 2\includes;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(JANSSON)\build\lib\Debug;$(GLIB)\lib;$(ProjectDir)..\..\..\SDL 2\Libs;$(GLIB)\bin;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(JANSSON)\build\lib\Debug;$(GLIB)\lib;$(SDL2)\Libs;$(GLIB)\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -51,7 +51,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;glib-2.0.lib;jansson_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;glib-2.0.lib;jansson_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -122,6 +122,7 @@
     <ClCompile Include="..\src\load.c" />
     <ClCompile Include="..\src\minotaur.c" />
     <ClCompile Include="..\src\monster_ai.c" />
+    <ClCompile Include="..\src\music.c" />
     <ClCompile Include="..\src\orc.c" />
     <ClCompile Include="..\src\path_find.c" />
     <ClCompile Include="..\src\player.c" />
