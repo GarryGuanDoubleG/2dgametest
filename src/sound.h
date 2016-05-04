@@ -13,6 +13,10 @@ typedef struct Sound_S Sound;
 void sound_init(int max_sounds, int channels, int channel_groups);
 
 /**
+* @brief frees memory allocated from sound system
+*/
+void sound_close();
+/**
 * @brief loads a playable sound file into a dictionary
 * @param filename of wav file to load
 * @return dictionary containing sound file
