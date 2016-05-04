@@ -1,14 +1,14 @@
-﻿Build started 5/3/2016 1:58:00 AM.
-     1>Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" on node 2 (build target(s)).
+﻿Build started 5/4/2016 5:24:23 PM.
+     1>Project "C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\conquest.unsuccessfulbuild".
        ClCompile:
-         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\music.c
-         music.c
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\music.c(72): warning C4101: 'music' : unreferenced local variable
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\music.c(92): warning C4715: 'music_load_resouce_all' : not all control paths return a value
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\window.c
+         window.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\window.c(10): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\window.c(26): warning C4715: 'window_load_data_from_def' : not all control paths return a value
        Link:
-         g:\Visual Studio 2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib "glib-2.0.lib" jansson_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\conquest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.lib" /MACHINE:X86 Debug\archer.obj
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib "glib-2.0.lib" jansson_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\conquest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.lib" /MACHINE:X86 Debug\archer.obj
          Debug\armor.obj
          Debug\audio.obj
          Debug\dict.obj
@@ -40,16 +40,17 @@
          Debug\types.obj
          Debug\vector.obj
          Debug\weapon.obj
-         LINK : C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe not found or not built by the last incremental link; performing full link
+         Debug\window.obj
+         LINK : C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe not found or not built by the last incremental link; performing full link
      1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
-         conquest.vcxproj -> C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe
+         conquest.vcxproj -> C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe;#1" /manifest Debug\conquest.exe.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe;#1" /manifest Debug\conquest.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\conquest.unsuccessfulbuild".
          Touching "Debug\conquest.lastbuildstate".
-     1>Done Building Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\conquest.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.80
+Time Elapsed 00:00:01.14

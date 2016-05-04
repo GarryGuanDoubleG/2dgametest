@@ -72,6 +72,8 @@
     <ClInclude Include="..\src\archer.h" />
     <ClInclude Include="..\src\armor.h" />
     <ClInclude Include="..\src\audio.h" />
+    <ClInclude Include="..\src\component.h" />
+    <ClInclude Include="..\src\component_actor.h" />
     <ClInclude Include="..\src\dict.h" />
     <ClInclude Include="..\src\entity.h" />
     <ClInclude Include="..\src\graphics.h" />
@@ -105,6 +107,7 @@
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\vector.h" />
     <ClInclude Include="..\src\weapon.h" />
+    <ClInclude Include="..\src\window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\archer.c" />
@@ -139,6 +142,7 @@
     <ClCompile Include="..\src\types.c" />
     <ClCompile Include="..\src\vector.c" />
     <ClCompile Include="..\src\weapon.c" />
+    <ClCompile Include="..\src\window.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Makefile" />
