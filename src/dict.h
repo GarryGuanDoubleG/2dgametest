@@ -1,9 +1,9 @@
 #ifndef _DICT_H_
 #define _DICT_H_
-#include <glib.h>
-#include <SDL.h>
 #include "types.h"
 #include "vector.h"
+#include <glib.h>
+#include <SDL.h>
 /*
  * Following code is based on Professor DJ Kehoe's MoGul Engine from NJIT
  * source can be found at https://github.com/engineerOfLies/MoGUL
@@ -38,8 +38,6 @@ typedef struct Dict_S
 	void (*keyFree)( void * data);
 	void *keyValue;
 }Dict;
-
-
 
 /*
 * @brief destroys the pointer and frees content it points to

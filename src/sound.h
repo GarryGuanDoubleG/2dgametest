@@ -1,7 +1,7 @@
 #ifndef _SOUND_H_
 #define _SOUND_H_
 #include "types.h"
-
+#include "dict.h"
 /**
 * @brief initializes the sound system based on parameters
 * @param max_sounds: maximum number of sounds that can be loaded at the same time

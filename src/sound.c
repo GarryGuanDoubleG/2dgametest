@@ -38,7 +38,7 @@ void sound_free(void * data)
 	Sound *sound;
 	if(!data)return;
 	sound = (Sound *)data;
-	Mix_FreeChunk((sound->chunk);
+	Mix_FreeChunk((sound->chunk));
 }
 
 void sound_close()
