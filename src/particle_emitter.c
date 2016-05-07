@@ -6,7 +6,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glib/ghash.h>
+//#include <glib/ghash.h>
 #include <SDL.h>
 
 GHashTable *__particle_sprite_hash = NULL;
@@ -16,6 +16,7 @@ int __particle_em_count = 0;
 int __particle_count = 0;
 void particle_load_from_def(char *filename);
 extern int delta;
+
 Sprite * particle_get_sprite(particle_types type)
 {
 	Sprite* sprite;

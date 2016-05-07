@@ -4,7 +4,7 @@
 #include "component.h"
 #include "types.h"
 #include "vector.h"
-#include <glib/glist.h>
+//#include <glib/glist.h>
 #include <glib.h>
 
 typedef void (*Window_Callback)(void *data);

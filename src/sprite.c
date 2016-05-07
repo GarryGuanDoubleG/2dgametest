@@ -3,7 +3,7 @@
 Sprite			*spriteList = NULL;
 int				sprite_count = 0;
 Sprite			*Sprite_Mouse;
-static int		SPRITE_MAX = 0;
+static int		sprite_max = 0;
 
 struct
 {
@@ -69,16 +69,23 @@ void DrawMouse2()
 void sprite_initialize_system(int max_sprites)
 {
 	int i;
+
 	if( max_sprites <= 0 )
 	{
 		fprintf(stdout, "The maximum number of sprites cannot be 0");
 		return;
 	}
-	SPRITE_MAX = max_sprites;
+
+	sprite_max = max_sprites;
 	sprite_count = 0;
-	spriteList = (Sprite *)malloc(sizeof(Sprite) * SPRITE_MAX);
-	memset(spriteList, 0, sizeof(Sprite) * SPRITE_MAX);
-	for(i = 0;i < SPRITE_MAX;i++)spriteList[i].image= NULL;
+
+	spriteList = (Sprite *)malloc(sizeof(Sprite) * sprite_max);
+	memset(spriteList, 0, sizeof(Sprite) * sprite_max);
+
+	for(i = 0;i < sprite_max;i++)
+	{
+		spriteList[i].image= NULL;
+	}
 
 	atexit(sprite_close_system);
 }
@@ -92,7 +99,7 @@ void sprite_close_system()
 	int i;
 	Sprite  **target = NULL;
 	Sprite *ptr = NULL;
-	for(i = 0; i < SPRITE_MAX; i++){
+	for(i = 0; i < sprite_max; i++){
 		if( spriteList[i].refCount > 0){
 			//target = spriteList[i];
 			ptr = &spriteList[i];
@@ -123,7 +130,7 @@ Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, i
 		return NULL;
 	}
 
-	for(i = 0; i < SPRITE_MAX; i++){
+	for(i = 0; i < sprite_max; i++){
 		if(!strcmp(spriteList[i].filename, filename)){
 			fprintf(stdout,"Sprite has already been loaded");
 			return NULL;
@@ -142,7 +149,7 @@ Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, i
 		return NULL;
 	}
 	//Loop through sprite list to find unallocated memory location
-	for(i = 0; i < SPRITE_MAX; i++){
+	for(i = 0; i < sprite_max; i++){
 		if((spriteList + i)->image == NULL){
 			spriteList[i].refCount = 1;
 			//Get image dimensions
@@ -156,7 +163,7 @@ Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, i
 
 			spriteList[i].frameW = frameW > 0 ? frameW : img_width;
 			spriteList[i].frameH = frameH > 0 ? frameH : img_height;
-			if(sprite_count +1 >= SPRITE_MAX){
+			if(sprite_count +1 >= sprite_max){
 				printf("Uh oh, max sprites reached!");
 				exit(1);
 			}
@@ -174,6 +181,7 @@ void sprite_free(Sprite ** sprite)
 {
 	Sprite * target = *sprite;
 	if(!sprite) return;
+	if(!*sprite) return;
 	//if(!*sprite) return;
   
 	target->refCount--;

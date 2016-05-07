@@ -3,7 +3,7 @@
 #include "dict.h"
 #include "load.h"
 #include "vector.h"
-#include <glib/glist.h>
+//#include <glib/glist.h>
 #include <glib.h>
 
 #define PARTICLE_MAX 10000
