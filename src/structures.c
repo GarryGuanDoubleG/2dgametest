@@ -4,7 +4,7 @@ static int struct_show_select = false;
 static entity * selected_struct = NULL;
 extern struct Mouse2;
 /*
-structure * struct_load(Sprite2 *sprite, int health, int defense, int type)
+structure * struct_load(Sprite *sprite, int health, int defense, int type)
 {
 	int i;
 	for(i = 0; i < STRUCT_MAX; i++)
@@ -103,17 +103,17 @@ void structure_select(int type)
 	}
 	if(type == struct_type::main_base01)
 	{
-		Sprite2 *struct_sprite = sprite_load(SPRITE_MAIN_BASE01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		Sprite *struct_sprite = sprite_load(SPRITE_MAIN_BASE01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
 	if(type == struct_type::wall_01)
 	{
-		Sprite2 *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		Sprite *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
 	if(type == struct_type::tower_01)
 	{
-		Sprite2 *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		Sprite *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
 

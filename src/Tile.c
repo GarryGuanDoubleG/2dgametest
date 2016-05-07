@@ -14,8 +14,8 @@ Tile *tile_list = NULL;
 Destructable_Tile *dest_tile_list = NULL;
 //array of tile scores for procedural forest gen
 int * tile_list_scores = NULL; 
-Sprite2 * tile_sprite_grass = NULL;
-Sprite2 * tile_sprite_tree = NULL;
+Sprite * tile_sprite_grass = NULL;
+Sprite * tile_sprite_tree = NULL;
 int call_stack = 0;
 
 /**
@@ -50,12 +50,12 @@ void tile_init_system(){
 /*
 * @brief loads the tile sprite from filepath into memory
 * @param cstring for filepath to open
-* @return pointer to Sprite2
+* @return pointer to Sprite
 */
 
-Sprite2 * tile_load(char *filename)
+Sprite * tile_load(char *filename)
 {
-	Sprite2 * sprite = sprite_load(filename, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+	Sprite * sprite = sprite_load(filename, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 	return sprite;
 }
 

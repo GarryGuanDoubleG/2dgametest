@@ -12,6 +12,6 @@ void structure_select(int type);
 int structure_place();
 void structure_HUD();
 //void struct_update_all();
-//structure * struct_load(Sprite2 *sprite, int health, int defense, int type);
+//structure * struct_load(Sprite *sprite, int health, int defense, int type);
 
 #endif

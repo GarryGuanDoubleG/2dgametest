@@ -4,6 +4,7 @@
 #include <glib/glist.h>
 #include <glib/ghash.h>
 */
+#include "simple_logger.h"
 #include <glib.h>
 #include "dict.h"
 
@@ -173,6 +174,7 @@ void dict_hash_remove(Dict*hash, char *key)
 Dict*dict_get_hash_value(Dict*hash, Line key)
 {
 	GHashTable *hash_table = NULL;
+	gpointer value = NULL;
 	if(!hash) return NULL;
 	if(hash->data_type != DICT_HASH) return NULL;
 	if(hash->keyValue == NULL)

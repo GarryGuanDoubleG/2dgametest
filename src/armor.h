@@ -57,11 +57,11 @@ typedef struct{
 	int frame_horizontal; /**<Tracks which frame horizontally should be rendered from the sprite. Used for playing next frame of animation**/
 	int frame_vertical; /**<Tracks which frame vertiaclly should be rendered from sprite. Used for determining which animation (or direction) should be played*/
 	
-	Sprite2 *image;/**<pointer to default sprite image usually set to walking animation*/
-	Sprite2 *image_slash;/**<pointer to sprite with slashing animation that is played usually to swing a sword or dagger*/
-	Sprite2 *image_bow; /**<pointer to sprite with bow and arrow shooting animation*/
-	Sprite2 *image_thrust; /**<pointer to sprite with thrusting animation like spears*/
-	Sprite2 *image_spellcast;/**<pointer to sprite with spellcasting animation*/
+	Sprite *image;/**<pointer to default sprite image usually set to walking animation*/
+	Sprite *image_slash;/**<pointer to sprite with slashing animation that is played usually to swing a sword or dagger*/
+	Sprite *image_bow; /**<pointer to sprite with bow and arrow shooting animation*/
+	Sprite *image_thrust; /**<pointer to sprite with thrusting animation like spears*/
+	Sprite *image_spellcast;/**<pointer to sprite with spellcasting animation*/
 
 	int active; /**<1 if armor should apply effects and be drawn or 0 if should be ignored */
 	int inuse; /**<true if armor is being tracked by resource manager and is in game. */
@@ -82,7 +82,7 @@ Armor *getArmor(char *name);
 * @param takes animation type to be played e.g. slash, thrust, spellcast. Pointer to current armor to retrieve its respective animation
 * @return pointer to sprite with animation
 */
-Sprite2 *getArmorAnim(int anim,Armor * myArmor);
+Sprite *getArmorAnim(int anim,Armor * myArmor);
 
 
 #endif

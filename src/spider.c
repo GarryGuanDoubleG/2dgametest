@@ -128,7 +128,7 @@ entity * spider_spawn(int type)
 }
 entity * spider01_spawn()
 {
-	Sprite2 * sprite_spider01;
+	Sprite * sprite_spider01;
 	entity * ent_spider01 = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};

@@ -4,13 +4,15 @@
 #include "vector.h"
 #include <glib.h>
 #include <SDL.h>
+
+
 /*
  * Following code is based on Professor DJ Kehoe's MoGul Engine from NJIT
  * source can be found at https://github.com/engineerOfLies/MoGUL
 */
 
 #define LINE_LENGTH 128
-
+#define GFOREACH(item, list) for(GList *__glist = list; __glist && (item = __glist->data, true); __glist = __glist->next)
 typedef enum Dict_types_S
 {
 	DICT_VOID,
@@ -104,5 +106,7 @@ int dict_get_hash_count(Dict * hash);
 * @return dict value of the nth entry in hash
 */
 Dict * dict_get_hash_nth(Line key, Dict *hash, int n);
+
+Dict * dict_get_hash_value(Dict*hash, Line key);
 
 #endif

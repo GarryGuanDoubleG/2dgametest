@@ -22,8 +22,8 @@ typedef struct item_S
 	int model_frameW; /**<image frame width of model */
 	int model_frameH; /**<image frame height of model */
 	//sprites
-	Sprite2 *icon; /**<pointer to sprite of icon image loaded into memory*/
-	Sprite2 *item_model; /**<pointer to sprite of model image loaded into memory*/
+	Sprite *icon; /**<pointer to sprite of icon image loaded into memory*/
+	Sprite *item_model; /**<pointer to sprite of model image loaded into memory*/
 	int pickup; /** <int true if item can be picked up*/
 	int amount; /** <int amount added to inventory when picked up*/
 	int inuse;/**<int true if loaded into memory*/

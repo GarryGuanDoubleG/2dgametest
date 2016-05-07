@@ -89,6 +89,7 @@
     <ClInclude Include="..\src\monster_define.h" />
     <ClInclude Include="..\src\music.h" />
     <ClInclude Include="..\src\orc.h" />
+    <ClInclude Include="..\src\particle_emitter.h" />
     <ClInclude Include="..\src\path_find.h" />
     <ClInclude Include="..\src\player.h" />
     <ClInclude Include="..\src\sara.h" />
@@ -127,6 +128,7 @@
     <ClCompile Include="..\src\monster_ai.c" />
     <ClCompile Include="..\src\music.c" />
     <ClCompile Include="..\src\orc.c" />
+    <ClCompile Include="..\src\particle_emitter.c" />
     <ClCompile Include="..\src\path_find.c" />
     <ClCompile Include="..\src\player.c" />
     <ClCompile Include="..\src\sara.c" />

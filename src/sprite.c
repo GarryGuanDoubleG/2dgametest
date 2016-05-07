@@ -1,8 +1,8 @@
 #include "sprite.h"
 
-Sprite2			*spriteList = NULL;
+Sprite			*spriteList = NULL;
 int				sprite_count = 0;
-Sprite2			*Sprite_Mouse;
+Sprite			*Sprite_Mouse;
 static int		SPRITE_MAX = 0;
 
 struct
@@ -76,8 +76,8 @@ void sprite_initialize_system(int max_sprites)
 	}
 	SPRITE_MAX = max_sprites;
 	sprite_count = 0;
-	spriteList = (Sprite2 *)malloc(sizeof(Sprite2) * SPRITE_MAX);
-	memset(spriteList, 0, sizeof(Sprite2) * SPRITE_MAX);
+	spriteList = (Sprite *)malloc(sizeof(Sprite) * SPRITE_MAX);
+	memset(spriteList, 0, sizeof(Sprite) * SPRITE_MAX);
 	for(i = 0;i < SPRITE_MAX;i++)spriteList[i].image= NULL;
 
 	atexit(sprite_close_system);
@@ -90,8 +90,8 @@ void sprite_initialize_system(int max_sprites)
 void sprite_close_system()
 {
 	int i;
-	Sprite2  **target = NULL;
-	Sprite2 *ptr = NULL;
+	Sprite  **target = NULL;
+	Sprite *ptr = NULL;
 	for(i = 0; i < SPRITE_MAX; i++){
 		if( spriteList[i].refCount > 0){
 			//target = spriteList[i];
@@ -109,11 +109,11 @@ void sprite_close_system()
   @return pointer to loaded sprite
 */
 
-Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH)
+Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH)
 {
 	SDL_Texture * newTexture = NULL;
 	SDL_Surface * loadedSurface = NULL;
-	Sprite2* new_sprite;
+	Sprite* new_sprite;
 	int i;
 	if(!spriteList){
 		fprintf(stdout, "Sprite List is null");
@@ -134,7 +134,7 @@ Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, 
 		fprintf(stdout,"%s was not loaded in sprite_load\n",filename);
 		return NULL;
 	}
-	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );
+	//SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );
 
 	newTexture = SDL_CreateTextureFromSurface(__gt_graphics_renderer, loadedSurface);
 	if(!newTexture){
@@ -165,13 +165,14 @@ Sprite2 *sprite_load(char *filename, int img_width, int img_height, int frameW, 
 		}		
 	}
 
+
 }
 /**
 * @brief frees the image loaded in the sprite and deallocates the memory for it
 */
-void sprite_free(Sprite2 ** sprite)
+void sprite_free(Sprite ** sprite)
 {
-	Sprite2 * target = *sprite;
+	Sprite * target = *sprite;
 	if(!sprite) return;
 	//if(!*sprite) return;
   
@@ -183,7 +184,7 @@ void sprite_free(Sprite2 ** sprite)
 			/*just to be anal retentive, check to see if the image is already freed*/
 		if(target->image != NULL)
 			SDL_DestroyTexture(target->image);
-		memset(target, 0, sizeof(Sprite2));
+		memset(target, 0, sizeof(Sprite));
 
 		target->image = NULL;
 	}
@@ -192,10 +193,10 @@ void sprite_free(Sprite2 ** sprite)
 
 /**
 * @brief draws the sprite onto the screen
-* @param Sprite2 pointer to draw, frame_horizontal frame # to play, frame-vertical - which frame to play, renderer of game, and x and y offset to draw
+* @param Sprite pointer to draw, frame_horizontal frame # to play, frame-vertical - which frame to play, renderer of game, and x and y offset to draw
 */
 
-void sprite_draw(Sprite2 *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
+void sprite_draw(Sprite *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
 	SDL_Rect camera = graphics_get_player_cam();

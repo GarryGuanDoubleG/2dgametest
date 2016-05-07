@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "path_find.h"
 #include "dict.h"
+#include "particle_emitter.h"
 /**
 * @brief terms for which team an entity is on to determine who to attack
 */
@@ -28,7 +29,7 @@ typedef struct Entity_S
 {
 	int inuse; /**< used for memory allocation if not inuse*/
 	//animation & drawing
-	Sprite2 * sprite;/**<pointer to sprite of entities body or default animation*/
+	Sprite * sprite;/**<pointer to sprite of entities body or default animation*/
 	int frame_horizontal;/**<Tracks which frame horizontally should be rendered from the sprite. Used for playing next frame of animation**/
 	int frame_vertical; /**<Tracks which frame vertiaclly should be rendered from sprite. Used for determining which animation (or direction) should be played*/
 	//ent positions
@@ -54,6 +55,7 @@ typedef struct Entity_S
 	int selected; /*< bool is player is placing building */
 	int struct_type;/*< int type of structure */
 	//end
+	Particle_Emitter * p_em;
 	void (*think)(struct Entity_S *self); /**<function pointer to think function to determine entity's actions*/
 	void (*update)(struct Entity_S *self); /**<function pointer to update function of specfic entity*/
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);/**<function pointer that triggers when entites collide with one another*/
@@ -91,11 +93,11 @@ int entity_check_collision(entity *self);
 /*
 * @brief loads player buildable structure
 */
-entity* struct_load(Sprite2 *sprite, int health, int defense, int type);
+entity* struct_load(Sprite *sprite, int health, int defense, int type);
 /**
 * @brief loads entity values into entity list and returns pointer to address in list
 */
-entity *entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int state);
+entity *entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state);
 /**
 * @brief closes entity system and frees all memory that was allocated
 */

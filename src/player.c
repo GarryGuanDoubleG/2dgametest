@@ -1,6 +1,6 @@
 #include "player.h"
 #include "simple_logger.h"
-
+#include "particle_emitter.h"
 char* player_char_file = "images/player/BODY_male.png";
 
 entity* player = NULL;
@@ -24,23 +24,23 @@ enum KeyPressSurfaces{
 };
 
 struct {
-	Sprite2 *image;
-	Sprite2 *image_slash;
-	Sprite2 *image_bow;
-	Sprite2 *image_thrust;
-	Sprite2 *image_spell;
+	Sprite *image;
+	Sprite *image_slash;
+	Sprite *image_bow;
+	Sprite *image_thrust;
+	Sprite *image_spell;
 }playerBody;
 
 
 //end
 void player_init(){
 	int i = 0;
-
+	
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	SDL_Rect bound = {PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.6f, PLAYER_FRAMEH*.6f};
 
-	Sprite2 *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	Sprite *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
 	animCurrent = WALK;
 	player = entity_load(player_sprite,pos, 100, 100, 0 );
@@ -57,6 +57,7 @@ void player_init(){
 	player->update = player_update;
 	player->player = true;
 	player->team = TEAM_PLAYER;
+	player->p_em = particle_em_new();
 
 	weapon_load_all();
 	armor_load_all();
@@ -138,7 +139,7 @@ void player_update(entity *self)
 void player_update_camera()
 {
 	SDL_Rect new_cam;
-
+	
 	new_cam.x = player->position.x - SCREEN_WIDTH/2;
 	new_cam.y = player->position.y - SCREEN_HEIGHT/2;
 	new_cam.w = SCREEN_WIDTH;
@@ -165,7 +166,7 @@ void player_update_camera()
 }
 
 void player_move(SDL_Event *e){
-
+	
 	if(!e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
@@ -206,10 +207,12 @@ void player_move(SDL_Event *e){
 }
 
 void player_attack(SDL_Event *e){
+	Vec2d p;
 	if(!e){
 		fprintf(stdout,"Player_Move sdl event e is null");
 		return;
 	}
+
 	switch(e->type){
 		case SDL_MOUSEBUTTONDOWN:
 			if(selecting_struct)
@@ -222,6 +225,13 @@ void player_attack(SDL_Event *e){
 		case SDL_KEYDOWN:
 			switch( e->key.keysym.sym )
 			  {
+				case SDLK_q:
+					slog("Q press");
+					p.y = player->position.y + player->sprite->frameH * 3 / 4;
+					p.x = player->position.x;
+					
+					particle_em_add(player->p_em, PARTICLE_SPELLCAST, p);
+					break;
 				case SDLK_i:
 					set_hud_state(HUD_state::inventory1);
 					break;

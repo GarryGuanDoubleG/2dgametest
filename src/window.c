@@ -9,18 +9,17 @@ void window_init()
 {
 	int i;
 	slog("Window init");
-	
-
 
 }
 
 Bool window_load_data_from_def(char *filename, void *data)
 {
+	Window * window;
+
 	if(!filename || !data)
 	{
 		slog("No filename or data pointer passed");
 		return Bool_False;
 	}
-
 
 }

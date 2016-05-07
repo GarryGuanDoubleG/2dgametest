@@ -121,7 +121,7 @@ void sara_onDeath(entity *self)
 
 entity * sara_spawn()
 {
-	Sprite2 * sprite_sara;
+	Sprite * sprite_sara;
 	entity * ent_sara = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};

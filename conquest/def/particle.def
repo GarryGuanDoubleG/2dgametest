@@ -1,0 +1,11 @@
+{
+	"spellcast":
+	{
+		"filepath": "images/particles/spellcast.png",
+		"img_width": 64,
+		"img_height": 64,
+		"frame_height": 80,
+		"frame_width": 80,
+		"frames_per_line": 4
+	}
+}
