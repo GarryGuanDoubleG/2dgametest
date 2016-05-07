@@ -55,7 +55,7 @@ void tile_init_system();
 * @brief loads tile sprite from filepath
 * @param cstring filepath of tile
 */
-Sprite2 * tile_load(char *filename);
+Sprite * tile_load(char *filename);
 /**
 * @brief sets the type and mbox of all tiles
 */

@@ -81,7 +81,7 @@ Armor *getArmor(char *name){
 	return NULL;
 }
 
-Sprite2 *getArmorAnim(int anim, Armor * myArmor){
+Sprite *getArmorAnim(int anim, Armor * myArmor){
 
 	if(!myArmor){
 		slog("Cannot get Armor Sprite. myArmor is NULL");

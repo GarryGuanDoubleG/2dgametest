@@ -7,15 +7,15 @@
 /**
 * @brief pointer to sprite of player's health bar that HUD updates based on current health
 */
-extern Sprite2 * health_bar;
+extern Sprite * health_bar;
 /**
 * @brief pointer to sprite of player's mana bar that HUD updates based on current mana
 */
-extern Sprite2 * mana_bar;
+extern Sprite * mana_bar;
 /**
 * @brief pointer to sprite of background of health and mana bars
 */
-extern Sprite2 * bg_bar;
+extern Sprite * bg_bar;
 
 /**
 * @brief states of the HUD to determine what to display in the menu HUD element

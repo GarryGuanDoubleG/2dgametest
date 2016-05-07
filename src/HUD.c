@@ -1,9 +1,9 @@
 #include "HUD.h"
 
-Sprite2 * HUD_bar;
-Sprite2 * HUD_menu;
-Sprite2 * HUD_item_bag;
-Sprite2 * HUD_axe;
+Sprite * HUD_bar;
+Sprite * HUD_menu;
+Sprite * HUD_item_bag;
+Sprite * HUD_axe;
 
 static HUD_state hud_state_curr;
 

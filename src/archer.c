@@ -1,4 +1,4 @@
-#include "arccher.h"
+#include "archer.h"
 
 void archer_update(entity *self)
 {
@@ -121,7 +121,7 @@ void archer_onDeath(entity *self)
 
 entity * archer_spawn()
 {
-	Sprite2 * sprite_archer;
+	Sprite * sprite_archer;
 	entity * ent_archer = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};

@@ -92,7 +92,7 @@ void grue_touch(entity *self, entity *other){
 }
 
 entity * grue_spawn(){
-	Sprite2 * sprite_grue;
+	Sprite * sprite_grue;
 	entity * ent_grue = NULL;
 	Vec2d pos = {400,400};
 	Vec2d vel = {-5,0};

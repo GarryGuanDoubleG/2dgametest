@@ -110,7 +110,7 @@ entity * orc_spawn(int type)
 }
 entity * orc_spawn()
 {
-	Sprite2 * sprite_orc;
+	Sprite * sprite_orc;
 	entity * ent_orc = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};

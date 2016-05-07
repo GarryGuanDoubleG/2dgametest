@@ -1,0 +1,54 @@
+﻿Build started 5/5/2016 10:59:38 PM.
+     1>Project "C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\conquest.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\conquest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib "glib-2.0.lib" jansson_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\conquest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.lib" /MACHINE:X86 Debug\archer.obj
+         Debug\armor.obj
+         Debug\audio.obj
+         Debug\dict.obj
+         Debug\entity.obj
+         Debug\game.obj
+         Debug\graphics.obj
+         Debug\grue.obj
+         Debug\HUD.obj
+         Debug\inventory.obj
+         Debug\items.obj
+         Debug\json_parse.obj
+         Debug\load.obj
+         Debug\minotaur.obj
+         Debug\monster_ai.obj
+         Debug\music.obj
+         Debug\orc.obj
+         Debug\particle_emitter.obj
+         Debug\path_find.obj
+         Debug\player.obj
+         Debug\sara.obj
+         Debug\save.obj
+         Debug\simple_logger.obj
+         Debug\sound.obj
+         Debug\spider.obj
+         Debug\sprite.obj
+         Debug\structures.obj
+         Debug\support_ai.obj
+         Debug\supp_angel.obj
+         Debug\Tile.obj
+         Debug\types.obj
+         Debug\vector.obj
+         Debug\weapon.obj
+         Debug\window.obj
+         LINK : C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe not found or not built by the last incremental link; performing full link
+     1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+         conquest.vcxproj -> C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe;#1" /manifest Debug\conquest.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\conquest.unsuccessfulbuild".
+         Touching "Debug\conquest.lastbuildstate".
+     1>Done Building Project "C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\conquest.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.62

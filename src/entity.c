@@ -54,7 +54,7 @@ entity * entity_new(){
 	return NULL;
 }
 //loads structure
-entity* struct_load(Sprite2 *sprite, int health, int defense, int type)
+entity* struct_load(Sprite *sprite, int health, int defense, int type)
 {
 	int i;
 	for(i = 0; i < entity_count + 1; i++)
@@ -77,7 +77,7 @@ entity* struct_load(Sprite2 *sprite, int health, int defense, int type)
 	return NULL;
 }
 
-entity* entity_load(Sprite2 *sprite,Vec2d pos, int health, int stamina, int state){
+entity* entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state){
 	int i;
 	for(i = 0; i < entity_count + 1; i++)
 	{

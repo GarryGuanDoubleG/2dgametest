@@ -110,7 +110,7 @@ entity * mino_spawn(int type)
 }
 entity * mino_spawn()
 {
-	Sprite2 * sprite_mino;
+	Sprite * sprite_mino;
 	entity * ent_mino = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};

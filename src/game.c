@@ -12,11 +12,14 @@
 #include "support_ai.h"
 #include "items.h"
 #include "structures.h"
+#include "particle_emitter.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
 extern SDL_Rect Camera;
-
+int current_time;
+int last_time;
+int delta;
 void Init_All(); //single function to intialize all resource managers
 
 /*this program must be run from the directory directly below images and src, not from within src*/
@@ -31,8 +34,8 @@ int main(int argc, char *argv[])
   char imagepath[512];
   SDL_Rect srcRect={0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
   SDL_Event e;
-
-
+  last_time = current_time = SDL_GetTicks();
+  
   Init_All();
   slog("Finished Init All()");
   done = 0;
@@ -42,7 +45,6 @@ int main(int argc, char *argv[])
 	//draw functions should go in order from background first to player draw calls last
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
-	
 	tile_render();	
 	player_draw();
 	DrawMouse2();
@@ -59,6 +61,7 @@ int main(int argc, char *argv[])
 	entity_update_all();
 	entity_think_all();
 	entity_check_collision_all();
+	particle_em_draw_all();
 //	struct_update_all();
 	
 
@@ -86,6 +89,9 @@ int main(int argc, char *argv[])
 		}
 		
 	SDL_RenderPresent(__gt_graphics_renderer);
+	last_time = current_time;
+	current_time = SDL_GetTicks();
+	delta = current_time - last_time;
   }while(!done);
   exit(0);		/*technically this will end the program, but the compiler likes all functions that can return a value TO return a value*/
   return 0;
@@ -109,12 +115,12 @@ void Init_All()
   sprite_initialize_system(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
   tile_init_system(); // allocate memory for tiles and generate map
+  particle_em_init_system();
   player_init(); //creates player entity
   hud_init(); //loads hud sprites
 //  structure_init_system();
   item_load_all(); //loads item imags into itemlist and allocates memory for new items
   inventory_init(); //allocates memory to store items
-  
   InitMouse2(); // loads mouse sprite into mem
   
 

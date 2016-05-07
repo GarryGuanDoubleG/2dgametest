@@ -146,7 +146,7 @@ void angel_onDeath(entity *self)
 
 entity * angel_spawn()
 {
-	Sprite2 * sprite_angel;
+	Sprite * sprite_angel;
 	entity * ent_angel = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
