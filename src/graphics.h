@@ -54,10 +54,10 @@ void NextFrame();
 void InitMouse();
 void DrawMouse();
 //player camera updated in player update
-SDL_Rect graphics_get_player_cam();
+SDL_Rect Graphics_Get_Player_Cam();
 void graphics_update_player_cam( SDL_Rect player_cam );
 //gg edit
-SDL_Renderer * graphics_get_renderer();
+SDL_Renderer * Graphics_Get_Renderer();
 
 
 #endif

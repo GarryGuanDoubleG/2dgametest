@@ -123,40 +123,40 @@ void draw_health_bar(entity *self){
 	SDL_Color BGColor = {255, 0, 0, 255};
 	
 
-	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
-	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
+	SDL_GetRenderDrawColor(Graphics_Get_Renderer(), &old.r, &old.g, &old.g, &old.a); 
+	if(SDL_SetRenderDrawColor(Graphics_Get_Renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
 	 {
 		slog("Failed to set render draw color");
      }
-	if(!rect_collide(bg_rect, graphics_get_player_cam()))
+	if(!rect_collide(bg_rect, Graphics_Get_Player_Cam()))
 	{
-		SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00);
+		SDL_SetRenderDrawColor(Graphics_Get_Renderer(), 0x00, 0x00, 0x00, 0x00);
 		return;
 	}
-		bg_rect.x -= graphics_get_player_cam().x;
-		bg_rect.y -= graphics_get_player_cam().y;
+		bg_rect.x -= Graphics_Get_Player_Cam().x;
+		bg_rect.y -= Graphics_Get_Player_Cam().y;
 		fg_rect = bg_rect;
 		px = bg_rect.x;
 		percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;
 		pw = (int)((float)bg_rect.w * percent); 
 
-		if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))
+		if(SDL_RenderFillRect(Graphics_Get_Renderer(), &bg_rect))
 		{
 			slog("Failed to Fill bg rect");
 		}
-    if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
+    if(SDL_SetRenderDrawColor(Graphics_Get_Renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
 	{
 		slog("Failed to set render draw color");
 	}
  
 	fg_rect.x = px;
 	fg_rect.w = pw;
-	if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))
+	if(SDL_RenderFillRect(Graphics_Get_Renderer(), &fg_rect))
 	{
 		slog("Failed to Fill Rect");
 	}
 
-    if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
+    if(SDL_SetRenderDrawColor(Graphics_Get_Renderer(), 0x00, 0x00, 0x00, 0x00))
 	{
 		slog("Failed to set render draw color");
 	}
@@ -166,7 +166,7 @@ void draw_health_bar(entity *self){
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
-	sprite_draw(ent->sprite, ent->frame, graphics_get_renderer(), ent->position.x, ent->position.y);
+	Sprite_Draw(ent->sprite, ent->frame, Graphics_Get_Renderer(), ent->position.x, ent->position.y);
 	if(ent == player)
 	{
 		draw_health_bar(ent);
@@ -225,17 +225,17 @@ void entity_update_all(){
 		{
 			entityList[i].position.x =0;
 		}
-		if(entityList[i].position.x + entityList[i].sprite->frameW > TOTAL_TILES_X * TILE_WIDTH)
+		if(entityList[i].position.x + entityList[i].sprite->frameW > TILE_ROWS * TILE_WIDTH)
 		{
-			entityList[i].position.x  = TOTAL_TILES_X * TILE_WIDTH - entityList[i].sprite->frameW;
+			entityList[i].position.x  = TILE_ROWS * TILE_WIDTH - entityList[i].sprite->frameW;
 		}
 		if(entityList[i].position.y < 0 ) 
 		{
 			entityList[i].position.y =0;
 		}
-		if(entityList[i].position.y + entityList[i].sprite->frameH > TOTAL_TILES_Y * TILE_HEIGHT)
+		if(entityList[i].position.y + entityList[i].sprite->frameH > TILE_COLUMNS * TILE_HEIGHT)
 		{
-			entityList[i].position.y  = TOTAL_TILES_Y * TILE_HEIGHT - entityList[i].sprite->frameH;
+			entityList[i].position.y  = TILE_COLUMNS * TILE_HEIGHT - entityList[i].sprite->frameH;
 		}
 
 		if(!entityList[i].update){
@@ -320,19 +320,19 @@ void weapon_collide_draw_box(Rect_f self, Rect_f other)
 	SDL_Color FGColor = {0, 255, 255, 255}; // other
 	SDL_Color BGColor = {255, 0, 0, 255}; //weapon
 
-	SDL_GetRenderDrawColor(graphics_get_renderer(), &old.r, &old.g, &old.g, &old.a); 
-	if(SDL_SetRenderDrawColor(graphics_get_renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
+	SDL_GetRenderDrawColor(Graphics_Get_Renderer(), &old.r, &old.g, &old.g, &old.a); 
+	if(SDL_SetRenderDrawColor(Graphics_Get_Renderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a))
 	 {
 		slog("Failed to set render draw color");
      }
-    if(SDL_RenderFillRect(graphics_get_renderer(), &bg_rect))slog("Failed to Fill bg rect");
-    if(SDL_SetRenderDrawColor(graphics_get_renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
+    if(SDL_RenderFillRect(Graphics_Get_Renderer(), &bg_rect))slog("Failed to Fill bg rect");
+    if(SDL_SetRenderDrawColor(Graphics_Get_Renderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a))
 	{
 		slog("Failed to set render draw color");
 	}
  
-    if(SDL_RenderFillRect(graphics_get_renderer(), &fg_rect))slog("Failed to Fill Rect");
-    if(SDL_SetRenderDrawColor(graphics_get_renderer(), 0x00, 0x00, 0x00, 0x00))
+    if(SDL_RenderFillRect(Graphics_Get_Renderer(), &fg_rect))slog("Failed to Fill Rect");
+    if(SDL_SetRenderDrawColor(Graphics_Get_Renderer(), 0x00, 0x00, 0x00, 0x00))
 	{
 		slog("Failed to set render draw color");
 	}
@@ -479,7 +479,7 @@ void ent_follow_path(entity *self)
 	{
 	//	slog("No Path");
 		return;
-		/*Vec2dSub(self_center_pos,player_center_pos,new_vel);
+		/*Vec2dSubtract(self_center_pos,player_center_pos,new_vel);
 		Normalize2d(new_vel);
 		VectorScale(new_vel, new_vel, 10);
 		self->velocity = new_vel;
@@ -520,7 +520,7 @@ void ent_follow_path(entity *self)
 	}
 	else
 	{	
-		Vec2dSub(tile_center_pos, self_center_pos, new_vel);
+		Vec2dSubtract(tile_center_pos, self_center_pos, new_vel);
 		Normalize2d(new_vel);
 		VectorScale(new_vel, new_vel, 5);
 		x = new_vel.x;

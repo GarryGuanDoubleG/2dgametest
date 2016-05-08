@@ -1,9 +1,9 @@
 #include "sprite.h"
 
 Sprite			*spriteList = NULL;
-int				sprite_count = 0;
+int				G_Sprite_Count = 0;
 Sprite			*Sprite_Mouse;
-static int		sprite_max = 0;
+static int		G_Sprite_Max = 0;
 
 struct
 {
@@ -13,51 +13,57 @@ struct
 	Uint32 frame;
 
 	Uint16  x, y;
-}Mouse2;
+}Mouse;
 
 /**
 * @brief intializes the sprite for the mouse
 */
-void InitMouse2()
+void Init_Mouse()
 {
   if(!SDL_ShowCursor(false)){
 	  printf("Could not hide mouse");
   }
 
-  Sprite_Mouse = sprite_load("images/mouse.png", 16,16, NULL,NULL);
+  Sprite_Mouse = Sprite_Load("images/mouse.png", 16,16, NULL,NULL);
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
-  Mouse2.state = 0;
-  Mouse2.shown = 0;
-  Mouse2.frame = 0;
 
+  Mouse.state = 0;
+  Mouse.shown = 0;
+  Mouse.frame = 0;
 }
 /**
 * @brief retrieves the mouse x and y position
 * @return x and y position in a 2d vector
 */
-Vec2d get_mouse_pos()
+Vec2d Get_Mouse_Pos()
 {
-	Vec2d mouse_pos = {Mouse2.x, Mouse2.y};
+	Vec2d mouse_pos = {Mouse.x, Mouse.y};
 	return mouse_pos;
 }
 
 /**
 * @brief Draw the mouse onto the screen
 */
-void DrawMouse2()
+void Draw_Mouse()
 {
   int mx,my;
   int frame, fpl;
   int animations;
 
-  frame = Mouse2.frame;
+  SDL_Rect cam;
+  Vec2d draw_pos;
+
+  frame = Mouse.frame;
   fpl = 16;
   animations = 3; // specific to mouse
 
   SDL_GetMouseState(&mx,&my);
 
+  draw_pos.x = mx + cam.x;
+  draw_pos.y = mx + cam.y;
+
   if(Sprite_Mouse != NULL)
-	  sprite_draw(Sprite_Mouse, Mouse2.frame,__gt_graphics_renderer,graphics_get_player_cam().x + mx, graphics_get_player_cam().y + my);
+	  Sprite_Draw(Sprite_Mouse, Mouse.frame,__gt_graphics_renderer, draw_pos.x , draw_pos.y);
   else
 	  printf("Sprite_Mouse did not load properly");
 
@@ -68,16 +74,16 @@ void DrawMouse2()
 	  frame = 0;
   }
 
-  Mouse2.frame = frame;
-  Mouse2.x = mx;
-  Mouse2.y = my;
+  Mouse.frame = frame;
+  Mouse.x = mx;
+  Mouse.y = my;
 }
 
 /**
 * @brief allocates memory for a maximum 
 * @param int maximum number of sprites to have allocated during game
 */
-void sprite_initialize_system(int max_sprites)
+void Sprite_Initialize_System(int max_sprites)
 {
 	int i;
 
@@ -87,36 +93,36 @@ void sprite_initialize_system(int max_sprites)
 		return;
 	}
 
-	sprite_max = max_sprites;
-	sprite_count = 0;
+	G_Sprite_Max = max_sprites;
+	G_Sprite_Count = 0;
 
-	spriteList = (Sprite *)malloc(sizeof(Sprite) * sprite_max);
-	memset(spriteList, 0, sizeof(Sprite) * sprite_max);
+	spriteList = (Sprite *)malloc(sizeof(Sprite) * G_Sprite_Max);
+	memset(spriteList, 0, sizeof(Sprite) * G_Sprite_Max);
 
-	for(i = 0;i < sprite_max;i++)
+	for(i = 0;i < G_Sprite_Max;i++)
 	{
 		spriteList[i].image= NULL;
 	}
 
-	atexit(sprite_close_system);
+	atexit(Sprite_Close_System);
 }
 
 /**
 * @brief deallocates the memory set during initialization
 */
 
-void sprite_close_system()
+void Sprite_Close_System()
 {
 	int i;
 	Sprite  **target = NULL;
 	Sprite *ptr = NULL;
-	for(i = 0; i < sprite_max; i++){
+	for(i = 0; i < G_Sprite_Max; i++){
 		if( spriteList[i].refCount > 0){
 			//target = spriteList[i];
 			ptr = &spriteList[i];
 			if(ptr){
 				target = &ptr;
-				sprite_free(target);
+				Sprite_Free(target);
 			}
 		}
 	}	
@@ -129,12 +135,13 @@ void sprite_close_system()
   @return pointer to loaded sprite
 */
 
-Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH)
+Sprite *Sprite_Load(char *filename, int img_width, int img_height, int frameW, int frameH)
 {
 	SDL_Texture * newTexture = NULL;
 	SDL_Surface * loadedSurface = NULL;
 	Sprite* new_sprite;
 	int i;
+
 	if(!spriteList){
 		fprintf(stdout, "Sprite List is null");
 	}
@@ -143,7 +150,7 @@ Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, i
 		return NULL;
 	}
 
-	for(i = 0; i < sprite_max; i++){
+	for(i = 0; i < G_Sprite_Count; i++){
 		if(!strcmp(spriteList[i].filename, filename)){
 			fprintf(stdout,"Sprite has already been loaded");
 			return NULL;
@@ -151,35 +158,37 @@ Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, i
 	}
 	loadedSurface = IMG_Load(filename);
 	if(!loadedSurface){
-		fprintf(stdout,"%s was not loaded in sprite_load\n",filename);
+		fprintf(stdout,"%s was not loaded in Sprite_Load\n",filename);
 		return NULL;
 	}
 	//SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );
 
-	newTexture = SDL_CreateTextureFromSurface(__gt_graphics_renderer, loadedSurface);
+	newTexture = SDL_CreateTextureFromSurface(Graphics_Get_Renderer(), loadedSurface);
 	if(!newTexture){
 		printf("Unable to create New Texture from Sprite Surface");
 		return NULL;
 	}
 	//Loop through sprite list to find unallocated memory location
-	for(i = 0; i < sprite_max; i++){
+	for(i = 0; i < G_Sprite_Max; i++){
 		if((spriteList + i)->image == NULL){
 			spriteList[i].refCount = 1;
+			G_Sprite_Count++;
+
 			//Get image dimensions
 			spriteList[i].imageW = img_width;
 			spriteList[i].imageH = img_height;
-			//global count
-			sprite_count++;
-			spriteList[i].image = newTexture;
-			strncpy(spriteList[i].filename,filename,20);
-			spriteList[i].fpl = 16;//frames per line. May have to change later
+			spriteList[i].frameW = frameW;
+			spriteList[i].frameH = frameH;
+			spriteList[i].fpl	 = 16;
 
-			spriteList[i].frameW = frameW > 0 ? frameW : img_width;
-			spriteList[i].frameH = frameH > 0 ? frameH : img_height;
-			if(sprite_count +1 >= sprite_max){
+			spriteList[i].image = newTexture;
+			spriteList[i].filename = filename;
+
+			if(G_Sprite_Count +1 >= G_Sprite_Max){
 				printf("Uh oh, max sprites reached!");
 				exit(1);
 			}
+
 			SDL_FreeSurface(loadedSurface);
 			return &spriteList[i];
 		}		
@@ -187,10 +196,77 @@ Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, i
 
 
 }
+
+Sprite *Sprite_Load_Text(TTF_Font *font, char *text, SDL_Color color)
+{
+	int i;
+	Sprite *sprite = NULL;
+	SDL_Surface* text_surface = NULL;
+	SDL_Texture* text_texture = NULL;
+	SDL_Renderer *renderer;
+
+	if(!font)return NULL;
+	if(!text)return NULL;
+
+	if(!spriteList)return NULL;
+
+	renderer = Graphics_Get_Renderer();
+
+	for(i = 0; i < G_Sprite_Max; i++)
+	{
+		if(spriteList[i].refCount == 0)
+		{
+			if(sprite == NULL)
+			{
+				sprite = &spriteList[i];
+			}
+			continue;
+		}
+		if(spriteList[i].filename == text)
+		{
+			spriteList[i].refCount++;
+			return &spriteList[i];
+		}
+	}
+	if(G_Sprite_Count + 1 > G_Sprite_Max)
+	{
+		slog("Maximum Sprites have been reached.");
+		exit(1);
+	}
+
+	text_surface = TTF_RenderText_Blended(font, text, color);
+	if(!text_surface)
+	{
+		return NULL;
+	}
+	else
+	{
+		text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
+	}
+	if(!text_texture)
+	{
+		return NULL;
+	}
+
+	sprite->image = text_texture;
+	sprite->filename = text;
+	sprite->imageW = text_surface->w;
+	sprite->imageH = text_surface->h;
+	sprite->frameW = text_surface->w;
+	sprite->frameH = text_surface->h;
+
+	sprite->refCount++;
+	sprite->fpl = 16;
+	SDL_FreeSurface(text_surface);
+
+	return sprite;
+}
+
+
 /**
 * @brief frees the image loaded in the sprite and deallocates the memory for it
 */
-void sprite_free(Sprite ** sprite)
+void Sprite_Free(Sprite ** sprite)
 {
 	Sprite * target = *sprite;
 	if(!sprite) return;
@@ -201,15 +277,13 @@ void sprite_free(Sprite ** sprite)
 
 	if(target->refCount == 0)
 	{
-		strcpy(target->filename,"\0");
-			/*just to be anal retentive, check to see if the image is already freed*/
+		/*just to be anal retentive, check to see if the image is already freed*/
 		if(target->image != NULL)
 		{
 			SDL_DestroyTexture(target->image);
 		}
 
 		memset(target, 0, sizeof(Sprite));
-
 		target->image = NULL;
 	}
 	target = NULL;
@@ -221,14 +295,14 @@ void sprite_free(Sprite ** sprite)
 * @param Sprite pointer to draw, frame_horizontal frame # to play, frame-vertical - which frame to play, renderer of game, and x and y offset to draw
 */
 
-void sprite_draw(Sprite *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY)
+void Sprite_Draw(Sprite *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
 	SDL_Rect camera;
 	SDL_Rect src;
 	SDL_Rect dest;
 
-	camera = graphics_get_player_cam();
+	camera = Graphics_Get_Player_Cam();
 
 	src.x = frame%sprite->fpl * sprite->imageW;
 	src.y = frame/sprite->fpl * sprite->imageH;
@@ -248,3 +322,37 @@ void sprite_draw(Sprite *sprite, int frame, SDL_Renderer *renderer, int drawX, i
 	}
 }
 
+void Sprite_Text_Draw(Sprite *text, Vec2d draw_pos, int alpha)
+{
+	SDL_Rect src, dest;
+	Vec2d pos;
+	Vec2d pos_rel;
+	Vec2d cam_pos;
+
+	SDL_Renderer *renderer;
+	SDL_Rect cam;
+	
+	pos = draw_pos;
+
+	if(!text)return;
+
+	renderer = Graphics_Get_Renderer();
+	cam = Graphics_Get_Player_Cam();
+	cam_pos.x = cam.x;
+	cam_pos.y = cam.y;
+
+	Vec2dSubtract(draw_pos, cam_pos, pos_rel); 
+
+	src.x = 0;
+	src.y = 0;
+	src.w = text->imageW;
+	src.h = text->imageH;
+	
+	dest.x = pos_rel.x;
+	dest.y = pos_rel.y;
+	dest.w = text->frameW;
+	dest.h = text->frameH;
+
+	SDL_SetTextureAlphaMod(text->image, alpha);
+	SDL_RenderCopy(renderer, text->image, &src, &dest);
+}

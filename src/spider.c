@@ -142,7 +142,7 @@ entity * spider01_spawn()
 	}
 
 	slog("spider: x%f y%f", pos.x, pos.y);
-	sprite_spider01 = sprite_load(SPRITE_SPIDER01_FILEPATH, SPIDER01_IMAGEW, SPIDER01_IMAGEH, SPIDER01_FRAMEW, SPIDER01_FRAMEH);
+	sprite_spider01 = Sprite_Load(SPRITE_SPIDER01_FILEPATH, SPIDER01_IMAGEW, SPIDER01_IMAGEH, SPIDER01_FRAMEW, SPIDER01_FRAMEH);
 	sprite_spider01->fpl = 10;//2 frames per line
 	ent_spider01 = entity_load(sprite_spider01, pos, 100, 25, STATE_PATROL);
 

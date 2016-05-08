@@ -356,11 +356,11 @@ SDL_Surface * get_gt_buffer(){
 	return __gt_graphics_temp_buffer;
 }
 
-SDL_Renderer * graphics_get_renderer(){
+SDL_Renderer * Graphics_Get_Renderer(){
 	return __gt_graphics_renderer;
 }
 
-SDL_Rect graphics_get_player_cam()
+SDL_Rect Graphics_Get_Player_Cam()
 {
 	return graphics_player_camera;
 }

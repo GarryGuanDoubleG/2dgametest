@@ -52,17 +52,17 @@ void armor_load_all(){
 	int fpl;
 
 	for(i = 0; i < sizeof(armorList)/sizeof(Armor); i++){
-		armorList[i].image = sprite_load(armorList[i].walk, armorList[i].imageH,armorList[i].imageW, 
+		armorList[i].image = Sprite_Load(armorList[i].walk, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
 		armorList[i].image->fpl = 9;
-		armorList[i].image_slash = sprite_load(armorList[i].slash, armorList[i].imageH,armorList[i].imageW, 
+		armorList[i].image_slash = Sprite_Load(armorList[i].slash, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
 		armorList[i].image_slash->fpl = 6;
-		armorList[i].image_bow = sprite_load(armorList[i].bow, armorList[i].imageH,armorList[i].imageW, 
+		armorList[i].image_bow = Sprite_Load(armorList[i].bow, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
-		armorList[i].image_thrust = sprite_load(armorList[i].thrust, armorList[i].imageH,armorList[i].imageW, 
+		armorList[i].image_thrust = Sprite_Load(armorList[i].thrust, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
-		armorList[i].image_spellcast = sprite_load(armorList[i].spellcast, armorList[i].imageH,armorList[i].imageW, 
+		armorList[i].image_spellcast = Sprite_Load(armorList[i].spellcast, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
 	}
 

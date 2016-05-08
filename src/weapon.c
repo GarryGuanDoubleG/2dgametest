@@ -46,7 +46,7 @@ void weapon_load_all(){
 	int i;
 
 	for(i = 0; i < (sizeof weaponlist)/sizeof(Weapon); i++){
-		weaponlist[i].image = sprite_load(weaponlist[i].filepath,weaponlist[i].imageW,weaponlist[i].imageH,weaponlist[i].frameW,weaponlist[i].frameH);
+		weaponlist[i].image = Sprite_Load(weaponlist[i].filepath,weaponlist[i].imageW,weaponlist[i].imageH,weaponlist[i].frameW,weaponlist[i].frameH);
 		weaponlist[i].image->fpl = weaponlist[i].fpl;
 	}
 	atexit(weapon_close_all);

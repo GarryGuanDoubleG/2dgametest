@@ -55,9 +55,9 @@ float Vec2dDistance(Vec2d a, Vec2d b);
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
 #define Vec4dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z, c.w = a.w + b.w)
 
-#define Vec2dSub(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y)
-#define Vec3dSub(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y)
-#define Vec4dSub(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y, c.w = a.w - b.w)
+#define Vec2dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y)
+#define Vec3dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y)
+#define Vec4dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y, c.w = a.w - b.w)
 
 #define Vec2dCopy(a,b)			(b.x = a.x, b.y = b.x)
 #define Vec3dCopy(a,b)		(b.x = a.x, b.y = b.x, b.z = a.z)
@@ -75,9 +75,9 @@ float Vec2dDistance(Vec2d a, Vec2d b);
 #define VectorNegate3d(a,b)		(b.x = -a.x, b.y = -a.y, b.z = -a.z)
 #define VectorNegate4d(a,b)		(b.x = -a.x, b.y = -a.y, b.z = -a.z, b.w = -a.w)
 
-#define VectorSet2d(v, x, y)	(v.x = x, v.y = y)
-#define VectorSet3d(v, x, y, z)	(v.x = x, v.y = y, v.z = z)
-#define VectorSet4d(v, x, y, z, w)	(v.x = x, v.y = y, v.z = z, v.w = w)
+#define Vec2dSet(vec,a,b)(vec.x=(a),vec.y=(b))
+#define Vec3dSet(vec,a,b,c)(vec.x=(a),vec.y=(b),vec.z=(c))
+#define Vec4dSet(vec,a,b,c,d)(vec.x=(a),vec.y=(b),vec.z=(c),vec.w=(d))
 
 
 float Normalize2d(Vec2d &v); // returns length

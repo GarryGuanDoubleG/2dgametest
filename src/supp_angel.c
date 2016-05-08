@@ -159,7 +159,7 @@ entity * angel_spawn()
 	}
 
 	slog("angel: x%f y%f", pos.x, pos.y);
-	sprite_angel = sprite_load(SPRITE_ANGEL_FILEPATH, ANGEL_IMAGEW, ANGEL_IMAGEH, ANGEL_FRAMEW, ANGEL_FRAMEH);
+	sprite_angel = Sprite_Load(SPRITE_ANGEL_FILEPATH, ANGEL_IMAGEW, ANGEL_IMAGEH, ANGEL_FRAMEW, ANGEL_FRAMEH);
 	sprite_angel->fpl = ANGEL_FPL;//2 frames per line
 	ent_angel = entity_load(sprite_angel, pos, 100, 25, STATE_PATROL);
 

@@ -123,7 +123,7 @@ entity * mino_spawn()
 	}
 
 	slog("mino: x%f y%f", pos.x, pos.y);
-	sprite_mino = sprite_load(SPRITE_MINO_FILEPATH, MINO_IMAGEW, MINO_IMAGEH, MINO_FRAMEW, MINO_FRAMEH);
+	sprite_mino = Sprite_Load(SPRITE_MINO_FILEPATH, MINO_IMAGEW, MINO_IMAGEH, MINO_FRAMEW, MINO_FRAMEH);
 	sprite_mino->fpl = MINO_FPL;//2 frames per line
 	ent_mino = entity_load(sprite_mino, pos, 100, 25, STATE_PATROL);
 

@@ -1,18 +1,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
+
 #include "graphics.h"
 #include "sprite.h"
 #include "entity.h"
-#include "Tile.h"
 #include "player.h"
+#include "audio.h"
+
+#include "Tile.h"
+
 #include "monster_ai.h"
 #include "support_ai.h"
+
 #include "items.h"
 #include "structures.h"
 #include "particle_emitter.h"
+
+#include "Menu.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
@@ -26,19 +35,25 @@ void Init_All(); //single function to intialize all resource managers
 /*notice the default arguments for main.  SDL expects main to look like that, so don't change it*/
 int main(int argc, char *argv[])
 {
-  SDL_Surface *temp = NULL;
   int done;
-  int tx = 0,ty = 0;
-  int i;
   const Uint8 *keys;
-  char imagepath[512];
-  SDL_Rect srcRect={0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
   SDL_Event e;
+
   last_time = current_time = SDL_GetTicks();
   
   Init_All();
-  slog("Finished Init All()");
   done = 0;
+
+  Menu_Title_Screen_Draw();
+  Menu_Main_Draw();
+  Music * music_new = Music_New("audio/bg_music.mp3", -1);
+
+  if(!music_new)
+  {
+	  slog("did not load audio");
+  }
+
+  Music_Player(music_new);
   do
   {
 	//render or draw functions go here
@@ -64,7 +79,6 @@ int main(int argc, char *argv[])
 	entity_check_collision_all();
 	particle_em_draw_all();
 //	struct_update_all();
-	
 
 	G_MONSTER_SPAWN_TIMER -= 1;
     NextFrame();
@@ -91,6 +105,7 @@ int main(int argc, char *argv[])
 		}
 		
 	SDL_RenderPresent(__gt_graphics_renderer);
+
 	last_time = current_time;
 	current_time = SDL_GetTicks();
 	delta = current_time - last_time;
@@ -114,16 +129,26 @@ void Init_All()
     0);
  
   srand(time(NULL));  //seed the random value at the start of the game
+  
+  if(TTF_Init() == -1)  
+  {
+	  exit(1);
+  }
+
   sprite_initialize_system(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
+  audio_init(128, 5); // allocates memory for audio channels
+
   tile_init_system(); // allocate memory for tiles and generate map
   particle_em_init_system();
+
   player_init(); //creates player entity
   hud_init(); //loads hud sprites
-//  structure_init_system();
-  item_load_all(); //loads item imags into itemlist and allocates memory for new items
   inventory_init(); //allocates memory to store items
-  InitMouse2(); // loads mouse sprite into mem
-  
 
+  item_load_all(); //loads item imags into itemlist and allocates memory for new items
+  weapon_load_all();
+  armor_load_all();
+
+  InitMouse2(); // loads mouse sprite into mem
 }

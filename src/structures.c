@@ -2,7 +2,7 @@
 
 static int struct_show_select = false;
 static entity * selected_struct = NULL;
-extern struct Mouse2;
+extern struct Mouse;
 /*
 structure * struct_load(Sprite *sprite, int health, int defense, int type)
 {
@@ -30,8 +30,8 @@ void struct_update(entity *self)
 
 void update_selected_struct(entity *self)
 {
-	Vec2d m_pos = get_mouse_pos();
-	Vec2d cam_offset = {graphics_get_player_cam().x, graphics_get_player_cam().y } ;
+	Vec2d m_pos = Get_Mouse_Pos();
+	Vec2d cam_offset = {Graphics_Get_Player_Cam().x, Graphics_Get_Player_Cam().y } ;
 	Vec2d frame_offset;
 	Vec2d draw_pos; 
 
@@ -46,7 +46,7 @@ void update_selected_struct(entity *self)
 		frame_offset.y = self->sprite->frameH/2;
 
 		Vec2dAdd(m_pos,cam_offset, draw_pos);
-		Vec2dSub(draw_pos, frame_offset, draw_pos); 
+		Vec2dSubtract(draw_pos, frame_offset, draw_pos); 
 		self->boundBox.x = draw_pos.x;
 		self->boundBox.y = draw_pos.y;
 		self->position = draw_pos;
@@ -103,17 +103,17 @@ void structure_select(int type)
 	}
 	if(type == struct_type::main_base01)
 	{
-		Sprite *struct_sprite = sprite_load(SPRITE_MAIN_BASE01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		Sprite *struct_sprite = Sprite_Load(SPRITE_MAIN_BASE01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
 	if(type == struct_type::wall_01)
 	{
-		Sprite *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		Sprite *struct_sprite = Sprite_Load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
 	if(type == struct_type::tower_01)
 	{
-		Sprite *struct_sprite = sprite_load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
+		Sprite *struct_sprite = Sprite_Load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
 		selected_struct = struct_load(struct_sprite, 1000, 100, type);
 	}
 

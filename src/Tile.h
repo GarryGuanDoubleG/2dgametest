@@ -15,8 +15,8 @@ extern const int SCREEN_WIDTH;
 extern const int TOTAL_TILES;
 extern const int TILE_WIDTH;
 extern const int TILE_HEIGHT; 
-extern const int TOTAL_TILES_X;
-extern const int TOTAL_TILES_Y;
+extern const int TILE_ROWS;
+extern const int TILE_COLUMNS;
 extern const int PLAYER_FRAMEW;
 extern const int PLAYER_FRAMEH;
 
@@ -125,7 +125,7 @@ Vec2d tile_get_pos(int index);
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
 #define MIN(a,b) (a < b ? a : b)
-#define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TOTAL_TILES_X/2)))
+#define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TILE_ROWS/2)))
 
 //couldn't put enum dir here, defined them manually
 
@@ -134,10 +134,10 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 #define DOWN 2
 #define RIGHT 3
 
-#define TILE_CAN_MOVE_LEFT(a)  (a % TOTAL_TILES_X !=0 ? true: false)
-#define TILE_CAN_MOVE_RIGHT(a) (( a % (TOTAL_TILES_X-1) !=0 || a == 0) ? true: false)
-#define TILE_CAN_MOVE_DOWN(a) (a < TOTAL_TILES - TOTAL_TILES_X ? true : false )
-#define TILE_CAN_MOVE_UP(a) (a >= TOTAL_TILES_X ? true : false)
+#define TILE_CAN_MOVE_LEFT(a)  (a % TILE_ROWS !=0 ? true: false)
+#define TILE_CAN_MOVE_RIGHT(a) (( a % (TILE_ROWS-1) !=0 || a == 0) ? true: false)
+#define TILE_CAN_MOVE_DOWN(a) (a < TOTAL_TILES - TILE_ROWS ? true : false )
+#define TILE_CAN_MOVE_UP(a) (a >= TILE_ROWS ? true : false)
 //takes vec2d
 #define TILE_CENTER_X(a) (a.x + TILE_WIDTH/2)
 #define TILE_CENTER_Y(a) (a.y + TILE_HEIGHT/2)

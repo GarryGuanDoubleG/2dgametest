@@ -41,14 +41,14 @@ void player_init(){
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	SDL_Rect bound = {PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.6f, PLAYER_FRAMEH*.6f};
 
-	Sprite *player_sprite = sprite_load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	Sprite *player_sprite = Sprite_Load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
 	anim_current = WALK;
 	player = entity_load(player_sprite,pos, 100, 100, 0 );
 	slog("Player: X: %i Y: %i", player->position.x, player->position.y);
 
 	playerBody.image = player->sprite;
-	playerBody.image_slash = sprite_load("images/player/slash/body slash.png",PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
+	playerBody.image_slash = Sprite_Load("images/player/slash/body slash.png",PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	playerBody.image_slash->fpl = 6;
 	player->boundBox = bound;
 
@@ -60,9 +60,6 @@ void player_init(){
 	player->team = TEAM_PLAYER;
 	player->p_em = particle_em_new();
 
-	weapon_load_all();
-	armor_load_all();
-
 	PlayerEquip.weapon = getWeapon("longsword");
 	player->weapon = PlayerEquip.weapon;
 	PlayerEquip.head = getArmor("head chain hood");
@@ -71,31 +68,31 @@ void player_init(){
 
 void player_draw_equip(){
 	if(PlayerEquip.feet){
-		sprite_draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 	if(PlayerEquip.hands){
-		sprite_draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 	if(PlayerEquip.head){
-		sprite_draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 	if(PlayerEquip.torso){
-		sprite_draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 	if(PlayerEquip.chest){
-		sprite_draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 	if(PlayerEquip.shoulders){
-		sprite_draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 	}
 
 	if(PlayerEquip.weapon && PlayerEquip.weapon->active && anim_current == SLASH ){
 		//sword sprites are 192x192 pixels, need offset
 		if(PlayerEquip.weapon->type == WEAP_SWORD){
-			sprite_draw(player->weapon->image, player->frame,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);			
+			Sprite_Draw(player->weapon->image, player->frame,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);			
 		}
 		else{ //draw on player instead
-			sprite_draw(PlayerEquip.weapon->image, player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+			Sprite_Draw(PlayerEquip.weapon->image, player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
 		} 
 	}
 }
@@ -107,7 +104,7 @@ void player_draw(){
 	entity_draw(player,player->position.x,player->position.y);
 
 	player_draw_equip();
-	hud_draw(graphics_get_player_cam(),player->health, player->maxhealth, player->stamina, player->stamina);
+	hud_draw(Graphics_Get_Player_Cam(),player->health, player->maxhealth, player->stamina, player->stamina);
 }
 
 int player_get_new_frame(int animation, int curr_frame, int fpl)

@@ -5,9 +5,9 @@
 
 const int TILE_WIDTH = PLAYER_FRAMEH;
 const int TILE_HEIGHT = PLAYER_FRAMEW;
-const int TOTAL_TILES_X = SCREEN_WIDTH/TILE_WIDTH * 3;
-const int TOTAL_TILES_Y = SCREEN_HEIGHT/TILE_HEIGHT * 3;
-const int TOTAL_TILES = TOTAL_TILES_X * TOTAL_TILES_Y ;//make a square 3 by 3 region of size screen
+const int TILE_ROWS = 100;
+const int TILE_COLUMNS = 100;
+const int TOTAL_TILES = TILE_ROWS * TILE_COLUMNS ;//make a square 3 by 3 region of size screen
 
 //array handle on tile types and coordinates on game
 Tile *tile_list = NULL;
@@ -55,7 +55,7 @@ void tile_init_system(){
 
 Sprite * tile_load(char *filename)
 {
-	Sprite * sprite = sprite_load(filename, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+	Sprite * sprite = Sprite_Load(filename, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 	return sprite;
 }
 
@@ -159,7 +159,7 @@ void tile_forest_gen(int start)
 
 	while( 0 < lifespan--)
 	{
-		int moves[4] = {i-1, i+1, i-TOTAL_TILES_X, i + TOTAL_TILES_X}; // left,right,up,down a tile on map
+		int moves[4] = {i-1, i+1, i-TILE_ROWS, i + TILE_ROWS}; // left,right,up,down a tile on map
 		int j;
 
 		get_moves(moves, 4, i);//4 directions
@@ -170,8 +170,8 @@ void tile_forest_gen(int start)
 		tile_list_scores[i] += 10;
 		moves[0] = i - 1;
 		moves[1] = i + 1;
-		moves[2] = i - TOTAL_TILES_X;
-		moves[3] = i + TOTAL_TILES_X;
+		moves[2] = i - TILE_ROWS;
+		moves[3] = i + TILE_ROWS;
 		get_moves(moves, 4, i);//4 directions
 		for(j = 0; j < 4; j++)
 		{
@@ -200,25 +200,25 @@ void tile_forest_gen()
 	slog("Starting FGEN 0 TILE: %i", start);
 	tile_forest_gen(start);
 	//start of top edge of forest
-	start = rand() % TOTAL_TILES_X -1; //rand num from 0 to end of first row
+	start = rand() % TILE_ROWS -1; //rand num from 0 to end of first row
 	slog("Starting FGEN 2 TILE: %i", start);
 	tile_forest_gen(start);
 	//start on left edge of forest
-	start = rand() % TOTAL_TILES_Y + 1;
-	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
-	start = start * TOTAL_TILES_X;
+	start = rand() % TILE_COLUMNS + 1;
+	start = start >= TILE_COLUMNS ? TILE_COLUMNS - 1 : start;
+	start = start * TILE_ROWS;
 	slog("Starting FGEN 3 TILE: %i", start);
 	tile_forest_gen(start);
 	//right edge
-	start = rand() % TOTAL_TILES_Y +1;
-	start = start >= TOTAL_TILES_Y ? TOTAL_TILES_Y - 1 : start;
-	start = (start *TOTAL_TILES_X) - 1;
+	start = rand() % TILE_COLUMNS +1;
+	start = start >= TILE_COLUMNS ? TILE_COLUMNS - 1 : start;
+	start = (start *TILE_ROWS) - 1;
 	slog("Starting FGEN 4 TILE: %i", start);
 
 	tile_forest_gen(start);
 	//bottom edge
-	start = rand() % TOTAL_TILES_X -1;
-	start += TOTAL_TILES - TOTAL_TILES_X;
+	start = rand() % TILE_ROWS -1;
+	start += TOTAL_TILES - TILE_ROWS;
 	slog("Starting FGEN 5 TILE: %i", start);
 	tile_forest_gen(start);
 	slog("Finished Gen");
@@ -245,28 +245,28 @@ void tile_set(){
 	int x = 0,y = 0;
 	Tile * tile;
 	//place the grass tile for all tiles on the map
-	for( i = 0; i < TOTAL_TILES; i++){
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
 
-		tile = (tile_list+i);
+		tile = &tile_list[i];
 		tile->mBox.x = x;
 		tile->mBox.y = y;
 		tile->mBox.w = TILE_WIDTH;
 		tile->mBox.h = TILE_HEIGHT;
-		tile->mType = TILE_GRASS1;//filler
+		tile->mType = TILE_GRASS;//filler
+
 		//set destructable tile to be a tree by default
 		dest_tile_list[i].mBox = tile->mBox;
 		dest_tile_list[i].mType = TILE_TREE;
 		dest_tile_list[i].hits = 5;
 		x += TILE_WIDTH;		
-		if(x >= TOTAL_TILES_X * TILE_WIDTH)
+		if(x >= TILE_ROWS * TILE_WIDTH)
 		{
 			x = 0;
 			y += TILE_HEIGHT;
 		} 
 	}
-	tile_forest_gen(); // procedurally generate the world
-
-	//slog_dest_tree_list();
+	tile_forest_gen(); // procedurally generate forest	
 }
 /**
 * @brief frees the tile type to be reset
@@ -303,7 +303,7 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 
 	if(t2_pos.x < t1_pos.x)
 	{
-		while(tile_1 % (TOTAL_TILES_X) != 0 && tile_get_pos(tile_2).x <  tile_get_pos(tile_1).x )
+		while(tile_1 % (TILE_ROWS) != 0 && tile_get_pos(tile_2).x <  tile_get_pos(tile_1).x )
 		{
 			tile_1--;
 			move_left++;
@@ -312,7 +312,7 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 	}
 	else if(t2_pos.x > t1_pos.x)
 	{
-		while(tile_1 %(TOTAL_TILES_X-1) != 0 && tile_get_pos(tile_2).x >  tile_get_pos(tile_1).x )
+		while(tile_1 %(TILE_ROWS-1) != 0 && tile_get_pos(tile_2).x >  tile_get_pos(tile_1).x )
 		{
 			tile_1++;
 			move_right++;
@@ -321,17 +321,17 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 	}
 	if(t2_pos.y < t1_pos.y)
 	{
-		while(tile_1 > (TOTAL_TILES_X) && tile_get_pos(tile_2).y <  tile_get_pos(tile_1).y)
+		while(tile_1 > (TILE_ROWS) && tile_get_pos(tile_2).y <  tile_get_pos(tile_1).y)
 		{
-			tile_1 -= TOTAL_TILES_X;
+			tile_1 -= TILE_ROWS;
 			move_up++;
 		}
 		tile_1 = start;
 	}
 	if(t2_pos.y > t1_pos.y)
-	while(tile_1 < (TOTAL_TILES - TOTAL_TILES_X) && tile_get_pos(tile_2).y >  tile_get_pos(tile_1).y)
+	while(tile_1 < (TOTAL_TILES - TILE_ROWS) && tile_get_pos(tile_2).y >  tile_get_pos(tile_1).y)
 	{
-		tile_1 += TOTAL_TILES_X;
+		tile_1 += TILE_ROWS;
 		move_down++;
 	}
 	
@@ -342,7 +342,7 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 */
 void tile_render(){
 	int i;
-	SDL_Rect camera = graphics_get_player_cam();
+	SDL_Rect camera = Graphics_Get_Player_Cam();
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
@@ -351,7 +351,7 @@ void tile_render(){
 			printf("Tile is null while rendering");
 			return ;
 		}
-		if(rect_collide(graphics_get_player_cam(), tile->mBox))
+		if(rect_collide(Graphics_Get_Player_Cam(), tile->mBox))
 		{
 			SDL_Rect dest = { tile->mBox.x - camera.x,tile->mBox.y-camera.y, TILE_HEIGHT, TILE_WIDTH};
 			SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, NULL, &dest);
@@ -466,31 +466,31 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 	{
 		case UP:
 			slog("Up");
-			if(curr_tile < TOTAL_TILES_X)
+			if(curr_tile < TILE_ROWS)
 			{
 				return false;
 			}
-			if (dest_tile_list[curr_tile - TOTAL_TILES_X].mType == TILE_TREE)
+			if (dest_tile_list[curr_tile - TILE_ROWS].mType == TILE_TREE)
 			{
 				is_tree = true;
-				tree_index = curr_tile - TOTAL_TILES_X;
+				tree_index = curr_tile - TILE_ROWS;
 			}
 			break;
 		case DOWN:
 			slog("Down");
-			if(curr_tile > TOTAL_TILES - TOTAL_TILES_X)
+			if(curr_tile > TOTAL_TILES - TILE_ROWS)
 			{
 				return false;
 			}
-			if(dest_tile_list[curr_tile + TOTAL_TILES_X].mType == TILE_TREE)
+			if(dest_tile_list[curr_tile + TILE_ROWS].mType == TILE_TREE)
 			{
 				is_tree = true;
-				tree_index = curr_tile + TOTAL_TILES_X;
+				tree_index = curr_tile + TILE_ROWS;
 			}
 			break;
 		case LEFT:
 			slog("Left");
-			if(curr_tile % TOTAL_TILES_X == 0)
+			if(curr_tile % TILE_ROWS == 0)
 			{
 				return false;
 			}
@@ -502,7 +502,7 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 			break;
 		case RIGHT:
 			slog("Right");
-			if(curr_tile % (TOTAL_TILES_X -1 ) == 0)
+			if(curr_tile % (TILE_ROWS -1 ) == 0)
 			{
 				return false;
 			}

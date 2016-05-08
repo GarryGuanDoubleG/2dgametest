@@ -84,10 +84,10 @@
     <ClInclude Include="..\src\items_define.h" />
     <ClInclude Include="..\src\json_parse.h" />
     <ClInclude Include="..\src\load.h" />
+    <ClInclude Include="..\src\Menu.h" />
     <ClInclude Include="..\src\minotaur.h" />
     <ClInclude Include="..\src\monster_ai.h" />
     <ClInclude Include="..\src\monster_define.h" />
-    <ClInclude Include="..\src\music.h" />
     <ClInclude Include="..\src\orc.h" />
     <ClInclude Include="..\src\particle_emitter.h" />
     <ClInclude Include="..\src\path_find.h" />
@@ -95,7 +95,6 @@
     <ClInclude Include="..\src\sara.h" />
     <ClInclude Include="..\src\save.h" />
     <ClInclude Include="..\src\simple_logger.h" />
-    <ClInclude Include="..\src\sound.h" />
     <ClInclude Include="..\src\spider.h" />
     <ClInclude Include="..\src\sprite.h" />
     <ClInclude Include="..\src\structures.h" />
@@ -124,6 +123,7 @@
     <ClCompile Include="..\src\items.c" />
     <ClCompile Include="..\src\json_parse.c" />
     <ClCompile Include="..\src\load.c" />
+    <ClCompile Include="..\src\Menu.c" />
     <ClCompile Include="..\src\minotaur.c" />
     <ClCompile Include="..\src\monster_ai.c" />
     <ClCompile Include="..\src\music.c" />
@@ -134,7 +134,6 @@
     <ClCompile Include="..\src\sara.c" />
     <ClCompile Include="..\src\save.c" />
     <ClCompile Include="..\src\simple_logger.c" />
-    <ClCompile Include="..\src\sound.c" />
     <ClCompile Include="..\src\spider.c" />
     <ClCompile Include="..\src\sprite.c" />
     <ClCompile Include="..\src\structures.c" />

@@ -195,10 +195,10 @@ void add_open_list(int size, Path new_path)
 int *get_moves(int tile)
 {
 	static int options[4];
-	options[0] = TILE_CAN_MOVE_UP(tile) ? tile - TOTAL_TILES_X : -1;
+	options[0] = TILE_CAN_MOVE_UP(tile) ? tile - TILE_ROWS : -1;
 	options[1] = TILE_CAN_MOVE_LEFT(tile) ? tile -1 : -1;
 	options[2] = TILE_CAN_MOVE_RIGHT(tile) ? tile + 1 : -1;
-	options[3] = TILE_CAN_MOVE_DOWN(tile) ? tile + TOTAL_TILES_X : -1;
+	options[3] = TILE_CAN_MOVE_DOWN(tile) ? tile + TILE_ROWS : -1;
 
 	return options;
 }

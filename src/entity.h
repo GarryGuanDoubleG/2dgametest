@@ -28,10 +28,15 @@
 typedef struct Entity_S
 {
 	int inuse; /**< used for memory allocation if not inuse*/
+	int id;
+	int face_dir;/**< direction entity is facing(e.g. left) */
+	int type;
+
 	//animation & drawing
 	Sprite * sprite;/**<pointer to sprite of entities body or default animation*/
 	int frame;
 	int next_frame;
+
 	//entity positions
 	Vec2d position; /**<stores x and y positional values of entity*/
 	Vec2d velocity; /**<x and y values that increment the positional value every frame*/
@@ -50,10 +55,6 @@ typedef struct Entity_S
 	//player
 	int inventory;/**<true if entity can hold items*/
 	Weapon *weapon;/**<pointer to currently equipped weapon*/
-	int face_dir;
-
-	int nextThink;/*<Time index for next think */
-	int thinkRate; /*<How often to run think */
 
 	//structures
 	int structure; /*< bool is a player building */
@@ -62,7 +63,11 @@ typedef struct Entity_S
 	//end
 
 	Particle_Emitter * p_em; /**<particle emitter that manages particle effects */
+
 	Path *path; /**<Path stores list of tiles to move to until target destination is reached*/
+
+	int nextThink;/*<Time index for next think */
+	int thinkRate; /*<How often to run think */
 
 	void (*think)(struct Entity_S *self); /**<function pointer to think function to determine entity's actions*/
 	void (*update)(struct Entity_S *self); /**<function pointer to update function of specfic entity*/

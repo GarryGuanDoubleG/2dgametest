@@ -103,7 +103,7 @@ entity * grue_spawn(){
 	}
 	slog("Timer: %i", G_MONSTER_SPAWN_TIMER);
 	slog("Monster Spawn Timer mod MonsterSpawn Timer is %i " , (G_MONSTER_SPAWN_TIMER % (GRUE_TIMER)));
-	sprite_grue = sprite_load(sprite_grue_filepath, grue_imageW, grue_imageH, grue_frameW, grue_frameH);
+	sprite_grue = Sprite_Load(sprite_grue_filepath, grue_imageW, grue_imageH, grue_frameW, grue_frameH);
 	sprite_grue->fpl = 1;//2 frames per line
 	ent_grue = entity_load(sprite_grue, pos, 150, 25, STATE_PATROL);
 

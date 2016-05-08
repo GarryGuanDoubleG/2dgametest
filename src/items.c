@@ -33,8 +33,8 @@ void item_load_all(){
 	int i;
 
 	for(i = 0; i < (sizeof itemList)/sizeof(item); i++){
-		itemList[i].icon = sprite_load(itemList[i].icon_path, itemList[i].icon_imageW,itemList[i].icon_imageH,itemList[i].icon_frameW,itemList[i].icon_frameH);
-		itemList[i].item_model = sprite_load(itemList[i].model_path, itemList[i].model_imageW,itemList[i].model_imageH,itemList[i].model_frameW,itemList[i].model_frameH);
+		itemList[i].icon = Sprite_Load(itemList[i].icon_path, itemList[i].icon_imageW,itemList[i].icon_imageH,itemList[i].icon_frameW,itemList[i].icon_frameH);
+		itemList[i].item_model = Sprite_Load(itemList[i].model_path, itemList[i].model_imageW,itemList[i].model_imageH,itemList[i].model_frameW,itemList[i].model_frameH);
 	}
 	atexit(item_close_all);
 }

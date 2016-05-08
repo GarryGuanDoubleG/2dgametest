@@ -156,7 +156,7 @@ void particle_load_from_def(char *filename)
 		fpl = atoi((char *) (dict_get_hash_value(value, "frames_per_line")->keyValue));
 		slog("particle img width height: %i %i", img_width, img_height);
 		slog("particle frame width height: %i %i", frame_width, frame_height);
-		particle_sprite = sprite_load(filepath, img_width, img_height, frame_width, frame_height);
+		particle_sprite = Sprite_Load(filepath, img_width, img_height, frame_width, frame_height);
 		particle_sprite->fpl = fpl;
 		if(particle_sprite)
 		{
@@ -247,7 +247,7 @@ void particle_draw(void *data, void *user_data)
 		particle->frame++;
 		particle->nextFrame = 150;
 	}
-	sprite_draw( p_sprite, particle->frame, graphics_get_renderer(), particle->pos.x, particle->pos.y);
+	Sprite_Draw( p_sprite, particle->frame, Graphics_Get_Renderer(), particle->pos.x, particle->pos.y);
 }
 
 void particle_em_draw(Particle_Emitter *p_em)

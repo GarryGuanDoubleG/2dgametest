@@ -123,7 +123,7 @@ entity * orc_spawn()
 	}
 
 	slog("ORC: x%f y%f", pos.x, pos.y);
-	sprite_orc = sprite_load(SPRITE_ORC_FILEPATH, ORC_IMAGEW, ORC_IMAGEH, ORC_FRAMEW, ORC_FRAMEH);
+	sprite_orc = Sprite_Load(SPRITE_ORC_FILEPATH, ORC_IMAGEW, ORC_IMAGEH, ORC_FRAMEW, ORC_FRAMEH);
 	sprite_orc->fpl = ORC_FPL;//2 frames per line
 	ent_orc = entity_load(sprite_orc, pos, 100, 25, STATE_PATROL);
 

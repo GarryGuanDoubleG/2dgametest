@@ -136,7 +136,7 @@ entity * archer_spawn()
 	}
 
 	slog("archer: x%f y%f", pos.x, pos.y);
-	sprite_archer = sprite_load(SPRITE_ARCHER_FILEPATH, ARCHER_IMAGEW, ARCHER_IMAGEH, ARCHER_FRAMEW, ARCHER_FRAMEH);
+	sprite_archer = Sprite_Load(SPRITE_ARCHER_FILEPATH, ARCHER_IMAGEW, ARCHER_IMAGEH, ARCHER_FRAMEW, ARCHER_FRAMEH);
 	sprite_archer->fpl = ARCHER_FPL;//2 frames per line
 	ent_archer = entity_load(sprite_archer, pos, 100, 25, STATE_PATROL);
 

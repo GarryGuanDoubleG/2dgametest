@@ -136,7 +136,7 @@ entity * sara_spawn()
 	}
 
 	slog("sara: x%f y%f", pos.x, pos.y);
-	sprite_sara = sprite_load(SPRITE_SARA_FILEPATH, SARA_IMAGEW, SARA_IMAGEH, SARA_FRAMEW, SARA_FRAMEH);
+	sprite_sara = Sprite_Load(SPRITE_SARA_FILEPATH, SARA_IMAGEW, SARA_IMAGEH, SARA_FRAMEW, SARA_FRAMEH);
 	sprite_sara->fpl = SARA_FPL;//2 frames per line
 	ent_sara = entity_load(sprite_sara, pos, 100, 25, STATE_PATROL);
 
