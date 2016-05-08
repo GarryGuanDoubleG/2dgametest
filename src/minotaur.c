@@ -16,7 +16,7 @@ void mino_update(entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	entity_draw(self,self->position.x, self->position.y);
+	entity_draw(self);
 }
 
 void mino_touch(entity *self, entity *other)

@@ -16,7 +16,7 @@ void angel_update(entity *self)
 		self->position = new_pos;
 	}
 	self->frame = (self->frame + 1) % self->sprite->fpl;
-	entity_draw(self,self->position.x, self->position.y);
+	entity_draw(self);
 }
 
 void angel_heal_mode(entity *self, entity *other)

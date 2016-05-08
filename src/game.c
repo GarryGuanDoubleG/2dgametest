@@ -26,11 +26,13 @@
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
 extern SDL_Rect Camera;
+
 int current_time;
 int last_time;
 int delta;
-void Init_All(); //single function to intialize all resource managers
 
+void Init_All(); //single function to intialize all resource managers
+void Draw_All();
 /*this program must be run from the directory directly below images and src, not from within src*/
 /*notice the default arguments for main.  SDL expects main to look like that, so don't change it*/
 int main(int argc, char *argv[])
@@ -38,7 +40,7 @@ int main(int argc, char *argv[])
   int done;
   const Uint8 *keys;
   SDL_Event e;
-
+  Music * music_new;
   last_time = current_time = SDL_GetTicks();
   
   Init_All();
@@ -46,14 +48,16 @@ int main(int argc, char *argv[])
 
   Menu_Title_Screen_Draw();
   Menu_Main_Draw();
-  Music * music_new = Music_New("audio/bg_music.mp3", -1);
+
+  music_new = Music_New("audio/bg_music.mp3", -1);
 
   if(!music_new)
   {
-	  slog("did not load audio");
+	  exit(1);
   }
 
   Music_Player(music_new);
+
   do
   {
 	//render or draw functions go here
@@ -63,8 +67,8 @@ int main(int argc, char *argv[])
 
 	tile_render();	
 	player_draw();
-	DrawMouse2();
-	
+	Draw_Mouse();
+	particle_em_draw_all();
 	/*monster_spawn(Monster::grue);
 	monster_spawn(Monster::spider01);
 	monster_spawn(Monster::mino);		
@@ -77,7 +81,6 @@ int main(int argc, char *argv[])
 	entity_update_all();
 	entity_think_all();
 	entity_check_collision_all();
-	particle_em_draw_all();
 //	struct_update_all();
 
 	G_MONSTER_SPAWN_TIMER -= 1;
@@ -135,7 +138,7 @@ void Init_All()
 	  exit(1);
   }
 
-  sprite_initialize_system(1000); // allocates memory for all sprites
+  Sprite_Initialize_System(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
   audio_init(128, 5); // allocates memory for audio channels
 
@@ -150,5 +153,10 @@ void Init_All()
   weapon_load_all();
   armor_load_all();
 
-  InitMouse2(); // loads mouse sprite into mem
+  Init_Mouse(); // loads mouse sprite into mem
+}
+
+void Draw_All()
+{
+
 }

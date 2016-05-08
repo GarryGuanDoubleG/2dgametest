@@ -85,7 +85,7 @@ void grue_think(entity* self){
 
 void grue_update(entity *self){
 	Vec2dAdd(self->position, self->velocity, self->position);
-	entity_draw(self,self->position.x, self->position.y);
+	entity_draw(self);
 }
 
 void grue_touch(entity *self, entity *other){

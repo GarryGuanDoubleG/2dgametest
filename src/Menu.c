@@ -52,7 +52,7 @@ void Menu_Title_Screen_Draw()
 	Vec2dSet(G_bg_pos, 0, 0);
 	Vec2dSet(start_text_pos, 640, 360);
 
-	Sprite_Draw(bg, 0,renderer,G_bg_pos.x, G_bg_pos.y);
+	Sprite_Draw(bg, 0,renderer, G_bg_pos);
 
 	do 
 	{	
@@ -132,7 +132,7 @@ void Menu_Main_Draw()
 
 	Vec3dSet(color, 254,254,254);
 
-	Sprite_Draw(bg,0,renderer, G_bg_pos.x, G_bg_pos.y);
+	Sprite_Draw(bg,0,renderer, G_bg_pos);
 
 	Sprite_Text_Draw(NewGame, NGPos, 255);
 	

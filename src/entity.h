@@ -112,12 +112,12 @@ entity *entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state
 /**
 * @brief closes entity system and frees all memory that was allocated
 */
-void entity_close();
+void entity_close(); 
 /**
 * @brief renders entity onto screen
-* @param requires entity to draw and location to draw to
+* @param entity: enttiy to draw
 */
-void entity_draw(entity *ent, int x, int y);
+void entity_draw(entity *ent);
 /**
 * @brief calls on all update funtions entities in use every frame
 */

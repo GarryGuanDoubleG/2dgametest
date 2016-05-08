@@ -25,7 +25,7 @@ structure * struct_load(Sprite *sprite, int health, int defense, int type)
 */
 void struct_update(entity *self)
 {
-	entity_draw(self, self->position.x, self->position.y);
+	entity_draw(self);
 }
 
 void update_selected_struct(entity *self)
@@ -51,7 +51,7 @@ void update_selected_struct(entity *self)
 		self->boundBox.y = draw_pos.y;
 		self->position = draw_pos;
 
-		entity_draw(self, draw_pos.x, draw_pos.y);
+		entity_draw(self);
 	}	
 }
 /*

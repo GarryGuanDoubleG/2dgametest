@@ -10,14 +10,6 @@
 const int SCREEN_HEIGHT = 720;
 const int SCREEN_WIDTH = 1280;
 
-struct
-{
-	Uint32 state;
-	Uint32 shown;
-	Uint32 frame;
-	Uint16  x, y;
-}Mouse;
-
 SDL_Surface *buffer; /*pointer to the background image buffer*/
 SDL_Surface *videobuffer; /*pointer to the draw buffer*/
 SDL_Rect Camera; /*x & y are the coordinates for the background map, w and h are of the screen*/

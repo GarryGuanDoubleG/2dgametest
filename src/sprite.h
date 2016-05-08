@@ -25,18 +25,18 @@ typedef struct
 typedef Sprite Text;
 
 //Draws Mouse
-void DrawMouse2();
-void InitMouse2();
+void Draw_Mouse();
+void Init_Mouse();
 
 extern Sprite* Sprite_Mouse;
-void sprite_initialize_system(int max_sprites);
-void sprite_close_system();
+void Sprite_Initialize_System(int max_sprites);
+void Sprite_Close_System();
 
-Vec2d get_mouse_pos();
+Vec2d Get_Mouse_Pos();
 Sprite *Sprite_Load(char *filename, int img_width, int img_height, int frameW, int frameH);
 Sprite *Sprite_Load_Text(TTF_Font *font, char *text, SDL_Color color);
 
 void Sprite_Free(Sprite **sprite);
-void Sprite_Draw(Sprite *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY);
+void Sprite_Draw(Sprite *sprite, int frame, SDL_Renderer *renderer, Vec2d draw_pos);
 void Sprite_Text_Draw(Sprite *text, Vec2d drawPos, int alpha);
 #endif

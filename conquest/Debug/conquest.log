@@ -1,14 +1,38 @@
-﻿Build started 5/8/2016 1:39:51 AM.
+﻿Build started 5/8/2016 3:28:55 AM.
      1>Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\conquest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\conquest.unsuccessfulbuild".
        ClCompile:
-         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Menu.c
-         Menu.c
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\menu.c(55): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\menu.c(55): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\menu.c(135): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\menu.c(135): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\sprite.c
+         sprite.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(63): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(63): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(178): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(179): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(180): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(181): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(142): warning C4101: 'new_sprite' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(253): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(254): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(255): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(256): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(307): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(308): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(309): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(310): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(312): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(313): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(314): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(315): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(341): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(342): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(348): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(349): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(351): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(352): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(353): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(354): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sprite.c(198): warning C4715: 'Sprite_Load' : not all control paths return a value
        Link:
          g:\Visual Studio 2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib "glib-2.0.lib" jansson_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\conquest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.lib" /MACHINE:X86 Debug\archer.obj
          Debug\armor.obj
@@ -56,4 +80,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.85
+Time Elapsed 00:00:00.82

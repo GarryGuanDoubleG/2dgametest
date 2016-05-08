@@ -16,7 +16,7 @@ void spider_update(entity *self)
 		self->position = new_pos;
 	}
 
-	entity_draw(self,self->position.x, self->position.y);
+	entity_draw(self);
 }
 
 void spider_touch(entity *self, entity *other)

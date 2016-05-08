@@ -51,8 +51,6 @@ Uint32 IndexColor(int color);
 void FrameDelay(Uint32 delay);
 void ResetBuffer();
 void NextFrame();
-void InitMouse();
-void DrawMouse();
 //player camera updated in player update
 SDL_Rect Graphics_Get_Player_Cam();
 void graphics_update_player_cam( SDL_Rect player_cam );

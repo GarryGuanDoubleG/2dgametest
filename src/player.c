@@ -67,32 +67,39 @@ void player_init(){
 }
 
 void player_draw_equip(){
+	Vec2d draw_pos;
+
+	Vec2dCopy(player->position, draw_pos);
+
 	if(PlayerEquip.feet){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame,Graphics_Get_Renderer(), player->position);
 	}
 	if(PlayerEquip.hands){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame,Graphics_Get_Renderer(), player->position);
 	}
 	if(PlayerEquip.head){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame,Graphics_Get_Renderer(), player->position);
 	}
 	if(PlayerEquip.torso){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame,Graphics_Get_Renderer(), player->position);
 	}
 	if(PlayerEquip.chest){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame,Graphics_Get_Renderer(), player->position);
 	}
 	if(PlayerEquip.shoulders){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame,Graphics_Get_Renderer(), player->position);
 	}
 
 	if(PlayerEquip.weapon && PlayerEquip.weapon->active && anim_current == SLASH ){
 		//sword sprites are 192x192 pixels, need offset
 		if(PlayerEquip.weapon->type == WEAP_SWORD){
-			Sprite_Draw(player->weapon->image, player->frame,__gt_graphics_renderer,player->position.x - PLAYER_FRAMEW,player->position.y - PLAYER_FRAMEH);			
+			//offset it
+			Vec2dSet(draw_pos, player->position.x - PLAYER_FRAMEW, player->position.y - PLAYER_FRAMEH);
+
+			Sprite_Draw(player->weapon->image, player->frame,__gt_graphics_renderer, draw_pos);
 		}
 		else{ //draw on player instead
-			Sprite_Draw(PlayerEquip.weapon->image, player->frame,__gt_graphics_renderer,player->position.x,player->position.y);
+			Sprite_Draw(PlayerEquip.weapon->image, player->frame,__gt_graphics_renderer, player->position);
 		} 
 	}
 }
@@ -101,7 +108,7 @@ void player_draw(){
 	//need to add other equipment
 	slog("Player Frame is %i fpl is %i", player->frame, player->sprite->fpl);
 
-	entity_draw(player,player->position.x,player->position.y);
+	entity_draw(player);
 
 	player_draw_equip();
 	hud_draw(Graphics_Get_Player_Cam(),player->health, player->maxhealth, player->stamina, player->stamina);

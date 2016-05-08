@@ -163,10 +163,9 @@ void draw_health_bar(entity *self){
 }
 //end
 
-void entity_draw(entity *ent, int x, int y){
-	//SDL Main Camera src rect
-	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
-	Sprite_Draw(ent->sprite, ent->frame, Graphics_Get_Renderer(), ent->position.x, ent->position.y);
+void entity_draw(entity *ent){
+	//SDL Main Camera src rect	
+	Sprite_Draw(ent->sprite, ent->frame, Graphics_Get_Renderer(), ent->position);
 	if(ent == player)
 	{
 		draw_health_bar(ent);
