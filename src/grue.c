@@ -4,7 +4,7 @@
 void grue_think(entity* self){
 	int randomNum;
 	Vec2d self_pos =  {self->position.x, self->position.y};
-	Vec2d player_pos = {entity_get_player()->position.x, entity_get_player()->position.y};
+	Vec2d player_pos = {Entity_Get_Player()->position.x, Entity_Get_Player()->position.y};
 	Vec2d grue_dir;
 	if(!self){
 		slog("Entity is NULL. Cannot THINK");

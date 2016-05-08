@@ -1,7 +1,9 @@
-#include "Tile.h"
-#include "simple_logger.h"
 #include <time.h>
 #include <math.h>
+
+#include "types.h"
+#include "Tile.h"
+#include "simple_logger.h"
 
 const int TILE_WIDTH = PLAYER_FRAMEH;
 const int TILE_HEIGHT = PLAYER_FRAMEW;
@@ -23,7 +25,8 @@ int call_stack = 0;
   Allocates memory for each tile in map and each destructable tile on the map
 */
 
-void tile_init_system(){
+void tile_init_system(int new_game)
+{
 	int i;
 	if(TOTAL_TILES == 0){
 		printf("Why is total tiles 0?");
@@ -40,11 +43,29 @@ void tile_init_system(){
 
 	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
-	tile_set();
-	tile_render();
-	slog("Adding exit tile close");
+	if(new_game == Bool_True)
+	{
+		tile_set();
+	}
 	atexit(tile_close_system);
-	slog("Finished Tile Init");
+}
+
+void tile_load_from_def(int *tile_map)
+{
+	int i;
+
+	tile_init_system(Bool_False);
+
+	//set tile list and destructable tiles based on loaded tile map
+	//reset hit values for destructable tiles
+	for(i = 0; i < TOTAL_TILES; i++)
+	{
+		tile_list[i].mType = tile_map[i];
+		dest_tile_list[i].mType = tile_map[i];
+		dest_tile_list[i].hits = 5;
+	}
+	//not very efficient but free tile_map
+	memset(tile_map, 0, sizeof(int) * TOTAL_TILES);
 }
 
 /*

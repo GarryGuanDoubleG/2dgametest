@@ -160,7 +160,7 @@ void weapon_collision(entity *owner);
 * @brief loops through entity list to find player and returns it
 * @return returns pointer to player entity
 */
-entity * entity_get_player();
+entity * Entity_Get_Player();
 
 /** 
 * @brief returns the center position of an entity

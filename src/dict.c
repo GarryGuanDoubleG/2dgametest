@@ -184,7 +184,7 @@ void dict_hash_remove(Dict*hash, char *key)
 	g_hash_table_remove(hash_table,key);
 }
 
-Dict*dict_get_hash_value(Dict*hash, Line key)
+Dict * dict_get_hash_value(Dict*hash, Line key)
 {
 	GHashTable *hash_table = NULL;
 	gpointer value = NULL;
@@ -194,8 +194,9 @@ Dict*dict_get_hash_value(Dict*hash, Line key)
 	{
 		return NULL;
 	}
+
 	hash_table = (GHashTable*)hash->keyValue;
-	return (Dict*)g_hash_table_lookup(hash_table, key);
+	return (Dict *)g_hash_table_lookup(hash_table, key);
 }
 
 int dict_get_hash_count(Dict * hash)
@@ -239,3 +240,13 @@ void Dict_Array_Cpy(Dict * dict_array, int index, void * data, int array_len)
 	dict_array->keyValue = g_array_insert_vals((GArray*)dict_array->keyValue, index, data, array_len);
 	dict_array->item_count = array_len;
 }
+/*
+void Dict_Array_Append(Dict *dict)
+{
+  if (!dict)return;
+  if (dict->keyType != DICT_ARRAY)return;
+  list->keyValue = g_array_append_(list->keyValue,item);
+  list->itemCount++;
+}
+
+*/

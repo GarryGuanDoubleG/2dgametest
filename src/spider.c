@@ -6,10 +6,10 @@ void spider_update(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		self->followPath(self);
 		Vec2dAdd(self->position, self->velocity, self->position);
-	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
+	//	aStar_search(self->aggro_range, self->position, Entity_Get_Player()->position,self->path);
 	}
 	else if(!tile_collision(new_pos, self->boundBox))
 	{
@@ -27,7 +27,7 @@ void spider_think(entity *self)
 	int randomNum;
 	int distance;
 	Vec2d self_pos =  {self->position.x, self->position.y};
-	Vec2d player_pos = {entity_get_player()->position.x, entity_get_player()->position.y};
+	Vec2d player_pos = {Entity_Get_Player()->position.x, Entity_Get_Player()->position.y};
 	Vec2d spider_dir;
 	if(!self){
 		slog("Entity is NULL. Cannot THINK");
@@ -52,7 +52,7 @@ void spider_think(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		if(tile_to_tile_dist(tile_get_tile_number(self->position, self->boundBox), tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox)) <= 1)
+		if(tile_to_tile_dist(tile_get_tile_number(self->position, self->boundBox), tile_get_tile_number(Entity_Get_Player()->position, Entity_Get_Player()->boundBox)) <= 1)
 		{
 			spider_dir.x = player_pos.x - self_pos.x;
 			spider_dir.y = player_pos.y - self_pos.y;
@@ -65,7 +65,7 @@ void spider_think(entity *self)
 		}
 		else
 		{
-			self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+			self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		}
 	}
 

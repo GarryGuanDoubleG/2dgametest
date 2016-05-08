@@ -8,6 +8,8 @@
 #include "sprite.h"
 #include "simple_logger.h"
 #include "vector.h"
+#include "types.h"
+#include "level.h"
 #include "Menu.h"
 
 TTF_Font *font = NULL;
@@ -218,11 +220,11 @@ void Menu_Main_Draw()
 						switch(select)
 						{
 						case 0:
-							//Level_Load(0, 0);
+							Level_Load(Bool_False);
 							done = 1;
 							break;
 						case 1:		
-							//Level_Load(0, 1);
+							Level_Load(Bool_True);
 							done = 1;
 							break;
 						case 2:

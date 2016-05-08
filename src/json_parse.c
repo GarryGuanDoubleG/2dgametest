@@ -6,6 +6,7 @@ Dict *json_convert(json_t *json);
 //Dict *json_list_convert(json_t *json);
 Dict *json_hash_convert(json_t *json);
 json_t *json_from_dict(Dict *dict);
+Dict *json_array_convert(json_t *json);
 
 Dict *json_parse_file(char *filename)
 {
@@ -37,11 +38,12 @@ Dict *json_convert(json_t *json)
   {
     return json_hash_convert(json);
   }
-/*  if (json_is_array(json))
+
+  if (json_is_array(json))
   {
-    return json_list_convert(json);
+    return json_array_convert(json);
   }
-  */
+  
   if (json_is_string(json))
   {
     return Dict_New_String((char *)json_string_value(json));
@@ -141,6 +143,36 @@ Dict *json_hash_convert(json_t *json)
 	}
 	
 	return data;	
+}
+
+Dict *json_array_convert(json_t *json)
+{
+  int index = 0;
+  int size;
+  json_t *value;
+  int *convert_array;
+  Dict *data;
+
+  data = Dict_New_Array( sizeof(int) );
+
+  if(!data)return NULL;
+  data->data_type = DICT_ARRAY;
+
+  size = json_array_size( json );
+  if(size == NULL) return NULL;
+
+  data->item_count = size;
+
+  convert_array = (int *)malloc(sizeof(int) * size);
+  data->keyValue = (void *)convert_array;
+
+  json_array_foreach(json, index, value)
+  {
+	  int temp = json_integer_value(value);
+	  convert_array[index] = temp;
+  }
+
+  return data;
 }
 
 json_t * json_from_dict(Dict *dict)

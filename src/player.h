@@ -8,6 +8,7 @@
 #include "HUD.h"
 #include "structure_define.h"
 #include "structures.h"
+#include "dict.h"
 
 extern entity *player;
 extern char * player_char_file;
@@ -31,6 +32,8 @@ typedef struct{ // player animation with equippables
 }Player_Equip;
 
 void Player_Init();
+void Player_Load_from_Def(Dict *value);
+
 void Player_Draw();
 void Player_Move(SDL_Event *e);
 void Player_Think(entity *self);

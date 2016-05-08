@@ -446,7 +446,7 @@ void entity_check_collision_all()
 }
 
 //player 
-entity * entity_get_player()
+entity * Entity_Get_Player()
 {
 	return player;
 }
@@ -456,7 +456,7 @@ void ent_follow_path(entity *self)
 	Vec2d tile_pos;
 	Vec2d tile_center_pos;
 	Vec2d self_center_pos = { ENT_CENTER_X(self), ENT_CENTER_Y(self)};
-	Vec2d player_center_pos = { ENT_CENTER_X(entity_get_player()), ENT_CENTER_Y(entity_get_player()) };
+	Vec2d player_center_pos = { ENT_CENTER_X(Entity_Get_Player()), ENT_CENTER_Y(Entity_Get_Player()) };
 	Vec2d new_vel;
 	//smaller bounds mean closer
 	Rect_f tile_bound = {-1,-1, TILE_WIDTH/3, TILE_HEIGHT/3};
@@ -498,7 +498,7 @@ void ent_follow_path(entity *self)
 	else
 	{
 		/*slog("Next is: %i", self->path->tile_index);
-		slog("Player is %i", tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox));*/
+		slog("Player is %i", tile_get_tile_number(Entity_Get_Player()->position, Entity_Get_Player()->boundBox));*/
 		 tile_pos = tile_get_pos(self->path->tile_index);
 
 		 tile_center_pos.x = TILE_CENTER_X(tile_pos);

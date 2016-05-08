@@ -66,6 +66,26 @@ void Player_Init(){
 	PlayerEquip.chest = getArmor("chest chain");
 }
 
+void Player_Load_from_Def(Dict *value)
+{
+	Vec2d pos;
+	Vec2d offset;
+	int tile_index;
+
+	char * stored_value;
+
+	Player_Init();
+
+	stored_value = (char*) value->keyValue;
+	tile_index = atoi(stored_value);
+	
+	pos = tile_get_pos(tile_index);
+	offset.x = player->boundBox.x;
+	offset.y = player->boundBox.y;
+
+	Vec2dAdd(offset, pos, player->position);
+}
+
 void Player_Draw_equip(){
 	Vec2d draw_pos;
 

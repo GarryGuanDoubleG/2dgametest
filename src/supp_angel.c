@@ -6,10 +6,10 @@ void angel_update(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		self->followPath(self);
 		Vec2dAdd(self->position, self->velocity, self->position);
-	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
+	//	aStar_search(self->aggro_range, self->position, Entity_Get_Player()->position,self->path);
 	}
 	else if(!tile_collision(new_pos, self->boundBox))
 	{
@@ -90,7 +90,7 @@ void angel_think(entity *self)
 		self->velocity.x = 0;
 		self->velocity.y = 0;
 		angel_heal_mode(self, teammate);
-		self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
+		self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 	}
 
 	else if(self->state == STATE_PATROL){

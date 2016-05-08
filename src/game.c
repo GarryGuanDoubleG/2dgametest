@@ -47,9 +47,6 @@ int main(int argc, char *argv[])
   Init_All();
   done = 0;
 
-  Menu_Title_Screen_Draw();
-  Menu_Main_Draw();
-
   music_new = Music_New("audio/bg_music.mp3", -1);
 
   if(!music_new)
@@ -143,14 +140,14 @@ void Init_All()
   Sprite_Initialize_System(1000); // allocates memory for all sprites
   entity_initialize_system();//allocate memory for all entities
   audio_init(128, 5); // allocates memory for audio channels
-
-  tile_init_system(); // allocate memory for tiles and generate map
   particle_em_init_system();
 
-  Player_Init(); //creates player entity
-  hud_init(); //loads hud sprites
-  inventory_init(); //allocates memory to store items
+  Menu_Title_Screen_Draw();
+  Menu_Main_Draw();
 
+  hud_init();
+
+  inventory_init(); //allocates memory to store items
   item_load_all(); //loads item imags into itemlist and allocates memory for new items
   weapon_load_all();
   armor_load_all();

@@ -50,7 +50,9 @@ extern Destructable_Tile *dest_tile_list;
 /**
 * @brief loads tile sprites into memeory
 */
-void tile_init_system();
+void tile_init_system(int new_game);
+
+void tile_load_from_def(int *tile_map);
 /**
 * @brief loads tile sprite from filepath
 * @param cstring filepath of tile

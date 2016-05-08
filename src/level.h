@@ -19,7 +19,7 @@
 /**
 * @brief loads the level from a config file
 */
-void Level_Load();
+void Level_Load(int load);
 
 void Level_Save();
 

@@ -126,13 +126,15 @@ void particle_em_free(Particle_Emitter *p_em)
 
 void particle_load_from_def(char *filename)
 {
-	Dict *particle_dict = load_dict_from_file(filename);
+	Dict *particle_dict;
 	int i = 0;
 	Line sprite_key;
 	Line key;
 	char * filepath;
 	Sprite *particle_sprite, *temp;
 	int  img_width,img_height, frame_width, frame_height, fpl;
+
+	particle_dict = load_dict_from_file(filename);
 
 	if(particle_dict->data_type != DICT_HASH)
 	{
