@@ -61,7 +61,7 @@ Sprite * tile_load(char *filename);
 /**
 * @brief sets the type and mbox of all tiles
 */
-void tile_set();
+void tile_new_game_set();
 /**
 * @brief frees tile from memory
 */
@@ -69,7 +69,7 @@ void tile_free(Tile *tile);
 /**
 * @brief renders tile onto screen
 */
-void tile_render();
+void tile_draw();
 /**
 * @brief frees all tiles in the tilelist
 */

@@ -72,6 +72,7 @@
     <ClInclude Include="..\src\archer.h" />
     <ClInclude Include="..\src\armor.h" />
     <ClInclude Include="..\src\audio.h" />
+    <ClInclude Include="..\src\camera.h" />
     <ClInclude Include="..\src\component.h" />
     <ClInclude Include="..\src\component_actor.h" />
     <ClInclude Include="..\src\dict.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="..\src\archer.c" />
     <ClCompile Include="..\src\armor.c" />
     <ClCompile Include="..\src\audio.c" />
+    <ClCompile Include="..\src\camera.c" />
     <ClCompile Include="..\src\dict.c" />
     <ClCompile Include="..\src\entity.c" />
     <ClCompile Include="..\src\game.c" />

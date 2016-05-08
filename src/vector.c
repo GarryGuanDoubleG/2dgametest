@@ -89,3 +89,14 @@ Vec2d VectorScale(Vec2d in, Vec2d out, float scale)
 
 	return out;
 }
+
+SDL_Rect New_SDL_Rect(int x, int y, int w, int h)
+{
+	SDL_Rect new_rect;
+	new_rect.x = x;
+	new_rect.y = y;
+	new_rect.w = w;
+	new_rect.h = h;
+
+	return new_rect;
+}

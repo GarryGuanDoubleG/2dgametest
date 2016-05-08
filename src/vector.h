@@ -49,6 +49,10 @@ int rect_collide(Rect_f a, Rect_f b);*/
 float Vec2dDistanceSQ(Vec2d a, Vec2d b);
 float Vec2dDistance(Vec2d a, Vec2d b);
 
+float Normalize2d(Vec2d &v); // returns length
+Vec2d VectorScale(Vec2d in, Vec2d out, float scale);
+SDL_Rect New_SDL_Rect(int x, int y, int w, int h);
+
 #define rect_collide(a,b) ( ((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&(a.y + a.h > b.y ) && (b.y + b.h > a.y)) ? true : false)
 
 #define Vec2dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y)
@@ -78,10 +82,5 @@ float Vec2dDistance(Vec2d a, Vec2d b);
 #define Vec2dSet(vec,a,b)(vec.x=(a),vec.y=(b))
 #define Vec3dSet(vec,a,b,c)(vec.x=(a),vec.y=(b),vec.z=(c))
 #define Vec4dSet(vec,a,b,c,d)(vec.x=(a),vec.y=(b),vec.z=(c),vec.w=(d))
-
-
-float Normalize2d(Vec2d &v); // returns length
-Vec2d VectorScale(Vec2d in, Vec2d out, float scale);
-
 
 #endif

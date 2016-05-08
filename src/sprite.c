@@ -104,6 +104,8 @@ void Sprite_Initialize_System(int max_sprites)
 		spriteList[i].image= NULL;
 	}
 
+	Init_Mouse();
+
 	atexit(Sprite_Close_System);
 }
 

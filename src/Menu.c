@@ -111,10 +111,12 @@ void Menu_Main_Draw()
 
 	Text *NewGame;
 	Text *LoadGame;
+	Text *EditorMode;
 	Text *QuitGame;
 
 	Vec2d NGPos;
 	Vec2d LGPos;
+	Vec2d EMPos;
 	Vec2d QuitPos;
 
 	Vec3d color;
@@ -126,21 +128,21 @@ void Menu_Main_Draw()
 
 	NewGame = Sprite_Load_Text(font,"New Game", Text_Color);
 	LoadGame = Sprite_Load_Text(font,"Load Game", Text_Color);
+	EditorMode = Sprite_Load_Text(font,"Editor Mode", Text_Color);
 	QuitGame = Sprite_Load_Text(font,"Quit Game", Text_Color);
 
 	Vec2dSet(NGPos, 480, 360);
 	Vec2dSet(LGPos, 480, 410);
-	Vec2dSet(QuitPos, 480, 460);
+	Vec2dSet(EMPos, 480, 460);
+	Vec2dSet(QuitPos, 480, 510);
 
 	Vec3dSet(color, 254,254,254);
 
 	Sprite_Draw(bg,0,renderer, G_bg_pos);
 
 	Sprite_Text_Draw(NewGame, NGPos, 255);
-	
 	Sprite_Text_Draw(LoadGame, LGPos, 255);
-
-	//sprite_BloomDraw(QuitGame,0,renderer,QuitPos, color, 5);
+	Sprite_Text_Draw(EditorMode, EMPos, 255);
 	Sprite_Text_Draw(QuitGame, QuitPos, 255);
 
 	done = 0;
@@ -149,6 +151,7 @@ void Menu_Main_Draw()
 	{
 		Sprite_Text_Draw(NewGame, NGPos, 255);
 		Sprite_Text_Draw(LoadGame, LGPos, 255);
+		Sprite_Text_Draw(EditorMode, EMPos, 255);
 		Sprite_Text_Draw(QuitGame, QuitPos, 255);
 
 		SDL_RenderPresent(renderer);
@@ -161,6 +164,7 @@ void Menu_Main_Draw()
 				//Sprite_Text_Draw(QuitGame, QuitPos);
 				SDL_SetTextureColorMod(NewGame->image,255,255,255);
 
+				SDL_SetTextureColorMod(EditorMode->image, 28,1,13);
 				SDL_SetTextureColorMod(LoadGame->image, 28,1,13);
 				SDL_SetTextureColorMod(QuitGame->image, 28,1,13);
 			break;
@@ -173,6 +177,7 @@ void Menu_Main_Draw()
 
 				SDL_SetTextureColorMod(LoadGame->image,255,255,255);
 
+				SDL_SetTextureColorMod(EditorMode->image, 28,1,13);
 				SDL_SetTextureColorMod(NewGame->image, 28,1,13);
 				SDL_SetTextureColorMod(QuitGame->image, 28,1,13);
 				break;
@@ -182,8 +187,17 @@ void Menu_Main_Draw()
 
 				//Sprite_Text_Draw(NewGame, NGPos);
 				//Sprite_Text_Draw(LoadGame, LGPos);
+				SDL_SetTextureColorMod(EditorMode->image,255,255,255);
+
+				SDL_SetTextureColorMod(NewGame->image, 28,1,13);
+				SDL_SetTextureColorMod(LoadGame->image, 28,1,13);
+				SDL_SetTextureColorMod(QuitGame->image, 28,1,13);
+
+				break;
+			case 3:
 				SDL_SetTextureColorMod(QuitGame->image,255,255,255);
 
+				SDL_SetTextureColorMod(EditorMode->image, 28,1,13);
 				SDL_SetTextureColorMod(NewGame->image, 28,1,13);
 				SDL_SetTextureColorMod(LoadGame->image, 28,1,13);
 				break;
@@ -208,7 +222,7 @@ void Menu_Main_Draw()
 
 					case SDLK_DOWN:
 					case SDLK_s:
-						if(select < 2)
+						if(select < 3)
 						{
 							select++;
 						}
@@ -228,6 +242,9 @@ void Menu_Main_Draw()
 							done = 1;
 							break;
 						case 2:
+							Level_Editor_Mode();
+							break;
+						case 3:
 							exit(1);
 							break;
 						}

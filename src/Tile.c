@@ -9,7 +9,7 @@ const int TILE_WIDTH = PLAYER_FRAMEH;
 const int TILE_HEIGHT = PLAYER_FRAMEW;
 const int TILE_ROWS = 100;
 const int TILE_COLUMNS = 100;
-const int TOTAL_TILES = TILE_ROWS * TILE_COLUMNS ;//make a square 3 by 3 region of size screen
+const int TOTAL_TILES = TILE_ROWS * TILE_COLUMNS ;
 
 //array handle on tile types and coordinates on game
 Tile *tile_list = NULL;
@@ -20,12 +20,14 @@ Sprite * tile_sprite_grass = NULL;
 Sprite * tile_sprite_tree = NULL;
 int call_stack = 0;
 
+void tile_editor_mode_set();
+
 /**
 * @brief loads tile sprites to be loaded into game and calls tile set to set the tile map
   Allocates memory for each tile in map and each destructable tile on the map
 */
 
-void tile_init_system(int new_game)
+void tile_init_system(int mode)
 {
 	int i;
 	if(TOTAL_TILES == 0){
@@ -43,10 +45,16 @@ void tile_init_system(int new_game)
 
 	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
-	if(new_game == Bool_True)
+
+	if(mode == 1)
 	{
-		tile_set();
+		tile_new_game_set();
 	}
+	if(mode == 2)
+	{
+		tile_editor_mode_set();
+	}
+
 	atexit(tile_close_system);
 }
 
@@ -261,7 +269,7 @@ void slog_dest_tree_list()
 * future plans for procedurally setting the map include applying several layers of
 * perlin noise to create natural rock and river scenary.
 */
-void tile_set(){
+void tile_new_game_set(){
 	int i;
 	int x = 0,y = 0;
 	Tile * tile;
@@ -288,6 +296,36 @@ void tile_set(){
 		} 
 	}
 	tile_forest_gen(); // procedurally generate forest	
+}
+
+void tile_editor_mode_set()
+{
+	int i;
+	int x = 0,y = 0;
+	Tile * tile;
+
+	for( i = 0; i < TOTAL_TILES; i++)
+	{
+		tile = &tile_list[i];
+		tile->mBox.x = x;
+		tile->mBox.y = y;
+		tile->mBox.w = TILE_WIDTH;
+		tile->mBox.h = TILE_HEIGHT;
+		tile->mType = TILE_GRASS;//filler
+
+		//set destructable tiles to grass for editor
+		dest_tile_list[i].mBox = tile->mBox;
+		dest_tile_list[i].mType = TILE_GRASS;
+		dest_tile_list[i].hits = 5;
+		
+		x += TILE_WIDTH;	
+
+		if(x >= TILE_ROWS * TILE_WIDTH)
+		{
+			x = 0;
+			y += TILE_HEIGHT;
+		} 
+	}
 }
 /**
 * @brief frees the tile type to be reset
@@ -361,13 +399,14 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 /**
 * @brief draws the tiles on the screen using tile type as reference for which sprite to draw
 */
-void tile_render(){
+void tile_draw(){
 	int i;
 	SDL_Rect camera = Graphics_Get_Player_Cam();
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		Tile * tile = &tile_list[i];
+
 		if(tile == NULL){
 			printf("Tile is null while rendering");
 			return ;
@@ -375,7 +414,7 @@ void tile_render(){
 		if(rect_collide(Graphics_Get_Player_Cam(), tile->mBox))
 		{
 			SDL_Rect dest = { tile->mBox.x - camera.x,tile->mBox.y-camera.y, TILE_HEIGHT, TILE_WIDTH};
-			SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_grass->image, NULL, &dest);
+			SDL_RenderCopy(Graphics_Get_Renderer(), tile_sprite_grass->image, NULL, &dest);
 			if(dest_tile_list[i].mType == TILE_TREE)
 			{
 				SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_tree->image, NULL, &dest);

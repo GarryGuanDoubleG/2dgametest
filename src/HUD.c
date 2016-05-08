@@ -61,14 +61,17 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 	Sprite_Draw(&sprite_bar, 0, Graphics_Get_Renderer(), draw_pos_h_bar);
 	//mana bar bg
 	Sprite_Draw(&sprite_bar, 0, Graphics_Get_Renderer(), draw_pos_m_bar);
-	//draw health bar on top of bg bar
+
+	//health
 	sprite_bar.frameW = BAR_FRAME_W * health_percent;
 	Sprite_Draw(&sprite_bar, 1, Graphics_Get_Renderer(), draw_pos_h_bar);
 	
-	//draw mana bar on top of bg bar
-	sprite_bar.frameW = BAR_FRAME_W * mana;
+	//mana
+	sprite_bar.frameW = BAR_FRAME_W * mana_percent;
 	Sprite_Draw(&sprite_bar, 2, Graphics_Get_Renderer(), draw_pos_m_bar);
 	
+	//menu
+
 	Vec2dSet(draw_pos, camera.x + HUD_MENU_DRAW_X, camera.y + HUD_MENU_DRAW_Y);
 	Sprite_Draw(HUD_menu,0, Graphics_Get_Renderer(), draw_pos);
 

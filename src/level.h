@@ -23,4 +23,9 @@ void Level_Load(int load);
 
 void Level_Save();
 
+void Level_Editor_Mode();
+
+#define MODE_LOAD_GAME		 0
+#define MODE_NEW_GAME		 1
+#define MODE_EDITOR			 2
 #endif 

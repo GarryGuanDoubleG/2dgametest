@@ -1,12 +1,368 @@
-﻿Build started 5/8/2016 2:54:15 PM.
+﻿Build started 5/8/2016 5:11:38 PM.
      1>Project "C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\conquest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\conquest.unsuccessfulbuild".
        ClCompile:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\HUD.c ..\src\Menu.c ..\src\Tile.c ..\src\archer.c ..\src\armor.c ..\src\audio.c ..\src\camera.c ..\src\dict.c ..\src\entity.c ..\src\game.c ..\src\graphics.c ..\src\grue.c ..\src\inventory.c ..\src\items.c ..\src\json_parse.c ..\src\level.c ..\src\load.c ..\src\minotaur.c ..\src\monster_ai.c ..\src\music.c ..\src\orc.c ..\src\particle_emitter.c ..\src\path_find.c ..\src\player.c ..\src\sara.c ..\src\save.c ..\src\spider.c ..\src\sprite.c ..\src\structures.c ..\src\supp_angel.c ..\src\support_ai.c ..\src\vector.c ..\src\weapon.c ..\src\window.c
+         music.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\music.c(72): warning C4101: 'music' : unreferenced local variable
+         json_parse.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\json_parse.c(57): warning C4244: 'argument' : conversion from 'json_int_t' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\json_parse.c(61): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\json_parse.c(136): warning C4101: 'obj' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\json_parse.c(169): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\json_parse.c(171): warning C4244: 'initializing' : conversion from 'json_int_t' to 'int', possible loss of data
+         camera.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(7): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(8): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(20): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(20): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(26): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(26): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(31): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(32): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(36): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(37): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(57): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\camera.c(57): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         Generating Code...
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\music.c(92): warning C4715: 'music_load_resouce_all' : not all control paths return a value
+         Compiling...
+         window.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\window.c(10): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\window.c(17): warning C4101: 'window' : unreferenced local variable
+         weapon.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(19): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(19): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(20): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(20): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(20): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(20): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(21): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(21): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(21): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(21): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(22): warning C4244: 'initializing' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(22): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(22): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(23): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(23): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\weapon.c(23): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         vector.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(30): warning C4005: 'Vec2dSet' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.h(82) : see previous definition of 'Vec2dSet'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(31): warning C4005: 'Vec3dSet' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.h(83) : see previous definition of 'Vec3dSet'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(32): warning C4005: 'Vec4dSet' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.h(84) : see previous definition of 'Vec4dSet'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(37): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(43): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(66): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\vector.c(82): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+         support_ai.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\support_ai.c(22): warning C4482: nonstandard extension used: enum 'Support' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\support_ai.c(25): warning C4482: nonstandard extension used: enum 'Support' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\support_ai.c(29): warning C4482: nonstandard extension used: enum 'Support' used in qualified name
+         supp_angel.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(108): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(54): warning C4101: 'distance' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(57): warning C4101: 'angel_dir' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(152): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(152): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         structures.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(5): warning C4091: 'extern ' : ignored on left of 'Mouse' when no variable is declared
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(34): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(34): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(50): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(51): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(104): warning C4482: nonstandard extension used: enum 'struct_type' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(109): warning C4482: nonstandard extension used: enum 'struct_type' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(114): warning C4482: nonstandard extension used: enum 'struct_type' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(122): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structures.c(123): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         sprite.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(63): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(63): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(180): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(181): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(182): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(183): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(144): warning C4101: 'new_sprite' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(255): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(256): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(257): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(258): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(309): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(310): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(311): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(312): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(314): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(315): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(316): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(317): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(343): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(344): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(350): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(351): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(353): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(354): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(355): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(356): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         spider.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(60): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(84): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(125): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(135): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(135): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(137): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(137): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+         save.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\save.c(28): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\save.c(56): warning C4305: '=' : truncation from '__int64' to 'Uint32'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\save.c(56): warning C4309: '=' : truncation of constant value
+         sara.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(99): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(48): warning C4101: 'distance' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(52): warning C4101: 'sara_dir' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(51): warning C4101: 'enemy_pos' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sara.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         player.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(41): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(41): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(42): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(42): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(42): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(42): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(83): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(84): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(134): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(134): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(134): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(134): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(214): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(215): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(275): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(278): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\player.c(283): warning C4482: nonstandard extension used: enum 'struct_type' used in qualified name
+         path_find.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\path_find.c(224): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\path_find.c(239): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\path_find.c(272): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         particle_emitter.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\particle_emitter.c(131): warning C4101: 'sprite_key' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\particle_emitter.c(134): warning C4101: 'temp' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\particle_emitter.c(174): warning C4101: 'p' : unreferenced local variable
+         orc.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(62): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(106): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(116): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(116): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         monster_ai.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\monster_ai.c(32): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\monster_ai.c(35): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\monster_ai.c(38): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\monster_ai.c(42): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+         minotaur.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(62): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(106): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(116): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(116): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         load.c
+         level.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.h(131): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(201) : see previous definition of 'MIN'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\level.c(71): warning C4101: 'player_tile' : unreferenced local variable
+         items.c
+         inventory.c
+         Generating Code...
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\minotaur.c(110): warning C4715: 'mino_spawn' : not all control paths return a value
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\orc.c(110): warning C4715: 'orc_spawn' : not all control paths return a value
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\spider.c(129): warning C4715: 'spider_spawn' : not all control paths return a value
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\sprite.c(200): warning C4715: 'Sprite_Load' : not all control paths return a value
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\window.c(25): warning C4715: 'window_load_data_from_def' : not all control paths return a value
+         Compiling...
+         grue.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\grue.c(35): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\grue.c(52): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\grue.c(100): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\grue.c(100): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+         graphics.c
+         game.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\game.c(131): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         entity.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(49): warning C4805: '==' : unsafe mix of type 'int' and type 'bool' in operation
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(117): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(186): warning C4805: '==' : unsafe mix of type 'int' and type 'bool' in operation
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(212): warning C4101: 'new_pos' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(213): warning C4101: 'old_pos' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(303): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(303): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(304): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(304): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(315): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(315): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(315): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(315): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(316): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(316): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(316): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(316): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(341): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(341): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(462): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(462): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(464): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(464): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\entity.c(468): warning C4101: 'distance' : unreferenced local variable
+         dict.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\dict.c(223): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+         audio.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\audio.c(140): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\audio.c(170): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+         armor.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\armor.c(51): warning C4101: 'path' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\armor.c(52): warning C4101: 'fpl' : unreferenced local variable
+         archer.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(99): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(52): warning C4101: 'archer_dir' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(48): warning C4101: 'distance' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(51): warning C4101: 'enemy_pos' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\archer.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         Tile.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(32): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(473): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(473): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(508): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(508): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(513): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(514): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(515): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(516): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(605): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(606): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(607): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(608): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(628): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(628): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(629): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(629): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(639): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.c(639): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+         Menu.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\tile.h(131): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(201) : see previous definition of 'MIN'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+         HUD.c
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(51): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(51): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(75): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(75): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(80): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(80): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(83): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(83): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(103): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(103): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry guan\documents\visual studio 2010\projects\conquest-rule-or-die\src\hud.c(115): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+         Generating Code...
        Link:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib "glib-2.0.lib" jansson_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\conquest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.lib" /MACHINE:X86 Debug\archer.obj
+         Debug\armor.obj
+         Debug\audio.obj
+         Debug\camera.obj
+         Debug\dict.obj
+         Debug\entity.obj
+         Debug\game.obj
+         Debug\graphics.obj
+         Debug\grue.obj
+         Debug\HUD.obj
+         Debug\inventory.obj
+         Debug\items.obj
+         Debug\json_parse.obj
+         Debug\level.obj
+         Debug\load.obj
+         Debug\Menu.obj
+         Debug\minotaur.obj
+         Debug\monster_ai.obj
+         Debug\music.obj
+         Debug\orc.obj
+         Debug\particle_emitter.obj
+         Debug\path_find.obj
+         Debug\player.obj
+         Debug\sara.obj
+         Debug\save.obj
+         Debug\simple_logger.obj
+         Debug\spider.obj
+         Debug\sprite.obj
+         Debug\structures.obj
+         Debug\support_ai.obj
+         Debug\supp_angel.obj
+         Debug\Tile.obj
+         Debug\types.obj
+         Debug\vector.obj
+         Debug\weapon.obj
+         Debug\window.obj
+         LINK : C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe not found or not built by the last incremental link; performing full link
+     1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
          conquest.vcxproj -> C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\Debug\conquest.exe;#1" /manifest Debug\conquest.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\conquest.unsuccessfulbuild".
          Touching "Debug\conquest.lastbuildstate".
@@ -14,4 +370,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.07
+Time Elapsed 00:00:11.88

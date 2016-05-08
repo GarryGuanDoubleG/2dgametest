@@ -21,12 +21,11 @@
 #include "items.h"
 #include "structures.h"
 #include "particle_emitter.h"
-
+#include "camera.h"
 #include "Menu.h"
 
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
-extern SDL_Rect Camera;
 
 int current_time;
 int last_time;
@@ -63,10 +62,8 @@ int main(int argc, char *argv[])
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
 
-	tile_render();	
-	Player_Draw();
-	Draw_Mouse();
-	particle_em_draw_all();
+	Draw_All();
+
 	/*monster_spawn(Monster::grue);
 	monster_spawn(Monster::spider01);
 	monster_spawn(Monster::mino);		
@@ -82,14 +79,14 @@ int main(int argc, char *argv[])
 //	struct_update_all();
 
 	G_MONSTER_SPAWN_TIMER -= 1;
-    NextFrame();
 	//end
     SDL_PumpEvents();
     keys = SDL_GetKeyboardState(NULL);
 	//taken from lazyfoo
 	//handles generally keyboard inputs	
 	
-	while( SDL_PollEvent( &e) != 0){
+	while( SDL_PollEvent( &e) != 0)
+	{
 		if(e.type == SDL_QUIT)
 		{
 			done = 1;
@@ -100,13 +97,13 @@ int main(int argc, char *argv[])
 		}
 	}
 
-		if(keys[SDL_SCANCODE_ESCAPE])
-		{
-			Level_Save();
-			done = 1;
-		}
+	if(keys[SDL_SCANCODE_ESCAPE])
+	{
+		Level_Save();
+		done = 1;
+	}
 		
-	SDL_RenderPresent(__gt_graphics_renderer);
+	SDL_RenderPresent(Graphics_Get_Renderer());
 
 	last_time = current_time;
 	current_time = SDL_GetTicks();
@@ -151,11 +148,14 @@ void Init_All()
   item_load_all(); //loads item imags into itemlist and allocates memory for new items
   weapon_load_all();
   armor_load_all();
-
-  Init_Mouse(); // loads mouse sprite into mem
 }
 
 void Draw_All()
 {
+	tile_draw();	
+	Player_Draw();
+	Draw_Mouse();
+	particle_em_draw_all();
 
+	NextFrame();
 }
