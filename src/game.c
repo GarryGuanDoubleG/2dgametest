@@ -41,10 +41,11 @@ int main(int argc, char *argv[])
   done = 0;
   do
   {
-	   //render or draw functions go here
+	//render or draw functions go here
 	//draw functions should go in order from background first to player draw calls last
     ResetBuffer();
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
+
 	tile_render();	
 	player_draw();
 	DrawMouse2();
@@ -66,9 +67,6 @@ int main(int argc, char *argv[])
 	
 
 	G_MONSTER_SPAWN_TIMER -= 1;
-
-	while(SDL_PollEvent(&e) != 0)
-		player_move (&e);
     NextFrame();
 	//end
     SDL_PumpEvents();
@@ -78,9 +76,13 @@ int main(int argc, char *argv[])
 	
 	while( SDL_PollEvent( &e) != 0){
 		if(e.type == SDL_QUIT)
+		{
 			done = 1;
-    	else
-			player_move(&e);	
+		}
+		else
+		{
+			player_move (&e);
+		}
 	}
 
 		if(keys[SDL_SCANCODE_ESCAPE])

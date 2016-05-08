@@ -30,40 +30,46 @@ typedef struct Entity_S
 	int inuse; /**< used for memory allocation if not inuse*/
 	//animation & drawing
 	Sprite * sprite;/**<pointer to sprite of entities body or default animation*/
-	int frame_horizontal;/**<Tracks which frame horizontally should be rendered from the sprite. Used for playing next frame of animation**/
-	int frame_vertical; /**<Tracks which frame vertiaclly should be rendered from sprite. Used for determining which animation (or direction) should be played*/
-	//ent positions
+	int frame;
+	int next_frame;
+	//entity positions
 	Vec2d position; /**<stores x and y positional values of entity*/
 	Vec2d velocity; /**<x and y values that increment the positional value every frame*/
 	SDL_Rect boundBox; /**<x and y offsets from postion and accurate dimensions of an entity used for collision detection**/
-	//game mechanic
+	
+	//game mechanics
 	int health, maxhealth; /**health values to update hud and determine if entity is alive. health cannot be greater than max health*/
-	int inventory;/**<true if entity can hold items*/
-	int face_dir; /**<direction entity is currently facing - up, down, left, right. Some ents only face left or right*/
-	int player; /**<int stores if this entity is the player*/
-	int aggro_range; /**< int number of tiles away from an entity in an enemy team before an AI changes states and becomes aggro */
-	int team; /**<int stores if entity is on player's team or against player*/
 	int damage; /**<int damage to apply if colliding with enemy*/
-	Weapon *weapon;/**<pointer to currently equipped weapon*/
 	int stamina;/**<int stores resource thats consumed on certain actions*/
+	
+	//AI
 	int state; /**<int stores state to use for AI actions*/
+	int team; /**<int stores if entity is on player's team or against player*/
+	int aggro_range; /**< int number of tiles away from an entity in an enemy team before an AI changes states and becomes aggro */
+
+	//player
+	int inventory;/**<true if entity can hold items*/
+	Weapon *weapon;/**<pointer to currently equipped weapon*/
+	int face_dir;
+
 	int nextThink;/*<Time index for next think */
 	int thinkRate; /*<How often to run think */
+
 	//structures
 	int structure; /*< bool is a player building */
 	int placed; /*< bool is in game? */
 	int selected; /*< bool is player is placing building */
-	int struct_type;/*< int type of structure */
 	//end
-	Particle_Emitter * p_em;
+
+	Particle_Emitter * p_em; /**<particle emitter that manages particle effects */
+	Path *path; /**<Path stores list of tiles to move to until target destination is reached*/
+
 	void (*think)(struct Entity_S *self); /**<function pointer to think function to determine entity's actions*/
 	void (*update)(struct Entity_S *self); /**<function pointer to update function of specfic entity*/
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);/**<function pointer that triggers when entites collide with one another*/
 	void (*free)(struct Entity_S *self);/**<frees entity from memory and allows new entity to be allocated*/
 	void (*onDeath)(struct Entity_S *self); /**<function pointer to event triggered on entity's death*/
 	void (*followPath)(struct Entity_S *self); /**<Function pointer to follow pathing to enemy*/
-
-	Path *path; /**<Path stores list of tiles to move to until target destination is reached*/
 }entity;
 
 /**

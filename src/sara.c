@@ -15,7 +15,7 @@ void sara_update(entity *self)
 	{
 		self->position = new_pos;
 	}
-	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+//	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
 	entity_draw(self,self->position.x, self->position.y);
 }
 
@@ -102,7 +102,7 @@ void sara_think(entity *self)
 			self->velocity.y = 0;
 		}
 	}
-
+/*
 	if(self->velocity.x >= 0)
 	{
 		self->frame_vertical  = 0;
@@ -111,6 +111,8 @@ void sara_think(entity *self)
 	{
 		self->frame_vertical = 1;
 	}
+
+	*/
 	//setting which sprite to use depending on direction
 }
 
@@ -143,8 +145,8 @@ entity * sara_spawn()
 		return NULL;
 	}
 	//each frame is a single direction
-	ent_sara->frame_horizontal = 0;
-	ent_sara->frame_vertical = 0;
+	ent_sara->frame = 0;
+
 	ent_sara->velocity = vel;
 	ent_sara->think = sara_think;
 	ent_sara->nextThink = 1;

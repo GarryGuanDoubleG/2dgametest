@@ -57,6 +57,7 @@ void grue_think(entity* self){
 	}
 
 	//setting which sprite to use depending on direction
+	/*
 	if(self->velocity.x != 0){
 		if(self->velocity.x >= 0){
 			self->frame_horizontal = 0;
@@ -79,7 +80,7 @@ void grue_think(entity* self){
 			self->frame_vertical = 0;
 		}		
 	}
-
+	*/
 }
 
 void grue_update(entity *self){
@@ -111,8 +112,7 @@ entity * grue_spawn(){
 		return NULL;
 	}
 	//each frame is a single direction
-	ent_grue->frame_horizontal = 0;
-	ent_grue->frame_vertical = 0;
+	ent_grue->frame = 0;
 	ent_grue->velocity = vel;
 	ent_grue->think = grue_think;
 	ent_grue->nextThink = 1;

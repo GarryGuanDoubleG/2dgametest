@@ -54,8 +54,7 @@ typedef struct{
 	int type;/**<type of armor used for potentionally adding more or less damage reduction scaling to armor*/
 	int equipped;/**<bool that tracks whether entity is currently wearing the armor or has it inventory*/
 
-	int frame_horizontal; /**<Tracks which frame horizontally should be rendered from the sprite. Used for playing next frame of animation**/
-	int frame_vertical; /**<Tracks which frame vertiaclly should be rendered from sprite. Used for determining which animation (or direction) should be played*/
+	int frame; /**<frame number to draw*/
 	
 	Sprite *image;/**<pointer to default sprite image usually set to walking animation*/
 	Sprite *image_slash;/**<pointer to sprite with slashing animation that is played usually to swing a sword or dagger*/

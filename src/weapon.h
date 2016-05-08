@@ -42,8 +42,7 @@ typedef struct Weapon_S{
 	int type;//sword, bow, etc. for animation
 	int equipped;
 
-	int frame_horizontal;
-	int frame_vertical;
+	int frame;
 	int fpl;// applies to player and armor
 
 	Sprite *image;/*<image to render on top of player*/

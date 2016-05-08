@@ -19,28 +19,52 @@ void hud_init()
 
 void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float max_mana)
 {
+	Sprite sprite_bar;
 
 	float health_percent = health / max_health;
-	float mana_percent = mana / max_mana;
+	float mana_percent;
 
+	float bg_bar_width;
+	float health_bar_width;
+	float mana_bar_width;
+
+	int frame;
 	int i;
-	
-	HUD_bar->frameW = BAR_FRAME_W;
-	sprite_draw(HUD_bar, 0, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
-	HUD_bar->frameW *= health_percent;
-	sprite_draw(HUD_bar, 0, 1, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
-	HUD_bar->frameW = BAR_FRAME_W;
-	sprite_draw(HUD_bar, 0, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y + HUD_bar->frameH);
-	HUD_bar->frameW *= mana_percent;
-	sprite_draw(HUD_bar, 0, 2, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y + HUD_bar->frameH);
 
-	sprite_draw(HUD_menu,0,0, graphics_get_renderer(), camera.x + HUD_MENU_DRAW_X, camera.y + HUD_MENU_DRAW_Y);
+	sprite_bar = *HUD_bar;
+
+	health_percent = health / max_health;
+	mana_percent = mana / max_mana;
+
+	bg_bar_width = BAR_FRAME_W;
+	health_bar_width = bg_bar_width * health_percent;
+	mana_bar_width = bg_bar_width * mana_percent;
+
+	frame = 0;
+
+	//draw bar background
+	sprite_bar.frameW = bg_bar_width;
+	//health bar bg
+	sprite_draw(&sprite_bar, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
+	//mana bar bg
+	sprite_draw(&sprite_bar, 0, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y + HUD_bar->frameH);
+
+	//draw health bar on top of bg bar
+	sprite_bar.frameW = BAR_FRAME_W * health_percent;
+	sprite_draw(&sprite_bar, 1, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y);
+	
+	//draw mana bar on top of bg bar
+	sprite_bar.frameW = BAR_FRAME_W * health_percent;
+	sprite_draw(&sprite_bar, 2, graphics_get_renderer(), camera.x + HUD_BAR_DRAW_X, camera.y + HUD_BAR_DRAW_Y + HUD_bar->frameH);
+	
+	sprite_draw(HUD_menu,0, graphics_get_renderer(), camera.x + HUD_MENU_DRAW_X, camera.y + HUD_MENU_DRAW_Y);
 
 	if(hud_state_curr == main_menu)
 	{
-		sprite_draw(HUD_item_bag, 0, 0, graphics_get_renderer(), camera.x + HUD_ITEM_BAG_DRAW_X, camera.y + HUD_ITEM_BAG_DRAW_Y);
-		sprite_draw(HUD_axe, 0, 0, graphics_get_renderer(), camera.x + HUD_AXE_DRAW_X, camera.y + HUD_AXE_DRAW_Y);
+		sprite_draw(HUD_item_bag, 0, graphics_get_renderer(), camera.x + HUD_ITEM_BAG_DRAW_X, camera.y + HUD_ITEM_BAG_DRAW_Y);
+		sprite_draw(HUD_axe, 0,  graphics_get_renderer(), camera.x + HUD_AXE_DRAW_X, camera.y + HUD_AXE_DRAW_Y);
 	}
+
 	if(hud_state_curr == inventory1)
 	{
 		for(i = 0; i < inv_bag_size; i++)		
@@ -56,11 +80,10 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 			draw_x += HUD_GRIDBOX_W * (i % HUD_MENU_COL); 
 			draw_y += HUD_GRIDBOX_H * (i / HUD_MENU_COL); 
 
-			sprite_draw(inv_items[i].icon, 0, 0, graphics_get_renderer(), draw_x, draw_y);
+			sprite_draw(inv_items[i].icon, 0, graphics_get_renderer(), draw_x, draw_y);
 		}
-		
 	}
-
+	
 }
  
 int set_hud_state(HUD_state state)

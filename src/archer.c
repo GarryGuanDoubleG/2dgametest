@@ -15,7 +15,7 @@ void archer_update(entity *self)
 	{
 		self->position = new_pos;
 	}
-	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+//	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
 	entity_draw(self,self->position.x, self->position.y);
 }
 
@@ -102,15 +102,17 @@ void archer_think(entity *self)
 			self->velocity.y = 0;
 		}
 	}
-
+/*
 	if(self->velocity.x >= 0)
 	{
 		self->frame_vertical  = 0;
 	}
 	else
 	{
-		self->frame_vertical = 1;
+		self->frame_vertical = 1;	
 	}
+
+*/
 	//setting which sprite to use depending on direction
 }
 
@@ -143,8 +145,8 @@ entity * archer_spawn()
 		return NULL;
 	}
 	//each frame is a single direction
-	ent_archer->frame_horizontal = 0;
-	ent_archer->frame_vertical = 0;
+	ent_archer->frame = 0;
+
 	ent_archer->velocity = vel;
 	ent_archer->think = archer_think;
 	ent_archer->nextThink = 1;

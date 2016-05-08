@@ -14,7 +14,9 @@ Particle_Emitter *__particle_em_list = NULL;
 Particle *__particle_list = NULL;
 int __particle_em_count = 0;
 int __particle_count = 0;
+
 void particle_load_from_def(char *filename);
+void particle_close_system();
 extern int delta;
 
 Sprite * particle_get_sprite(particle_types type)
@@ -32,12 +34,30 @@ Sprite * particle_get_sprite(particle_types type)
 	}
 }
 
+void particle_close_system()
+{
+	int i;
+	
+	for(i = 0; i < __particle_em_count; i++)
+	{
+		g_list_free(__particle_em_list[i].particle_list);
+	}
+	
+	memset(__particle_em_list, 0, sizeof(Particle_Emitter) * PARTICLE_EM_MAX);
+	memset(__particle_list, 0, sizeof(Particle) * PARTICLE_MAX);
+	g_hash_table_destroy(__particle_sprite_hash);
+
+	__particle_em_list = NULL;
+	__particle_list = NULL;
+	__particle_sprite_hash = NULL;
+}
+
 void particle_em_init_system()
 {
 	__particle_sprite_hash = g_hash_table_new_full(g_str_hash,
 							  g_str_equal,
 							  (GDestroyNotify)dict_g_string_free,
-							  (GDestroyNotify)sprite_free);
+							  (GDestroyNotify)NULL);
 	__particle_list = (Particle *)malloc(sizeof(Particle) * PARTICLE_MAX);
 	memset(__particle_list, 0, sizeof(Particle) * PARTICLE_MAX);
 
@@ -46,6 +66,8 @@ void particle_em_init_system()
 
 	__particle_em_count = 0;
 	__particle_count = 0;
+
+	atexit(particle_close_system);
 
 	particle_load_from_def("def/particle.def");
 }
@@ -225,41 +247,9 @@ void particle_draw(void *data, void *user_data)
 		particle->frame++;
 		particle->nextFrame = 150;
 	}
-	sprite_draw( p_sprite, particle->frame, 0, graphics_get_renderer(), particle->pos.x, particle->pos.y);
+	sprite_draw( p_sprite, particle->frame, graphics_get_renderer(), particle->pos.x, particle->pos.y);
 }
-/*
-void particle_draw(void * data, void *user_data)
-{
-	Particle * particle = (Particle*) data;
-	Sprite * p_sprite;
-	unsigned int frame_duration;
-	unsigned int ticks = SDL_GetTicks();
-	int frame_odd, frame_even;
-	int offset;
-	if(!particle || !data) return;
-	p_sprite = particle_get_sprite(particle->type);
-	frame_duration = 500 / p_sprite->fpl;
-	frame_odd = (particle->frame % 2 == 0) ? 1 : -1;
-	offset = (int)(p_sprite->frameW)/2.75 * frame_odd * particle->odd;
-	if(!particle)
-	{
-		slog("Particle is null");
-	}
-	if(!p_sprite)
-	{
-		slog("Sprite NULL");
-	}
 
-	sprite_draw( p_sprite, particle->frame, 0, graphics_get_renderer(), 
-		particle->pos.x + offset, particle->pos.y + (p_sprite->frameH - (p_sprite->frameH * particle->frame)/2));
-	
-	if(ticks > (particle->nextFrame + frame_duration))
-	{
-		particle->nextFrame += frame_duration;
-		particle->frame++;
-	}
-}
-*/
 void particle_em_draw(Particle_Emitter *p_em)
 {
 	if(!p_em) return;

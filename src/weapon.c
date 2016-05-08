@@ -11,8 +11,10 @@ Weapon weaponlist[] =
 		"longsword",
 
 		192,192,//image size
+		//PLAYER_FRAMEW*3,PLAYER_FRAMEH*3,//Frame width/height
+		//{PLAYER_FRAMEW*3,PLAYER_FRAMEH*3},//offset
 		PLAYER_FRAMEW*3,PLAYER_FRAMEH*3,//Frame width/height
-		{PLAYER_FRAMEW*3,PLAYER_FRAMEH*3},//offset
+		{0,0},//offset
 
 		{PLAYER_FRAMEW*.2,PLAYER_FRAMEH*.2},//offset
 		{-PLAYER_FRAMEW/4,-PLAYER_FRAMEH/3,PLAYER_FRAMEW*1.5,PLAYER_FRAMEH*.65},//bounding up
@@ -28,8 +30,7 @@ Weapon weaponlist[] =
 		false,//set to true dynamically
 
 		-1,//frame_horizontal is set dynamically
-		-1,//set through player
-		5,//5 frames per line
+		6,// frames per line
 
 		NULL,//image set during init
 		false, // active
@@ -46,6 +47,7 @@ void weapon_load_all(){
 
 	for(i = 0; i < (sizeof weaponlist)/sizeof(Weapon); i++){
 		weaponlist[i].image = sprite_load(weaponlist[i].filepath,weaponlist[i].imageW,weaponlist[i].imageH,weaponlist[i].frameW,weaponlist[i].frameH);
+		weaponlist[i].image->fpl = weaponlist[i].fpl;
 	}
 	atexit(weapon_close_all);
 }

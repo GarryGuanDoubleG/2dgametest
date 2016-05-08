@@ -10,8 +10,7 @@ struct
 	Uint32 state;
 	Uint32 shown;
 
-	Uint32 frame_horizontal;
-	Uint32 frame_vertical;
+	Uint32 frame;
 
 	Uint16  x, y;
 }Mouse2;
@@ -29,7 +28,7 @@ void InitMouse2()
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
   Mouse2.state = 0;
   Mouse2.shown = 0;
-  Mouse2.frame_horizontal = Mouse2.frame_vertical = 0;
+  Mouse2.frame = 0;
 
 }
 /**
@@ -48,16 +47,28 @@ Vec2d get_mouse_pos()
 void DrawMouse2()
 {
   int mx,my;
+  int frame, fpl;
+  int animations;
+
+  frame = Mouse2.frame;
+  fpl = 16;
+  animations = 3; // specific to mouse
+
   SDL_GetMouseState(&mx,&my);
+
   if(Sprite_Mouse != NULL)
-	  sprite_draw(Sprite_Mouse,Mouse2.frame_horizontal, Mouse2.frame_vertical,__gt_graphics_renderer,graphics_get_player_cam().x + mx, graphics_get_player_cam().y + my);
+	  sprite_draw(Sprite_Mouse, Mouse2.frame,__gt_graphics_renderer,graphics_get_player_cam().x + mx, graphics_get_player_cam().y + my);
   else
 	  printf("Sprite_Mouse did not load properly");
 
-  Mouse2.frame_horizontal = (Mouse2.frame_horizontal + 1)%16;
-  if(Mouse2.frame_horizontal == 0)
-	  Mouse2.frame_vertical = (Mouse2.frame_vertical + 1)%3;
+  // go to next frame
+  frame++;
+  if( frame >= (animations * fpl))
+  {
+	  frame = 0;
+  }
 
+  Mouse2.frame = frame;
   Mouse2.x = mx;
   Mouse2.y = my;
 }
@@ -103,8 +114,10 @@ void sprite_close_system()
 		if( spriteList[i].refCount > 0){
 			//target = spriteList[i];
 			ptr = &spriteList[i];
-			target = &ptr;
-			sprite_free(target);
+			if(ptr){
+				target = &ptr;
+				sprite_free(target);
+			}
 		}
 	}	
 }
@@ -183,7 +196,7 @@ void sprite_free(Sprite ** sprite)
 	if(!sprite) return;
 	if(!*sprite) return;
 	//if(!*sprite) return;
-  
+	
 	target->refCount--;
 
 	if(target->refCount == 0)
@@ -191,12 +204,16 @@ void sprite_free(Sprite ** sprite)
 		strcpy(target->filename,"\0");
 			/*just to be anal retentive, check to see if the image is already freed*/
 		if(target->image != NULL)
+		{
 			SDL_DestroyTexture(target->image);
+		}
+
 		memset(target, 0, sizeof(Sprite));
 
 		target->image = NULL;
 	}
 	target = NULL;
+	sprite = NULL;
 }
 
 /**
@@ -204,14 +221,24 @@ void sprite_free(Sprite ** sprite)
 * @param Sprite pointer to draw, frame_horizontal frame # to play, frame-vertical - which frame to play, renderer of game, and x and y offset to draw
 */
 
-void sprite_draw(Sprite *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY)
+void sprite_draw(Sprite *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY)
 {
 	//Set rendering space and render to screen
-	SDL_Rect camera = graphics_get_player_cam();
-	SDL_Rect src = { frame_horizontal * sprite->imageW, 
-					 frame_vertical * sprite->imageH, 
-					 sprite->imageW, sprite->imageH};
-	SDL_Rect dest = { drawX, drawY, sprite->frameW, sprite->frameH};
+	SDL_Rect camera;
+	SDL_Rect src;
+	SDL_Rect dest;
+
+	camera = graphics_get_player_cam();
+
+	src.x = frame%sprite->fpl * sprite->imageW;
+	src.y = frame/sprite->fpl * sprite->imageH;
+	src.w = sprite->imageW;
+	src.h = sprite->imageH;
+
+	dest.x =  drawX;
+	dest.y = drawY; 
+	dest.w = sprite->frameW;
+	dest.h = sprite->frameH;
 
 	if(rect_collide(camera, dest))
 	{
@@ -221,4 +248,3 @@ void sprite_draw(Sprite *sprite, int frame_horizontal, int frame_vertical, SDL_R
 	}
 }
 
-/*eol@eof*/

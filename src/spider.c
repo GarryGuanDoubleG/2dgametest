@@ -89,7 +89,7 @@ void spider_think(entity *self)
 	}
 
 	//setting which sprite to use depending on direction
-	if(self->velocity.x != 0){
+	/*if(self->velocity.x != 0){
 		if(self->velocity.x >= 0){
 			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
 			self->frame_vertical = 3;//hard coded based on sprite
@@ -111,6 +111,7 @@ void spider_think(entity *self)
 			self->frame_vertical = 2;
 		}		
 	}
+	*/
 }
 
 void spider_onDeath(entity *self)
@@ -150,8 +151,8 @@ entity * spider01_spawn()
 		return NULL;
 	}
 	//each frame is a single direction
-	ent_spider01->frame_horizontal = 0;
-	ent_spider01->frame_vertical = 0;
+	ent_spider01->frame= 0;
+
 	ent_spider01->velocity = vel;
 	ent_spider01->think = spider_think;
 	ent_spider01->nextThink = 1;

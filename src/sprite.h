@@ -33,6 +33,6 @@ void sprite_close_system();
 Vec2d get_mouse_pos();
 Sprite *sprite_load(char *filename, int img_width, int img_height, int frameW, int frameH);
 void sprite_free(Sprite **sprite);
-void sprite_draw(Sprite *sprite, int frame_horizontal, int frame_vertical, SDL_Renderer *renderer, int drawX, int drawY);
+void sprite_draw(Sprite *sprite, int frame, SDL_Renderer *renderer, int drawX, int drawY);
 
 #endif

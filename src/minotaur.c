@@ -15,7 +15,7 @@ void mino_update(entity *self)
 	{
 		self->position = new_pos;
 	}
-	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+//	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
 	entity_draw(self,self->position.x, self->position.y);
 }
 
@@ -52,7 +52,7 @@ void mino_think(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		self->frame_vertical = 3;
+		//self->frame_vertical = 3;
 
 		if(tile_to_tile_dist(tile_get_tile_number(self->position, self->boundBox), tile_get_tile_number(entity_get_player()->position, entity_get_player()->boundBox)) <= 1)
 		{
@@ -71,7 +71,7 @@ void mino_think(entity *self)
 		}
 	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
-
+/*
 	else if(self->state == STATE_PATROL){
 		self->frame_vertical = 0;
 		if(randomNum<= 5){
@@ -91,7 +91,7 @@ void mino_think(entity *self)
 		}
 	}
 
-
+	*/
 	//setting which sprite to use depending on direction
 }
 
@@ -132,9 +132,9 @@ entity * mino_spawn()
 		return NULL;
 	}
 	//each frame is a single direction
-	ent_mino->frame_horizontal = 0;
-	ent_mino->frame_vertical = 0;
+	ent_mino->frame = 0;
 	ent_mino->velocity = vel;
+
 	ent_mino->think = mino_think;
 	ent_mino->nextThink = 1;
 	ent_mino->thinkRate = SPIDER01_THINK_RATE;//think every 30 frames

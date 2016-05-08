@@ -6,6 +6,9 @@ const int ENTITY_MAX = 2000; // max entities allocated into memory
 int entity_count = 0;
 entity *entityList; // handle on all entities
 Dict * entity_defs = NULL;// dictionary of all entity definitions
+
+extern entity *player;
+
 void entity_initialize_system(){
 	int i;
 	Line key;
@@ -91,7 +94,6 @@ entity* entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state
 			 entityList[i].maxhealth = health;
 			 entityList[i].stamina = stamina;
 			 entityList[i].state = state;
-			 entityList[i].player = false; //set to true on player init
 			 entityList[i].followPath = ent_follow_path;
 			 entityList[i].path = NULL;
 			 return &entityList[i];
@@ -164,8 +166,8 @@ void draw_health_bar(entity *self){
 void entity_draw(entity *ent, int x, int y){
 	//SDL Main Camera src rect
 	SDL_Rect entRect = {ent->position.x + ent->boundBox.x, ent->position.y + ent->boundBox.h, ent->boundBox.w, ent->boundBox.h};
-	sprite_draw(ent->sprite, ent->frame_horizontal, ent->frame_vertical, __gt_graphics_renderer, ent->position.x, ent->position.y);
-	if(!ent->player)
+	sprite_draw(ent->sprite, ent->frame, graphics_get_renderer(), ent->position.x, ent->position.y);
+	if(ent == player)
 	{
 		draw_health_bar(ent);
 	}
@@ -218,7 +220,7 @@ void entity_update_all(){
 		{
 			entity_free(&entityList[i]);
 		}
-
+		//check for map bounds
 		if(entityList[i].position.x < 0 ) 
 		{
 			entityList[i].position.x =0;
@@ -241,13 +243,15 @@ void entity_update_all(){
 		}
 
 		entityList[i].update(&entityList[i]);
-		if(entityList[i].health <= 0 && !entityList[i].player)
+		//don't free player
+		if(entityList[i].health <= 0 && !(&entityList[i] == player))
 		{
 			entity_free(&entityList[i]);
 		}
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
 		}
+
 	}
 }
 
@@ -445,20 +449,7 @@ void entity_check_collision_all()
 //player 
 entity * entity_get_player()
 {
-	int i;
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
-			continue;
-		}
-		if(!entityList[i].update){
-			continue;
-		}
-		if(!entityList[i].player)
-		{
-			continue;
-		}
-		return &entityList[i];
-	}
+	return player;
 }
 
 void ent_follow_path(entity *self)

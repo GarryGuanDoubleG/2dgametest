@@ -15,7 +15,7 @@ void angel_update(entity *self)
 	{
 		self->position = new_pos;
 	}
-	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+	self->frame = (self->frame + 1) % self->sprite->fpl;
 	entity_draw(self,self->position.x, self->position.y);
 }
 
@@ -68,9 +68,9 @@ void angel_think(entity *self)
 		self->nextThink = self->thinkRate;
 	}
 	
-	
 	randomNum = rand() % 15;
 	teammate = ent_find_nearest_teammate(self);
+
 	if(teammate)
 	{
 		if(Vec2dDistanceSQ(self_pos,teammate->position) < (TILE_WIDTH * TILE_HEIGHT) * self->aggro_range *self->aggro_range)
@@ -90,9 +90,7 @@ void angel_think(entity *self)
 		self->velocity.x = 0;
 		self->velocity.y = 0;
 		angel_heal_mode(self, teammate);
-		slog("Head Mode");
 		self->path = getPath(self->aggro_range, &self->position, self->boundBox,entity_get_player()->boundBox, &entity_get_player()->position,self->path);
-	//	aStar_search(self->aggro_range, self->position, entity_get_player()->position,self->path);
 	}
 
 	else if(self->state == STATE_PATROL){
@@ -113,30 +111,32 @@ void angel_think(entity *self)
 			self->velocity.y = 0;
 		}
 	}
-
+/*
+	//setting which sprite to use depending on direction
 	if(self->velocity.x != 0){
 		if(self->velocity.x >= 0){
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-			self->frame_vertical = 2;//hard coded based on sprite
+			self->frame = (self->frame + 1) % self->sprite->fpl;
+			self->frame = 2 * self->sprite->fpl;//hard coded based on sprite
 		}
 		else
 		{
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-			self->frame_vertical = 1;
+			self->frame = (self->frame + 1) % self->sprite->fpl;
+			self->
 		}
 	}
 	else{
 		if(self->velocity.y >= 0){
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+			self->frame = (self->frame + 1) % self->sprite->fpl;
 			self->frame_vertical = 3;
 		}
 		else
 		{
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
+			self->frame = (self->frame + 1) % self->sprite->fpl;
 			self->frame_vertical = 1;
 		}		
 	}
-	//setting which sprite to use depending on direction
+	*/
+
 }
 
 void angel_onDeath(entity *self)
@@ -167,9 +167,8 @@ entity * angel_spawn()
 		slog("Could not spawn Spider01");
 		return NULL;
 	}
-	//each frame is a single direction
-	ent_angel->frame_horizontal = 0;
-	ent_angel->frame_vertical = 0;
+
+	ent_angel->frame = 0;
 	ent_angel->velocity = vel;
 	ent_angel->think = angel_think;
 	ent_angel->nextThink = 1;

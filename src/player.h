@@ -26,7 +26,7 @@ typedef struct{ // player animation with equippables
 	Armor * chest;
 	Armor * shoulders;
 	Weapon * weapon;
-	int fpl;
+
 	int anim; // used for drawing sprite,walk,b
 }player_equip;
 
@@ -35,6 +35,5 @@ void player_draw();
 void player_move(SDL_Event *e);
 void player_think(entity *self);
 void player_update(entity *self);
-void player_attack(SDL_Event *e);
 int player_tree_collision();
 #endif

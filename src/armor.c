@@ -22,7 +22,6 @@ Armor armorList[] =
 		true,
 		
 		-1,// frame horizontal
-		-1, //fame vertical
 	},
 
 	{
@@ -43,7 +42,6 @@ Armor armorList[] =
 		true,
 		
 		-1,// frame horizontal
-		-1, //fame vertical
 	},
 
 };
@@ -51,13 +49,15 @@ Armor armorList[] =
 void armor_load_all(){
 	int i;
 	char path[128];// used to concatenate to filepath to find animation
+	int fpl;
 
 	for(i = 0; i < sizeof(armorList)/sizeof(Armor); i++){
 		armorList[i].image = sprite_load(armorList[i].walk, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
+		armorList[i].image->fpl = 9;
 		armorList[i].image_slash = sprite_load(armorList[i].slash, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
-		armorList[i].image_slash->fpl = 5;
+		armorList[i].image_slash->fpl = 6;
 		armorList[i].image_bow = sprite_load(armorList[i].bow, armorList[i].imageH,armorList[i].imageW, 
 										 armorList[i].frameW, armorList[i].frameH);
 		armorList[i].image_thrust = sprite_load(armorList[i].thrust, armorList[i].imageH,armorList[i].imageW, 
