@@ -28,12 +28,12 @@ typedef struct{ // player animation with equippables
 	Weapon * weapon;
 
 	int anim; // used for drawing sprite,walk,b
-}player_equip;
+}Player_Equip;
 
-void player_init();
-void player_draw();
-void player_move(SDL_Event *e);
-void player_think(entity *self);
-void player_update(entity *self);
-int player_tree_collision();
+void Player_Init();
+void Player_Draw();
+void Player_Move(SDL_Event *e);
+void Player_Think(entity *self);
+void Player_Update(entity *self);
+int Player_Tree_Collision();
 #endif

@@ -10,7 +10,7 @@ const int PLAYERW = 64; /*<player image width is 64x64.*/
 const int PLAYER_FRAMEH = 128;
 const int PLAYER_FRAMEW = 128;
 
-static player_equip PlayerEquip;
+static Player_Equip PlayerEquip;
 static int anim_current;//used to determine current animation
 static int in_build_mode_01 = false;
 static int selecting_struct = false;
@@ -34,7 +34,7 @@ struct {
 }playerBody;
 
 //end
-void player_init(){
+void Player_Init(){
 	int i = 0;
 	
 	Tile start = tile_start();
@@ -54,8 +54,8 @@ void player_init(){
 
 	player->frame = 0;
 
-	player->think = player_think;
-	player->update = player_update;
+	player->think = Player_Think;
+	player->update = Player_Update;
 	
 	player->team = TEAM_PLAYER;
 	player->p_em = particle_em_new();
@@ -66,7 +66,7 @@ void player_init(){
 	PlayerEquip.chest = getArmor("chest chain");
 }
 
-void player_draw_equip(){
+void Player_Draw_equip(){
 	Vec2d draw_pos;
 
 	Vec2dCopy(player->position, draw_pos);
@@ -104,13 +104,13 @@ void player_draw_equip(){
 	}
 }
 
-void player_draw(){
+void Player_Draw(){
 	//need to add other equipment
 	slog("Player Frame is %i fpl is %i", player->frame, player->sprite->fpl);
 
 	entity_draw(player);
 
-	player_draw_equip();
+	Player_Draw_equip();
 	hud_draw(Graphics_Get_Player_Cam(),player->health, player->maxhealth, player->stamina, player->stamina);
 }
 
@@ -134,7 +134,7 @@ int player_get_new_frame(int animation, int curr_frame, int fpl)
 	return frame;
 }
 
-void player_update(entity *self)
+void Player_Update(entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 	int frame;
@@ -187,7 +187,7 @@ void player_update(entity *self)
 	}
 }
 
-void player_update_camera()
+void Player_Update_Camera()
 {
 	SDL_Rect new_cam;
 	
@@ -196,10 +196,10 @@ void player_update_camera()
 	new_cam.w = SCREEN_WIDTH;
 	new_cam.h = SCREEN_HEIGHT;
 
-	graphics_update_player_cam(new_cam);
+	Graphics_Update_Player_Cam(new_cam);
 }
 
-void player_move(SDL_Event *e){
+void Player_Move(SDL_Event *e){
 	
 	int frame;
 	int fpl;
@@ -244,12 +244,6 @@ void player_move(SDL_Event *e){
 			player->frame = player_get_new_frame(animation, frame, fpl);
 			player->face_dir = face_right;
 			break;
-        default:
-			break;
-    }
-
-	switch( e->key.keysym.sym)
-	{
 		case SDLK_q:
 			slog("Q press");
 			p.y = player->position.y + player->sprite->frameH * 3 / 4;
@@ -271,7 +265,7 @@ void player_move(SDL_Event *e){
 			}
 		case SDLK_f:
 			slog("Press F");
-			if(anim_current != SLASH && player_tree_collision())
+			if(anim_current != SLASH && Player_Tree_Collision())
 			{
 				anim_current = SLASH;
 				animation = player->face_dir;
@@ -308,10 +302,10 @@ void player_move(SDL_Event *e){
 		default:
 			break;
 	}
-	player_update_camera();
+	Player_Update_Camera();
 }
 
-int player_tree_collision()
+int Player_Tree_Collision()
 {
 	if(!player)
 	{ 
@@ -321,7 +315,7 @@ int player_tree_collision()
 
 	return tile_forage(player->position, player->boundBox, player->face_dir);
 }
-void player_think(entity* self)
+void Player_Think(entity* self)
 {
 
 

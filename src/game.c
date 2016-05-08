@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     SDL_RenderClear(__gt_graphics_renderer);//clear screen
 
 	tile_render();	
-	player_draw();
+	Player_Draw();
 	Draw_Mouse();
 	particle_em_draw_all();
 	/*monster_spawn(Monster::grue);
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			player_move (&e);
+			Player_Move (&e);
 		}
 	}
 
@@ -145,7 +145,7 @@ void Init_All()
   tile_init_system(); // allocate memory for tiles and generate map
   particle_em_init_system();
 
-  player_init(); //creates player entity
+  Player_Init(); //creates player entity
   hud_init(); //loads hud sprites
   inventory_init(); //allocates memory to store items
 

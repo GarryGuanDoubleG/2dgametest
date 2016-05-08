@@ -53,7 +53,7 @@ void ResetBuffer();
 void NextFrame();
 //player camera updated in player update
 SDL_Rect Graphics_Get_Player_Cam();
-void graphics_update_player_cam( SDL_Rect player_cam );
+void Graphics_Update_Player_Cam( SDL_Rect player_cam );
 //gg edit
 SDL_Renderer * Graphics_Get_Renderer();
 
