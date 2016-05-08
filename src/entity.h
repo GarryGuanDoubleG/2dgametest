@@ -8,6 +8,7 @@
 #include "path_find.h"
 #include "dict.h"
 #include "particle_emitter.h"
+#include "camera.h"
 /**
 * @brief terms for which team an entity is on to determine who to attack
 */

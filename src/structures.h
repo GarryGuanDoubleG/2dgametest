@@ -6,6 +6,7 @@
 #include "Tile.h"
 #include "vector.h"
 #include "structure_define.h"
+#include "camera.h"
 
 void structure_select(int type);
 //void structure_update_all();

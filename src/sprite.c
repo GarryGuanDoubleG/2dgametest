@@ -59,7 +59,7 @@ void Draw_Mouse()
 
   SDL_GetMouseState(&mx,&my);
 
-  cam = Graphics_Get_Player_Cam();
+  cam = Camera_Get_Camera();
   Vec2dSet(draw_pos, mx + cam.x, my + cam.y);
 
   if(Sprite_Mouse != NULL)
@@ -304,7 +304,7 @@ void Sprite_Draw(Sprite *sprite, int frame, SDL_Renderer *renderer, Vec2d draw_p
 	SDL_Rect src;
 	SDL_Rect dest;
 
-	camera = Graphics_Get_Player_Cam();
+	camera = Camera_Get_Camera();
 
 	src.x = frame%sprite->fpl * sprite->imageW;
 	src.y = frame/sprite->fpl * sprite->imageH;
@@ -339,7 +339,7 @@ void Sprite_Text_Draw(Sprite *text, Vec2d draw_pos, int alpha)
 	if(!text)return;
 
 	renderer = Graphics_Get_Renderer();
-	cam = Graphics_Get_Player_Cam();
+	cam = Camera_Get_Camera();
 	cam_pos.x = cam.x;
 	cam_pos.y = cam.y;
 

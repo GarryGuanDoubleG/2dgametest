@@ -21,9 +21,6 @@ SDL_Renderer *   __gt_graphics_renderer = NULL;
 SDL_Texture  *   __gt_graphics_texture = NULL;
 SDL_Surface  *   __gt_graphics_surface = NULL;
 SDL_Surface  *   __gt_graphics_temp_buffer = NULL;
-//gg edit
-static SDL_Rect		graphics_player_camera;
-
 
 /*some data on the video settings that can be useful for a lot of functions*/
 static int __gt_bitdepth;
@@ -125,8 +122,6 @@ void Init_Graphics(
         gt_graphics_close();
         return;
     }
-	//gg edit
-	graphics_player_camera = camera;
         
     atexit(gt_graphics_close);
     printf("graphics initialized\n");
@@ -176,13 +171,11 @@ void gt_graphics_render_surface_to_screen(SDL_Surface *surface,SDL_Rect srcRect,
     dstRect.y = y;
     dstRect.w = srcRect.w;
     dstRect.h = srcRect.h;
-	if(rect_collide(graphics_player_camera, dstRect))
-	{
-		SDL_RenderCopy(__gt_graphics_renderer,
-                     __gt_graphics_texture,
-                     &srcRect,
-                     &dstRect);
-	}
+
+	SDL_RenderCopy(__gt_graphics_renderer,
+                    __gt_graphics_texture,
+                    &srcRect,
+                    &dstRect);
 }
 
 
@@ -350,15 +343,4 @@ SDL_Surface * get_gt_buffer(){
 
 SDL_Renderer * Graphics_Get_Renderer(){
 	return __gt_graphics_renderer;
-}
-
-SDL_Rect Graphics_Get_Player_Cam()
-{
-	return graphics_player_camera;
-}
-
-void Graphics_Update_Player_Cam(SDL_Rect player_cam)
-{
-	graphics_player_camera = player_cam;
-	
 }

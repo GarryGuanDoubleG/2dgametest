@@ -9,6 +9,7 @@
 #include "Tile_define.h"
 #include "vector.h"
 #include "inventory.h"
+#include "camera.h"
 
 extern const int SCREEN_HEIGHT;
 extern const int SCREEN_WIDTH;

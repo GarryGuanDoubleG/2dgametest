@@ -8,6 +8,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "graphics.h"
+#include "camera.h"
 /**
 * @brief sprite structure used for clipping images for sprites and 
 *  loading / drawing image into the game 

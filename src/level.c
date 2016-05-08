@@ -8,8 +8,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void Level_Editor_Move(SDL_Event *e);
+
 void Level_Editor_Init()
 {
+	Vec2d em_cam_size;
+	Vec2d em_cam_offset;
+
+	int cam_width = (SCREEN_WIDTH * 3) / 4;
+	int cam_height = (SCREEN_HEIGHT * 3) / 4;
+
+	//offset camera to left
+	int cam_pos_x = ((SCREEN_WIDTH - cam_width) /2 ) * -1;
+	int cam_pos_y = ((SCREEN_HEIGHT - cam_height) /2 ) * -1;
+
+	Vec2dSet(em_cam_size, cam_width, cam_height);
+	Vec2dSet(em_cam_offset, cam_pos_x, cam_pos_y);
+
+	Camera_SetSize(em_cam_size);
+	Camera_SetPosition(em_cam_offset);
+
 	tile_init_system(MODE_EDITOR);
 }
 
@@ -46,6 +64,10 @@ void Level_Editor_Mode()
 			if(e.type == SDL_QUIT)
 			{
 				done = 1;
+			}
+			else
+			{
+				Level_Editor_Move(&e);
 			}
 		}
 
@@ -148,4 +170,33 @@ void Level_Save()
 
 	//save
 	save_dict_as_json(save, "save.def");
+}
+
+void Level_Editor_Move(SDL_Event *e)
+{
+	Vec2d move_cam;
+	Vec2d new_cam_pos;
+
+	Vec2dSet(move_cam, 0, 0);
+
+	switch( e->key.keysym.sym )
+    {
+        case SDLK_UP:
+			move_cam.y -= 5;
+			break;
+		case SDLK_DOWN:
+			move_cam.y += 5;
+			break;
+		case SDLK_RIGHT:
+			move_cam.x += 5;
+			break;
+		case SDLK_LEFT:
+			move_cam.x -= 5;
+			break;
+		default:
+			break;
+	}
+	
+	Vec2dAdd(move_cam, Camera_Get_Camera(), new_cam_pos);
+	Camera_SetPosition(new_cam_pos);
 }

@@ -29,11 +29,11 @@ void tile_editor_mode_set();
 
 void tile_init_system(int mode)
 {
-	int i;
 	if(TOTAL_TILES == 0){
 		printf("Why is total tiles 0?");
 		return;
 	}
+
 	tile_list = (Tile*) malloc(sizeof(Tile)*TOTAL_TILES);
 	memset(tile_list,0, sizeof(Tile) * TOTAL_TILES);
 
@@ -61,7 +61,7 @@ void tile_init_system(int mode)
 void tile_load_from_def(int *tile_map)
 {
 	int i;
-
+	int x = 0,y = 0;
 	tile_init_system(Bool_False);
 
 	//set tile list and destructable tiles based on loaded tile map
@@ -70,7 +70,18 @@ void tile_load_from_def(int *tile_map)
 	{
 		tile_list[i].mType = tile_map[i];
 		dest_tile_list[i].mType = tile_map[i];
+
+		tile_list[i].mBox	   = New_SDL_Rect(x, y, TILE_WIDTH, TILE_HEIGHT);
+		dest_tile_list[i].mBox = tile_list[i].mBox;
+
 		dest_tile_list[i].hits = 5;
+
+		x += TILE_WIDTH;		
+		if(x >= TILE_ROWS * TILE_WIDTH)
+		{
+			x = 0;
+			y += TILE_HEIGHT;
+		}
 	}
 	//not very efficient but free tile_map
 	memset(tile_map, 0, sizeof(int) * TOTAL_TILES);
@@ -401,7 +412,13 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 */
 void tile_draw(){
 	int i;
-	SDL_Rect camera = Graphics_Get_Player_Cam();
+
+	SDL_Rect camera;
+	SDL_Rect dest;
+
+	SDL_Renderer * renderer = Graphics_Get_Renderer();
+	
+	camera = Camera_Get_Camera();
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
@@ -411,14 +428,12 @@ void tile_draw(){
 			printf("Tile is null while rendering");
 			return ;
 		}
-		if(rect_collide(Graphics_Get_Player_Cam(), tile->mBox))
+
+		Sprite_Draw(tile_sprite_grass, 0, renderer, draw_pos);
+		//needs to be more readable
+		if(dest_tile_list[i].mType == TILE_TREE)
 		{
-			SDL_Rect dest = { tile->mBox.x - camera.x,tile->mBox.y-camera.y, TILE_HEIGHT, TILE_WIDTH};
-			SDL_RenderCopy(Graphics_Get_Renderer(), tile_sprite_grass->image, NULL, &dest);
-			if(dest_tile_list[i].mType == TILE_TREE)
-			{
-				SDL_RenderCopy(__gt_graphics_renderer,tile_sprite_tree->image, NULL, &dest);
-			}
+			Sprite_Draw(tile_sprite_tree, 0, renderer, draw_pos); 
 		}
 	}
 }

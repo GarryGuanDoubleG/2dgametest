@@ -128,13 +128,13 @@ void draw_health_bar(entity *self){
 	 {
 		slog("Failed to set render draw color");
      }
-	if(!rect_collide(bg_rect, Graphics_Get_Player_Cam()))
+	if(!rect_collide(bg_rect, Camera_Get_Camera()))
 	{
 		SDL_SetRenderDrawColor(Graphics_Get_Renderer(), 0x00, 0x00, 0x00, 0x00);
 		return;
 	}
-		bg_rect.x -= Graphics_Get_Player_Cam().x;
-		bg_rect.y -= Graphics_Get_Player_Cam().y;
+		bg_rect.x -= Camera_Get_Camera().x;
+		bg_rect.y -= Camera_Get_Camera().y;
 		fg_rect = bg_rect;
 		px = bg_rect.x;
 		percent = percent > 1.f ? 1.f : percent < 0.f ? 0.f : percent;

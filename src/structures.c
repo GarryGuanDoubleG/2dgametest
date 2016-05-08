@@ -31,7 +31,7 @@ void struct_update(entity *self)
 void update_selected_struct(entity *self)
 {
 	Vec2d m_pos = Get_Mouse_Pos();
-	Vec2d cam_offset = {Graphics_Get_Player_Cam().x, Graphics_Get_Player_Cam().y } ;
+	Vec2d cam_offset = {Camera_Get_Camera().x, Camera_Get_Camera().y } ;
 	Vec2d frame_offset;
 	Vec2d draw_pos; 
 

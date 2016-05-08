@@ -131,7 +131,7 @@ void Player_Draw(){
 	entity_draw(player);
 
 	Player_Draw_equip();
-	hud_draw(Graphics_Get_Player_Cam(),player->health, player->maxhealth, player->stamina, player->stamina);
+	hud_draw(Camera_Get_Camera(),player->health, player->maxhealth, player->stamina, player->stamina);
 }
 
 int player_get_new_frame(int animation, int curr_frame, int fpl)
@@ -209,14 +209,12 @@ void Player_Update(entity *self)
 
 void Player_Update_Camera()
 {
-	SDL_Rect new_cam;
-	
-	new_cam.x = player->position.x - SCREEN_WIDTH/2;
-	new_cam.y = player->position.y - SCREEN_HEIGHT/2;
-	new_cam.w = SCREEN_WIDTH;
-	new_cam.h = SCREEN_HEIGHT;
+	Vec2d pos;
 
-	Graphics_Update_Player_Cam(new_cam);
+	pos.x = player->position.x - SCREEN_WIDTH / 2;
+	pos.y = player->position.y - SCREEN_HEIGHT / 2;
+
+	Camera_SetPosition(pos);
 }
 
 void Player_Move(SDL_Event *e){

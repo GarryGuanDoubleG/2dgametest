@@ -51,10 +51,7 @@ Uint32 IndexColor(int color);
 void FrameDelay(Uint32 delay);
 void ResetBuffer();
 void NextFrame();
-//player camera updated in player update
-SDL_Rect Graphics_Get_Player_Cam();
-void Graphics_Update_Player_Cam( SDL_Rect player_cam );
-//gg edit
+
 SDL_Renderer * Graphics_Get_Renderer();
 
 
