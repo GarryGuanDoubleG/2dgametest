@@ -44,19 +44,19 @@ Dict *json_convert(json_t *json)
   */
   if (json_is_string(json))
   {
-    return dict_new_string((char *)json_string_value(json));
+    return Dict_New_String((char *)json_string_value(json));
   }
   if (json_is_boolean(json))
   {
-    return dict_new_bool(json_is_true(json));
+    return Dict_New_bool(json_is_true(json));
   }
   if (json_is_integer(json))
   {
-    return dict_new_int(json_integer_value(json));
+    return Dict_New_int(json_integer_value(json));
   }
   if (json_is_real(json))
   {
-    return dict_new_float(json_real_value(json));
+    return Dict_New_float(json_real_value(json));
   }
   if (json_is_null(json))
   {
@@ -70,7 +70,7 @@ Dict *mgl_json_list_convert(json_t *json)
 {
   int index;
   json_t *value;
-  Dict *data = Dict_new_list();
+  Dict *data = Dict_New_list();
   json_array_foreach(json, index, value)
   {
     mgl_Dict_list_append(data,mgl_json_convert(value));
@@ -99,9 +99,37 @@ json_t *json_from_hash(Dict *dict)
 	return json;
 }
 
+json_t *json_from_array(Dict *dict)		
+{
+	json_t *json;
+	int count, i;
+	int value;
+	GArray *g_array;
+
+	if(!dict) return NULL;
+	if(dict->data_type != DICT_ARRAY) return NULL;
+
+	g_array = (GArray*)dict->keyValue;
+
+	json = json_array();
+	if(!json) return NULL;
+
+	count = dict->item_count;
+
+	for(i = 0; i < count; i++)
+	{
+		//value = dict_get_hash_nth(keystring, dict, i);
+		//if(!value) continue;
+		value = g_array_index(g_array, int, i);
+
+		json_array_append_new(json, json_integer(value));
+	}
+	return json;
+}
+
 Dict *json_hash_convert(json_t *json)
 {
-	Dict *data = dict_new_hash();	
+	Dict *data = Dict_New_Hash();	
 	json_t *value;
 	json_t *obj;
 	const char *key;
@@ -109,7 +137,7 @@ Dict *json_hash_convert(json_t *json)
 	json_object_foreach(json, key, value)
 	{
 		slog("key: %s", key);
-     	dict_hash_insert(data, key, json_convert(value));
+     	Dict_Hash_Insert(data, key, json_convert(value));
 	}
 	
 	return data;	
@@ -122,6 +150,8 @@ json_t * json_from_dict(Dict *dict)
 	{
 		case DICT_HASH:
 			return json_from_hash(dict);		
+		case DICT_ARRAY:
+			return json_from_array(dict);
         /*case MGL_DICT_LIST:
             return mgl_json_from_list(dict);
             break;
@@ -129,7 +159,7 @@ json_t * json_from_dict(Dict *dict)
         case DICT_INT:        
         case DICT_FLOAT:
         case DICT_STRING:
-        case DICT_VOID:
+        case DICT_VOID:		
         case DICT_CUSTOM:
             return json_string((char*)dict->keyValue);
             break;

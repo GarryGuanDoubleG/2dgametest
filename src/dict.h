@@ -19,11 +19,12 @@ typedef enum Dict_types_S
 	DICT_INT,
 	DICT_FLOAT,
 	DICT_STRING,
+	DICT_ARRAY,
 	DICT_LIST,
 	DICT_HASH,
 	DICT_SOUND,
 	DICT_MUSIC,
-	DICT_CUSTOM,	
+	DICT_CUSTOM,
 }Dict_Type;
 
 typedef void (*Dict_Free)(void *data);
@@ -61,29 +62,31 @@ void dict_g_string_free(char * string);
 * @brief returns a newly allocated dictionary
 * @return returns a pointer to new dictionary
 */
-Dict * dict_new();
+Dict * Dict_New();
 /*
 * @brief allocates and and creates a pointer to a new Ghash
 * @return NULL on error or a Dictionary of a GHashTable
 */
-Dict * dict_new_hash();
+Dict * Dict_New_Hash();
+
+Dict * Dict_New_Array(int size);
 
 /**
 * @brief allocates a GString and sets up a pointer to new GString
 * @param The text to contain.
 * @return NULL on error or Dict containing a GString
 */
-Dict *dict_new_string(char *text);
+Dict *Dict_New_String(char *text);
 
 /*creates new key values based on inputs of different types*/
-Dict * dict_new_bool(Bool n);
-Dict * dict_new_int(int n);
-Dict * dict_new_uint(int n);
-Dict * dict_new_float(float n);
-Dict * dict_new_vec2d(Vec2d n);
-Dict * dict_new_vec3d(Vec3d n);
-Dict * dict_new_rect(SDL_Rect n);
-Dict * dict_new_rectf(Rect_f n);
+Dict * Dict_New_bool(Bool n);
+Dict * Dict_New_int(int n);
+Dict * Dict_New_uint(int n);
+Dict * Dict_New_float(float n);
+Dict * Dict_New_vec2d(Vec2d n);
+Dict * Dict_New_vec3d(Vec3d n);
+Dict * Dict_New_rect(SDL_Rect n);
+Dict * Dict_New_rectf(Rect_f n);
 
 /**
 * @brief inserts a new key value pair into the dictionary hash table
@@ -91,7 +94,7 @@ Dict * dict_new_rectf(Rect_f n);
 * @param char *key, the key to identify the new value
 * @param dict * value, the value to insert into the hash table
 */
-void dict_hash_insert(Dict *hash, const char *key, Dict *value);
+void Dict_Hash_Insert(Dict *hash, const char *key, gpointer value);
 /**
 * @brief gets the number of values into the hash table
 * @param dict hash, the hash table to check
@@ -108,5 +111,7 @@ int dict_get_hash_count(Dict * hash);
 Dict * dict_get_hash_nth(Line key, Dict *hash, int n);
 
 Dict * dict_get_hash_value(Dict*hash, Line key);
+
+void Dict_Array_Cpy(Dict * dict_array, int index, void * data, int array_len);
 
 #endif

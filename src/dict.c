@@ -46,7 +46,7 @@ void dict_hash_free(Dict * dict_hash)
   free(dict_hash);
 }
 
-Dict * dict_new()
+Dict * Dict_New()
 {
 	Dict *new_dict;
 	new_dict = (Dict*) malloc(sizeof(new_dict));
@@ -58,10 +58,10 @@ Dict * dict_new()
 	return new_dict;
 }
 
-Dict * dict_new_hash()
+Dict * Dict_New_Hash()
 {
 	Dict *new_dict;
-	new_dict = dict_new();
+	new_dict = Dict_New();
 	if(!new_dict) return NULL;
 	new_dict->data_type = DICT_HASH;
 	new_dict->item_count = 0;
@@ -74,66 +74,79 @@ Dict * dict_new_hash()
 	return new_dict;
 }
 
-Dict *dict_new_bool(Bool n)
+Dict *Dict_New_Array(int data_size)
+{
+	Dict *new_dict;
+	new_dict = Dict_New();
+	if(!new_dict) return NULL;
+	new_dict->data_type = DICT_ARRAY;
+	new_dict->item_count = 0;
+	new_dict->keyFree = (Dict_Free)dict_hash_free;
+	new_dict->keyValue = 
+		g_array_new(Bool_False, Bool_False, data_size);
+	return new_dict;
+}
+
+Dict *Dict_New_bool(Bool n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%s", string_from_bool(n));
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_int(int n)
+Dict *Dict_New_int(int n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%i",n);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_uint(unsigned int n)
+Dict *Dict_New_uint(unsigned int n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%u",n);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_float(float n)
+Dict *Dict_New_float(float n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%f",n);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_vec2d(Vec2d n)
+Dict *Dict_New_vec2d(Vec2d n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%f,%f",n.x,n.y);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_vec3d(Vec3d n)
+Dict *Dict_New_vec3d(Vec3d n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%f,%f,%f",n.x,n.y,n.z);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_rect(SDL_Rect n)
+Dict *Dict_New_rect(SDL_Rect n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%i,%i,%i,%i",n.x,n.y,n.w,n.h);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_rectf(Rect_f n)
+Dict *Dict_New_rectf(Rect_f n)
 {
   Line text;
   sprintf_s(text,LINE_LENGTH,"%f,%f,%f,%f",n.x,n.y,n.w,n.h);
-  return dict_new_string(text);
+  return Dict_New_String(text);
 }
 
-Dict *dict_new_string(char *text)
+Dict *Dict_New_String(char *text)
 {
   Dict *new_dict; 
-  new_dict = dict_new();
+  new_dict = Dict_New();
   if (!new_dict)return NULL;
   new_dict->data_type = DICT_STRING;
   new_dict->item_count = strlen(text);
@@ -143,7 +156,7 @@ Dict *dict_new_string(char *text)
   return new_dict;
 }
 
-void dict_hash_insert(Dict *hash, const char *key, Dict*value)
+void Dict_Hash_Insert(Dict *hash, const char *key, gpointer value)
 {
 	GHashTable *hash_table = NULL;
 	if(!hash) return;
@@ -188,7 +201,7 @@ Dict*dict_get_hash_value(Dict*hash, Line key)
 int dict_get_hash_count(Dict * hash)
 {
 	if(!hash) return 0;
-	if(!hash->data_type != DICT_HASH) return 0;
+	if(hash->data_type != DICT_HASH) return 0;
 	if(hash->keyValue == NULL) return 0;
 	return hash->item_count; 
 }
@@ -210,4 +223,19 @@ Dict* dict_get_hash_nth(Line key, Dict* hash, int n)
 	result = dict_get_hash_value(hash, key);
 	g_list_free(keys);
 	return result;
+}
+
+void Dict_Array_Cpy(Dict * dict_array, int index, void * data, int array_len)
+{
+	if(!dict_array) return;
+	if(dict_array->data_type != DICT_ARRAY) return;
+	if(!data) return;
+	if(index < 0)
+	{
+		slog("DICT_ARRAY: Index cannot be < 0");
+		return;
+	}
+
+	dict_array->keyValue = g_array_insert_vals((GArray*)dict_array->keyValue, index, data, array_len);
+	dict_array->item_count = array_len;
 }

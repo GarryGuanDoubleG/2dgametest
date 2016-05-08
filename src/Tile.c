@@ -253,7 +253,7 @@ void tile_set(){
 		tile->mBox.y = y;
 		tile->mBox.w = TILE_WIDTH;
 		tile->mBox.h = TILE_HEIGHT;
-		tile->mType = TILE_GRASS;//filler
+		tile->mType = TILE_TREE;//filler
 
 		//set destructable tile to be a tree by default
 		dest_tile_list[i].mBox = tile->mBox;
@@ -346,7 +346,7 @@ void tile_render(){
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
-		Tile * tile = (tile_list + i);
+		Tile * tile = &tile_list[i];
 		if(tile == NULL){
 			printf("Tile is null while rendering");
 			return ;
@@ -579,4 +579,21 @@ Vec2d tile_get_pos(int index)
 	Vec2d tile_pos = {tile_list[index].mBox.x, tile_list[index].mBox.y };
 
 	return tile_pos;	
+}
+
+int *Tile_Map_Get(int &tile_count, int &row, int& col)
+{
+	static int tile_map[TOTAL_TILES];
+	int i;
+
+	tile_count = TOTAL_TILES;
+	row = TILE_ROWS;
+	col = TILE_COLUMNS;
+
+	for(i = 0; i < TOTAL_TILES; i++)
+	{
+		tile_map[i] = tile_list[i].mType;
+	}
+
+	return tile_map;
 }

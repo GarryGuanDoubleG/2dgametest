@@ -13,6 +13,7 @@
 #include "audio.h"
 
 #include "Tile.h"
+#include "level.h"
 
 #include "monster_ai.h"
 #include "support_ai.h"
@@ -104,6 +105,7 @@ int main(int argc, char *argv[])
 
 		if(keys[SDL_SCANCODE_ESCAPE])
 		{
+			Level_Save();
 			done = 1;
 		}
 		

@@ -124,6 +124,8 @@ Vec2d tile_get_pos(int index);
 */
 int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir);
 
+int *Tile_Map_Get(int &tile_count, int &row, int &col);
+
 #define MIN(a,b) (a < b ? a : b)
 #define DISTANCE_CENTER(a)(abs(a - (TOTAL_TILES/2 + TILE_ROWS/2)))
 

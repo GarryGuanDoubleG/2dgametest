@@ -83,6 +83,7 @@
     <ClInclude Include="..\src\items.h" />
     <ClInclude Include="..\src\items_define.h" />
     <ClInclude Include="..\src\json_parse.h" />
+    <ClInclude Include="..\src\level.h" />
     <ClInclude Include="..\src\load.h" />
     <ClInclude Include="..\src\Menu.h" />
     <ClInclude Include="..\src\minotaur.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="..\src\inventory.c" />
     <ClCompile Include="..\src\items.c" />
     <ClCompile Include="..\src\json_parse.c" />
+    <ClCompile Include="..\src\level.c" />
     <ClCompile Include="..\src\load.c" />
     <ClCompile Include="..\src\Menu.c" />
     <ClCompile Include="..\src\minotaur.c" />

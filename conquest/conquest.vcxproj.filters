@@ -132,6 +132,9 @@
     <ClInclude Include="..\src\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\archer.c">
@@ -234,6 +237,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Menu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\level.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
