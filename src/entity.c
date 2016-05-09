@@ -166,7 +166,7 @@ void draw_health_bar(entity *self){
 void entity_draw(entity *ent){
 	//SDL Main Camera src rect	
 	Sprite_Draw(ent->sprite, ent->frame, Graphics_Get_Renderer(), ent->position);
-	if(ent == player)
+	if(ent != player)
 	{
 		draw_health_bar(ent);
 	}
@@ -250,7 +250,10 @@ void entity_update_all(){
 		if(entityList[i].weapon){
 			entityList[i].weapon->face_dir = entityList[i].face_dir;
 		}
-
+		if(&entityList[i] != player)
+		{		
+			entity_draw(&entityList[i]);
+		}
 	}
 }
 

@@ -155,7 +155,7 @@ Sprite *Sprite_Load(char *filename, int img_width, int img_height, int frameW, i
 	for(i = 0; i < G_Sprite_Count; i++){
 		if(!strcmp(spriteList[i].filename, filename)){
 			fprintf(stdout,"Sprite has already been loaded");
-			return NULL;
+			return &spriteList[i];
 		}
 	}
 	loadedSurface = IMG_Load(filename);

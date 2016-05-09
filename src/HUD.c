@@ -112,7 +112,7 @@ int set_hud_state(HUD_state state)
 {
 	if(hud_state_curr == state)
 	{
-		hud_state_curr = HUD_state::main_menu;
+		//hud_state_curr = HUD_state::main_menu;
 		return false;
 	}
 	else

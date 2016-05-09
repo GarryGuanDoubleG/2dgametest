@@ -6,10 +6,18 @@ void mino_update(entity *self)
 
 	if(self->state == STATE_AGGRO)
 	{
-		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		self->followPath(self);
-		Vec2dAdd(self->position, self->velocity, self->position);
-	//	aStar_search(self->aggro_range, self->position, Entity_Get_Player()->position,self->path);
+		Vec2dAdd(self->position, self->velocity, self->position);			
+
+		if((self->frame / self->sprite->fpl) != 3 )
+		{
+			self->frame = 30;
+		}
+		else
+		{
+			self->frame++;
+		}
+
 	}
 	else if(!tile_collision(new_pos, self->boundBox))
 	{
@@ -69,11 +77,10 @@ void mino_think(entity *self)
 		{
 			self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		}
-	//	aStar_search(self->aggro_range, self->position, Entity_Get_Player()->position,self->path);
 	}
-/*
+
 	else if(self->state == STATE_PATROL){
-		self->frame_vertical = 0;
+		self->frame = 0;
 		if(randomNum<= 5){
 			self->velocity.x = 5;
 		}
@@ -91,7 +98,7 @@ void mino_think(entity *self)
 		}
 	}
 
-	*/
+	
 	//setting which sprite to use depending on direction
 }
 

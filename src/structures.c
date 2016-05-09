@@ -3,30 +3,85 @@
 static int struct_show_select = false;
 static entity * selected_struct = NULL;
 extern struct Mouse;
-/*
-structure * struct_load(Sprite *sprite, int health, int defense, int type)
-{
-	int i;
-	for(i = 0; i < STRUCT_MAX; i++)
-	{
-		if(struct_list[i].inuse == false)
-		{
-			struct_list[i].inuse = true;
-			struct_list[i].sprite = sprite;
-			struct_list[i].health = health;
-			struct_list[i].defense = defense;
-		}
-		return &struct_list[i];
-	}
+extern entity *player;
 
-	slog("Could not load structure");
-	return NULL;
-}
-*/
 void struct_update(entity *self)
 {
 	entity_draw(self);
 }
+
+Vec2d StructGetBuildPos()
+{
+	Vec2d player_pos;
+	Vec2d build_pos;
+	Vec2d offset;
+
+	player_pos = player->position;
+
+	if(player->face_dir == 0)		
+		Vec2dSet(offset, 0, -128);
+	else if(player->face_dir == 1)
+		Vec2dSet(offset, -128, 0);
+	else if(player->face_dir == 2)
+		Vec2dSet(offset, 0, 128);
+	else if(player->face_dir == 3)
+		Vec2dSet(offset, 128, 0);
+
+	Vec2dAdd(offset, player->position, build_pos);
+
+	return build_pos;
+}
+
+void struct_touch(entity *self, entity *other)
+{
+	Vec2dSet(other->velocity, 0, 0);
+}
+
+entity *struct_wall_spawn()
+{
+	Sprite *sprite;
+	cStruct * wall;
+
+	Vec2d build_pos;
+	int build_tile;
+	int tile_type;
+
+	build_pos = StructGetBuildPos();
+
+	build_tile = tile_get_tile_number(build_pos, New_SDL_Rect(0, 0, 1, 1));
+	tile_type = tile_get_type(build_tile);
+
+	if(tile_type != TILE_GRASS && tile_type != TILE_ROAD)
+	{
+		slog("Can't build there");
+		return NULL;
+	}
+
+	build_pos = tile_get_pos(build_tile);
+
+	sprite = Sprite_Load("images/structures/wall_01.png", 66, 160, 100, 120);
+	sprite->fpl = 0;
+
+	wall = entity_load(sprite, build_pos, 1000, 0, 0);
+	wall->type = struct_wall;
+
+	wall->boundBox = New_SDL_Rect( 10, 10, 110, 110);
+
+	wall->update = struct_update;
+	wall->touch = struct_touch;
+	wall->frame = 0;
+
+	return wall;
+}
+
+entity *structure_spawn(int type)
+{
+	if(type == struct_wall)
+	{
+		return struct_wall_spawn();	
+	}
+}
+
 
 void update_selected_struct(entity *self)
 {
@@ -53,78 +108,6 @@ void update_selected_struct(entity *self)
 
 		entity_draw(self);
 	}	
-}
-/*
-void struct_update_all()
-{
-	int i;
-	int j;
-	for(i = 0; i < STRUCT_MAX; i++)
-	{
-		if(struct_list[i].inuse == false)
-		{
-			continue;
-		}
-		if(!struct_list[i].update)
-		{
-			continue;
-		}
-		struct_list[i].update(&struct_list[i]);
-
-		if(struct_list[i].placed == true)
-		{
-			structure_draw(&struct_list[i], struct_list[i].position);
-			for(j = 0; j < ENTITY_MAX; j++)
-			{
-				if(!entityList[i].inuse)
-				{
-					continue;
-				}
-				if(struct_collision(&struct_list[i], &entityList[i]))
-				{
-					entityList[i].position.x -= entityList[i].velocity.x;
-					entityList[i].position.y -= entityList[i].velocity.y;
-				}
-			}
-		}
-	}
-}
-*/
-
-
-void structure_select(int type)
-{
-	slog("structure select");
-	if(selected_struct)
-	{
-		entity_free(selected_struct);
-		selected_struct = NULL;
-		return;
-	}
-	if(type == struct_type::main_base01)
-	{
-		Sprite *struct_sprite = Sprite_Load(SPRITE_MAIN_BASE01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
-		selected_struct = struct_load(struct_sprite, 1000, 100, type);
-	}
-	if(type == struct_type::wall_01)
-	{
-		Sprite *struct_sprite = Sprite_Load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
-		selected_struct = struct_load(struct_sprite, 1000, 100, type);
-	}
-	if(type == struct_type::tower_01)
-	{
-		Sprite *struct_sprite = Sprite_Load(SPRITE_WALL01_FILEPATH, SPRITE_IMAGE_W, SPRITE_IMAGE_H, SPRITE_FRAME_W, SPRITE_FRAME_H);
-		selected_struct = struct_load(struct_sprite, 1000, 100, type);
-	}
-
-	selected_struct->boundBox.x = 0;
-	selected_struct->boundBox.y = 0;
-	selected_struct->boundBox.w = selected_struct->sprite->frameW;
-	selected_struct->boundBox.h = selected_struct->sprite->frameH;
-	selected_struct->update = update_selected_struct;
-	selected_struct->selected = true;
-
-	slog("finished selecting structure");
 }
 
 //puts structure into the world

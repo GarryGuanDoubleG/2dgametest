@@ -63,7 +63,7 @@ SDL_Rect New_SDL_Rect(int x, int y, int w, int h);
 #define Vec3dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y)
 #define Vec4dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y, c.w = a.w - b.w)
 
-#define Vec2dCopy(a,b)			(b.x = a.x, b.y = b.x)
+#define Vec2dCopy(a,b)			(b.x = a.x, b.y = a.y)
 #define Vec3dCopy(a,b)		(b.x = a.x, b.y = b.x, b.z = a.z)
 #define Vec4dCopy(a,b)		(b.x = a.x, b.y = b.x, b.z = a.z, , b.w = a.w)
 

@@ -45,7 +45,7 @@ void Player_Init(){
 	Sprite *player_sprite = Sprite_Load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
 	anim_current = WALK;
-	player = entity_load(player_sprite,pos, 100, 100, 0 );
+	player = entity_load(player_sprite,pos, 3500, 100, 0 );
 	slog("Player: X: %i Y: %i", player->position.x, player->position.y);
 
 	playerBody.image = player->sprite;
@@ -74,19 +74,34 @@ void Player_Load_from_Def(Dict *value)
 	Vec2d pos;
 	Vec2d offset;
 	int tile_index;
+	Tile start;
 
 	char * stored_value;
 
 	Player_Init();
 
-	stored_value = (char*) value->keyValue;
-	tile_index = atoi(stored_value);
-	
-	pos = tile_get_pos(tile_index);
-	offset.x = player->boundBox.x;
-	offset.y = player->boundBox.y;
+	if(value && value->keyValue)
+	{
+		stored_value = (char*) value->keyValue;
+		tile_index = atoi(stored_value);
+		pos = tile_get_pos(tile_index);
+			
+		offset.x = 10;
+		offset.y = 20;
 
-	Vec2dAdd(offset, pos, player->position);
+		Vec2dAdd(offset, pos, player->position);
+	}
+	else
+	{
+		start = tile_start();
+
+		pos.x = start.mBox.x;
+		pos.y = start.mBox.y;
+		player->position = pos;
+	}
+
+	Player_Update_Camera();
+
 }
 
 void Player_Draw_equip(){
@@ -159,7 +174,7 @@ int player_get_new_frame(int animation, int curr_frame, int fpl)
 
 void Player_Update(entity *self)
 {
-	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
+	Vec2d new_pos = {player->position.x + player->velocity.x, player->position.y + player->velocity.y};
 	int frame;
 	int fpl;
 	int animation;
@@ -272,11 +287,16 @@ void Player_Move(SDL_Event *e){
 					
 			particle_em_add(player->p_em, PARTICLE_SPELLCAST, p);
 			break;
+		case SDLK_e:
+			set_hud_state(HUD_state::main_menu);
+			in_build_mode_01 = Bool_False;
+			break;
 		case SDLK_i:
 			set_hud_state(HUD_state::inventory1);
 			break;
 		case SDLK_b:
-			in_build_mode_01 = set_hud_state(HUD_state::build1);
+			set_hud_state(HUD_state::build1);
+			in_build_mode_01 = Bool_True;
 			break;
 		case SDLK_v:
 			if(in_build_mode_01)

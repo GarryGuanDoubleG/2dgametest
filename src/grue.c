@@ -56,31 +56,24 @@ void grue_think(entity* self){
 		}
 	}
 
-	//setting which sprite to use depending on direction
-	/*
 	if(self->velocity.x != 0){
 		if(self->velocity.x >= 0){
-			self->frame_horizontal = 0;
-			self->frame_vertical = 0;
+			self->frame = 0;;
 		}
 		else
 		{
-			self->frame_horizontal = 0;
-			self->frame_vertical = 1;
+			self->frame = 2;
 		}
 	}
 	else{
 		if(self->velocity.y >= 0){
-			self->frame_horizontal = 1;
-			self->frame_vertical = 1;
+			self->frame = 1;
 		}
 		else
 		{
-			self->frame_horizontal = 1;
-			self->frame_vertical = 0;
+			self->frame = 3;
 		}		
 	}
-	*/
 }
 
 void grue_update(entity *self){
@@ -88,7 +81,8 @@ void grue_update(entity *self){
 	entity_draw(self);
 }
 
-void grue_touch(entity *self, entity *other){
+void grue_touch(entity *self, entity *other)
+{
 
 }
 
@@ -104,7 +98,7 @@ entity * grue_spawn(){
 	slog("Timer: %i", G_MONSTER_SPAWN_TIMER);
 	slog("Monster Spawn Timer mod MonsterSpawn Timer is %i " , (G_MONSTER_SPAWN_TIMER % (GRUE_TIMER)));
 	sprite_grue = Sprite_Load(sprite_grue_filepath, grue_imageW, grue_imageH, grue_frameW, grue_frameH);
-	sprite_grue->fpl = 1;//2 frames per line
+	sprite_grue->fpl = 2;//2 frames per line
 	ent_grue = entity_load(sprite_grue, pos, 150, 25, STATE_PATROL);
 
 	if(!ent_grue){

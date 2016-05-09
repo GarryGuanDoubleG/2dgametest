@@ -64,9 +64,12 @@ int main(int argc, char *argv[])
 
 	Draw_All();
 
-	/*monster_spawn(Monster::grue);
+	monster_spawn(Monster::grue);
+	
 	monster_spawn(Monster::spider01);
+	
 	monster_spawn(Monster::mino);		
+	/*
 	monster_spawn(Monster::orc);	
 	support_spawn(Support::sara);	
 	support_spawn(Support::healer);	
@@ -102,7 +105,8 @@ int main(int argc, char *argv[])
 		Level_Save();
 		done = 1;
 	}
-		
+
+	NextFrame();
 	SDL_RenderPresent(Graphics_Get_Renderer());
 
 	last_time = current_time;
@@ -156,6 +160,4 @@ void Draw_All()
 	Player_Draw();
 	Draw_Mouse();
 	particle_em_draw_all();
-
-	NextFrame();
 }

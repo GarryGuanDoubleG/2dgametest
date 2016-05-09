@@ -8,6 +8,15 @@
 #include "structure_define.h"
 #include "camera.h"
 
+typedef enum
+{
+	struct_wall = 0,
+}structure_types;
+
+typedef entity cStruct;
+
+cStruct *structure_spawn(int type);
+
 void structure_select(int type);
 //void structure_update_all();
 int structure_place();

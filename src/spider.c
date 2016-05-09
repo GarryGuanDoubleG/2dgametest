@@ -89,29 +89,37 @@ void spider_think(entity *self)
 	}
 
 	//setting which sprite to use depending on direction
-	/*if(self->velocity.x != 0){
-		if(self->velocity.x >= 0){
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-			self->frame_vertical = 3;//hard coded based on sprite
+	if(self->velocity.x != 0){
+		if(self->velocity.x >= 0)
+		{
+			if((self->frame / self->sprite->fpl) != 3)
+				self->frame = 30;
+			else
+				self->frame++;
 		}
 		else
 		{
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-			self->frame_vertical = 1;
+			if((self->frame / self->sprite->fpl) != 1)
+				self->frame = 10;
+			else
+				self->frame++;
 		}
 	}
 	else{
 		if(self->velocity.y >= 0){
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-			self->frame_vertical = 0;
+			if((self->frame / self->sprite->fpl) != 0)
+				self->frame = 0;
+			else
+				self->frame++;
 		}
 		else
 		{
-			self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-			self->frame_vertical = 2;
+			if((self->frame / self->sprite->fpl) != 0)
+				self->frame = 2;
+			else
+				self->frame++;
 		}		
 	}
-	*/
 }
 
 void spider_onDeath(entity *self)
@@ -143,7 +151,7 @@ entity * spider01_spawn()
 
 	slog("spider: x%f y%f", pos.x, pos.y);
 	sprite_spider01 = Sprite_Load(SPRITE_SPIDER01_FILEPATH, SPIDER01_IMAGEW, SPIDER01_IMAGEH, SPIDER01_FRAMEW, SPIDER01_FRAMEH);
-	sprite_spider01->fpl = 10;//2 frames per line
+	sprite_spider01->fpl = 10;
 	ent_spider01 = entity_load(sprite_spider01, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_spider01){
@@ -152,7 +160,6 @@ entity * spider01_spawn()
 	}
 	//each frame is a single direction
 	ent_spider01->frame= 0;
-
 	ent_spider01->velocity = vel;
 	ent_spider01->think = spider_think;
 	ent_spider01->nextThink = 1;

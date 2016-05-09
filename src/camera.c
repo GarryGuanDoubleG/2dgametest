@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "types.h"
 static SDL_Rect G_Camera = {0,0,1280,720};
+static Vec2d G_Offset;
 
 void Camera_Init(Vec2d pos, int width, int height)
 {
@@ -10,11 +11,16 @@ void Camera_Init(Vec2d pos, int width, int height)
 	G_Camera.h = height;
 }
 
+void Camera_Set_Editor_Offset(Vec2d offset)
+{
+	Vec2dCopy(offset, G_Offset);
+}
+
 Vec2d Camera_Get_Editor_Offset()
 {
 	Vec2d offset;
 
-	Vec2dSet(offset, 320, 180);
+	Vec2dCopy(G_Offset, offset);
 	return offset;
 }
 

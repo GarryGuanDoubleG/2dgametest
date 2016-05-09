@@ -10,7 +10,7 @@ void Camera_Init(Vec2d pos, int width, int height);
  */
 SDL_Rect Camera_Get_Camera();
 
-
+void Camera_Set_Editor_Offset(Vec2d offset);
 Vec2d Camera_Get_Editor_Offset();
 /**
  * @brief	Get's the position of the active camera.

@@ -15,9 +15,14 @@ const int TOTAL_TILES = TILE_ROWS * TILE_COLUMNS ;
 Tile *tile_list = NULL;
 Destructable_Tile *dest_tile_list = NULL;
 //array of tile scores for procedural forest gen
+
+//have file in / o
+// should refactor to use file input and output and store in ghash
 int * tile_list_scores = NULL; 
 Sprite * tile_sprite_grass = NULL;
 Sprite * tile_sprite_tree = NULL;
+Sprite * tile_sprite_bush = NULL;
+Sprite * tile_sprite_water = NULL;
 int G_Editor_Mode = Bool_False;
 
 void tile_editor_mode_set();
@@ -45,6 +50,8 @@ void tile_init_system(int mode)
 
 	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
 	tile_sprite_tree = tile_load(PATH_TILE_TREE);
+	tile_sprite_bush = tile_load(PATH_TILE_BUSH);
+	tile_sprite_water = tile_load(PATH_TILE_WATER);
 
 	if(mode == 1)
 	{
@@ -228,6 +235,7 @@ void tile_forest_gen(int start)
 * drunken man's walk moves in random directions towards the center
 * each tile the man walks on becomes a road tile
 */
+
 void tile_forest_gen()
 {
 	int start;
@@ -357,6 +365,14 @@ int tile_get_type(int index)
 	return dest_tile_list[index].mType;
 }
 
+void tile_editor_set_type(int tile_index, int new_type)
+{
+	if(tile_index < TOTAL_TILES && tile_index >= 0 )
+	{
+		tile_list[tile_index].mType = new_type;
+		dest_tile_list[tile_index].mType = new_type;
+	}
+}
 /**
 * @brief calculates the distance between tiles by counting how many steps to move before one reaches the other 
 * @param indexes of both tiles in tile_list and calculate the tiles in between
@@ -413,20 +429,23 @@ void tile_draw(){
 	int i;
 
 	Vec2d draw_pos;
+	Vec2d cam_pos;
 	Vec2d editor_offset;
 
 	SDL_Rect camera;
+	SDL_Rect tile_box;
 	SDL_Rect dest;
 
 	SDL_Renderer * renderer = Graphics_Get_Renderer();
 	
-	camera = Camera_Get_Camera();
 	editor_offset = Camera_Get_Editor_Offset();
+	cam_pos = Camera_GetPosition();
+	camera = Camera_Get_Camera();	
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
-		Tile * tile = &tile_list[i];
-		
+		Tile * tile = &tile_list[i];		
+
 		if(tile == NULL){
 			slog("Tile is null while rendering");
 			return ;
@@ -434,19 +453,29 @@ void tile_draw(){
 
 		Vec2dSet(draw_pos, tile->mBox.x, tile->mBox.y);
 		
-		if(rect_collide(camera, tile->mBox))
+		if(G_Editor_Mode == Bool_True)
+		{	
+			tile_box = New_SDL_Rect(tile->mBox.x + editor_offset.x, 
+							 tile->mBox.y + editor_offset.y, 
+							 TILE_WIDTH, TILE_HEIGHT);
+			Vec2dAdd(draw_pos, editor_offset, draw_pos);
+			Vec2dAdd(draw_pos, editor_offset, draw_pos);
+		}
+		else
 		{
-			if(G_Editor_Mode == Bool_True)
-			{
-				Vec2dAdd(draw_pos, editor_offset, draw_pos);
-			}
-
+			tile_box = New_SDL_Rect(tile->mBox.x, tile->mBox.y,
+								    TILE_WIDTH,   TILE_HEIGHT);
+		}
+		if(rect_collide(camera, tile_box))
+		{
 			Sprite_Draw(tile_sprite_grass, 0, renderer, draw_pos);
 			//needs to be more readable
 			if(tile->mType == TILE_TREE)
-			{
-				Sprite_Draw(tile_sprite_tree, 0, renderer, draw_pos); 
-			}
+				Sprite_Draw(tile_sprite_tree, 0, renderer, draw_pos); 			
+			if(tile->mType == TILE_WATER)
+				Sprite_Draw(tile_sprite_water, 0, renderer, draw_pos);
+			if(tile->mType == TILE_BUSH)
+				Sprite_Draw(tile_sprite_bush, 0, renderer, draw_pos);
 		}
 	}
 }
@@ -477,9 +506,8 @@ Tile tile_start()
 	int i;
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
-		if(tile_list[i].mType == TILE_ROAD)
-		{
-			
+		if(tile_list[i].mType == TILE_ROAD || tile_list[i].mType == TILE_GRASS )
+		{			
 			if(rand() % 20 <= 1 && i != 0)
 			{
 				return tile_list[i];
@@ -511,10 +539,10 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 
 		if(rect_collide(player_pos, tile_bound))
 		{
-			if(dest_tile_list[i].mType == TILE_TREE)
+			if(tile_list[i].mType != TILE_GRASS && tile_list[i].mType != TILE_ROAD)
 			{
 				return true;
-			}
+			}		
 		}
 	}
 	return false;
@@ -610,6 +638,11 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 		if( dest_tile_list[tree_index].hits == 0)
 		{
 			dest_tile_list[tree_index].mType = NULL;
+			if(tile_list[tree_index].mType == TILE_TREE)
+			{
+				tile_list[tree_index].mType = TILE_ROAD;
+			}
+
 			inventory_add("wood");
 		}
 	}

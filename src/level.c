@@ -17,8 +17,10 @@ GHashTable *tile_pos_hash;
 
 int G_Selected_Type = -1;
 int G_Store_Pos = Bool_True;
+int count = 0;
 
-void Level_Editor_Move(SDL_Event *e);
+
+void Level_Editor_Input(SDL_Event *e);
 
 void Level_Set_Select(gpointer key, gpointer tile_pos, gpointer data)
 {
@@ -35,7 +37,7 @@ void Level_Set_Select(gpointer key, gpointer tile_pos, gpointer data)
 
 	tool_pos = (Vec2d *) tile_pos;
 	click_pos = (Vec2d *) data;
-
+	
 	click_box = New_SDL_Rect(click_pos->x, click_pos->y, 16, 16);
 	tool_box = New_SDL_Rect(tool_pos->x, tool_pos->y, TILE_WIDTH, TILE_HEIGHT);
 
@@ -44,17 +46,40 @@ void Level_Set_Select(gpointer key, gpointer tile_pos, gpointer data)
 		G_Selected_Type = atoi( (char *)g_hash_table_lookup(tile_type, key));
 	}
 }
+
 void Level_Tool_Select()
 {
 	Vec2d click_pos;
 	Vec2d tile_pos;
+	int i;
 
 	click_pos = G_Mouse_Pos;
-	Vec2dSet(click_pos, click_pos.x + 160, click_pos.y + 90);
+	Vec2dAdd(click_pos, Camera_Get_Editor_Offset(), click_pos);
 
 	g_hash_table_foreach(tile_pos_hash, Level_Set_Select, &click_pos);
-}
 
+	click_pos = G_Mouse_Pos;
+	if( G_Mouse_Pos.x > 50 && click_pos.x < 256
+		&& click_pos.y > 250 && click_pos.y < 450)
+	{
+		slog("forest gen");
+		G_Selected_Type = -1;
+
+		for(i = 0; i < TOTAL_TILES; i++)
+		{
+			tile_list[i].mType = TILE_TREE;
+			dest_tile_list[i].mType = TILE_TREE;
+		}
+	}
+
+	if( G_Mouse_Pos.x > 50 && click_pos.x < 256
+		&& click_pos.y > 480 && click_pos.y < 680)
+	{
+		slog("path gen");
+		G_Selected_Type = -1;
+		tile_forest_gen();
+	}
+}
 
 void Level_Editor_Load_Assets()
 {
@@ -105,12 +130,12 @@ void Level_Editor_Init()
 	Vec2d em_cam_size;
 	Vec2d em_cam_offset;
 
-	int cam_width = (SCREEN_WIDTH * 3) / 4;
-	int cam_height = (SCREEN_HEIGHT * 3) / 4;
+	int cam_width = 1080;
+	int cam_height = 640;
 
 	//offset camera to left
-	int cam_pos_x = ((SCREEN_WIDTH - cam_width) / 2 );
-	int cam_pos_y = ((SCREEN_HEIGHT - cam_height) /2 );
+	int cam_pos_x = 300;
+	int cam_pos_y = 50;
 
 	Vec2dSet(em_cam_size, cam_width, cam_height);
 	Vec2dSet(em_cam_offset, cam_pos_x, cam_pos_y);
@@ -118,6 +143,7 @@ void Level_Editor_Init()
 
 	Camera_SetSize(em_cam_size);
 	Camera_SetPosition(em_cam_offset);
+	Camera_Set_Editor_Offset(em_cam_offset);
 
 	tile_init_system(MODE_EDITOR);
 
@@ -143,6 +169,7 @@ void Level_Tile_Tools_Draw(void *key, gpointer sprite, gpointer pos)
 {
 	Vec2d *curr_pos;
 	Vec2d *next_pos;
+	Vec2d *tool_pos;
 
 	Vec2d draw_pos;
 	Vec2d camera_pos;
@@ -166,13 +193,34 @@ void Level_Tile_Tools_Draw(void *key, gpointer sprite, gpointer pos)
 	Vec2dSet(draw_pos, curr_pos->x, curr_pos->y);
 	Vec2dAdd(draw_pos, camera_pos, draw_pos);
 
+	if(type < 0)
+	{
+		if(!strcmp(tile_key, "forest_gen"))
+		{			
+			draw_pos.x = 330 + camera_pos.x;
+			draw_pos.y = 300 + camera_pos.y;
+
+			Vec2dSubtract(draw_pos, Camera_Get_Editor_Offset(), draw_pos);
+		}
+		else
+		{
+			draw_pos.x = 330 + camera_pos.x;
+			draw_pos.y = 500 + camera_pos.y;;
+
+			Vec2dSubtract(draw_pos, Camera_Get_Editor_Offset(), draw_pos);
+		}
+		Sprite_Draw((Sprite *)sprite, 0, Graphics_Get_Renderer(), draw_pos);
+		return;
+	}
+
 	if(G_Store_Pos == Bool_True)
 	{
-		Vec2d *tile_pos = (Vec2d *)malloc(sizeof(Vec2d));
-		tile_pos->x = draw_pos.x;
-		tile_pos->y = draw_pos.y;
+		tool_pos = (Vec2d *)malloc(sizeof(Vec2d));
 
-		g_hash_table_insert(tile_pos_hash, g_strdup( tile_key ), tile_pos);
+		tool_pos->x = draw_pos.x;
+		tool_pos->y = draw_pos.y;
+
+		g_hash_table_insert(tile_pos_hash, g_strdup( tile_key ), tool_pos);
 	}
 
 	if(G_Selected_Type != type)
@@ -201,12 +249,14 @@ void Level_Editor_Draw()
 	Vec2d asset_draw_pos;
 
 	Vec2dSet(asset_draw_pos, 0, 0);
+
 	//clear screen
 	ResetBuffer();
     SDL_RenderClear(Graphics_Get_Renderer());//clear screen
 
+	//draw tile assets
 	g_hash_table_foreach(tile_hash, Level_Tile_Tools_Draw, &asset_draw_pos);
-
+	//stored tile asset positions
 	G_Store_Pos = Bool_False;
 
 	tile_draw();
@@ -238,13 +288,15 @@ void Level_Editor_Mode()
 			}
 			else
 			{
-				Level_Editor_Move(&e);
+				Level_Editor_Input(&e);
 			}
 		}
 
 		if(keys[SDL_SCANCODE_ESCAPE])
 		{
 			Level_Save();
+			SDL_PumpEvents();
+			SDL_RenderClear(Graphics_Get_Renderer());
 			done = 1;
 		}
 	}while(!done);
@@ -296,8 +348,10 @@ void Level_Load(int load)
 	//player data should be stored in a hash
 	//but only starting tile is being saved;
 	value = dict_get_hash_value(last_save, "PLAYER_TILE");
-	if(!value) return;
-	Player_Load_from_Def(value); //creates player entity
+	if(!value)
+		Player_Load_from_Def(NULL);
+	 else
+		Player_Load_from_Def(value); //creates player entity
 }
 
 void Level_Save()
@@ -343,26 +397,45 @@ void Level_Save()
 	save_dict_as_json(save, "save.def");
 }
 
-void Level_Editor_Move(SDL_Event *e)
+void Level_Editor_Input(SDL_Event *e)
 {
-	Vec2d move_cam;
+	int tile_index;
+
+	Vec2d move_cam_offset;
 	Vec2d new_cam_pos;
 
-	Vec2dSet(move_cam, 0, 0);
+	Vec2d tile_pos;
+	Vec2d tile_map_pos;
+	Vec2d mouse_pos;
+
+	Vec2d camera;
+	Vec2d cam_offset;
+
+	SDL_Rect mouse_bounds;
+	SDL_Rect tile_map_bounds;
+	SDL_Rect camera_bounds;
+
+	Vec2dSet(move_cam_offset, 0, 0);
+
+	camera = Camera_GetPosition();
+	cam_offset = Camera_Get_Editor_Offset();
+	camera_bounds = Camera_Get_Camera();
+
+	Vec2dAdd(cam_offset, camera, tile_map_pos);
 
 	switch( e->key.keysym.sym )
     {
         case SDLK_UP:
-			move_cam.y -= TILE_HEIGHT;
+			move_cam_offset.y -= TILE_HEIGHT;
 			break;
 		case SDLK_DOWN:
-			move_cam.y += TILE_HEIGHT;
+			move_cam_offset.y += TILE_HEIGHT;
 			break;
 		case SDLK_RIGHT:
-			move_cam.x += TILE_WIDTH;
+			move_cam_offset.x += TILE_WIDTH;
 			break;
 		case SDLK_LEFT:
-			move_cam.x -= TILE_WIDTH;
+			move_cam_offset.x -= TILE_WIDTH;
 			break;
 		default:
 			break;
@@ -371,10 +444,34 @@ void Level_Editor_Move(SDL_Event *e)
 	if(e->type == SDL_MOUSEBUTTONDOWN)
 	{
 		G_Mouse_Pos = Get_Mouse_Pos();
+		
+		mouse_pos = G_Mouse_Pos;
+		Vec2dAdd(mouse_pos, camera, mouse_pos);
+		Vec2dSubtract(mouse_pos, cam_offset, mouse_pos);
+		mouse_bounds = New_SDL_Rect(mouse_pos.x, mouse_pos.y, 16, 16);
+
+		slog("mouse pos %f %f", mouse_pos.x, mouse_pos.y);
+		slog("cam x y %f %f", camera.x, camera.y);
+
+		tile_map_bounds = New_SDL_Rect(camera.x, camera.y, camera_bounds.w, camera_bounds.h);
+
+		//need to edit for readability
+		if(rect_collide(mouse_bounds, tile_map_bounds) && G_Selected_Type >= 0 )
+		{	
+			Vec2dSubtract(mouse_pos, cam_offset, mouse_pos);
+			
+			mouse_bounds = New_SDL_Rect(0, 0, 16, 16);
+			//gets tile number based on original absolute positions not relative to camera
+			//subtract by offset
+			tile_index = tile_get_tile_number(mouse_pos, mouse_bounds);
+			tile_editor_set_type(tile_index, G_Selected_Type);
+			slog("clicked tile index %i", tile_index);
+		}
+
 		Level_Tool_Select();
 	}
 
-	Vec2dAdd(move_cam, Camera_Get_Camera(), new_cam_pos);
+	Vec2dAdd(move_cam_offset, Camera_Get_Camera(), new_cam_pos);
 
 	if(new_cam_pos.x < G_em_camera_bound.x || 
 	   new_cam_pos.y < G_em_camera_bound.y)

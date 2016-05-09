@@ -59,6 +59,9 @@ void tile_load_from_def(int *tile_map);
 * @param cstring filepath of tile
 */
 Sprite * tile_load(char *filename);
+
+void tile_forest_gen();
+
 /**
 * @brief sets the type and mbox of all tiles
 */
@@ -88,6 +91,8 @@ Tile tile_start();
 * @return int type of tile
 */
 int tile_get_type(int index);
+
+void tile_editor_set_type(int tile_index, int new_type);
 /*
 * @brief gets the tile index based on entity position and bouding box
 * @param position of entity to match with tile position. Bounding box used for center postion of ent

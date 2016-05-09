@@ -1,0 +1,59 @@
+{
+	"terrain":
+	{
+		"water_pit":
+		{
+			"image": "editor/Terrain/water_pit.png",
+			"imageW": 83,
+			"imageH": 83,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 3
+		},
+		"tree":
+		{
+			"image": "editor/Terrain/terrain_atlas_tree.png",
+			"imageW": 97,
+			"imageH": 126,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 1
+		},
+		"bush":
+		{
+			"image": "editor/Terrain/bush.png",
+			"imageW": 96,
+			"imageH": 83,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 4
+		},
+		"grass":
+		{
+			"image": "editor/Terrain/grass01.png",
+			"imageW": 32,
+			"imageH": 32,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 0
+		},
+		"forest_gen":
+		{
+			"image": "editor/forest_gen.png",
+			"imageW": 419,
+			"imageH": 84,
+			"frameW": 256,
+			"frameH": 200,
+			"type": -1
+		},
+		"path_gen":
+		{
+			"image": "editor/path_gen.png",
+			"imageW": 384,
+			"imageH": 84,
+			"frameW": 256,
+			"frameH": 200,
+			"type": -1
+		}
+	}
+}

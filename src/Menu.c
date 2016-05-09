@@ -243,6 +243,7 @@ void Menu_Main_Draw()
 							break;
 						case 2:
 							Level_Editor_Mode();
+							done = 1;
 							break;
 						case 3:
 							exit(1);
@@ -252,12 +253,14 @@ void Menu_Main_Draw()
 					}
 			}
 		}
+		
 		keys = SDL_GetKeyboardState(NULL);
 		
 		if(keys[SDL_SCANCODE_ESCAPE])
 		{
 			exit(1);
 		}
+		
 	}
 	while(!done);		
 
