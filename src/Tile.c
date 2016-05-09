@@ -610,6 +610,11 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 		if( dest_tile_list[tree_index].hits == 0)
 		{
 			dest_tile_list[tree_index].mType = NULL;
+			if(tile_list[tree_index].mType == TILE_TREE)
+			{
+				tile_list[tree_index].mType = TILE_ROAD;
+			}
+
 			inventory_add("wood");
 		}
 	}

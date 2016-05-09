@@ -1,0 +1,60 @@
+{
+	"terrain":
+	{
+		"water_pit":
+		{
+			"image": "editor/Terrain/water_pit.png",
+			"imageW": 83,
+			"imageH": 83,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 3
+		},
+		"tree":
+		{
+			"image": "editor/Terrain/terrain_atlas_tree.png",
+			"imageW": 97,
+			"imageH": 126,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 1
+		},
+		"bush":
+		{
+			"image": "editor/Terrain/bush.png",
+			"imageW": 96,
+			"imageH": 83,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 4
+		},
+		"grass":
+		{
+			"image": "editor/Terrain/grass01.png",
+			"imageW": 32,
+			"imageH": 32,
+			"frameW": 128,
+			"frameH": 128,
+			"type": 0
+		}
+	},
+	"entity":
+	{
+		"grue":
+		{
+			"image": "editor/Monster/Grue.png",
+			"imageW": 60,
+			"imageH": 71,
+			"frameW": 96,
+			"frameH": 96
+		},
+		"spider":
+		{
+			"image": "editor/Monster/spider.png",
+			"imageW": 64,
+			"imageH": 57,
+			"frameW": 64,
+			"frameH": 57
+		}
+	}
+}

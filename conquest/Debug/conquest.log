@@ -1,4 +1,4 @@
-﻿Build started 5/8/2016 11:40:17 PM.
+﻿Build started 5/9/2016 12:52:24 AM.
      1>Project "C:\Users\Garry Guan\Documents\Visual Studio 2010\Projects\Conquest-Rule-or-Die\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\conquest.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -14,4 +14,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.06
+Time Elapsed 00:00:00.14

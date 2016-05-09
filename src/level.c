@@ -347,8 +347,15 @@ void Level_Editor_Move(SDL_Event *e)
 {
 	Vec2d move_cam;
 	Vec2d new_cam_pos;
+	Vec2d tile_map_pos;
+	Vec2d camera;
+	Vec2d cam_offset;
 
 	Vec2dSet(move_cam, 0, 0);
+	camera = Camera_GetPosition();
+	cam_offset = Camera_Get_Editor_Offset();
+
+	Vec2dAdd(cam_offset, camera, tile_map_pos);
 
 	switch( e->key.keysym.sym )
     {
@@ -371,6 +378,13 @@ void Level_Editor_Move(SDL_Event *e)
 	if(e->type == SDL_MOUSEBUTTONDOWN)
 	{
 		G_Mouse_Pos = Get_Mouse_Pos();
+		
+		if(G_Mouse_Pos.x > camera.x 
+		   && G_Mouse_Pos.y > camera.y)
+		{
+			slog("tile_map");
+		}
+
 		Level_Tool_Select();
 	}
 
