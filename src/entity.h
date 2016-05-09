@@ -26,6 +26,18 @@
 * @brief structure to store intial values and functions of anything that needs to think in the game
 * contains values for AI, player interaction, sprite for drawing, and values for interacting with environment
 */
+
+typedef enum 
+{
+	PLAYER = 0,
+	SPIDER = 1,
+	GRUE   = 2,
+	MINO   = 3,
+
+	//structures
+	WALL   = 100,
+}ENTITY_TYPE;
+
 typedef struct Entity_S
 {
 	int inuse; /**< used for memory allocation if not inuse*/

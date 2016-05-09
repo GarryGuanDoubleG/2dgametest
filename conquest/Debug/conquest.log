@@ -1,65 +1,46 @@
-﻿Build started 5/9/2016 7:47:54 AM.
+﻿Build started 5/9/2016 8:52:49 AM.
      1>Project "C:\Users\Garry\documents\visual studio 2010\Projects\conquest\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\conquest.unsuccessfulbuild".
        ClCompile:
-         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\structures.c
-         structures.c
+         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\level.c
+         level.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(137): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
      1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
                  c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
      1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
                  c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
      1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
                  c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(5): warning C4091: 'extern ' : ignored on left of 'Mouse' when no variable is declared
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(89): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(89): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(105): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(106): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(83): warning C4715: 'structure_spawn' : not all control paths return a value
-       Link:
-         g:\Visual Studio 2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Garry\documents\visual studio 2010\Projects\conquest\Debug\conquest.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib "glib-2.0.lib" jansson_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\conquest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Garry\documents\visual studio 2010\Projects\conquest\Debug\conquest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Garry\documents\visual studio 2010\Projects\conquest\Debug\conquest.lib" /MACHINE:X86 Debug\archer.obj
-         Debug\armor.obj
-         Debug\audio.obj
-         Debug\camera.obj
-         Debug\dict.obj
-         Debug\entity.obj
-         Debug\game.obj
-         Debug\graphics.obj
-         Debug\grue.obj
-         Debug\HUD.obj
-         Debug\inventory.obj
-         Debug\items.obj
-         Debug\json_parse.obj
-         Debug\level.obj
-         Debug\load.obj
-         Debug\Menu.obj
-         Debug\minotaur.obj
-         Debug\monster_ai.obj
-         Debug\music.obj
-         Debug\orc.obj
-         Debug\particle_emitter.obj
-         Debug\path_find.obj
-         Debug\player.obj
-         Debug\sara.obj
-         Debug\save.obj
-         Debug\simple_logger.obj
-         Debug\spider.obj
-         Debug\sprite.obj
-         Debug\structures.obj
-         Debug\support_ai.obj
-         Debug\supp_angel.obj
-         Debug\Tile.obj
-         Debug\types.obj
-         Debug\vector.obj
-         Debug\weapon.obj
-         Debug\window.obj
-         LINK : C:\Users\Garry\documents\visual studio 2010\Projects\conquest\Debug\conquest.exe not found or not built by the last incremental link; performing full link
-     1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>player.obj : error LNK2019: unresolved external symbol "void __cdecl structure_select(int)" (?structure_select@@YAXH@Z) referenced in function "void __cdecl Player_Move(union SDL_Event *)" (?Player_Move@@YAXPATSDL_Event@@@Z)
-     1>C:\Users\Garry\documents\visual studio 2010\Projects\conquest\Debug\conquest.exe : fatal error LNK1120: 1 unresolved externals
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(41): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(41): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(32): warning C4101: 'tile' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(53): warning C4101: 'tile_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(88): warning C4101: 'j' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(140): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(140): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(141): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(141): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(378): error C2065: 'entity_list' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(408): error C2440: '=' : cannot convert from 'entity' to 'entity *'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(410): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'float' to 'gpointer'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(411): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'float' to 'gpointer'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(412): error C3861: 'Dict_hash_Insert': identifier not found
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(413): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'int' to 'gpointer'
+                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(414): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'int' to 'gpointer'
+                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(416): error C3861: 'iota': identifier not found
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(474): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(474): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(479): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(479): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
      1>Done Building Project "C:\Users\Garry\documents\visual studio 2010\Projects\conquest\conquest\conquest.vcxproj" (build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.81
+Time Elapsed 00:00:00.73

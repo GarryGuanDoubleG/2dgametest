@@ -86,7 +86,7 @@ entity* entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state
 	{
 		 if(entityList[i].inuse == false)
 		 {
-			 entity_count++;
+			 entity_count++;			
 			 entityList[i].inuse = true;
 			 entityList[i].sprite = sprite;
 			 entityList[i].position = pos;
@@ -95,6 +95,7 @@ entity* entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state
 			 entityList[i].stamina = stamina;
 			 entityList[i].state = state;
 			 entityList[i].followPath = ent_follow_path;
+			 entityList[i].id = i;
 			 entityList[i].path = NULL;
 			 return &entityList[i];
 			 break;

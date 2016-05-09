@@ -313,8 +313,6 @@ void Level_Load(int load)
 	Dict * last_save;
 	Dict * value;
 
-	int player_tile;
-
 	int *tile_map;
 	int tile_row;
 	int tile_col;
@@ -356,6 +354,8 @@ void Level_Load(int load)
 
 void Level_Save()
 {
+	int i;
+
 	int tile_count;
 	int *tile_map;
 
@@ -364,12 +364,18 @@ void Level_Save()
 
 	int player_tile;
 	entity * ent_player;
+	entity * ent;
 
 	Dict *dict_tile_map;
+	Dict *entity_save_hash;
+	Dict *value;
 	Dict *save;
 
 	save = Dict_New_Hash();
+	entity_save_hash = Dict_New_Hash();
+	value = Dict_New_Hash();
 	if(!save) return;
+	if(!entity_list) return;
 
 	//save player
 	ent_player = Entity_Get_Player();
@@ -391,6 +397,23 @@ void Level_Save()
 		Dict_Hash_Insert(save, "TILE_ROWS", Dict_New_int(row));
 		Dict_Hash_Insert(save, "TILE_COLUMNS", Dict_New_int(col));
 		Dict_Hash_Insert(save, "TILE_MAP", dict_tile_map);
+	}
+
+	for(i = 0; i < ENTITY_MAX; i++)
+	{
+		if(!entityList[i].inuse)
+		{
+			continue;
+		}
+		ent = entityList[i];
+
+		Dict_Hash_Insert(value, "position_x", Dict_New_float(ent->position.x));
+		Dict_Hash_Insert(value, "position_y", ent->position.y);
+		Dict_hash_Insert(value, "id", ent->id);
+		Dict_Hash_Insert(value, "health", ent->health);
+		Dict_Hash_Insert(value, "type", ent->type);
+
+		Dict_Hash_Insert(entity_save_hash, iota(ent->id), value);
 	}
 
 	//save

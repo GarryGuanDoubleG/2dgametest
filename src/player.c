@@ -301,9 +301,10 @@ void Player_Move(SDL_Event *e){
 		case SDLK_v:
 			if(in_build_mode_01)
 			{
-				structure_select(struct_type::main_base01);
-				selecting_struct =!selecting_struct;
+				structure_spawn( ENTITY_TYPE::WALL );
+				in_build_mode_01 = Bool_False;
 			}
+			break;
 		case SDLK_f:
 			slog("Press F");
 			if(anim_current != SLASH && Player_Tree_Collision())

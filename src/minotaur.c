@@ -151,6 +151,7 @@ entity * mino_spawn()
 	ent_mino->state = STATE_PATROL;
 	ent_mino->boundBox = boundBox;
 	ent_mino->aggro_range = SPIDER01_AGGRO_RANGE;//10 tiles
+	ent_mino->type = ENTITY_TYPE::GRUE;
 
 	return ent_mino;
 }

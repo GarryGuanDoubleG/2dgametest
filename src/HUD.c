@@ -4,6 +4,7 @@ Sprite * HUD_bar;
 Sprite * HUD_menu;
 Sprite * HUD_item_bag;
 Sprite * HUD_axe;
+Sprite * HUD_wall_icon;
 
 static HUD_state hud_state_curr;
 
@@ -16,6 +17,7 @@ void hud_init()
 	HUD_menu = Sprite_Load(HUD_MENU_GRID_PATH, HUD_MENU_IMG_W, HUD_MENU_IMG_H, HUD_MENU_FRAME_W, HUD_MENU_FRAME_H);
 	HUD_item_bag = Sprite_Load(HUD_ITEM_BAG_PATH, HUD_ITEM_BAG_IMG_W, HUD_ITEM_BAG_IMG_H, HUD_ITEM_BAG_FRAME_W, HUD_ITEM_BAG_FRAME_H);
 	HUD_axe = Sprite_Load(HUD_AXE_PATH, HUD_AXE_IMG_W, HUD_AXE_IMG_H, HUD_AXE_FRAME_W, HUD_AXE_FRAME_H);
+	HUD_wall_icon = Sprite_Load("images/HUD/wall_icon.jpg", 173, 203, 80, 69);
 }
 
 void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float max_mana)
@@ -104,6 +106,16 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 
 			Sprite_Draw(inv_items[i].icon, 0, Graphics_Get_Renderer(), draw_pos);
 		}
+	}
+	else if(hud_state_curr == HUD_state::build1)
+	{
+		Vec2d draw_pos;
+		int draw_x = HUD_GRID_OFFSET_X + HUD_MENU_DRAW_X + camera.x;
+		int draw_y = HUD_GRID_OFFSET_Y + HUD_MENU_DRAW_Y + camera.y;
+
+		Vec2dSet(draw_pos, draw_x, draw_y);
+
+		Sprite_Draw(HUD_wall_icon, 0, Graphics_Get_Renderer(), draw_pos);
 	}
 	
 }

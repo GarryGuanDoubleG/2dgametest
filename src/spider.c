@@ -171,5 +171,6 @@ entity * spider01_spawn()
 	ent_spider01->boundBox = boundBox;
 	ent_spider01->aggro_range = SPIDER01_AGGRO_RANGE;//10 tiles
 
+	ent_spider01->type = ENTITY_TYPE::SPIDER;
 	return ent_spider01;
 }

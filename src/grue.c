@@ -101,6 +101,7 @@ entity * grue_spawn(){
 	sprite_grue->fpl = 2;//2 frames per line
 	ent_grue = entity_load(sprite_grue, pos, 150, 25, STATE_PATROL);
 
+
 	if(!ent_grue){
 		slog("Could not spawn GRUE");
 		return NULL;
@@ -115,6 +116,8 @@ entity * grue_spawn(){
 	ent_grue->update = grue_update;
 	ent_grue->state = STATE_PATROL;
 	ent_grue->boundBox = boundBox;
+
+	ent_grue->type = ENTITY_TYPE::GRUE;
 
 	return ent_grue;
 }

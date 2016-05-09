@@ -34,6 +34,13 @@ Vec2d StructGetBuildPos()
 
 void struct_touch(entity *self, entity *other)
 {
+	Vec2d new_pos;
+	Vec2d neg_vel;
+
+	VectorNegate2d(other->velocity, neg_vel);
+
+	Vec2dAdd(other->position, neg_vel, other->position);
+
 	Vec2dSet(other->velocity, 0, 0);
 }
 
@@ -60,10 +67,10 @@ entity *struct_wall_spawn()
 	build_pos = tile_get_pos(build_tile);
 
 	sprite = Sprite_Load("images/structures/wall_01.png", 66, 160, 100, 120);
-	sprite->fpl = 0;
+	sprite->fpl = 1;
 
 	wall = entity_load(sprite, build_pos, 1000, 0, 0);
-	wall->type = struct_wall;
+	wall->type = ENTITY_TYPE::WALL;
 
 	wall->boundBox = New_SDL_Rect( 10, 10, 110, 110);
 
@@ -76,7 +83,7 @@ entity *struct_wall_spawn()
 
 entity *structure_spawn(int type)
 {
-	if(type == struct_wall)
+	if(type == ENTITY_TYPE::WALL)
 	{
 		return struct_wall_spawn();	
 	}
