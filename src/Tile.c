@@ -5,8 +5,8 @@
 #include "Tile.h"
 #include "simple_logger.h"
 
-const int TILE_WIDTH = PLAYER_FRAMEH;
-const int TILE_HEIGHT = PLAYER_FRAMEW;
+const int TILE_WIDTH = PLAYER_FRAMEW;
+const int TILE_HEIGHT = PLAYER_FRAMEH;
 const int TILE_ROWS = 100;
 const int TILE_COLUMNS = 100;
 const int TOTAL_TILES = TILE_ROWS * TILE_COLUMNS ;
@@ -18,7 +18,7 @@ Destructable_Tile *dest_tile_list = NULL;
 int * tile_list_scores = NULL; 
 Sprite * tile_sprite_grass = NULL;
 Sprite * tile_sprite_tree = NULL;
-int call_stack = 0;
+int G_Editor_Mode = Bool_False;
 
 void tile_editor_mode_set();
 
@@ -108,7 +108,6 @@ Sprite * tile_load(char *filename)
 */
 void get_moves(int * moves, int size, int move)
 {
-	++call_stack;
 
 	if(!TILE_CAN_MOVE_LEFT(move))
 	{
@@ -142,7 +141,6 @@ int tile_forest_walk(int moves[])
 	int i;
 	int size = 4;
 	int move = -1;
-	++call_stack;
 
 	for(i = 0; i < size; i++)//4 is number of moves
 	{
@@ -195,7 +193,6 @@ void tile_forest_gen(int start)
 	//-1 means can't move to that node
 	tile_list[i].mType = TILE_ROAD;
 	dest_tile_list[i].mType = TILE_ROAD;
-	++call_stack;
 
 	while( 0 < lifespan--)
 	{
@@ -234,7 +231,6 @@ void tile_forest_gen(int start)
 void tile_forest_gen()
 {
 	int start;
-	++call_stack;
 
 	start = 0;
 	slog("Starting FGEN 0 TILE: %i", start);
@@ -313,22 +309,24 @@ void tile_editor_mode_set()
 {
 	int i;
 	int x = 0,y = 0;
+
 	Tile * tile;
+	Destructable_Tile * dest_tile;
+
+	G_Editor_Mode = Bool_True;
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		tile = &tile_list[i];
-		tile->mBox.x = x;
-		tile->mBox.y = y;
-		tile->mBox.w = TILE_WIDTH;
-		tile->mBox.h = TILE_HEIGHT;
+		dest_tile = &dest_tile_list[i];
+
+		tile->mBox = New_SDL_Rect(x, y, TILE_WIDTH, TILE_HEIGHT);
 		tile->mType = TILE_GRASS;//filler
 
-		//set destructable tiles to grass for editor
-		dest_tile_list[i].mBox = tile->mBox;
-		dest_tile_list[i].mType = TILE_GRASS;
-		dest_tile_list[i].hits = 5;
-		
+		dest_tile->mBox = tile->mBox;
+		dest_tile->mType = TILE_GRASS;
+		dest_tile->hits = 5;
+
 		x += TILE_WIDTH;	
 
 		if(x >= TILE_ROWS * TILE_WIDTH)
@@ -364,6 +362,7 @@ int tile_get_type(int index)
 * @param indexes of both tiles in tile_list and calculate the tiles in between
 * @return number of tiles between another tile
 */
+//needs refactoring
 int tile_to_tile_dist(int tile_1, int tile_2)
 {
 	int move_left = 0, move_right = 0, move_down = 0, move_up = 0;
@@ -413,27 +412,41 @@ int tile_to_tile_dist(int tile_1, int tile_2)
 void tile_draw(){
 	int i;
 
+	Vec2d draw_pos;
+	Vec2d editor_offset;
+
 	SDL_Rect camera;
 	SDL_Rect dest;
 
 	SDL_Renderer * renderer = Graphics_Get_Renderer();
 	
 	camera = Camera_Get_Camera();
+	editor_offset = Camera_Get_Editor_Offset();
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		Tile * tile = &tile_list[i];
-
+		
 		if(tile == NULL){
-			printf("Tile is null while rendering");
+			slog("Tile is null while rendering");
 			return ;
 		}
 
-		Sprite_Draw(tile_sprite_grass, 0, renderer, draw_pos);
-		//needs to be more readable
-		if(dest_tile_list[i].mType == TILE_TREE)
+		Vec2dSet(draw_pos, tile->mBox.x, tile->mBox.y);
+		
+		if(rect_collide(camera, tile->mBox))
 		{
-			Sprite_Draw(tile_sprite_tree, 0, renderer, draw_pos); 
+			if(G_Editor_Mode == Bool_True)
+			{
+				Vec2dAdd(draw_pos, editor_offset, draw_pos);
+			}
+
+			Sprite_Draw(tile_sprite_grass, 0, renderer, draw_pos);
+			//needs to be more readable
+			if(tile->mType == TILE_TREE)
+			{
+				Sprite_Draw(tile_sprite_tree, 0, renderer, draw_pos); 
+			}
 		}
 	}
 }

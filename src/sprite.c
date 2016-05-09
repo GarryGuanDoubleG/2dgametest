@@ -24,7 +24,7 @@ void Init_Mouse()
 	  printf("Could not hide mouse");
   }
 
-  Sprite_Mouse = Sprite_Load("images/mouse.png", 16,16, NULL,NULL);
+  Sprite_Mouse = Sprite_Load("images/mouse.png", 16, 16, 16, 16);
   if(Sprite_Mouse == NULL)fprintf(stdout,"mouse didn't load: %s\n", SDL_GetError());
 
   Mouse.state = 0;

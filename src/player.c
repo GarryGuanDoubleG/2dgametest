@@ -33,7 +33,8 @@ struct {
 	Sprite *image_spell;
 }playerBody;
 
-//end
+void Player_Update_Camera();
+
 void Player_Init(){
 	int i = 0;
 	
@@ -64,6 +65,8 @@ void Player_Init(){
 	player->weapon = PlayerEquip.weapon;
 	PlayerEquip.head = getArmor("head chain hood");
 	PlayerEquip.chest = getArmor("chest chain");
+
+	Player_Update_Camera();
 }
 
 void Player_Load_from_Def(Dict *value)
