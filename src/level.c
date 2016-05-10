@@ -375,7 +375,7 @@ void Level_Save()
 	entity_save_hash = Dict_New_Hash();
 	value = Dict_New_Hash();
 	if(!save) return;
-	if(!entity_list) return;
+	//if(!entity_list) return;
 
 	//save player
 	ent_player = Entity_Get_Player();
@@ -398,7 +398,7 @@ void Level_Save()
 		Dict_Hash_Insert(save, "TILE_COLUMNS", Dict_New_int(col));
 		Dict_Hash_Insert(save, "TILE_MAP", dict_tile_map);
 	}
-
+	/*
 	for(i = 0; i < ENTITY_MAX; i++)
 	{
 		if(!entityList[i].inuse)
@@ -415,7 +415,7 @@ void Level_Save()
 
 		Dict_Hash_Insert(entity_save_hash, iota(ent->id), value);
 	}
-
+	*/
 	//save
 	save_dict_as_json(save, "save.def");
 }

@@ -1,46 +1,17 @@
-﻿Build started 5/9/2016 8:52:49 AM.
-     1>Project "C:\Users\Garry\documents\visual studio 2010\Projects\conquest\conquest\conquest.vcxproj" on node 2 (build target(s)).
+﻿Build started 5/9/2016 10:05:38 PM.
+     1>Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\conquest.unsuccessfulbuild".
+         Creating "Debug\conquest.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\level.c
-         level.c
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(137): warning C4005: 'MIN' : macro redefinition
-                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
-                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
-                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
-                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(41): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(41): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(32): warning C4101: 'tile' : unreferenced local variable
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(53): warning C4101: 'tile_pos' : unreferenced local variable
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(88): warning C4101: 'j' : unreferenced local variable
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(140): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(140): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(141): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(141): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(378): error C2065: 'entity_list' : undeclared identifier
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(408): error C2440: '=' : cannot convert from 'entity' to 'entity *'
-                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(410): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'float' to 'gpointer'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(411): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'float' to 'gpointer'
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(412): error C3861: 'Dict_hash_Insert': identifier not found
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(413): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'int' to 'gpointer'
-                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(414): error C2664: 'Dict_Hash_Insert' : cannot convert parameter 3 from 'int' to 'gpointer'
-                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(416): error C3861: 'iota': identifier not found
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(474): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(474): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(479): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(479): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>Done Building Project "C:\Users\Garry\documents\visual studio 2010\Projects\conquest\conquest\conquest.vcxproj" (build target(s)) -- FAILED.
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         conquest.vcxproj -> C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\conquest.unsuccessfulbuild".
+         Touching "Debug\conquest.lastbuildstate".
+     1>Done Building Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.73
+Time Elapsed 00:00:00.06
