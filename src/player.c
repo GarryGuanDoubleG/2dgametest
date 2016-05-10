@@ -302,7 +302,9 @@ void Player_Move(SDL_Event *e){
 			if(in_build_mode_01)
 			{
 				structure_spawn( ENTITY_TYPE::WALL );
+
 				in_build_mode_01 = Bool_False;
+				set_hud_state(HUD_state::main_menu);
 			}
 			break;
 		case SDLK_f:

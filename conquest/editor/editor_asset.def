@@ -49,7 +49,7 @@
 		"path_gen":
 		{
 			"image": "editor/path_gen.png",
-			"imageW": 384,
+			"imageW": 345,
 			"imageH": 84,
 			"frameW": 256,
 			"frameH": 200,
