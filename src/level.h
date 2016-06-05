@@ -13,7 +13,7 @@
 #include "types.h"
 #include "dict.h"
 #include "Tile.h"
-#include "entity.h"
+#include "Entity.h"
 #include "player.h"
 
 /**

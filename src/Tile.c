@@ -1,12 +1,20 @@
 #include <time.h>
 #include <math.h>
+#include <jansson.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <glib.h>
 
 #include "types.h"
 #include "Tile.h"
+#include "level.h"
+#include "load.h"
+#include "save.h"
 #include "simple_logger.h"
+#include "json_parse.h"
 
-const int TILE_WIDTH = PLAYER_FRAMEW;
-const int TILE_HEIGHT = PLAYER_FRAMEH;
+const int TILE_WIDTH = 64;
+const int TILE_HEIGHT = 64;
 const int TILE_ROWS = 100;
 const int TILE_COLUMNS = 100;
 const int TOTAL_TILES = TILE_ROWS * TILE_COLUMNS ;
@@ -17,21 +25,20 @@ Destructable_Tile *dest_tile_list = NULL;
 //array of tile scores for procedural forest gen
 
 //have file in / o
+//sprite and tile assets
+
+GHashTable *g_tile_sprites;
+
 // should refactor to use file input and output and store in ghash
 int * tile_list_scores = NULL; 
-Sprite * tile_sprite_grass = NULL;
-Sprite * tile_sprite_tree = NULL;
-Sprite * tile_sprite_bush = NULL;
-Sprite * tile_sprite_water = NULL;
 int G_Editor_Mode = Bool_False;
 
 void tile_editor_mode_set();
-
+void tile_load_assets();
 /**
 * @brief loads tile sprites to be loaded into game and calls tile set to set the tile map
   Allocates memory for each tile in map and each destructable tile on the map
 */
-
 void tile_init_system(int mode)
 {
 	if(TOTAL_TILES == 0){
@@ -39,19 +46,15 @@ void tile_init_system(int mode)
 		return;
 	}
 
-	tile_list = (Tile*) malloc(sizeof(Tile)*TOTAL_TILES);
-	memset(tile_list,0, sizeof(Tile) * TOTAL_TILES);
-
-	dest_tile_list = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
-	memset(dest_tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
-
+	tile_list		 = (Tile*) malloc(sizeof(Tile)*TOTAL_TILES);
+	dest_tile_list	 = (Destructable_Tile*) malloc(sizeof(Destructable_Tile)*TOTAL_TILES);
 	tile_list_scores = (int*) malloc(sizeof(int) * TOTAL_TILES);
+
+	memset(tile_list,0, sizeof(Tile) * TOTAL_TILES);
+	memset(dest_tile_list,0, sizeof(Destructable_Tile) * TOTAL_TILES);
 	memset(tile_list_scores, 0, sizeof(int) * TOTAL_TILES);
 
-	tile_sprite_grass = tile_load(PATH_TILE_GRASS);
-	tile_sprite_tree = tile_load(PATH_TILE_TREE);
-	tile_sprite_bush = tile_load(PATH_TILE_BUSH);
-	tile_sprite_water = tile_load(PATH_TILE_WATER);
+	tile_load_assets();
 
 	if(mode == 1)
 	{
@@ -442,6 +445,9 @@ void tile_draw(){
 	cam_pos = Camera_GetPosition();
 	camera = Camera_Get_Camera();	
 
+	Sprite *sprite;
+	Line key;
+
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		Tile * tile = &tile_list[i];		
@@ -468,14 +474,14 @@ void tile_draw(){
 		}
 		if(rect_collide(camera, tile_box))
 		{
-			Sprite_Draw(tile_sprite_grass, 0, renderer, draw_pos);
-			//needs to be more readable
-			if(tile->mType == TILE_TREE)
-				Sprite_Draw(tile_sprite_tree, 0, renderer, draw_pos); 			
-			if(tile->mType == TILE_WATER)
-				Sprite_Draw(tile_sprite_water, 0, renderer, draw_pos);
-			if(tile->mType == TILE_BUSH)
-				Sprite_Draw(tile_sprite_bush, 0, renderer, draw_pos);
+			//draw grass
+			itoa(TILE_GRASS, key, 10);
+			sprite = (Sprite *) g_hash_table_lookup(g_tile_sprites, key);
+			Sprite_Draw(sprite, 0, draw_pos);
+
+			itoa(tile->mType, key, 10);
+			sprite = (Sprite *)g_hash_table_lookup(g_tile_sprites, key);
+			Sprite_Draw(sprite, 0, draw_pos);
 		}
 	}
 }
@@ -520,7 +526,7 @@ Tile tile_start()
 
 /**
 * @brief checks to see if a position and bound collide with a tile
-* @param Vec2d position of entity, SDL_Rect bounding box to check collision
+* @param Vec2d position of Entity, SDL_Rect bounding box to check collision
 * @return 1(true) if position & bound collide with a tree
 */
 int tile_collision(Vec2d pos, SDL_Rect bound)
@@ -550,7 +556,7 @@ int tile_collision(Vec2d pos, SDL_Rect bound)
 
 /**
 * @brief player has an ability to destroy(forage) a tree for wood
-* check if entity is facing a tree and collides with it
+* check if Entity is facing a tree and collides with it
 * @param position of forager, SDL_Rect bounding box for collision against tree, int face direction to check if facing tree
 * @return tree if can forage
 */
@@ -651,9 +657,9 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 }
 
 /**
-* @brief finds the tile index of an entity based on the center of its body
-* @param Vec2d pos - x and y position of entity, SDL_Rect bound - used for collision and finding center
-* @return tile index of entity
+* @brief finds the tile index of an Entity based on the center of its body
+* @param Vec2d pos - x and y position of Entity, SDL_Rect bound - used for collision and finding center
+* @return tile index of Entity
 */
 int tile_get_tile_number(Vec2d pos, SDL_Rect bound)
 {
@@ -717,4 +723,80 @@ int *Tile_Map_Get(int &tile_count, int &row, int& col)
 	}
 
 	return tile_map;
+}
+
+void tile_load_tiles(Dict *value)
+{
+	int i;
+	Line key;
+
+	for(i = 0; i < value->item_count; i++)
+	{
+		Dict * tile;
+		Sprite *sprite;
+
+		char *filepath;
+		char * type;
+
+		tile = dict_get_hash_nth(key, value, i);
+
+		if(!tile) 
+		{
+			slog("Could not load tile asset");
+			return;
+		}
+		//get tile info to load sprite
+
+		filepath = (char *)(dict_get_hash_value(tile, "filepath")->keyValue);
+		type	 = (char *)(dict_get_hash_value(tile, "type")->keyValue);
+
+		//load and store sprite
+		sprite = Sprite_Load(filepath, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+		
+		if(!sprite) 
+		{
+			slog("Could not load tile sprite");
+			return;
+		}
+
+		g_hash_table_insert(g_tile_sprites, g_strdup(type), sprite);
+	}
+}
+/**
+* @brief loads tile assets from a def file
+*/
+void tile_load_assets()
+{
+	Dict *assets;
+	Dict *value;
+
+	int i, j;
+
+	Line key;
+
+	assets = load_dict_from_file("def/tiles.def");
+	value = dict_get_hash_value(assets, "tiles");
+
+	g_tile_sprites = g_hash_table_new_full(g_str_hash,
+							  g_str_equal,
+							  (GDestroyNotify)dict_g_string_free,
+							  (GDestroyNotify)dict_destroy);
+
+	if(!value || value->data_type != DICT_HASH) 
+	{
+		slog("Could not load tile set");
+		return;
+	}
+
+	tile_load_tiles(value);
+
+	value = dict_get_hash_value(assets, "destructables");
+
+	if(!value || value->data_type != DICT_HASH)
+	{
+		slog("Could not load destructables");
+		return;
+	}
+	
+	tile_load_tiles(value);
 }

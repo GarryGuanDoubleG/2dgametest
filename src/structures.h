@@ -2,13 +2,13 @@
 #define _STRUCTURES_H_
 #include "sprite.h"
 #include "HUD.h"
-#include "entity.h"
+#include "Entity.h"
 #include "Tile.h"
 #include "vector.h"
 #include "structure_define.h"
 #include "camera.h"
 
-typedef entity cStruct;
+typedef Entity cStruct;
 
 cStruct *structure_spawn(int type);
 

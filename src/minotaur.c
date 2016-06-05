@@ -1,6 +1,6 @@
 #include "minotaur.h"
 
-void mino_update(entity *self)
+void mino_update(Entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 
@@ -24,13 +24,13 @@ void mino_update(entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void mino_touch(entity *self, entity *other)
+void mino_touch(Entity *self, Entity *other)
 {
 }
-void mino_think(entity *self)
+void mino_think(Entity *self)
 {
 	int randomNum;
 	int distance;
@@ -102,12 +102,12 @@ void mino_think(entity *self)
 	//setting which sprite to use depending on direction
 }
 
-void mino_onDeath(entity *self)
+void mino_onDeath(Entity *self)
 {
 
 }
 
-entity * mino_spawn(int type)
+Entity * mino_spawn(int type)
 {
 	slog("mino_spawn");
 	if(type == Monster::mino)
@@ -115,10 +115,10 @@ entity * mino_spawn(int type)
 		return mino_spawn();
 	}
 }
-entity * mino_spawn()
+Entity * mino_spawn()
 {
 	Sprite * sprite_mino;
-	entity * ent_mino = NULL;
+	Entity * ent_mino = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	Vec2d vel = {0,0};
@@ -132,7 +132,7 @@ entity * mino_spawn()
 	slog("mino: x%f y%f", pos.x, pos.y);
 	sprite_mino = Sprite_Load(SPRITE_MINO_FILEPATH, MINO_IMAGEW, MINO_IMAGEH, MINO_FRAMEW, MINO_FRAMEH);
 	sprite_mino->fpl = MINO_FPL;//2 frames per line
-	ent_mino = entity_load(sprite_mino, pos, 100, 25, STATE_PATROL);
+	ent_mino = Entity_load(sprite_mino, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_mino){
 		slog("Could not spawn Spider01");
@@ -151,7 +151,7 @@ entity * mino_spawn()
 	ent_mino->state = STATE_PATROL;
 	ent_mino->boundBox = boundBox;
 	ent_mino->aggro_range = SPIDER01_AGGRO_RANGE;//10 tiles
-	ent_mino->type = ENTITY_TYPE::GRUE;
+	ent_mino->type = Entity_TYPE::GRUE;
 
 	return ent_mino;
 }

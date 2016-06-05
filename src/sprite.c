@@ -63,7 +63,7 @@ void Draw_Mouse()
   Vec2dSet(draw_pos, mx + cam.x, my + cam.y);
 
   if(Sprite_Mouse != NULL)
-	  Sprite_Draw(Sprite_Mouse, Mouse.frame, Graphics_Get_Renderer(), draw_pos);
+	  Sprite_Draw(Sprite_Mouse, Mouse.frame, draw_pos);
   else
 	  printf("Sprite_Mouse did not load properly");
 
@@ -297,14 +297,16 @@ void Sprite_Free(Sprite ** sprite)
 * @param Sprite pointer to draw, frame_horizontal frame # to play, frame-vertical - which frame to play, renderer of game, and x and y offset to draw
 */
 
-void Sprite_Draw(Sprite *sprite, int frame, SDL_Renderer *renderer, Vec2d draw_pos)
+void Sprite_Draw(Sprite *sprite, int frame, Vec2d draw_pos)
 {
 	//Set rendering space and render to screen
+	SDL_Renderer *renderer;
 	SDL_Rect camera;
 	SDL_Rect src;
 	SDL_Rect dest;
 
 	camera = Camera_Get_Camera();
+	renderer = Graphics_Get_Renderer();
 
 	src.x = frame%sprite->fpl * sprite->imageW;
 	src.y = frame/sprite->fpl * sprite->imageH;

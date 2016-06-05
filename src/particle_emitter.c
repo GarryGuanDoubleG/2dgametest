@@ -249,7 +249,7 @@ void particle_draw(void *data, void *user_data)
 		particle->frame++;
 		particle->nextFrame = 150;
 	}
-	Sprite_Draw( p_sprite, particle->frame, Graphics_Get_Renderer(), particle->pos);
+	Sprite_Draw( p_sprite, particle->frame, particle->pos);
 }
 
 void particle_em_draw(Particle_Emitter *p_em)

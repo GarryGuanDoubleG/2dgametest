@@ -7,7 +7,7 @@ int G_MONSTER_SPAWN_TIMER = 6000;// used for timing how often monsters are spawn
 
 time_t t;
 
-void monster_touch(entity *self, entity *other)
+void monster_touch(Entity *self, Entity *other)
 {
 	if(self->team != other->team)
 	{
@@ -16,8 +16,8 @@ void monster_touch(entity *self, entity *other)
 
 }
 
-entity *monster_spawn(int type){
-	entity *ent_new;//sprite of monster to spawn
+Entity *monster_spawn(int type){
+	Entity *ent_new;//sprite of monster to spawn
 	srand((unsigned)time(&t));
 
 	if(G_MONSTER_SPAWN_TIMER <= 0){

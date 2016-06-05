@@ -1,5 +1,5 @@
-#ifndef _ENTITY_H_
-#define _ENTITY_H_
+#ifndef _Entity_H_
+#define _Entity_H_
 #include "vector.h"
 #include "sprite.h"
 #include "weapon.h"
@@ -10,7 +10,7 @@
 #include "particle_emitter.h"
 #include "camera.h"
 /**
-* @brief terms for which team an entity is on to determine who to attack
+* @brief terms for which team an Entity is on to determine who to attack
 */
 #define TEAM_PLAYER 1
 #define TEAM_ENEMY  0
@@ -29,20 +29,29 @@
 
 typedef enum 
 {
-	PLAYER = 0,
-	SPIDER = 1,
-	GRUE   = 2,
-	MINO   = 3,
+	PLAYER			= 0,
+	SPIDER			= 1,
+	GRUE			= 2,
+	MINO			= 3,
 
 	//structures
-	WALL   = 100,
-}ENTITY_TYPE;
+	WALL			= 100,
+	MAIN_BASE		= 101,
+	TOWER			= 102,
+	//tiles
+	T_GRASS			= 1000,
+	T_TREE			= 1001,
+	T_PATH			= 1002,
+	T_WATER			= 1003,
+	T_BUSH			= 1004,
+	T_ROCK			= 1005,
+}Entity_TYPE;
 
 typedef struct Entity_S
 {
 	int inuse; /**< used for memory allocation if not inuse*/
 	int id;
-	int face_dir;/**< direction entity is facing(e.g. left) */
+	int face_dir;/**< direction Entity is facing(e.g. left) */
 	int type;
 
 	//animation & drawing
@@ -50,23 +59,23 @@ typedef struct Entity_S
 	int frame;
 	int next_frame;
 
-	//entity positions
-	Vec2d position; /**<stores x and y positional values of entity*/
+	//Entity positions
+	Vec2d position; /**<stores x and y positional values of Entity*/
 	Vec2d velocity; /**<x and y values that increment the positional value every frame*/
-	SDL_Rect boundBox; /**<x and y offsets from postion and accurate dimensions of an entity used for collision detection**/
+	SDL_Rect boundBox; /**<x and y offsets from postion and accurate dimensions of an Entity used for collision detection**/
 	
 	//game mechanics
-	int health, maxhealth; /**health values to update hud and determine if entity is alive. health cannot be greater than max health*/
+	int health, maxhealth; /**health values to update hud and determine if Entity is alive. health cannot be greater than max health*/
 	int damage; /**<int damage to apply if colliding with enemy*/
 	int stamina;/**<int stores resource thats consumed on certain actions*/
 	
 	//AI
 	int state; /**<int stores state to use for AI actions*/
-	int team; /**<int stores if entity is on player's team or against player*/
-	int aggro_range; /**< int number of tiles away from an entity in an enemy team before an AI changes states and becomes aggro */
+	int team; /**<int stores if Entity is on player's team or against player*/
+	int aggro_range; /**< int number of tiles away from an Entity in an enemy team before an AI changes states and becomes aggro */
 
 	//player
-	int inventory;/**<true if entity can hold items*/
+	int inventory;/**<true if Entity can hold items*/
 	Weapon *weapon;/**<pointer to currently equipped weapon*/
 
 	//structures
@@ -82,101 +91,101 @@ typedef struct Entity_S
 	int nextThink;/*<Time index for next think */
 	int thinkRate; /*<How often to run think */
 
-	void (*think)(struct Entity_S *self); /**<function pointer to think function to determine entity's actions*/
-	void (*update)(struct Entity_S *self); /**<function pointer to update function of specfic entity*/
+	void (*think)(struct Entity_S *self); /**<function pointer to think function to determine Entity's actions*/
+	void (*update)(struct Entity_S *self); /**<function pointer to update function of specfic Entity*/
 	void (*touch)(struct Entity_S *self, struct Entity_S *other);/**<function pointer that triggers when entites collide with one another*/
-	void (*free)(struct Entity_S *self);/**<frees entity from memory and allows new entity to be allocated*/
-	void (*onDeath)(struct Entity_S *self); /**<function pointer to event triggered on entity's death*/
+	void (*free)(struct Entity_S *self);/**<frees Entity from memory and allows new Entity to be allocated*/
+	void (*onDeath)(struct Entity_S *self); /**<function pointer to event triggered on Entity's death*/
 	void (*followPath)(struct Entity_S *self); /**<Function pointer to follow pathing to enemy*/
-}entity;
+}Entity;
 
 /**
 * brief max number of entities to allocate into memory
 */
-extern const int ENTITY_MAX;
+extern const int Entity_MAX;
 /**
 * brief list of all entities that are allocated into memory
 */
-extern entity *entityList;
+extern Entity *EntityList;
 /**
 * brief number of entities currently in use and exist in the game
 */
-extern int entity_count;
+extern int Entity_count;
 /**
-* brief frees entity from memory
+* brief frees Entity from memory
 */
-void entity_free(entity * ent);
+void Entity_free(Entity * ent);
 /*
 * @brief initializes memory and allocates it to store maximum number of entities
 */
-void entity_initialize_system();
+void Entity_initialize_system();
 /**
-* @brief checks collision of entity to structure
+* @brief checks collision of Entity to structure
 */
-int entity_check_collision(entity *self);
+int Entity_check_collision(Entity *self);
 /*
 * @brief loads player buildable structure
 */
-entity* struct_load(Sprite *sprite, int health, int defense, int type);
+Entity* struct_load(Sprite *sprite, int health, int defense, int type);
 /**
-* @brief loads entity values into entity list and returns pointer to address in list
+* @brief loads Entity values into Entity list and returns pointer to address in list
 */
-entity *entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state);
+Entity *Entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state);
 /**
-* @brief closes entity system and frees all memory that was allocated
+* @brief closes Entity system and frees all memory that was allocated
 */
-void entity_close(); 
+void Entity_close(); 
 /**
-* @brief renders entity onto screen
-* @param entity: enttiy to draw
+* @brief renders Entity onto screen
+* @param Entity: enttiy to draw
 */
-void entity_draw(entity *ent);
+void Entity_draw(Entity *ent);
 /**
 * @brief calls on all update funtions entities in use every frame
 */
-void entity_update_all();
+void Entity_update_all();
 /*
-* @brief moves to center of next tile in the entity's path
+* @brief moves to center of next tile in the Entity's path
 */
-void ent_follow_path(entity *self);
+void ent_follow_path(Entity *self);
 /**
-* @brief locates the nearest entity on the enemy tam
-* @param takes pointer to entity to use find nearest enemy relative to self's position
-* @return returns pointer to enemy entity
+* @brief locates the nearest Entity on the enemy tam
+* @param takes pointer to Entity to use find nearest enemy relative to self's position
+* @return returns pointer to enemy Entity
 */
-entity * ent_find_nearest_enemy(entity *self);
+Entity * ent_find_nearest_enemy(Entity *self);
 /**
-* @brief locates the nearest entity on the friendly team
-* @param takes pointer to entity to use find nearest enemy relative to self's position
-* @return returns pointer to friendly entity
+* @brief locates the nearest Entity on the friendly team
+* @param takes pointer to Entity to use find nearest enemy relative to self's position
+* @return returns pointer to friendly Entity
 */
-entity * ent_find_nearest_teammate(entity *self);
+Entity * ent_find_nearest_teammate(Entity *self);
 //in class
 /*
- *@brief return a pointer to an empty entity structure
- *@return NULL on error or no more space for entities or a valid entity
+ *@brief return a pointer to an empty Entity structure
+ *@return NULL on error or no more space for entities or a valid Entity
  */
-void entity_think_all();
+void Entity_think_all();
 /**
-* @brief function that calls entity a's touch function
-* @param takes two entity pointers and calls entity a's touch function which applies effects to entity b
+* @brief function that calls Entity a's touch function
+* @param takes two Entity pointers and calls Entity a's touch function which applies effects to Entity b
 * @return true if they colldie
 **/
-int entity_collide(entity *a, entity*b);
-void entity_check_collision_all();
+int Entity_collide(Entity *a, Entity*b);
+void Entity_check_collision_all();
 /**
-* @brief checks if  weapon collided with an enemy entity
-* @param pointer to entity that owns the weapon. Used for position and events
+* @brief checks if  weapon collided with an enemy Entity
+* @param pointer to Entity that owns the weapon. Used for position and events
 */
-void weapon_collision(entity *owner);
+void weapon_collision(Entity *owner);
 /**
-* @brief loops through entity list to find player and returns it
-* @return returns pointer to player entity
+* @brief loops through Entity list to find player and returns it
+* @return returns pointer to player Entity
 */
-entity * Entity_Get_Player();
+Entity * Entity_Get_Player();
 
 /** 
-* @brief returns the center position of an entity
+* @brief returns the center position of an Entity
 */
 #define ENT_CENTER_X(a) (a->position.x + a->sprite->frameW/2)
 #define ENT_CENTER_Y(a) (a->position.y + a->sprite->frameH/2)

@@ -8,7 +8,7 @@
 
 #include "graphics.h"
 #include "sprite.h"
-#include "entity.h"
+#include "Entity.h"
 #include "player.h"
 #include "audio.h"
 
@@ -39,8 +39,11 @@ int main(int argc, char *argv[])
 {
   int done;
   const Uint8 *keys;
+
   SDL_Event e;
+
   Music * music_new;
+
   last_time = current_time = SDL_GetTicks();
   
   Init_All();
@@ -53,7 +56,7 @@ int main(int argc, char *argv[])
 	  exit(1);
   }
 
-  Music_Player(music_new);
+ // Music_Player(music_new);
 
   do
   {
@@ -76,9 +79,9 @@ int main(int argc, char *argv[])
 	support_spawn(Support::archer);
 	
 	*/
-	entity_update_all();
-	entity_think_all();
-	entity_check_collision_all();
+	Entity_update_all();
+	Entity_think_all();
+	Entity_check_collision_all();
 //	struct_update_all();
 
 	G_MONSTER_SPAWN_TIMER -= 1;
@@ -139,7 +142,7 @@ void Init_All()
   }
 
   Sprite_Initialize_System(1000); // allocates memory for all sprites
-  entity_initialize_system();//allocate memory for all entities
+  Entity_initialize_system();//allocate memory for all entities
   audio_init(128, 5); // allocates memory for audio channels
   particle_em_init_system();
 

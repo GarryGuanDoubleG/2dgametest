@@ -7,8 +7,8 @@ int G_SUPPORT_SPAWN_TIMER = 6000;// used for timing how often monsters are spawn
 
 time_t support_t;
 
-entity *support_spawn(int type){
-	entity *ent_new;//sprite of monster to spawn
+Entity *support_spawn(int type){
+	Entity *ent_new;//sprite of monster to spawn
 	srand((unsigned)time(&support_t));
 
 	if(G_SUPPORT_SPAWN_TIMER <= 0){

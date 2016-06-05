@@ -29,10 +29,10 @@ void path_free(Path *&path);
 /**
 * @brief getPath uses an A* search algorithm to find shorest path between two entities
 * @param size: maximum size of open & closed list
-		 start: Pointer to Vec2d position of entity finding path
-		 start_bound: SDL_Rect bounding box to determine which tile entity is currently on
-		 target_bound: bounding box to find which tile target entity is on
-		 target: pointer to Vec2d of entity to travel to
+		 start: Pointer to Vec2d position of Entity finding path
+		 start_bound: SDL_Rect bounding box to determine which tile Entity is currently on
+		 target_bound: bounding box to find which tile target Entity is on
+		 target: pointer to Vec2d of Entity to travel to
 		 curr_path: NULL if no current path, pointer to current path which is to be freed from memory
 * @return pointer to first tile to move to with pointers to next nodes to move to
 */

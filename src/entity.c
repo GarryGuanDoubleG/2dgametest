@@ -1,103 +1,103 @@
-#include "entity.h"
+#include "Entity.h"
 #include "simple_logger.h"
 #include "load.h"
 
-const int ENTITY_MAX = 2000; // max entities allocated into memory
-int entity_count = 0;
-entity *entityList; // handle on all entities
-Dict * entity_defs = NULL;// dictionary of all entity definitions
+const int Entity_MAX = 2000; // max entities allocated into memory
+int Entity_count = 0;
+Entity *EntityList; // handle on all entities
+Dict * Entity_defs = NULL;// dictionary of all Entity definitions
 
-extern entity *player;
+extern Entity *player;
 
-void entity_initialize_system(){
+void Entity_initialize_system(){
 	int i;
 	Line key;
 	Dict * temp;
-	entityList = (entity *)malloc(sizeof(entity) * ENTITY_MAX);
-	memset(entityList, 0, sizeof(entity)* ENTITY_MAX);
+	EntityList = (Entity *)malloc(sizeof(Entity) * Entity_MAX);
+	memset(EntityList, 0, sizeof(Entity)* Entity_MAX);
 
-	for(i = 0; i < ENTITY_MAX; i++){
-		entityList[i].sprite = NULL;
-		entityList[i].inuse = false;
+	for(i = 0; i < Entity_MAX; i++){
+		EntityList[i].sprite = NULL;
+		EntityList[i].inuse = false;
 	}
-	slog("LOADING ENTITY DEF");
-	entity_defs = load_dict_from_file("def/test.def");
-	if(!entity_defs)
+	slog("LOADING Entity DEF");
+	Entity_defs = load_dict_from_file("def/test.def");
+	if(!Entity_defs)
 	{
-		slog("Error, could not load entity def");
+		slog("Error, could not load Entity def");
 	}
-	else if(entity_defs->data_type != DICT_HASH)
+	else if(Entity_defs->data_type != DICT_HASH)
 	{
 		slog("Def file is not a hash");
 	}
 	else
 	{
-		for(i = 0; i < entity_defs->item_count; i++)
+		for(i = 0; i < Entity_defs->item_count; i++)
 		{
-			temp = dict_get_hash_nth(key, entity_defs, i);
+			temp = dict_get_hash_nth(key, Entity_defs, i);
 			slog("%i: \n%s \n%s", i, key, (const char*)temp->keyValue);
 		}
 	}
 	slog("FINISHED LOADING");
-	atexit(entity_close);
+	atexit(Entity_close);
 
 }
 
-entity * entity_new(){
+Entity * Entity_new(){
 	int i = 0;
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(entityList[i].inuse == true){
+	for(i = 0; i < Entity_MAX; i++){
+		if(EntityList[i].inuse == true){
 			continue;
 		}
-//		path_free(entityList[i].path);
-		memset(&entityList[i], 0, sizeof(entity));
-		entityList[i].inuse = true;
-		return (&entityList[i]);
+//		path_free(EntityList[i].path);
+		memset(&EntityList[i], 0, sizeof(Entity));
+		EntityList[i].inuse = true;
+		return (&EntityList[i]);
 	}
 	return NULL;
 }
 //loads structure
-entity* struct_load(Sprite *sprite, int health, int defense, int type)
+Entity* struct_load(Sprite *sprite, int health, int defense, int type)
 {
 	int i;
-	for(i = 0; i < entity_count + 1; i++)
+	for(i = 0; i < Entity_count + 1; i++)
 	{
-		 if(entityList[i].inuse == false)
+		 if(EntityList[i].inuse == false)
 		 {
-			 entity_count++;
-			 entityList[i].inuse = true;
-			 entityList[i].sprite = sprite;
-			 entityList[i].health = health;
-			 entityList[i].maxhealth = health;			 
-			 entityList[i].structure = true;
-			 entityList[i].placed = false;
-			 entityList[i].selected = false;
+			 Entity_count++;
+			 EntityList[i].inuse = true;
+			 EntityList[i].sprite = sprite;
+			 EntityList[i].health = health;
+			 EntityList[i].maxhealth = health;			 
+			 EntityList[i].structure = true;
+			 EntityList[i].placed = false;
+			 EntityList[i].selected = false;
 			 
-			 return &entityList[i];
+			 return &EntityList[i];
 			 break;
 		 }
 	}
 	return NULL;
 }
 
-entity* entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state){
+Entity* Entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state){
 	int i;
-	for(i = 0; i < entity_count + 1; i++)
+	for(i = 0; i < Entity_count + 1; i++)
 	{
-		 if(entityList[i].inuse == false)
+		 if(EntityList[i].inuse == false)
 		 {
-			 entity_count++;			
-			 entityList[i].inuse = true;
-			 entityList[i].sprite = sprite;
-			 entityList[i].position = pos;
-			 entityList[i].health = health;
-			 entityList[i].maxhealth = health;
-			 entityList[i].stamina = stamina;
-			 entityList[i].state = state;
-			 entityList[i].followPath = ent_follow_path;
-			 entityList[i].id = i;
-			 entityList[i].path = NULL;
-			 return &entityList[i];
+			 Entity_count++;			
+			 EntityList[i].inuse = true;
+			 EntityList[i].sprite = sprite;
+			 EntityList[i].position = pos;
+			 EntityList[i].health = health;
+			 EntityList[i].maxhealth = health;
+			 EntityList[i].stamina = stamina;
+			 EntityList[i].state = state;
+			 EntityList[i].followPath = ent_follow_path;
+			 EntityList[i].id = i;
+			 EntityList[i].path = NULL;
+			 return &EntityList[i];
 			 break;
 		 }
 	}
@@ -107,7 +107,7 @@ entity* entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state
 //code based on post by MikeyPro on sdl forum
 //link: https://forums.libsdl.org/viewtopic.php?t=11040&sid=0c796abe9954dba84ee2814c32c85f5c
 
-void draw_health_bar(entity *self){
+void draw_health_bar(Entity *self){
 	//percent health to draw
 	int barW = self->maxhealth;
 	int barH = 15;
@@ -164,108 +164,108 @@ void draw_health_bar(entity *self){
 }
 //end
 
-void entity_draw(entity *ent){
+void Entity_draw(Entity *ent){
 	//SDL Main Camera src rect	
-	Sprite_Draw(ent->sprite, ent->frame, Graphics_Get_Renderer(), ent->position);
+	Sprite_Draw(ent->sprite, ent->frame, ent->position);
 	if(ent != player)
 	{
 		draw_health_bar(ent);
 	}
 }
 
-void entity_free(entity* ent){ //makes entity->inuse false so new ent can be initialized in this mem location
+void Entity_free(Entity* ent){ //makes Entity->inuse false so new ent can be initialized in this mem location
 	ent->inuse = false;
 	ent->sprite = NULL;
 	path_free(ent->path);
-	entity_count--;
+	Entity_count--;
 
 }
 
-void entity_close(){ //deallocates all entities
+void Entity_close(){ //deallocates all entities
 	int i;
-	for(i = 0; i < ENTITY_MAX; i++){
-		 if(entityList[i].inuse == true){
-			 entity_free(&entityList[i]);	
+	for(i = 0; i < Entity_MAX; i++){
+		 if(EntityList[i].inuse == true){
+			 Entity_free(&EntityList[i]);	
 		 }
 	}
-	memset(entityList, 0, sizeof(entity) * ENTITY_MAX);
+	memset(EntityList, 0, sizeof(Entity) * Entity_MAX);
 }
 
-void entity_think_all(){
+void Entity_think_all(){
 	int i = 0;
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_MAX; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(!entityList[i].think){
+		if(!EntityList[i].think){
 			continue;
 		}
-		/*if(entityList[i].path)
+		/*if(EntityList[i].path)
 		{
-			path_free(entityList[i].path);
+			path_free(EntityList[i].path);
 		}*/
-		entityList[i].think(&entityList[i]);
+		EntityList[i].think(&EntityList[i]);
 	}
 }
 
-void entity_update_all(){
+void Entity_update_all(){
 	int i = 0;
 	Vec2d new_pos;
 	Vec2d old_pos;
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_MAX; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(!entityList[i].sprite)
+		if(!EntityList[i].sprite)
 		{
-			entity_free(&entityList[i]);
+			Entity_free(&EntityList[i]);
 		}
 		//check for map bounds
-		if(entityList[i].position.x < 0 ) 
+		if(EntityList[i].position.x < 0 ) 
 		{
-			entityList[i].position.x =0;
+			EntityList[i].position.x =0;
 		}
-		if(entityList[i].position.x + entityList[i].sprite->frameW > TILE_ROWS * TILE_WIDTH)
+		if(EntityList[i].position.x + EntityList[i].sprite->frameW > TILE_ROWS * TILE_WIDTH)
 		{
-			entityList[i].position.x  = TILE_ROWS * TILE_WIDTH - entityList[i].sprite->frameW;
+			EntityList[i].position.x  = TILE_ROWS * TILE_WIDTH - EntityList[i].sprite->frameW;
 		}
-		if(entityList[i].position.y < 0 ) 
+		if(EntityList[i].position.y < 0 ) 
 		{
-			entityList[i].position.y =0;
+			EntityList[i].position.y =0;
 		}
-		if(entityList[i].position.y + entityList[i].sprite->frameH > TILE_COLUMNS * TILE_HEIGHT)
+		if(EntityList[i].position.y + EntityList[i].sprite->frameH > TILE_COLUMNS * TILE_HEIGHT)
 		{
-			entityList[i].position.y  = TILE_COLUMNS * TILE_HEIGHT - entityList[i].sprite->frameH;
+			EntityList[i].position.y  = TILE_COLUMNS * TILE_HEIGHT - EntityList[i].sprite->frameH;
 		}
 
-		if(!entityList[i].update){
+		if(!EntityList[i].update){
 			continue;
 		}
 
-		entityList[i].update(&entityList[i]);
+		EntityList[i].update(&EntityList[i]);
 		//don't free player
-		if(entityList[i].health <= 0 && !(&entityList[i] == player))
+		if(EntityList[i].health <= 0 && !(&EntityList[i] == player))
 		{
-			entity_free(&entityList[i]);
+			Entity_free(&EntityList[i]);
 		}
-		if(entityList[i].weapon){
-			entityList[i].weapon->face_dir = entityList[i].face_dir;
+		if(EntityList[i].weapon){
+			EntityList[i].weapon->face_dir = EntityList[i].face_dir;
 		}
-		if(&entityList[i] != player)
+		if(&EntityList[i] != player)
 		{		
-			entity_draw(&entityList[i]);
+			Entity_draw(&EntityList[i]);
 		}
 	}
 }
 
-void entity_death(entity *self){
+void Entity_death(Entity *self){
 	//death animation
 
 	//free
-	entity_free(self);
+	Entity_free(self);
 }
 
-void weapon_touch(entity * self, entity *other)
+void weapon_touch(Entity * self, Entity *other)
 {
 	if (!self || !other)
 	{
@@ -280,29 +280,29 @@ void weapon_touch(entity * self, entity *other)
 	if(other->health <= 0)
 	{
 		slog("Entity health is now: %i", other->health);
-		entity_death(other);
+		Entity_death(other);
 	}
 
 }
-int entity_check_collision(entity * self)
+int Entity_check_collision(Entity * self)
 {
 	int i;
-	for(i = 0; i < entity_count + 1; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_count + 1; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(&entityList[i] == self)
+		if(&EntityList[i] == self)
 		{
 			continue;
 		}
-		if(entity_collide(self, &entityList[i]))
+		if(Entity_collide(self, &EntityList[i]))
 		{
 			return true;
 		}
 	}
 	return false;
 }
-int entity_collide(entity *a, entity*b)
+int Entity_collide(Entity *a, Entity*b)
 {
 	SDL_Rect aB = {a->boundBox.x + a->position.x, a->boundBox.y + a->position.y, a->boundBox.w, a->boundBox.h};
 	SDL_Rect bB = {b->boundBox.x + b->position.x, b->boundBox.y + b->position.y, b->boundBox.w, b->boundBox.h};
@@ -340,13 +340,13 @@ void weapon_collide_draw_box(Rect_f self, Rect_f other)
 		slog("Failed to set render draw color");
 	}
 }
-int weapon_collision(entity *self, entity *other, Rect_f bound)
+int weapon_collision(Entity *self, Entity *other, Rect_f bound)
 {
 	Rect_f aB = {(float)other->position.x + (float)other->boundBox.x, (float)other->position.y + other->boundBox.y, other->boundBox.w, other->boundBox.h};
 	Rect_f bB = {(float)self->position.x + bound.x + self->weapon->boundOffset.x, (float)self->position.y + bound.y + self->weapon->boundOffset.y, bound.w, bound.h};
 
 	if(!self || !self->weapon || !other){
-		slog("NO weap or entity");
+		slog("NO weap or Entity");
 		return false;
 	}
 
@@ -364,7 +364,7 @@ int weapon_collision(entity *self, entity *other, Rect_f bound)
 	return false;
 }
 
-void weapon_collision(entity *owner)
+void weapon_collision(Entity *owner)
 {
 	int i;
 
@@ -372,29 +372,29 @@ void weapon_collision(entity *owner)
 	{
 		slog("Entity or Weapon is NULL. No Collision");
 	}
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_MAX; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(!entityList[i].update){
+		if(!EntityList[i].update){
 			continue;
 		}
-		if(owner == &entityList[i]){
+		if(owner == &EntityList[i]){
 			continue;
 		}
 		if(owner->weapon && owner->weapon->active){
 			switch(owner->weapon->face_dir){
 				case UP:
-						weapon_collision(owner, &entityList[i], owner->weapon->boundUp);
+						weapon_collision(owner, &EntityList[i], owner->weapon->boundUp);
 						break;
 				case DOWN:
-						weapon_collision(owner, &entityList[i], owner->weapon->boundDown);
+						weapon_collision(owner, &EntityList[i], owner->weapon->boundDown);
 						break;
 				case LEFT:
-						weapon_collision(owner, &entityList[i], owner->weapon->boundLeft);
+						weapon_collision(owner, &EntityList[i], owner->weapon->boundLeft);
 						break;
 				case RIGHT:
-						weapon_collision(owner, &entityList[i], owner->weapon->boundRight);
+						weapon_collision(owner, &EntityList[i], owner->weapon->boundRight);
 						break;
 				default:
 					break;
@@ -403,42 +403,42 @@ void weapon_collision(entity *owner)
 	}
 }
 
-void entity_check_collision_all()
+void Entity_check_collision_all()
 {
 	int i = 0;
 	int j = 0;
-	entity *curr = NULL;
-	entity *next = NULL;
+	Entity *curr = NULL;
+	Entity *next = NULL;
 
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_MAX; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(!entityList[i].update){
+		if(!EntityList[i].update){
 			continue;
 		}
-		curr = &entityList[i];
+		curr = &EntityList[i];
 
-		for(j = 0; j < ENTITY_MAX; j++){
-			if(!entityList[j].inuse){
+		for(j = 0; j < Entity_MAX; j++){
+			if(!EntityList[j].inuse){
 				continue;
 			}
-			if(!entityList[j].update){
+			if(!EntityList[j].update){
 				continue;
 			}
-			if(curr == &entityList[j]){
+			if(curr == &EntityList[j]){
 				continue;
 			}
 			if(!curr){
 				slog("Curr is null");
 				continue;
 			}
-			next = &entityList[j];
+			next = &EntityList[j];
 			if((!next || !curr) || curr == next )
 			{
 				continue;
 			}
-			if(entity_collide(curr, next))
+			if(Entity_collide(curr, next))
 			{
 				if(curr->touch)
 				{				
@@ -450,12 +450,12 @@ void entity_check_collision_all()
 }
 
 //player 
-entity * Entity_Get_Player()
+Entity * Entity_Get_Player()
 {
 	return player;
 }
 
-void ent_follow_path(entity *self)
+void ent_follow_path(Entity *self)
 {
 	Vec2d tile_pos;
 	Vec2d tile_center_pos;
@@ -542,26 +542,26 @@ void ent_follow_path(entity *self)
 
 }
 
-entity * ent_find_nearest_enemy(entity *self)
+Entity * ent_find_nearest_enemy(Entity *self)
 {
 	int i;
 	float min_dist = 99999;
 	float distance;
 	int ent_index = -1;
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_MAX; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(entityList[i].team == self->team)
+		if(EntityList[i].team == self->team)
 		{
 			continue;
 		}
-		if(&entityList[i] == self)
+		if(&EntityList[i] == self)
 		{
 			continue;
 		}
 
-		distance = Vec2dDistance(entityList[i].position, self->position);
+		distance = Vec2dDistance(EntityList[i].position, self->position);
 		if(min_dist > MIN(min_dist, distance))
 		{
 			min_dist = distance;
@@ -571,7 +571,7 @@ entity * ent_find_nearest_enemy(entity *self)
 	if(ent_index != -1)
 	{
 
-		return &entityList[ent_index];
+		return &EntityList[ent_index];
 	}
 	else
 	{
@@ -580,26 +580,26 @@ entity * ent_find_nearest_enemy(entity *self)
 
 }
 
-entity * ent_find_nearest_teammate(entity *self)
+Entity * ent_find_nearest_teammate(Entity *self)
 {
 	int i;
 	float min_dist = 99999;
 	float distance;
 	int ent_index = -1;
-	for(i = 0; i < ENTITY_MAX; i++){
-		if(!entityList[i].inuse){
+	for(i = 0; i < Entity_MAX; i++){
+		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(entityList[i].team != self->team)
+		if(EntityList[i].team != self->team)
 		{
 			continue;
 		}
-		if(&entityList[i] == self)
+		if(&EntityList[i] == self)
 		{
 			continue;
 		}
 
-		distance = Vec2dDistance(entityList[i].position, self->position);
+		distance = Vec2dDistance(EntityList[i].position, self->position);
 		if(min_dist > MIN(min_dist, distance))
 		{
 			min_dist = distance;
@@ -609,7 +609,7 @@ entity * ent_find_nearest_teammate(entity *self)
 	if(ent_index != -1)
 	{
 
-		return &entityList[ent_index];
+		return &EntityList[ent_index];
 	}
 	else
 	{
