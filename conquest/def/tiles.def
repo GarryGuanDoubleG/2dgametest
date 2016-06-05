@@ -1,0 +1,26 @@
+{
+	"tile_width": 64,
+	"tile_height": 64,
+	"tiles":
+	{
+		"grass":
+		{
+			"filepath": "images/terrain/Grass01.png",
+			"type": 0
+		},
+		"road":
+		{
+			"filepath": "images/terrain/Grass01.png",
+			"type": 2
+		}
+	},
+	"destructables":
+	{
+		"tree":
+		{
+			"filepath": "images/terrain/tree.png",
+			"hits": 5,
+			"type": 1
+		}
+	}
+}
