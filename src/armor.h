@@ -11,7 +11,7 @@
 #define ARMOR_CLOTH 1
 #define ARMOR_LEATEHR 2
 /**
-* brief terms for the current animation state an entity is in to play matching armor animation
+* brief terms for the current animation state an Entity is in to play matching armor animation
 */
 #define WALK 10
 #define SLASH 11
@@ -44,15 +44,15 @@ typedef struct{
 
 	int imageH,imageW;/**<dimensions of image in the sprite to render to screen */
 	int frameW, frameH; /**<size of frame in pixels to draw to the screen */
-	Vec2d offset;/**<x and y distance to draw away from the entity that wears this armor */
+	Vec2d offset;/**<x and y distance to draw away from the Entity that wears this armor */
 	//only need offset if using custom weapon not from same creator
 
 	int phys_def;/**<physical defense value used for decreasing incoming physical damage by percent*/
 	int magic_def;/**<magical defense value used for decreasing incoming magical damage by percent*/
 
-	int face_dir; /**<direction entity is currently facing - up, down, left, right. Some ents only face left or right*/
+	int face_dir; /**<direction Entity is currently facing - up, down, left, right. Some ents only face left or right*/
 	int type;/**<type of armor used for potentionally adding more or less damage reduction scaling to armor*/
-	int equipped;/**<bool that tracks whether entity is currently wearing the armor or has it inventory*/
+	int equipped;/**<bool that tracks whether Entity is currently wearing the armor or has it inventory*/
 
 	int frame; /**<frame number to draw*/
 	

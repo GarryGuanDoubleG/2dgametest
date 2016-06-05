@@ -1,7 +1,7 @@
 #include "grue.h"
 
 
-void grue_think(entity* self){
+void grue_think(Entity* self){
 	int randomNum;
 	Vec2d self_pos =  {self->position.x, self->position.y};
 	Vec2d player_pos = {Entity_Get_Player()->position.x, Entity_Get_Player()->position.y};
@@ -76,19 +76,19 @@ void grue_think(entity* self){
 	}
 }
 
-void grue_update(entity *self){
+void grue_update(Entity *self){
 	Vec2dAdd(self->position, self->velocity, self->position);
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void grue_touch(entity *self, entity *other)
+void grue_touch(Entity *self, Entity *other)
 {
 
 }
 
-entity * grue_spawn(){
+Entity * grue_spawn(){
 	Sprite * sprite_grue;
-	entity * ent_grue = NULL;
+	Entity * ent_grue = NULL;
 	Vec2d pos = {400,400};
 	Vec2d vel = {-5,0};
 	SDL_Rect boundBox = {grue_frameW*.1f,grue_frameH *.1f, grue_frameW, grue_frameH};
@@ -99,7 +99,7 @@ entity * grue_spawn(){
 	slog("Monster Spawn Timer mod MonsterSpawn Timer is %i " , (G_MONSTER_SPAWN_TIMER % (GRUE_TIMER)));
 	sprite_grue = Sprite_Load(sprite_grue_filepath, grue_imageW, grue_imageH, grue_frameW, grue_frameH);
 	sprite_grue->fpl = 2;//2 frames per line
-	ent_grue = entity_load(sprite_grue, pos, 150, 25, STATE_PATROL);
+	ent_grue = Entity_load(sprite_grue, pos, 150, 25, STATE_PATROL);
 
 
 	if(!ent_grue){
@@ -117,7 +117,7 @@ entity * grue_spawn(){
 	ent_grue->state = STATE_PATROL;
 	ent_grue->boundBox = boundBox;
 
-	ent_grue->type = ENTITY_TYPE::GRUE;
+	ent_grue->type = Entity_TYPE::GRUE;
 
 	return ent_grue;
 }

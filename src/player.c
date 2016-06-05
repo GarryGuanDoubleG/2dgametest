@@ -3,12 +3,12 @@
 #include "particle_emitter.h"
 char* player_char_file = "images/player/BODY_male.png";
 
-entity* player = NULL;
+Entity* player = NULL;
 
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
-const int PLAYER_FRAMEH = 128;
-const int PLAYER_FRAMEW = 128;
+const int PLAYER_FRAMEH = 64;
+const int PLAYER_FRAMEW = 64;
 
 static Player_Equip PlayerEquip;
 static int anim_current;//used to determine current animation
@@ -45,7 +45,7 @@ void Player_Init(){
 	Sprite *player_sprite = Sprite_Load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
 	player_sprite->fpl = 9;
 	anim_current = WALK;
-	player = entity_load(player_sprite,pos, 3500, 100, 0 );
+	player = Entity_load(player_sprite,pos, 3500, 100, 0 );
 	slog("Player: X: %i Y: %i", player->position.x, player->position.y);
 
 	playerBody.image = player->sprite;
@@ -110,22 +110,22 @@ void Player_Draw_equip(){
 	Vec2dCopy(player->position, draw_pos);
 
 	if(PlayerEquip.feet){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame,Graphics_Get_Renderer(), player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame, player->position);
 	}
 	if(PlayerEquip.hands){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame,Graphics_Get_Renderer(), player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame, player->position);
 	}
 	if(PlayerEquip.head){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame,Graphics_Get_Renderer(), player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame, player->position);
 	}
 	if(PlayerEquip.torso){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame,Graphics_Get_Renderer(), player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame, player->position);
 	}
 	if(PlayerEquip.chest){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame,Graphics_Get_Renderer(), player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame, player->position);
 	}
 	if(PlayerEquip.shoulders){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame,Graphics_Get_Renderer(), player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame, player->position);
 	}
 
 	if(PlayerEquip.weapon && PlayerEquip.weapon->active && anim_current == SLASH ){
@@ -134,10 +134,10 @@ void Player_Draw_equip(){
 			//offset it
 			Vec2dSet(draw_pos, player->position.x - PLAYER_FRAMEW, player->position.y - PLAYER_FRAMEH);
 
-			Sprite_Draw(player->weapon->image, player->frame,__gt_graphics_renderer, draw_pos);
+			Sprite_Draw(player->weapon->image, player->frame, draw_pos);
 		}
 		else{ //draw on player instead
-			Sprite_Draw(PlayerEquip.weapon->image, player->frame,__gt_graphics_renderer, player->position);
+			Sprite_Draw(PlayerEquip.weapon->image, player->frame, player->position);
 		} 
 	}
 }
@@ -146,7 +146,7 @@ void Player_Draw(){
 	//need to add other equipment
 	slog("Player Frame is %i fpl is %i", player->frame, player->sprite->fpl);
 
-	entity_draw(player);
+	Entity_draw(player);
 
 	Player_Draw_equip();
 	hud_draw(Camera_Get_Camera(),player->health, player->maxhealth, player->stamina, player->stamina);
@@ -172,7 +172,7 @@ int player_get_new_frame(int animation, int curr_frame, int fpl)
 	return frame;
 }
 
-void Player_Update(entity *self)
+void Player_Update(Entity *self)
 {
 	Vec2d new_pos = {player->position.x + player->velocity.x, player->position.y + player->velocity.y};
 	int frame;
@@ -301,7 +301,7 @@ void Player_Move(SDL_Event *e){
 		case SDLK_v:
 			if(in_build_mode_01)
 			{
-				structure_spawn( ENTITY_TYPE::WALL );
+				structure_spawn( Entity_TYPE::WALL );
 
 				in_build_mode_01 = Bool_False;
 				set_hud_state(HUD_state::main_menu);
@@ -359,7 +359,7 @@ int Player_Tree_Collision()
 
 	return tile_forage(player->position, player->boundBox, player->face_dir);
 }
-void Player_Think(entity* self)
+void Player_Think(Entity* self)
 {
 
 

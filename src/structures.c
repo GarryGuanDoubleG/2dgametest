@@ -1,13 +1,13 @@
 #include "structures.h"
 
 static int struct_show_select = false;
-static entity * selected_struct = NULL;
+static Entity * selected_struct = NULL;
 extern struct Mouse;
-extern entity *player;
+extern Entity *player;
 
-void struct_update(entity *self)
+void struct_update(Entity *self)
 {
-	entity_draw(self);
+	Entity_draw(self);
 }
 
 Vec2d StructGetBuildPos()
@@ -32,7 +32,7 @@ Vec2d StructGetBuildPos()
 	return build_pos;
 }
 
-void struct_touch(entity *self, entity *other)
+void struct_touch(Entity *self, Entity *other)
 {
 	Vec2d new_pos;
 	Vec2d neg_vel;
@@ -44,7 +44,7 @@ void struct_touch(entity *self, entity *other)
 	Vec2dSet(other->velocity, 0, 0);
 }
 
-entity *struct_wall_spawn()
+Entity *struct_wall_spawn()
 {
 	Sprite *sprite;
 	cStruct * wall;
@@ -69,8 +69,8 @@ entity *struct_wall_spawn()
 	sprite = Sprite_Load("images/structures/wall_01.png", 66, 160, 100, 120);
 	sprite->fpl = 1;
 
-	wall = entity_load(sprite, build_pos, 1000, 0, 0);
-	wall->type = ENTITY_TYPE::WALL;
+	wall = Entity_load(sprite, build_pos, 1000, 0, 0);
+	wall->type = Entity_TYPE::WALL;
 
 	wall->boundBox = New_SDL_Rect( 10, 10, 110, 110);
 
@@ -81,16 +81,16 @@ entity *struct_wall_spawn()
 	return wall;
 }
 
-entity *structure_spawn(int type)
+Entity *structure_spawn(int type)
 {
-	if(type == ENTITY_TYPE::WALL)
+	if(type == Entity_TYPE::WALL)
 	{
 		return struct_wall_spawn();	
 	}
 }
 
 
-void update_selected_struct(entity *self)
+void update_selected_struct(Entity *self)
 {
 	Vec2d m_pos = Get_Mouse_Pos();
 	Vec2d cam_offset = {Camera_Get_Camera().x, Camera_Get_Camera().y } ;
@@ -113,7 +113,7 @@ void update_selected_struct(entity *self)
 		self->boundBox.y = draw_pos.y;
 		self->position = draw_pos;
 
-		entity_draw(self);
+		Entity_draw(self);
 	}	
 }
 
@@ -129,7 +129,7 @@ int structure_place()
 	slog("placing structure");
 	selected_struct->selected = false;
 	if(!tile_collision(selected_struct->position, selected_struct->boundBox)
-	   && !entity_check_collision(selected_struct))
+	   && !Entity_check_collision(selected_struct))
 	{
 		selected_struct->placed = true;
 		selected_struct->update = struct_update;

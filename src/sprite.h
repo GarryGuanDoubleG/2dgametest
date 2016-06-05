@@ -38,6 +38,9 @@ Sprite *Sprite_Load(char *filename, int img_width, int img_height, int frameW, i
 Sprite *Sprite_Load_Text(TTF_Font *font, char *text, SDL_Color color);
 
 void Sprite_Free(Sprite **sprite);
-void Sprite_Draw(Sprite *sprite, int frame, SDL_Renderer *renderer, Vec2d draw_pos);
+
+void Sprite_Draw(Sprite *sprite, int frame, Vec2d draw_pos);
+
 void Sprite_Text_Draw(Sprite *text, Vec2d drawPos, int alpha);
+
 #endif

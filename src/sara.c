@@ -1,6 +1,6 @@
 #include "sara.h"
 
-void sara_update(entity *self)
+void sara_update(Entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 
@@ -16,10 +16,10 @@ void sara_update(entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void sara_attack_mode(entity *self, entity * other)
+void sara_attack_mode(Entity *self, Entity * other)
 {
 	if(!self || !other)
 	{
@@ -33,7 +33,7 @@ void sara_attack_mode(entity *self, entity * other)
 	}
 }
 
-void sara_touch(entity *self, entity *other)
+void sara_touch(Entity *self, Entity *other)
 {
 	if(!self || !other)
 	{
@@ -42,12 +42,12 @@ void sara_touch(entity *self, entity *other)
 	}
 	//other->health -= self->damage;
 }
-void sara_think(entity *self)
+void sara_think(Entity *self)
 {
 	int randomNum;
 	int distance;
 	Vec2d self_pos =  {self->position.x, self->position.y};	
-	entity *enemy; 
+	Entity *enemy; 
 	Vec2d enemy_pos; 
 	Vec2d sara_dir;
 
@@ -116,15 +116,15 @@ void sara_think(entity *self)
 	//setting which sprite to use depending on direction
 }
 
-void sara_onDeath(entity *self)
+void sara_onDeath(Entity *self)
 {
 
 }
 
-entity * sara_spawn()
+Entity * sara_spawn()
 {
 	Sprite * sprite_sara;
-	entity * ent_sara = NULL;
+	Entity * ent_sara = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	Vec2d vel = {0,0};
@@ -138,7 +138,7 @@ entity * sara_spawn()
 	slog("sara: x%f y%f", pos.x, pos.y);
 	sprite_sara = Sprite_Load(SPRITE_SARA_FILEPATH, SARA_IMAGEW, SARA_IMAGEH, SARA_FRAMEW, SARA_FRAMEH);
 	sprite_sara->fpl = SARA_FPL;//2 frames per line
-	ent_sara = entity_load(sprite_sara, pos, 100, 25, STATE_PATROL);
+	ent_sara = Entity_load(sprite_sara, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_sara){
 		slog("Could not spawn Spider01");

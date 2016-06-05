@@ -60,30 +60,30 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 	//draw bar background
 	sprite_bar.frameW = bg_bar_width;
 	//health bar bg
-	Sprite_Draw(&sprite_bar, 0, Graphics_Get_Renderer(), draw_pos_h_bar);
+	Sprite_Draw(&sprite_bar, 0, draw_pos_h_bar);
 	//mana bar bg
-	Sprite_Draw(&sprite_bar, 0, Graphics_Get_Renderer(), draw_pos_m_bar);
+	Sprite_Draw(&sprite_bar, 0, draw_pos_m_bar);
 
 	//health
 	sprite_bar.frameW = BAR_FRAME_W * health_percent;
-	Sprite_Draw(&sprite_bar, 1, Graphics_Get_Renderer(), draw_pos_h_bar);
+	Sprite_Draw(&sprite_bar, 1, draw_pos_h_bar);
 	
 	//mana
 	sprite_bar.frameW = BAR_FRAME_W * mana_percent;
-	Sprite_Draw(&sprite_bar, 2, Graphics_Get_Renderer(), draw_pos_m_bar);
+	Sprite_Draw(&sprite_bar, 2, draw_pos_m_bar);
 	
 	//menu
 
 	Vec2dSet(draw_pos, camera.x + HUD_MENU_DRAW_X, camera.y + HUD_MENU_DRAW_Y);
-	Sprite_Draw(HUD_menu,0, Graphics_Get_Renderer(), draw_pos);
+	Sprite_Draw(HUD_menu,0, draw_pos);
 
 	if(hud_state_curr == main_menu)
 	{
 		Vec2dSet(draw_pos, camera.x + HUD_ITEM_BAG_DRAW_X, camera.y + HUD_ITEM_BAG_DRAW_Y);
-		Sprite_Draw(HUD_item_bag, 0, Graphics_Get_Renderer(), draw_pos);
+		Sprite_Draw(HUD_item_bag, 0, draw_pos);
 
 		Vec2dSet(draw_pos, camera.x + HUD_AXE_DRAW_X, camera.y + HUD_AXE_DRAW_Y);
-		Sprite_Draw(HUD_axe, 0,  Graphics_Get_Renderer(), draw_pos);
+		Sprite_Draw(HUD_axe, 0, draw_pos);
 	}
 
 	if(hud_state_curr == inventory1)
@@ -104,7 +104,7 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 
 			Vec2dSet(draw_pos, draw_x, draw_y);
 
-			Sprite_Draw(inv_items[i].icon, 0, Graphics_Get_Renderer(), draw_pos);
+			Sprite_Draw(inv_items[i].icon, 0, draw_pos);
 		}
 	}
 	else if(hud_state_curr == HUD_state::build1)
@@ -115,7 +115,7 @@ void hud_draw(SDL_Rect camera, float health, float max_health, float mana, float
 
 		Vec2dSet(draw_pos, draw_x, draw_y);
 
-		Sprite_Draw(HUD_wall_icon, 0, Graphics_Get_Renderer(), draw_pos);
+		Sprite_Draw(HUD_wall_icon, 0, draw_pos);
 	}
 	
 }

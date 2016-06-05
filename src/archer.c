@@ -1,6 +1,6 @@
 #include "archer.h"
 
-void archer_update(entity *self)
+void archer_update(Entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 
@@ -16,10 +16,10 @@ void archer_update(entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void archer_attack_mode(entity *self, entity * other)
+void archer_attack_mode(Entity *self, Entity * other)
 {
 	if(!self || !other)
 	{
@@ -33,7 +33,7 @@ void archer_attack_mode(entity *self, entity * other)
 	}
 }
 
-void archer_touch(entity *self, entity *other)
+void archer_touch(Entity *self, Entity *other)
 {
 	if(!self || !other)
 	{
@@ -42,12 +42,12 @@ void archer_touch(entity *self, entity *other)
 	}
 	//other->health -= self->damage;
 }
-void archer_think(entity *self)
+void archer_think(Entity *self)
 {
 	int randomNum;
 	int distance;
 	Vec2d self_pos =  {self->position.x, self->position.y};	
-	entity *enemy; 
+	Entity *enemy; 
 	Vec2d enemy_pos; 
 	Vec2d archer_dir;
 
@@ -116,15 +116,15 @@ void archer_think(entity *self)
 	//setting which sprite to use depending on direction
 }
 
-void archer_onDeath(entity *self)
+void archer_onDeath(Entity *self)
 {
 
 }
 
-entity * archer_spawn()
+Entity * archer_spawn()
 {
 	Sprite * sprite_archer;
-	entity * ent_archer = NULL;
+	Entity * ent_archer = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	Vec2d vel = {0,0};
@@ -138,7 +138,7 @@ entity * archer_spawn()
 	slog("archer: x%f y%f", pos.x, pos.y);
 	sprite_archer = Sprite_Load(SPRITE_ARCHER_FILEPATH, ARCHER_IMAGEW, ARCHER_IMAGEH, ARCHER_FRAMEW, ARCHER_FRAMEH);
 	sprite_archer->fpl = ARCHER_FPL;//2 frames per line
-	ent_archer = entity_load(sprite_archer, pos, 100, 25, STATE_PATROL);
+	ent_archer = Entity_load(sprite_archer, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_archer){
 		slog("Could not spawn Spider01");

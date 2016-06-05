@@ -1,6 +1,6 @@
 #include "supp_angel.h"
 
-void angel_update(entity *self)
+void angel_update(Entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 
@@ -16,10 +16,10 @@ void angel_update(entity *self)
 		self->position = new_pos;
 	}
 	self->frame = (self->frame + 1) % self->sprite->fpl;
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void angel_heal_mode(entity *self, entity *other)
+void angel_heal_mode(Entity *self, Entity *other)
 {
 	if(!self || !other)
 	{
@@ -39,7 +39,7 @@ void angel_heal_mode(entity *self, entity *other)
 
 }
 
-void angel_touch(entity *self, entity *other)
+void angel_touch(Entity *self, Entity *other)
 {
 	if(!self || !other)
 	{
@@ -48,12 +48,12 @@ void angel_touch(entity *self, entity *other)
 	}
 	//other->health -= self->damage;
 }
-void angel_think(entity *self)
+void angel_think(Entity *self)
 {
 	int randomNum;
 	int distance;
 	Vec2d self_pos =  {self->position.x, self->position.y};	
-	entity *teammate; 
+	Entity *teammate; 
 	Vec2d angel_dir;
 
 	if(!self){
@@ -139,15 +139,15 @@ void angel_think(entity *self)
 
 }
 
-void angel_onDeath(entity *self)
+void angel_onDeath(Entity *self)
 {
 
 }
 
-entity * angel_spawn()
+Entity * angel_spawn()
 {
 	Sprite * sprite_angel;
-	entity * ent_angel = NULL;
+	Entity * ent_angel = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	Vec2d vel = {0,0};
@@ -161,7 +161,7 @@ entity * angel_spawn()
 	slog("angel: x%f y%f", pos.x, pos.y);
 	sprite_angel = Sprite_Load(SPRITE_ANGEL_FILEPATH, ANGEL_IMAGEW, ANGEL_IMAGEH, ANGEL_FRAMEW, ANGEL_FRAMEH);
 	sprite_angel->fpl = ANGEL_FPL;//2 frames per line
-	ent_angel = entity_load(sprite_angel, pos, 100, 25, STATE_PATROL);
+	ent_angel = Entity_load(sprite_angel, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_angel){
 		slog("Could not spawn Spider01");

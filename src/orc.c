@@ -1,6 +1,6 @@
 #include "orc.h"
 
-void orc_update(entity *self)
+void orc_update(Entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 
@@ -16,13 +16,13 @@ void orc_update(entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void orc_touch(entity *self, entity *other)
+void orc_touch(Entity *self, Entity *other)
 {
 }
-void orc_think(entity *self)
+void orc_think(Entity *self)
 {
 	int randomNum;
 	int distance;
@@ -95,12 +95,12 @@ void orc_think(entity *self)
 	//setting which sprite to use depending on direction
 }
 
-void orc_onDeath(entity *self)
+void orc_onDeath(Entity *self)
 {
 
 }
 
-entity * orc_spawn(int type)
+Entity * orc_spawn(int type)
 {
 	slog("orc_spawn");
 	if(type == Monster::orc)
@@ -108,10 +108,10 @@ entity * orc_spawn(int type)
 		return orc_spawn();
 	}
 }
-entity * orc_spawn()
+Entity * orc_spawn()
 {
 	Sprite * sprite_orc;
-	entity * ent_orc = NULL;
+	Entity * ent_orc = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	Vec2d vel = {0,0};
@@ -125,7 +125,7 @@ entity * orc_spawn()
 	slog("ORC: x%f y%f", pos.x, pos.y);
 	sprite_orc = Sprite_Load(SPRITE_ORC_FILEPATH, ORC_IMAGEW, ORC_IMAGEH, ORC_FRAMEW, ORC_FRAMEH);
 	sprite_orc->fpl = ORC_FPL;//2 frames per line
-	ent_orc = entity_load(sprite_orc, pos, 100, 25, STATE_PATROL);
+	ent_orc = Entity_load(sprite_orc, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_orc){
 		slog("Could not spawn Spider01");

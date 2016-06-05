@@ -25,7 +25,6 @@ extern const int PLAYER_FRAMEH;
 * @brief tile structure with tile dimensions and type to be rendered
 */
 typedef struct{
-
 	SDL_Rect mBox; /**< SDL_Rect with position and dimensions.*/
 	//Type of tile
 	int mType; /**< int type of the tile*/
@@ -94,15 +93,15 @@ int tile_get_type(int index);
 
 void tile_editor_set_type(int tile_index, int new_type);
 /*
-* @brief gets the tile index based on entity position and bouding box
-* @param position of entity to match with tile position. Bounding box used for center postion of ent
+* @brief gets the tile index based on Entity position and bouding box
+* @param position of Entity to match with tile position. Bounding box used for center postion of ent
 * @return int tile index matching position
 */
 int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
 
 /*
 * @brief returns true if tile collides with certain position and its bounding box
-* @param Vec2d position of collision. SDL_Rect bound to check entity collisions
+* @param Vec2d position of collision. SDL_Rect bound to check Entity collisions
 * @return true if position is collides with tile
 */
 int tile_collision(Vec2d pos, SDL_Rect bound);

@@ -69,6 +69,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\actor.h" />
     <ClInclude Include="..\src\archer.h" />
     <ClInclude Include="..\src\armor.h" />
     <ClInclude Include="..\src\audio.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="..\src\window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\actor.c" />
     <ClCompile Include="..\src\archer.c" />
     <ClCompile Include="..\src\armor.c" />
     <ClCompile Include="..\src\audio.c" />

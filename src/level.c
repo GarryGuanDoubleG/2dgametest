@@ -1,13 +1,15 @@
+#include <jansson.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <glib.h>
+
 #include "level.h"
 #include "load.h"
 #include "save.h"
 #include "simple_logger.h"
 #include "json_parse.h"
 #include "graphics.h"
-#include <jansson.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <glib.h>
+
 static Vec2d G_em_camera_bound;
 static Vec2d G_Mouse_Pos;
 
@@ -209,7 +211,7 @@ void Level_Tile_Tools_Draw(void *key, gpointer sprite, gpointer pos)
 
 			Vec2dSubtract(draw_pos, Camera_Get_Editor_Offset(), draw_pos);
 		}
-		Sprite_Draw((Sprite *)sprite, 0, Graphics_Get_Renderer(), draw_pos);
+		Sprite_Draw((Sprite *)sprite, 0, draw_pos);
 		return;
 	}
 
@@ -226,12 +228,12 @@ void Level_Tile_Tools_Draw(void *key, gpointer sprite, gpointer pos)
 	if(G_Selected_Type != type)
 	{
 		SDL_SetTextureColorMod(tile_sprite->image, 100,100,200);
-		Sprite_Draw(tile_sprite, 0, Graphics_Get_Renderer(), draw_pos);
+		Sprite_Draw(tile_sprite, 0, draw_pos);
 		SDL_SetTextureColorMod(tile_sprite->image, 255,255,255);
 	}
 	else
 	{
-		Sprite_Draw(tile_sprite, 0, Graphics_Get_Renderer(), draw_pos);
+		Sprite_Draw(tile_sprite, 0, draw_pos);
 	}
 	//set next tile to draw to the right
 	next_pos->x += tile_sprite->frameW + 10;
@@ -305,7 +307,7 @@ void Level_Editor_Mode()
 void Level_Load_New()
 {
   tile_init_system(Bool_True); // allocate memory for tiles and generate map
-  Player_Init(); //creates player entity
+  Player_Init(); //creates player Entity
 }
 
 void Level_Load(int load)
@@ -349,7 +351,7 @@ void Level_Load(int load)
 	if(!value)
 		Player_Load_from_Def(NULL);
 	 else
-		Player_Load_from_Def(value); //creates player entity
+		Player_Load_from_Def(value); //creates player Entity
 }
 
 void Level_Save()
@@ -363,19 +365,19 @@ void Level_Save()
 	int col;
 
 	int player_tile;
-	entity * ent_player;
-	entity * ent;
+	Entity * ent_player;
+	Entity * ent;
 
 	Dict *dict_tile_map;
-	Dict *entity_save_hash;
+	Dict *Entity_save_hash;
 	Dict *value;
 	Dict *save;
 
 	save = Dict_New_Hash();
-	entity_save_hash = Dict_New_Hash();
+	Entity_save_hash = Dict_New_Hash();
 	value = Dict_New_Hash();
 	if(!save) return;
-	//if(!entity_list) return;
+	//if(!Entity_list) return;
 
 	//save player
 	ent_player = Entity_Get_Player();
@@ -399,13 +401,13 @@ void Level_Save()
 		Dict_Hash_Insert(save, "TILE_MAP", dict_tile_map);
 	}
 	/*
-	for(i = 0; i < ENTITY_MAX; i++)
+	for(i = 0; i < Entity_MAX; i++)
 	{
-		if(!entityList[i].inuse)
+		if(!EntityList[i].inuse)
 		{
 			continue;
 		}
-		ent = entityList[i];
+		ent = EntityList[i];
 
 		Dict_Hash_Insert(value, "position_x", Dict_New_float(ent->position.x));
 		Dict_Hash_Insert(value, "position_y", ent->position.y);
@@ -413,7 +415,7 @@ void Level_Save()
 		Dict_Hash_Insert(value, "health", ent->health);
 		Dict_Hash_Insert(value, "type", ent->type);
 
-		Dict_Hash_Insert(entity_save_hash, iota(ent->id), value);
+		Dict_Hash_Insert(Entity_save_hash, iota(ent->id), value);
 	}
 	*/
 	//save

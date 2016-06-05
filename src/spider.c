@@ -1,6 +1,6 @@
 #include "spider.h"
 
-void spider_update(entity *self)
+void spider_update(Entity *self)
 {
 	Vec2d new_pos = {self->position.x + self->velocity.x, self->position.y + self->velocity.y};
 
@@ -16,13 +16,13 @@ void spider_update(entity *self)
 		self->position = new_pos;
 	}
 
-	entity_draw(self);
+	Entity_draw(self);
 }
 
-void spider_touch(entity *self, entity *other)
+void spider_touch(Entity *self, Entity *other)
 {
 }
-void spider_think(entity *self)
+void spider_think(Entity *self)
 {
 	int randomNum;
 	int distance;
@@ -122,12 +122,12 @@ void spider_think(entity *self)
 	}
 }
 
-void spider_onDeath(entity *self)
+void spider_onDeath(Entity *self)
 {
 
 }
 
-entity * spider_spawn(int type)
+Entity * spider_spawn(int type)
 {
 	slog("spider_spawn");
 	if(type == Monster::spider01)
@@ -135,10 +135,10 @@ entity * spider_spawn(int type)
 		return spider01_spawn();
 	}
 }
-entity * spider01_spawn()
+Entity * spider01_spawn()
 {
 	Sprite * sprite_spider01;
-	entity * ent_spider01 = NULL;
+	Entity * ent_spider01 = NULL;
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
 	Vec2d vel = {0,0};
@@ -152,7 +152,7 @@ entity * spider01_spawn()
 	slog("spider: x%f y%f", pos.x, pos.y);
 	sprite_spider01 = Sprite_Load(SPRITE_SPIDER01_FILEPATH, SPIDER01_IMAGEW, SPIDER01_IMAGEH, SPIDER01_FRAMEW, SPIDER01_FRAMEH);
 	sprite_spider01->fpl = 10;
-	ent_spider01 = entity_load(sprite_spider01, pos, 100, 25, STATE_PATROL);
+	ent_spider01 = Entity_load(sprite_spider01, pos, 100, 25, STATE_PATROL);
 
 	if(!ent_spider01){
 		slog("Could not spawn Spider01");
@@ -171,6 +171,6 @@ entity * spider01_spawn()
 	ent_spider01->boundBox = boundBox;
 	ent_spider01->aggro_range = SPIDER01_AGGRO_RANGE;//10 tiles
 
-	ent_spider01->type = ENTITY_TYPE::SPIDER;
+	ent_spider01->type = Entity_TYPE::SPIDER;
 	return ent_spider01;
 }
