@@ -16,7 +16,7 @@ void orc_update(Entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	Entity_draw(self);
+	Entity_Draw(self);
 }
 
 void orc_touch(Entity *self, Entity *other)
@@ -54,20 +54,20 @@ void orc_think(Entity *self)
 	{
 	//	self->frame_vertical = 3;
 
-		if(tile_to_tile_dist(tile_get_tile_number(self->position, self->boundBox), tile_get_tile_number(Entity_Get_Player()->position, Entity_Get_Player()->boundBox)) <= 1)
+		if(tile_to_tile_dist(Tile_Get_Index(self->position, self->boundBox), Tile_Get_Index(Entity_Get_Player()->position, Entity_Get_Player()->boundBox)) <= 1)
 		{
 			orc_dir.x = player_pos.x - self_pos.x;
 			orc_dir.y = player_pos.y - self_pos.y;
 
 			distance = Normalize2d(orc_dir);
-			orc_dir = VectorScale(orc_dir, orc_dir, GRUE_VELOCITY_AGGRO);
+		//	orc_dir = VectorScale(orc_dir, orc_dir, GRUE_VELOCITY_AGGRO);
 			self->velocity = distance != 0 ? orc_dir : self->velocity;
 			path_free(self->path);
 			self->path = NULL;
 		}
 		else
 		{
-			self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
+			//self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		}
 	//	aStar_search(self->aggro_range, self->position, Entity_Get_Player()->position,self->path);
 	}

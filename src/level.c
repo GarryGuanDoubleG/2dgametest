@@ -21,7 +21,6 @@ int G_Selected_Type = -1;
 int G_Store_Pos = Bool_True;
 int count = 0;
 
-
 void Level_Editor_Input(SDL_Event *e);
 
 void Level_Set_Select(gpointer key, gpointer tile_pos, gpointer data)
@@ -252,8 +251,6 @@ void Level_Editor_Draw()
 
 	Vec2dSet(asset_draw_pos, 0, 0);
 
-	//clear screen
-	ResetBuffer();
     SDL_RenderClear(Graphics_Get_Renderer());//clear screen
 
 	//draw tile assets
@@ -264,7 +261,7 @@ void Level_Editor_Draw()
 	tile_draw();
 	Draw_Mouse();
 
-	NextFrame();
+	graphics_next_frame();
 }
 
 void Level_Editor_Mode()
@@ -377,14 +374,13 @@ void Level_Save()
 	Entity_save_hash = Dict_New_Hash();
 	value = Dict_New_Hash();
 	if(!save) return;
-	//if(!Entity_list) return;
 
 	//save player
 	ent_player = Entity_Get_Player();
 
 	if(ent_player)
 	{
-		player_tile = tile_get_tile_number(player->position, player->boundBox);
+		player_tile = Tile_Get_Index(player->position, player->boundBox);
 		Dict_Hash_Insert(save, "PLAYER_TILE", Dict_New_int(player_tile));
 	}
 
@@ -400,24 +396,7 @@ void Level_Save()
 		Dict_Hash_Insert(save, "TILE_COLUMNS", Dict_New_int(col));
 		Dict_Hash_Insert(save, "TILE_MAP", dict_tile_map);
 	}
-	/*
-	for(i = 0; i < Entity_MAX; i++)
-	{
-		if(!EntityList[i].inuse)
-		{
-			continue;
-		}
-		ent = EntityList[i];
 
-		Dict_Hash_Insert(value, "position_x", Dict_New_float(ent->position.x));
-		Dict_Hash_Insert(value, "position_y", ent->position.y);
-		Dict_hash_Insert(value, "id", ent->id);
-		Dict_Hash_Insert(value, "health", ent->health);
-		Dict_Hash_Insert(value, "type", ent->type);
-
-		Dict_Hash_Insert(Entity_save_hash, iota(ent->id), value);
-	}
-	*/
 	//save
 	save_dict_as_json(save, "save.def");
 }
@@ -488,7 +467,7 @@ void Level_Editor_Input(SDL_Event *e)
 			mouse_bounds = New_SDL_Rect(0, 0, 16, 16);
 			//gets tile number based on original absolute positions not relative to camera
 			//subtract by offset
-			tile_index = tile_get_tile_number(mouse_pos, mouse_bounds);
+			tile_index = Tile_Get_Index(mouse_pos, mouse_bounds);
 			tile_editor_set_type(tile_index, G_Selected_Type);
 			slog("clicked tile index %i", tile_index);
 		}

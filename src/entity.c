@@ -1,27 +1,31 @@
 #include "Entity.h"
+
 #include "simple_logger.h"
-#include "load.h"
 
-const int Entity_MAX = 2000; // max entities allocated into memory
-int Entity_count = 0;
-Entity *EntityList; // handle on all entities
-Dict * Entity_defs = NULL;// dictionary of all Entity definitions
+const int		g_entity_max = 2000; // max entities allocated into memory
+int				g_entity_count = 0;
 
-extern Entity *player;
+Entity			*EntityList; // handle on all entities
+Dict			*Entity_defs = NULL;// dictionary of all Entity definitions
+
+extern			Entity *player;
 
 void Entity_initialize_system(){
 	int i;
 	Line key;
 	Dict * temp;
-	EntityList = (Entity *)malloc(sizeof(Entity) * Entity_MAX);
-	memset(EntityList, 0, sizeof(Entity)* Entity_MAX);
 
-	for(i = 0; i < Entity_MAX; i++){
+	EntityList = (Entity *)malloc(sizeof(Entity) * g_entity_max);
+	memset(EntityList, 0, sizeof(Entity)* g_entity_max);
+
+	for(i = 0; i < g_entity_max; i++)
+	{
 		EntityList[i].sprite = NULL;
 		EntityList[i].inuse = false;
 	}
-	slog("LOADING Entity DEF");
+
 	Entity_defs = load_dict_from_file("def/test.def");
+
 	if(!Entity_defs)
 	{
 		slog("Error, could not load Entity def");
@@ -38,33 +42,44 @@ void Entity_initialize_system(){
 			slog("%i: \n%s \n%s", i, key, (const char*)temp->keyValue);
 		}
 	}
-	slog("FINISHED LOADING");
-	atexit(Entity_close);
 
+	atexit(Entity_close);
 }
 
-Entity * Entity_new(){
-	int i = 0;
-	for(i = 0; i < Entity_MAX; i++){
-		if(EntityList[i].inuse == true){
+Entity * Entity_New(){
+	int i;
+
+	if(++g_entity_count >= g_entity_max)
+	{
+		slog("Max entities have already been reached");
+		return NULL;
+	}
+
+	for(i = 0; i < g_entity_max; i++)
+	{
+
+		if(EntityList[i].inuse == true)
+		{
 			continue;
 		}
-//		path_free(EntityList[i].path);
+
 		memset(&EntityList[i], 0, sizeof(Entity));
 		EntityList[i].inuse = true;
+
 		return (&EntityList[i]);
 	}
+
 	return NULL;
 }
 //loads structure
 Entity* struct_load(Sprite *sprite, int health, int defense, int type)
 {
 	int i;
-	for(i = 0; i < Entity_count + 1; i++)
+	for(i = 0; i < g_entity_count + 1; i++)
 	{
 		 if(EntityList[i].inuse == false)
 		 {
-			 Entity_count++;
+			 g_entity_count++;
 			 EntityList[i].inuse = true;
 			 EntityList[i].sprite = sprite;
 			 EntityList[i].health = health;
@@ -82,11 +97,11 @@ Entity* struct_load(Sprite *sprite, int health, int defense, int type)
 
 Entity* Entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state){
 	int i;
-	for(i = 0; i < Entity_count + 1; i++)
+	for(i = 0; i < g_entity_count + 1; i++)
 	{
 		 if(EntityList[i].inuse == false)
 		 {
-			 Entity_count++;			
+			 g_entity_count++;			
 			 EntityList[i].inuse = true;
 			 EntityList[i].sprite = sprite;
 			 EntityList[i].position = pos;
@@ -164,7 +179,7 @@ void draw_health_bar(Entity *self){
 }
 //end
 
-void Entity_draw(Entity *ent){
+void Entity_Draw(Entity *ent){
 	//SDL Main Camera src rect	
 	Sprite_Draw(ent->sprite, ent->frame, ent->position);
 	if(ent != player)
@@ -173,27 +188,27 @@ void Entity_draw(Entity *ent){
 	}
 }
 
-void Entity_free(Entity* ent){ //makes Entity->inuse false so new ent can be initialized in this mem location
+void Entity_Free(Entity* ent){ //makes Entity->inuse false so new ent can be initialized in this mem location
 	ent->inuse = false;
 	ent->sprite = NULL;
 	path_free(ent->path);
-	Entity_count--;
+	g_entity_count--;
 
 }
 
 void Entity_close(){ //deallocates all entities
 	int i;
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		 if(EntityList[i].inuse == true){
-			 Entity_free(&EntityList[i]);	
+			 Entity_Free(&EntityList[i]);	
 		 }
 	}
-	memset(EntityList, 0, sizeof(Entity) * Entity_MAX);
+	memset(EntityList, 0, sizeof(Entity) * g_entity_max);
 }
 
 void Entity_think_all(){
 	int i = 0;
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}
@@ -212,13 +227,14 @@ void Entity_update_all(){
 	int i = 0;
 	Vec2d new_pos;
 	Vec2d old_pos;
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}
 		if(!EntityList[i].sprite)
 		{
-			Entity_free(&EntityList[i]);
+			Entity_Free(&EntityList[i]);
+			continue;
 		}
 		//check for map bounds
 		if(EntityList[i].position.x < 0 ) 
@@ -246,14 +262,14 @@ void Entity_update_all(){
 		//don't free player
 		if(EntityList[i].health <= 0 && !(&EntityList[i] == player))
 		{
-			Entity_free(&EntityList[i]);
+			Entity_Free(&EntityList[i]);
 		}
 		if(EntityList[i].weapon){
 			EntityList[i].weapon->face_dir = EntityList[i].face_dir;
 		}
 		if(&EntityList[i] != player)
 		{		
-			Entity_draw(&EntityList[i]);
+			Entity_Draw(&EntityList[i]);
 		}
 	}
 }
@@ -262,7 +278,7 @@ void Entity_death(Entity *self){
 	//death animation
 
 	//free
-	Entity_free(self);
+	Entity_Free(self);
 }
 
 void weapon_touch(Entity * self, Entity *other)
@@ -287,7 +303,7 @@ void weapon_touch(Entity * self, Entity *other)
 int Entity_check_collision(Entity * self)
 {
 	int i;
-	for(i = 0; i < Entity_count + 1; i++){
+	for(i = 0; i < g_entity_count + 1; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}
@@ -372,7 +388,7 @@ void weapon_collision(Entity *owner)
 	{
 		slog("Entity or Weapon is NULL. No Collision");
 	}
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}
@@ -410,7 +426,7 @@ void Entity_check_collision_all()
 	Entity *curr = NULL;
 	Entity *next = NULL;
 
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}
@@ -419,7 +435,7 @@ void Entity_check_collision_all()
 		}
 		curr = &EntityList[i];
 
-		for(j = 0; j < Entity_MAX; j++){
+		for(j = 0; j < g_entity_max; j++){
 			if(!EntityList[j].inuse){
 				continue;
 			}
@@ -455,6 +471,54 @@ Entity * Entity_Get_Player()
 	return player;
 }
 
+void Entity_Move_Towards_Player(Entity *ent, int speed)
+{
+	Entity *player;
+
+	Vec2d direction;
+	Vec2d player_pos;
+	Vec2d new_vel;
+	Vec2d unit_vec;
+
+	float distance;
+
+	player = Entity_Get_Player();
+
+	direction.x = player->position.x - ent->position.x;
+	direction.y = player->position.y - ent->position.y;
+
+	distance = Normalize2d(direction);
+	VectorScale(&direction, &new_vel, speed);
+
+	ent->velocity = distance != 0 ? new_vel : ent ->velocity;
+	path_free(ent->path);
+	ent->path = NULL;
+}
+
+void Entity_Set_Random_Velocity(Entity *ent, int speed)
+{
+	Vec2d new_vel;
+
+	int randomNum = rand() % 15;
+
+	if(!ent)
+	{
+		slog("Ent is null");
+		return;
+	}
+
+	new_vel.x = randomNum <= 5 ? speed :
+				randomNum <= 10 ? -speed : 0;
+
+	randomNum = rand() % 15;
+
+	new_vel.y = randomNum <= 5 ? speed :
+				randomNum <= 10 ? -speed : 0;
+
+	ent->velocity = new_vel;
+}
+
+
 void ent_follow_path(Entity *self)
 {
 	Vec2d tile_pos;
@@ -480,29 +544,10 @@ void ent_follow_path(Entity *self)
 	}
 	if(!self->path)
 	{
-	//	slog("No Path");
 		return;
-		/*Vec2dSubtract(self_center_pos,player_center_pos,new_vel);
-		Normalize2d(new_vel);
-		VectorScale(new_vel, new_vel, 10);
-		self->velocity = new_vel;
-		slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
-		x = new_vel.x;
-		y = new_vel.y;
-		while((x * x + y * y) < 25)
-		{
-			//VectorScale(new_vel, new_vel, 2);
-			x *= 2;
-			y *= 2;
-		}
-		new_vel.x = x;
-		new_vel.y = y;
-		return;*/
 	}
 	else
 	{
-		/*slog("Next is: %i", self->path->tile_index);
-		slog("Player is %i", tile_get_tile_number(Entity_Get_Player()->position, Entity_Get_Player()->boundBox));*/
 		 tile_pos = tile_get_pos(self->path->tile_index);
 
 		 tile_center_pos.x = TILE_CENTER_X(tile_pos);
@@ -512,11 +557,8 @@ void ent_follow_path(Entity *self)
 		 tile_bound.y = tile_center_pos.y;
 	}
 
-/*	if((TILE_CENTER_X(tile_pos) == ENT_CENTER_X(self)) && 
-	   TILE_CENTER_Y(tile_pos) == ENT_CENTER_Y(self) )*/
 	if(rect_collide(tile_bound, self_bound))
 	{
-//		slog("rect collide");
 		path_free_node(&(self->path));
 		self->velocity.x = 0;
 		self->velocity.y = 0;
@@ -525,12 +567,13 @@ void ent_follow_path(Entity *self)
 	{	
 		Vec2dSubtract(tile_center_pos, self_center_pos, new_vel);
 		Normalize2d(new_vel);
-		VectorScale(new_vel, new_vel, 5);
+		VectorScale(&new_vel, &new_vel, 5);
 		x = new_vel.x;
 		y = new_vel.y;
 		while((x * x + y * y) < 49)
 		{
-			//VectorScale(new_vel, new_vel, 2);
+			if(x == 0 && y == 0)
+				break;
 			x *= 2;
 			y *= 2;
 		}
@@ -548,7 +591,7 @@ Entity * ent_find_nearest_enemy(Entity *self)
 	float min_dist = 99999;
 	float distance;
 	int ent_index = -1;
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}
@@ -586,7 +629,7 @@ Entity * ent_find_nearest_teammate(Entity *self)
 	float min_dist = 99999;
 	float distance;
 	int ent_index = -1;
-	for(i = 0; i < Entity_MAX; i++){
+	for(i = 0; i < g_entity_max; i++){
 		if(!EntityList[i].inuse){
 			continue;
 		}

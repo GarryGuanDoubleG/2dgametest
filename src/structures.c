@@ -7,7 +7,7 @@ extern Entity *player;
 
 void struct_update(Entity *self)
 {
-	Entity_draw(self);
+	Entity_Draw(self);
 }
 
 Vec2d StructGetBuildPos()
@@ -55,7 +55,7 @@ Entity *struct_wall_spawn()
 
 	build_pos = StructGetBuildPos();
 
-	build_tile = tile_get_tile_number(build_pos, New_SDL_Rect(0, 0, 1, 1));
+	build_tile = Tile_Get_Index(build_pos, New_SDL_Rect(0, 0, 1, 1));
 	tile_type = tile_get_type(build_tile);
 
 	if(tile_type != TILE_GRASS && tile_type != TILE_ROAD)
@@ -113,7 +113,7 @@ void update_selected_struct(Entity *self)
 		self->boundBox.y = draw_pos.y;
 		self->position = draw_pos;
 
-		Entity_draw(self);
+		Entity_Draw(self);
 	}	
 }
 

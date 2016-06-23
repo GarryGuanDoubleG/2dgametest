@@ -356,6 +356,17 @@ void tile_free(Tile *tile){
 }
 
 /**
+* @brief determines if a given tile can be walked on / through
+* @param tile_index - tile index to check
+* @return int - 0 or 1 for if tile can be traversed
+*/
+int tile_traversable(int tile_index)
+{
+	int type = tile_get_type(tile_index);
+	return type == TILE_ROAD || type == TILE_GRASS;
+}
+
+/**
 * @brief returns the type of a tile given its tile index
 * @param int tile index used to get tile type
 */
@@ -661,7 +672,7 @@ int tile_forage(Vec2d pos, SDL_Rect bound, int face_dir)
 * @param Vec2d pos - x and y position of Entity, SDL_Rect bound - used for collision and finding center
 * @return tile index of Entity
 */
-int tile_get_tile_number(Vec2d pos, SDL_Rect bound)
+int Tile_Get_Index(Vec2d pos, SDL_Rect bound)
 {
 	int i;
 	Vec2d bound_pos = {pos.x + bound.x + bound.w/2, pos.y + bound.y + bound.h/2};

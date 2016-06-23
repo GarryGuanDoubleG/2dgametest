@@ -1,17 +1,269 @@
-﻿Build started 6/5/2016 5:33:29 PM.
+﻿Build started 6/21/2016 10:37:21 PM.
      1>Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\conquest.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
-       Link:
-         All outputs are up-to-date.
-         conquest.vcxproj -> C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\Debug\conquest.exe
-       FinalizeBuildStatus:
-         Deleting file "Debug\conquest.unsuccessfulbuild".
-         Touching "Debug\conquest.lastbuildstate".
-     1>Done Building Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" (build target(s)).
+         g:\Visual Studio 2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\Menu.c ..\src\Tile.c ..\src\actor.c ..\src\archer.c ..\src\enemy.c ..\src\entity.c ..\src\game.c ..\src\grue.c ..\src\level.c ..\src\minotaur.c ..\src\orc.c ..\src\path_find.c ..\src\player.c ..\src\sara.c ..\src\save.c ..\src\structures.c ..\src\supp_angel.c ..\src\support_ai.c
+         supp_angel.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(108): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(54): warning C4101: 'distance' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(57): warning C4101: 'angel_dir' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(152): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(152): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\supp_angel.c(154): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         structures.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(5): warning C4091: 'extern ' : ignored on left of 'Mouse' when no variable is declared
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(37): warning C4101: 'new_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(73): warning C4482: nonstandard extension used: enum 'Entity_TYPE' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(86): warning C4482: nonstandard extension used: enum 'Entity_TYPE' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(96): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(96): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(112): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(113): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         path_find.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(291): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(293): error C2065: 'path' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(293): error C2227: left of '->g_val' must point to class/struct/union/generic type
+                 type is ''unknown-type''
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(295): error C2660: 'add_closed_list' : function does not take 1 arguments
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(306): error C2065: 'path' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(308): error C2065: 'target' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(310): error C2065: 'size' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(316): error C2065: 'parent_paths' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(316): error C2440: 'initializing' : cannot convert from 'int' to 'Path_S *'
+                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(319): error C2065: 'target' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(322): error C2065: 'parent_paths' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(322): error C2227: left of '->parent' must point to class/struct/union/generic type
+                 type is ''unknown-type''
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(323): error C2065: 'parent_paths' : undeclared identifier
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(323): error C2227: left of '->parent' must point to class/struct/union/generic type
+                 type is ''unknown-type''
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\path_find.c(323): fatal error C1903: unable to recover from previous error(s); stopping compilation
+         orc.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(62): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(106): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(116): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(116): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(118): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(118): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         minotaur.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(70): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(94): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(113): warning C4482: nonstandard extension used: enum 'Monster' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(123): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(123): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(125): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(125): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(125): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(125): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(154): warning C4482: nonstandard extension used: enum 'Entity_TYPE' used in qualified name
+         level.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(136): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(43): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(43): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(33): warning C4101: 'tile' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(54): warning C4101: 'tile_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(89): warning C4101: 'j' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(141): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(141): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(142): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(142): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(356): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(366): warning C4101: 'ent' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(455): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(455): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(460): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(460): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\level.c(411): warning C4101: 'tile_pos' : unreferenced local variable
+         game.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\game.c(125): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         enemy.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(136): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\enemy.c(53): warning C4101: 'j' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\enemy.c(180): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\enemy.c(181): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\enemy.c(121): warning C4101: 'key' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\enemy.c(237): error C2660: 'getPath' : function does not take 6 arguments
+         Tile.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(136): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(471): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(471): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(477): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(477): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(489): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 g:\visual studio 2010\vc\include\stdlib.h(867) : see declaration of 'itoa'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(493): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 g:\visual studio 2010\vc\include\stdlib.h(867) : see declaration of 'itoa'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(451): warning C4101: 'dest' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(546): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(546): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(581): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(581): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(586): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(587): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(588): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(589): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(683): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(684): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(685): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(686): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(706): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(706): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(707): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(707): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(717): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(717): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(784): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(786): warning C4101: 'key' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.c(784): warning C4101: 'j' : unreferenced local variable
+         Generating Code...
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\minotaur.c(117): warning C4715: 'mino_spawn' : not all control paths return a value
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\orc.c(110): warning C4715: 'orc_spawn' : not all control paths return a value
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structures.c(90): warning C4715: 'structure_spawn' : not all control paths return a value
+         Compiling...
+         support_ai.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\support_ai.c(22): warning C4482: nonstandard extension used: enum 'Support' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\support_ai.c(25): warning C4482: nonstandard extension used: enum 'Support' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\support_ai.c(29): warning C4482: nonstandard extension used: enum 'Support' used in qualified name
+         save.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\save.c(28): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 g:\visual studio 2010\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\save.c(56): warning C4305: '=' : truncation from '__int64' to 'Uint32'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\save.c(56): warning C4309: '=' : truncation of constant value
+         sara.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(99): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(48): warning C4101: 'distance' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(52): warning C4101: 'sara_dir' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(51): warning C4101: 'enemy_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\sara.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         player.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(42): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(42): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(43): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(43): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(43): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(43): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(97): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(98): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(149): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(149): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(149): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(149): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(288): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(292): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(295): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(301): warning C4482: nonstandard extension used: enum 'Entity_TYPE' used in qualified name
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\player.c(304): warning C4482: nonstandard extension used: enum 'HUD_state' used in qualified name
+         grue.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\grue.c(35): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\grue.c(52): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\grue.c(94): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\grue.c(94): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\grue.c(120): warning C4482: nonstandard extension used: enum 'Entity_TYPE' used in qualified name
+         entity.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(61): warning C4805: '==' : unsafe mix of type 'int' and type 'bool' in operation
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(133): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(134): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(202): warning C4805: '==' : unsafe mix of type 'int' and type 'bool' in operation
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(228): warning C4101: 'new_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(229): warning C4101: 'old_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(323): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(323): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(324): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(324): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(335): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(335): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(335): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(335): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(336): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(336): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(336): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(336): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(361): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(361): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(491): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(481): warning C4101: 'unit_vec' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(479): warning C4101: 'player_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(511): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(516): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(530): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(530): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(532): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(532): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\entity.c(536): warning C4101: 'distance' : unreferenced local variable
+         archer.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(99): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(52): warning C4101: 'archer_dir' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(48): warning C4101: 'distance' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(51): warning C4101: 'enemy_pos' : unreferenced local variable
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(129): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(131): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\archer.c(131): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         actor.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(136): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
+         Menu.c
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\tile.h(136): warning C4005: 'MIN' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\glib-2.28\include\glib-2.0\glib\gmacros.h(221) : see previous definition of 'MIN'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(11) : see previous definition of 'SPRITE_IMAGE_W'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(18): warning C4005: 'SPRITE_IMAGE_H' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(12) : see previous definition of 'SPRITE_IMAGE_H'
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(23): warning C4005: 'SPRITE_IMAGE_W' : macro redefinition
+                 c:\users\garry\documents\visual studio 2010\projects\conquest\src\structure_define.h(17) : see previous definition of 'SPRITE_IMAGE_W'
+         Generating Code...
+     1>c:\users\garry\documents\visual studio 2010\projects\conquest\src\actor.c(45): warning C4700: uninitialized local variable 'target' used
+     1>Done Building Project "C:\Users\Garry\Documents\Visual Studio 2010\Projects\conquest\conquest\conquest.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.07
+Time Elapsed 00:00:10.28

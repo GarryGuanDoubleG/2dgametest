@@ -15,7 +15,7 @@
 #include "Tile.h"
 #include "level.h"
 
-#include "monster_ai.h"
+#include "enemy.h"
 #include "support_ai.h"
 
 #include "items.h"
@@ -27,9 +27,9 @@
 extern SDL_Surface *screen;
 extern SDL_Surface *buffer; /*pointer to the draw buffer*/
 
-int current_time;
-int last_time;
-int delta;
+int g_current_time;
+int g_last_time;
+int g_delta;
 
 void Init_All(); //single function to intialize all resource managers
 void Draw_All();
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
   Music * music_new;
 
-  last_time = current_time = SDL_GetTicks();
+  g_last_time = g_current_time = SDL_GetTicks();
   
   Init_All();
   done = 0;
@@ -62,23 +62,12 @@ int main(int argc, char *argv[])
   {
 	//render or draw functions go here
 	//draw functions should go in order from background first to player draw calls last
-    ResetBuffer();
-    SDL_RenderClear(__gt_graphics_renderer);//clear screen
+    SDL_RenderClear(g_graphics_renderer);//clear screen
 
 	Draw_All();
+	
+	Enemy_Spawn(SPIDER);
 
-	monster_spawn(Monster::grue);
-	
-	monster_spawn(Monster::spider01);
-	
-	monster_spawn(Monster::mino);		
-	/*
-	monster_spawn(Monster::orc);	
-	support_spawn(Support::sara);	
-	support_spawn(Support::healer);	
-	support_spawn(Support::archer);
-	
-	*/
 	Entity_update_all();
 	Entity_think_all();
 	Entity_check_collision_all();
@@ -109,12 +98,12 @@ int main(int argc, char *argv[])
 		done = 1;
 	}
 
-	NextFrame();
+	graphics_next_frame();
 	SDL_RenderPresent(Graphics_Get_Renderer());
 
-	last_time = current_time;
-	current_time = SDL_GetTicks();
-	delta = current_time - last_time;
+	g_last_time = g_current_time;
+	g_current_time = SDL_GetTicks();
+	g_delta = g_current_time - g_last_time;
   }while(!done);
   exit(0);		/*technically this will end the program, but the compiler likes all functions that can return a value TO return a value*/
   return 0;
@@ -130,8 +119,7 @@ void Init_All()
     SCREEN_WIDTH,
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
-    SCREEN_HEIGHT,
-    bgcolor,
+    SCREEN_HEIGHT, 
     0);
  
   srand(time(NULL));  //seed the random value at the start of the game
@@ -150,6 +138,9 @@ void Init_All()
   Menu_Main_Draw();
 
   hud_init();
+
+  Enemy_Init_All();
+  Path_Init_System();
 
   inventory_init(); //allocates memory to store items
   item_load_all(); //loads item imags into itemlist and allocates memory for new items

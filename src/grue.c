@@ -33,7 +33,7 @@ void grue_think(Entity* self){
 		grue_dir.y = player_pos.y - self_pos.y;
 
 		distance = Normalize2d(grue_dir);
-		grue_dir = VectorScale(grue_dir, grue_dir, GRUE_VELOCITY_AGGRO);
+		//grue_dir = VectorScale(grue_dir, grue_dir, GRUE_VELOCITY_AGGRO);
 		self->velocity = distance != 0 ? grue_dir : self->velocity;
 	}
 
@@ -78,7 +78,7 @@ void grue_think(Entity* self){
 
 void grue_update(Entity *self){
 	Vec2dAdd(self->position, self->velocity, self->position);
-	Entity_draw(self);
+	Entity_Draw(self);
 }
 
 void grue_touch(Entity *self, Entity *other)

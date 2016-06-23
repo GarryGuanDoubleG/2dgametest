@@ -4,8 +4,69 @@
 //true if added to list
 static Path closed_list[MAX_PATH_SIZE];
 static Path open_list[MAX_PATH_SIZE];
-static Path * temp_path_nodes; // temp path for moving 
 
+static Path * g_path_heads;
+static Path * g_path_nodes;
+
+extern const int g_entity_max;
+
+static int g_max_path_heads;
+static int g_max_path_nodes;
+static const int g_path_length = 25;
+
+
+void Path_Close_System()
+{
+	memset(g_path_heads, 0, sizeof(Path) * g_entity_max);
+	memset(g_path_nodes, 0, sizeof(Path) * g_entity_max * g_path_length);
+
+	g_path_heads = NULL;
+	g_path_nodes = NULL;
+}
+
+void Path_Init_System()
+{
+	g_max_path_heads = g_entity_max;
+	g_max_path_nodes = g_entity_max * g_path_length;
+
+	//each entity has a path head
+	g_path_heads = (Path *) malloc(sizeof(Path) * g_max_path_heads);
+	//each path can store up to 25 path nodes
+	g_path_nodes = (Path *) malloc(sizeof(Path) * g_max_path_nodes);
+
+	memset(g_path_heads, 0, sizeof(Path) * g_entity_max);
+	memset(g_path_nodes, 0, sizeof(Path) * g_entity_max * g_path_length);
+
+	atexit(Path_Close_System);
+}
+
+Path * Path_New_Head()
+{
+	int i;
+
+	for(i = 0; i < g_max_path_heads; i++)
+	{
+		if(g_path_heads[i].parent == g_path_heads[i].next == NULL)
+		{
+			return &g_path_heads[i];
+		}
+	}
+
+	return NULL;
+}
+
+Path * Path_New_Node()
+{
+	int i;
+
+	for(i = 0; i < g_max_path_heads; i++)
+	{
+		if(g_path_nodes[i].parent == g_path_nodes[i].next == NULL)
+		{
+			return &g_path_nodes[i];
+		}
+	}
+}
 
 
 void path_free_node(Path **path)
@@ -93,11 +154,12 @@ void sort_open_list(int size, int target)
 	}
 }
 
-void add_closed_list(int size, Path path)
+void add_closed_list(Path path)
 {
 	int i = 0;
 	int found = false;
-	for(i = 0; i < size - 1; i++)
+
+	for(i = 0; i < MAX_PATH_SIZE - 1; i++)
 	{
 		if(closed_list[i].tile_index == path.tile_index)
 		{
@@ -106,13 +168,12 @@ void add_closed_list(int size, Path path)
 		}	
 		if(closed_list[i].tile_index == closed_list[i+1].tile_index)
 		{
-
 			break;
 		}
 	}
 	if(!found)
 	{
-		for(i = 0; i < size - 1; i++)
+		for(i = 0; i < MAX_PATH_SIZE - 1; i++)
 		{
 			if(closed_list[i].f_val >= 999)
 			{
@@ -122,7 +183,7 @@ void add_closed_list(int size, Path path)
 		
 		}
 
-		for(i = 0; i < size - 1; i++)
+		for(i = 0; i < MAX_PATH_SIZE - 1; i++)
 		{
 			if(open_list[i].tile_index == path.tile_index)
 			{
@@ -133,13 +194,27 @@ void add_closed_list(int size, Path path)
 	}
 }
 
+int open_list_empty()
+{
+	int i;
+	for(i = 0; i < MAX_PATH_SIZE; i++)
+	{
+		if(open_list[i].tile_index != -1)
+		{
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
 Path * get_priority_OL()
 {
 	return open_list[0].f_val < 999 ? &open_list[0] : NULL;
 }
 
 
-void add_open_list(int size, Path new_path)
+void add_open_list(Path new_path)
 {
 	int i = 0;
 	int done = false;
@@ -192,6 +267,7 @@ void add_open_list(int size, Path new_path)
 	}
 }
 
+//needs improvement
 int *get_moves(int tile)
 {
 	static int options[4];
@@ -202,50 +278,49 @@ int *get_moves(int tile)
 
 	return options;
 }
-Path *get_path(int curr, int size, int target, int max_g_val)
+Path *Find_New_Path(int start_tile, int target, int range)
 {
 	int i;
+	int p_index;
 	int *options;
-	int temp_index = 1;
-	// could use chunking as well
-	Path * parent_paths = (Path*)malloc(sizeof(Path) * size);
-	memset(parent_paths, 0, sizeof(Path) * size);
-	Path * path = (Path*)malloc(sizeof(Path) * size);
-	memset(path, 0, sizeof(Path) * size);
+	int distance;
+
+	static Path p_nodes[MAX_PATH_SIZE]; //Temp nodes used for finding path
+	
+	Path curr_node;
+	Path * start_path;
+
+	start_path = Path_New_Head();
+	start_path->tile_index = start_tile;
+	start_path->priority = 0;
+
+	memset(p_nodes, 0, sizeof(p_nodes));
+	
+	//current index of p_node
+	p_index = 0;
+	curr_node = p_nodes[p_index];
+
 	//bfs a * approach
-	if(curr == target || tile_to_tile_dist(curr, target) == 1)
+	//if next to target, set path to target
+	distance = tile_to_tile_dist(start_tile, target);
+
+	if(distance <= 1)
 	{
-		path->tile_index = target;
-		return path;
+		start_path->parent = NULL;
+		start_path->next = NULL;
+
+		start_path->tile_index = target;
+		return start_path;
 	}
 
-	path->tile_index = curr;
-	path->next = path->parent = NULL;
-	path->h_val = tile_to_tile_dist(curr, target);
-	path->g_val = 0;
-	path->f_val = path->h_val + path->g_val;
+	curr_node.tile_index = start_tile;
+	curr_node.priority	= distance;
 
-	add_closed_list(size, *path);
-	options = get_moves(curr);
-	for( i = 0; i < 4; i++)
+	add_open_list(curr_node);
+
+	while(!open_list_empty())
 	{
-		Path new_node;
-
-		if(tile_get_type(options[i]) != TILE_TREE && options[i] != -1)
-		{
-			new_node.tile_index = options[i];
-			new_node.parent = path;
-			new_node.g_val = new_node.parent->g_val + 1;
-			new_node.h_val = tile_to_tile_dist(options[i], target);
-			new_node.f_val = new_node.g_val + new_node.h_val;
-			add_open_list(size, new_node);
-		}
-	}
-
-	while(open_list[0].f_val != 999)
-	{
-		Path new_node = {&parent_paths[temp_index++], NULL, -1, 999,999,999};
-		*new_node.parent = open_list[0];
+		
 		//checks if we found target tile
 		if(open_list[0].tile_index == target)
 		{
@@ -310,35 +385,20 @@ void slog_path(Path *path)
 }
 
 
-Path* getPath(int size, Vec2d *start, SDL_Rect start_bound, SDL_Rect target_bound, Vec2d *target, Path *curr_path)
+Path* getPath(Vec2d *self_pos, Vec2d *target_pos, SDL_Rect self_bound, SDL_Rect target_bound, int range)
 {
-	const int list_size = size * size;
-	int start_index  = tile_get_tile_number(*start, start_bound);
-	int target_index = tile_get_tile_number(*target, target_bound);
 	int i;
-	Path init = {NULL, NULL, -1, 999, 999, 999};
-	Path *path = NULL;
+	int start_index;
+	int target_index;
+	
+	const int list_size = range * range;
 
-	if(curr_path)
-	{
-		path_free(curr_path);
-	}
+	Path *path;
 
-	for(i =0; i < MAX_PATH_SIZE; i++)
-	{
-		closed_list[i].tile_index = init.tile_index;
-		closed_list[i].f_val = init.f_val; //high value to make sorting easier
-		open_list[i].tile_index = init.tile_index;
-		open_list[i].f_val = init.f_val;
-	}
+	start_index = Tile_Get_Index(*self_pos, self_bound);
+	target_index = Tile_Get_Index(*target_pos, target_bound);
 
-	//tile_heuristic *tile_heur = tile_get_heuristic( size, start_index, target_index);
-	path = get_path(start_index, MAX_PATH_SIZE, target_index, MAX_PATH_SIZE);
-	slog_path(path);
-	/*if(tile_heur)
-	{
-		tile_list_heuristic_free(tile_heur);
-	}*/
+	path = Find_New_Path(start_index, MAX_PATH_SIZE, target_index, list_size);
 
 	return path;
 }

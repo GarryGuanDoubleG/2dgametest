@@ -17,7 +17,7 @@ int __particle_count = 0;
 
 void particle_load_from_def(char *filename);
 void particle_close_system();
-extern int delta;
+extern int g_delta;
 
 Sprite * particle_get_sprite(particle_types type)
 {
@@ -106,7 +106,7 @@ Particle * particle_new(particle_types type, Vec2d pos, int scale, int rotation)
 		particle->scale = scale;
 		particle->rotation = rotation;
 		particle->frame = 0;
-		particle->nextFrame = 150;
+		particle->graphics_next_frame = 150;
 		break;
 	}
 	return particle;
@@ -149,17 +149,19 @@ void particle_load_from_def(char *filename)
 			slog("Error: %s should be a hash", key);
 			break;
 		}
-		filepath = (char *)(dict_get_hash_value(value, "filepath")->keyValue);
-		slog("particle sprite filepath: %s", filepath);
-		img_width = atoi((char *)(dict_get_hash_value(value, "img_width")->keyValue));
-		img_height = atoi((char *) (dict_get_hash_value(value, "img_height")->keyValue));
-		frame_width = atoi((char*)(dict_get_hash_value(value, "frame_width")->keyValue));
-		frame_height = atoi((char *) (dict_get_hash_value(value, "frame_height")->keyValue));
-		fpl = atoi((char *) (dict_get_hash_value(value, "frames_per_line")->keyValue));
-		slog("particle img width height: %i %i", img_width, img_height);
-		slog("particle frame width height: %i %i", frame_width, frame_height);
+		filepath		= (char *)(dict_get_hash_value(value, "filepath")->keyValue);
+		
+		img_width		= atoi((char *)(dict_get_hash_value(value, "img_width")->keyValue));
+		img_height		= atoi((char *)(dict_get_hash_value(value, "img_height")->keyValue));
+
+		frame_width		= atoi((char*)(dict_get_hash_value(value, "frame_width")->keyValue));
+		frame_height	= atoi((char *)(dict_get_hash_value(value, "frame_height")->keyValue));
+
+		fpl				= atoi((char *)(dict_get_hash_value(value, "frames_per_line")->keyValue));
+
 		particle_sprite = Sprite_Load(filepath, img_width, img_height, frame_width, frame_height);
 		particle_sprite->fpl = fpl;
+
 		if(particle_sprite)
 		{
 			g_hash_table_insert(__particle_sprite_hash, g_strdup(key), particle_sprite);
@@ -242,12 +244,12 @@ void particle_draw(void *data, void *user_data)
 	{
 		slog("Sprite is NULL");
 	}
-	particle->pos.y -= 150 * delta / 1000;
-	particle->nextFrame -= delta;
-	if(particle->nextFrame <= 0)
+	particle->pos.y -= 150 * g_delta / 1000;
+	particle->graphics_next_frame -= g_delta;
+	if(particle->graphics_next_frame <= 0)
 	{
 		particle->frame++;
-		particle->nextFrame = 150;
+		particle->graphics_next_frame = 150;
 	}
 	Sprite_Draw( p_sprite, particle->frame, particle->pos);
 }

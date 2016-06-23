@@ -82,12 +82,10 @@ float Vec2dDistance(Vec2d a, Vec2d b){
 	return sqrt((double)((b.x - a.x) *(b.x -a.x)) + (double)((b.y - a.y) * (b.y - a.y)));
 }
 
-Vec2d VectorScale(Vec2d in, Vec2d out, float scale)
+void VectorScale(Vec2d *in, Vec2d *out, float scale)
 {
-	out.x = in.x * scale;
-	out.y = in.y * scale;
-
-	return out;
+	out->x = in->x * scale;
+	out->y = in->y * scale;
 }
 
 SDL_Rect New_SDL_Rect(int x, int y, int w, int h)

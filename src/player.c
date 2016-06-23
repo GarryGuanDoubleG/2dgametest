@@ -7,15 +7,15 @@ Entity* player = NULL;
 
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
-const int PLAYER_FRAMEH = 64;
-const int PLAYER_FRAMEW = 64;
+const int PLAYER_FRAMEH = 96;
+const int PLAYER_FRAMEW = 96;
 
 static Player_Equip PlayerEquip;
 static int anim_current;//used to determine current animation
 static int in_build_mode_01 = false;
 static int selecting_struct = false;
 
-extern int delta;
+extern int g_delta;
 //taken from lazyfoo
 //order of up,left,down,right are listed in order to match frame vertical in player.png
 enum KeyPressSurfaces{
@@ -46,7 +46,6 @@ void Player_Init(){
 	player_sprite->fpl = 9;
 	anim_current = WALK;
 	player = Entity_load(player_sprite,pos, 3500, 100, 0 );
-	slog("Player: X: %i Y: %i", player->position.x, player->position.y);
 
 	playerBody.image = player->sprite;
 	playerBody.image_slash = Sprite_Load("images/player/slash/body slash.png",PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
@@ -143,10 +142,8 @@ void Player_Draw_equip(){
 }
 
 void Player_Draw(){
-	//need to add other equipment
-	slog("Player Frame is %i fpl is %i", player->frame, player->sprite->fpl);
 
-	Entity_draw(player);
+	Entity_Draw(player);
 
 	Player_Draw_equip();
 	hud_draw(Camera_Get_Camera(),player->health, player->maxhealth, player->stamina, player->stamina);
@@ -199,7 +196,7 @@ void Player_Update(Entity *self)
 		return;
 	}
 
-	player->next_frame -= delta;
+	player->next_frame -= g_delta;
 	if(player->next_frame <= 0)
 	{
 		player->frame++;

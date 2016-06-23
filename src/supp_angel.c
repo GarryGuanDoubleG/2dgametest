@@ -16,7 +16,7 @@ void angel_update(Entity *self)
 		self->position = new_pos;
 	}
 	self->frame = (self->frame + 1) % self->sprite->fpl;
-	Entity_draw(self);
+	Entity_Draw(self);
 }
 
 void angel_heal_mode(Entity *self, Entity *other)
@@ -90,7 +90,7 @@ void angel_think(Entity *self)
 		self->velocity.x = 0;
 		self->velocity.y = 0;
 		angel_heal_mode(self, teammate);
-		self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
+		//self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 	}
 
 	else if(self->state == STATE_PATROL){

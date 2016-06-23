@@ -24,7 +24,7 @@ void mino_update(Entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	Entity_draw(self);
+	Entity_Draw(self);
 }
 
 void mino_touch(Entity *self, Entity *other)
@@ -62,20 +62,20 @@ void mino_think(Entity *self)
 	{
 		//self->frame_vertical = 3;
 
-		if(tile_to_tile_dist(tile_get_tile_number(self->position, self->boundBox), tile_get_tile_number(Entity_Get_Player()->position, Entity_Get_Player()->boundBox)) <= 1)
+		if(tile_to_tile_dist(Tile_Get_Index(self->position, self->boundBox), Tile_Get_Index(Entity_Get_Player()->position, Entity_Get_Player()->boundBox)) <= 1)
 		{
 			mino_dir.x = player_pos.x - self_pos.x;
 			mino_dir.y = player_pos.y - self_pos.y;
 
 			distance = Normalize2d(mino_dir);
-			mino_dir = VectorScale(mino_dir, mino_dir, GRUE_VELOCITY_AGGRO);
+			//mino_dir = VectorScale(mino_dir, mino_dir, GRUE_VELOCITY_AGGRO);
 			self->velocity = distance != 0 ? mino_dir : self->velocity;
 			path_free(self->path);
 			self->path = NULL;
 		}
 		else
 		{
-			self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
+			//self->path = getPath(self->aggro_range, &self->position, self->boundBox,Entity_Get_Player()->boundBox, &Entity_Get_Player()->position,self->path);
 		}
 	}
 

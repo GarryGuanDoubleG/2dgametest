@@ -10,12 +10,12 @@ typedef struct Path_S
 {
 	Path_S *parent; /**< pointer to parent node that moved to this current tile*/
 	Path_S *next; /**< pointer to parent node that moved to this current tile*/
+	
 	int tile_index; /**< the tile index that current node is on*/
-	float h_val;//distance to target tile
-	float g_val;//all movement costs are the same because you can't move diagonally
-	float f_val;/**<int stores the sum of h and g val*/
+	int priority; /**< heuristic for value of moving to this tile */
 }Path;
 
+void Path_Init_System();
 /**
 *@brief deallocates path node from memory
 *@param double pointer to check if path node was properly freed
@@ -36,7 +36,7 @@ void path_free(Path *&path);
 		 curr_path: NULL if no current path, pointer to current path which is to be freed from memory
 * @return pointer to first tile to move to with pointers to next nodes to move to
 */
-Path* getPath(int size, Vec2d *start, SDL_Rect start_bound, SDL_Rect target_bound, Vec2d *target, Path *curr_path);
+Path* getPath(Vec2d *self_pos, Vec2d *target_pos, SDL_Rect self_bound, SDL_Rect target_bound, int range);
 //100 tiles * value of each tile(10)
 #define MAX_PATH_SIZE 200
 #endif

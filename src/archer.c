@@ -16,7 +16,7 @@ void archer_update(Entity *self)
 		self->position = new_pos;
 	}
 //	self->frame_horizontal = (self->frame_horizontal + 1) % self->sprite->fpl;
-	Entity_draw(self);
+	Entity_Draw(self);
 }
 
 void archer_attack_mode(Entity *self, Entity * other)

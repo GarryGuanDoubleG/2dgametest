@@ -30,9 +30,13 @@
 typedef enum 
 {
 	PLAYER			= 0,
+
+	//Enemies
 	SPIDER			= 1,
 	GRUE			= 2,
 	MINO			= 3,
+
+	//Supports
 
 	//structures
 	WALL			= 100,
@@ -60,7 +64,7 @@ typedef struct Entity_S
 	int next_frame;
 
 	//Entity positions
-	Vec2d position; /**<stores x and y positional values of Entity*/
+	Vec2d position; /**<stores x and y positional values of Entity*/	
 	Vec2d velocity; /**<x and y values that increment the positional value every frame*/
 	SDL_Rect boundBox; /**<x and y offsets from postion and accurate dimensions of an Entity used for collision detection**/
 	
@@ -73,7 +77,7 @@ typedef struct Entity_S
 	int state; /**<int stores state to use for AI actions*/
 	int team; /**<int stores if Entity is on player's team or against player*/
 	int aggro_range; /**< int number of tiles away from an Entity in an enemy team before an AI changes states and becomes aggro */
-
+	int aggro_speed;/**< int speed to chase player when in aggro state. Diagonal movements move twice as fast */
 	//player
 	int inventory;/**<true if Entity can hold items*/
 	Weapon *weapon;/**<pointer to currently equipped weapon*/
@@ -102,7 +106,7 @@ typedef struct Entity_S
 /**
 * brief max number of entities to allocate into memory
 */
-extern const int Entity_MAX;
+extern const int g_entity_max;
 /**
 * brief list of all entities that are allocated into memory
 */
@@ -110,15 +114,22 @@ extern Entity *EntityList;
 /**
 * brief number of entities currently in use and exist in the game
 */
-extern int Entity_count;
+extern int g_entity_count;
 /**
 * brief frees Entity from memory
 */
-void Entity_free(Entity * ent);
+void Entity_Free(Entity * ent);
 /*
 * @brief initializes memory and allocates it to store maximum number of entities
 */
 void Entity_initialize_system();
+
+/**
+* @brief returns the next available(unused) entity in entity list
+* @return pointer to available entity
+*/
+Entity *Entity_New();
+
 /**
 * @brief checks collision of Entity to structure
 */
@@ -139,7 +150,7 @@ void Entity_close();
 * @brief renders Entity onto screen
 * @param Entity: enttiy to draw
 */
-void Entity_draw(Entity *ent);
+void Entity_Draw(Entity *ent);
 /**
 * @brief calls on all update funtions entities in use every frame
 */
@@ -183,6 +194,15 @@ void weapon_collision(Entity *owner);
 * @return returns pointer to player Entity
 */
 Entity * Entity_Get_Player();
+
+/**
+* @brief sets the velocity of given entity towards the player
+* @param entity - to set velocity towards player
+* @param int speed - scale of velocity to move towards player
+*/
+void Entity_Move_Towards_Player(Entity *ent, int speed);
+
+void Entity_Set_Random_Velocity(Entity *ent, int speed);
 
 /** 
 * @brief returns the center position of an Entity

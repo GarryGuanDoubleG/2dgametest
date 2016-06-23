@@ -17,7 +17,7 @@ typedef enum particle_types
 typedef struct particle_S
 {
 	particle_types type;
-	int nextFrame;//SDL_GetTicks start time
+	int graphics_next_frame;//SDL_GetTicks start time
 	int inuse;
 	int frame;
 	int scale;

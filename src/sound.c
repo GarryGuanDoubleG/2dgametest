@@ -1,8 +1,11 @@
-#include "sound.h"
-#include "simple_logger.h"
+#include <SDL_mixer.h>
 #include "dict.h"
 #include "load.h"
-#include <SDL_mixer.h>
+
+#include "sound.h"
+#include "simple_logger.h"
+
+
 
 static int sound_channels = 0;
 static int sound_reserv_channels = 0;
@@ -25,9 +28,9 @@ void sound_init(int max_sounds, int channels, int channel_groups)
 {
 	Sound sound;
 
-	sound_hash = dict_new_hash();
+	sound_hash = Dict_New_Hash();
 	sound_max = max_sounds;
-	sound_groups = dict_new_hash();
+	sound_groups = Dict_New_Hash();
 	sound_channels = Mix_AllocateChannels(channels);
 	sound_reserv_channels = Mix_ReserveChannels(channel_groups);
 	atexit(sound_close);
@@ -55,7 +58,7 @@ void sound_close()
 
 Dict * sound_load_wav(char *filename)
 {
-	Dict * value = dict_new();
+	Dict * value = Dict_New();
 	Sound * sound = (Sound *)malloc(sizeof(Sound));
 	if(!filename) return NULL;
 	sound->chunk = Mix_LoadWAV(filename);
@@ -83,7 +86,7 @@ void sound_load_all_resources(char *filename)
 	for( i = 0; i < sound_file_hash->item_count; i++)
 	{
 		Dict * value = dict_get_hash_nth(key, sound_file_hash, i);
-		dict_hash_insert(sound_hash, key, (Dict*)sound_load_wav((char *) sound_file_hash->keyValue));
+		Dict_Hash_Insert(sound_hash, key, (Dict*)sound_load_wav((char *) sound_file_hash->keyValue));
 	}
 }
 

@@ -84,6 +84,13 @@ void tile_close_system();
 * man's path becomes roads
 */
 Tile tile_start();
+
+/**
+* @brief determines if a given tile can be walked on / through
+* @param tile_index - tile index to check
+* @return int - 0 or 1 for if tile can be traversed
+*/
+int tile_traversable(int tile_index);
 /**
 * @brief returns the tile type of a tile
 * @param int index for tile
@@ -97,7 +104,7 @@ void tile_editor_set_type(int tile_index, int new_type);
 * @param position of Entity to match with tile position. Bounding box used for center postion of ent
 * @return int tile index matching position
 */
-int tile_get_tile_number(Vec2d pos, SDL_Rect bound);
+int Tile_Get_Index(Vec2d pos, SDL_Rect bound);
 
 /*
 * @brief returns true if tile collides with certain position and its bounding box

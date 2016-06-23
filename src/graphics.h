@@ -29,28 +29,22 @@ extern SDL_Rect Camera; /*x & y are the coordinates for the background map, w an
 extern int NumSprites;
 extern Uint32 NOW;		
 
-extern SDL_Window   *   __gt_graphics_main_window;
-extern SDL_Renderer *   __gt_graphics_renderer;
-extern SDL_Texture  *   __gt_graphics_texture;
-extern SDL_Surface  *   __gt_graphics_surface;
-extern SDL_Surface  *   __gt_graphics_temp_buffer;
+extern SDL_Window   *   graphics_main_window;
+extern SDL_Renderer *   g_graphics_renderer;
 
-void Init_Graphics(
+
+void Init_Graphics
+(
 	char *windowName,
     int viewWidth,
     int viewHeight,
     int renderWidth,
     int renderHeight,
-    float bgcolor[4],
     int fullscreen);
-void DrawPixel(SDL_Surface *screen, Uint8 R, Uint8 G, Uint8 B, int x, int y);
-void BlankScreen(SDL_Surface *buf,Uint32 color);
-void gt_graphics_render_surface_to_screen(SDL_Surface *surface,SDL_Rect srcRect,int x,int y);
 
-Uint32 IndexColor(int color);
-void FrameDelay(Uint32 delay);
-void ResetBuffer();
-void NextFrame();
+void graphics_next_frame();
+void graphics_frame_delay();
+
 
 SDL_Renderer * Graphics_Get_Renderer();
 

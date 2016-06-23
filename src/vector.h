@@ -50,7 +50,7 @@ float Vec2dDistanceSQ(Vec2d a, Vec2d b);
 float Vec2dDistance(Vec2d a, Vec2d b);
 
 float Normalize2d(Vec2d &v); // returns length
-Vec2d VectorScale(Vec2d in, Vec2d out, float scale);
+void VectorScale(Vec2d *in, Vec2d *out, float scale);
 SDL_Rect New_SDL_Rect(int x, int y, int w, int h);
 
 #define rect_collide(a,b) ( ((a.x + a.w > b.x ) && (b.x + b.w > a.x)&&(a.y + a.h > b.y ) && (b.y + b.h > a.y)) ? true : false)
