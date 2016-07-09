@@ -1,12 +1,18 @@
 #include <stdio.h>
 #include <string.h>
+#include <glib.h>
 /*#include <glib/gstring.h>
 #include <glib/glist.h>
 #include <glib/ghash.h>
 */
 #include "simple_logger.h"
-#include <glib.h>
 #include "dict.h"
+
+void Dict_Free_Value(gpointer *val)
+{
+	if(!val) return;
+	g_free(val);
+}
 
 void dict_g_string_free(char * string)
 {
@@ -19,8 +25,7 @@ void dict_destroy(Dict * dict)
 	dict_free(&dict);
 }
 
-void dict_free(Dict ** dict)
-{ 
+void dict_free(Dict ** dict){ 
 	if(!dict) return;
 	if(!*dict) return;
 	if((*dict)->keyValue != NULL)
@@ -94,11 +99,23 @@ Dict *Dict_New_bool(Bool n)
   return Dict_New_String(text);
 }
 
-Dict *Dict_New_int(int n)
+Dict *Dict_New_Int(int n)
 {
-  Line text;
-  sprintf_s(text,LINE_LENGTH,"%i",n);
-  return Dict_New_String(text);
+	Dict *new_dict; 
+	//should probably make a memory pool system instead of using malloc a million times
+	int *temp = (int*)(malloc(sizeof(int)));
+	new_dict = Dict_New();
+  
+	if (!new_dict)return NULL;
+
+	*temp = n;
+
+	new_dict->data_type = DICT_INT;
+	new_dict->item_count = 1;
+	new_dict->keyFree = (Dict_Free)Dict_Free_Value;
+	//new_dict->keyClone = dict_clone_string;
+	new_dict->keyValue = (void*)temp;
+	return new_dict;
 }
 
 Dict *Dict_New_uint(unsigned int n)
@@ -184,7 +201,7 @@ void dict_hash_remove(Dict*hash, char *key)
 	g_hash_table_remove(hash_table,key);
 }
 
-Dict * dict_get_hash_value(Dict*hash, Line key)
+Dict * Dict_Get_Hash_Value(Dict*hash, Line key)
 {
 	GHashTable *hash_table = NULL;
 	gpointer value = NULL;
@@ -221,7 +238,7 @@ Dict* dict_get_hash_nth(Line key, Dict* hash, int n)
 	keys = g_hash_table_get_keys(hash_table);
 	if(!keys) return NULL;
 	strncpy(key, (char*)g_list_nth_data(keys, n), LINE_LENGTH);
-	result = dict_get_hash_value(hash, key);
+	result = Dict_Get_Hash_Value(hash, key);
 	g_list_free(keys);
 	return result;
 }

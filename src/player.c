@@ -1,19 +1,24 @@
+#include <glib.h>
+#include "dict.h"
+#include "json_parse.h"
 #include "player.h"
-#include "simple_logger.h"
 #include "particle_emitter.h"
+#include "simple_logger.h"
 char* player_char_file = "images/player/BODY_male.png";
 
 Entity* player = NULL;
 
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
-const int PLAYER_FRAMEH = 96;
-const int PLAYER_FRAMEW = 96;
+const int PLAYER_FRAMEH = 80;
+const int PLAYER_FRAMEW = 80;
 
 static Player_Equip PlayerEquip;
 static int anim_current;//used to determine current animation
 static int in_build_mode_01 = false;
 static int selecting_struct = false;
+
+static GHashTable *g_player_sprites;
 
 extern int g_delta;
 //taken from lazyfoo
@@ -24,7 +29,13 @@ enum KeyPressSurfaces{
    face_down = 2,
    face_right = 3,
 };
-
+struct Player
+{
+	int intell;
+	int dex;
+	int str;
+	Sprite *sprite;
+};
 struct {
 	Sprite *image;
 	Sprite *image_slash;
@@ -35,22 +46,80 @@ struct {
 
 void Player_Update_Camera();
 
-void Player_Init(){
-	int i = 0;
-	
+void Player_Init()
+{
+	int i;
+	Dict	*player_def, 
+			*dict_sprites, 
+			*dict_bB;
+
+	Sprite	*sprite;
+
+	char *filepath;
+
+	int *imageW, *imageH,
+		*frameW, *frameH;
+	int *fpl;
+
+	int *health, *mana;
+
+	SDL_Rect boundBox;
+
 	Tile start = tile_start();
 	Vec2d pos = {start.mBox.x,start.mBox.y};
-	SDL_Rect bound = {PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.2f,PLAYER_FRAMEW*.6f, PLAYER_FRAMEH*.6f};
 
-	Sprite *player_sprite = Sprite_Load(player_char_file,PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	player_sprite->fpl = 9;
-	anim_current = WALK;
-	player = Entity_load(player_sprite,pos, 3500, 100, 0 );
+	player_def = Load_Dict_From_File("def/player.def");
 
-	playerBody.image = player->sprite;
-	playerBody.image_slash = Sprite_Load("images/player/slash/body slash.png",PLAYERW, PLAYERH, PLAYER_FRAMEW, PLAYER_FRAMEH);
-	playerBody.image_slash->fpl = 6;
-	player->boundBox = bound;
+	g_player_sprites = g_hash_table_new_full(g_str_hash,
+							  g_str_equal,
+							  (GDestroyNotify)dict_g_string_free,
+							  (GDestroyNotify)dict_destroy);
+
+	if(!player_def || player_def->data_type != DICT_HASH)
+	{
+		slog("Player Def not found");
+		return;
+	}
+
+	dict_sprites	= Dict_Get_Hash_Value(player_def, "sprites");
+	dict_bB			= Dict_Get_Hash_Value(player_def, "boundBox");
+
+	health			= (int *)Dict_Get_Hash_Value(player_def, "health");
+	mana			= (int *)Dict_Get_Hash_Value(player_def, "health");
+
+	boundBox.x		= * (int *)(Dict_Get_Hash_Value(dict_bB, "x")->keyValue);
+	boundBox.y		= * (int *)(Dict_Get_Hash_Value(dict_bB, "y")->keyValue);
+	boundBox.w		= * (int *)(Dict_Get_Hash_Value(dict_bB, "w")->keyValue);
+	boundBox.h		= * (int *)(Dict_Get_Hash_Value(dict_bB, "h")->keyValue);
+
+	frameW			= (int *)(Dict_Get_Hash_Value(player_def, "frameW")->keyValue);
+	frameH			= (int *)(Dict_Get_Hash_Value(player_def, "frameH")->keyValue);
+
+	//load sprites & animations
+	for(i = 0; i < dict_sprites->item_count; i++)
+	{
+		Line		key;
+		Dict		*value;
+
+		value		= dict_get_hash_nth(key, dict_sprites, i);
+
+		filepath	= (char *)(Dict_Get_Hash_Value(value, "filepath")->keyValue);
+		
+		imageW		= (int *)(Dict_Get_Hash_Value(value, "imageW")->keyValue);
+		imageH		= (int *)(Dict_Get_Hash_Value(value, "imageH")->keyValue);
+
+		fpl			= (int *)(Dict_Get_Hash_Value(value, "fpl")->keyValue);
+
+		sprite = Sprite_Load(filepath, *imageW, *imageH, *frameW, *frameH);
+		sprite->fpl = *fpl;
+
+		g_hash_table_insert(g_player_sprites, g_strdup(key), sprite);
+	}
+
+	sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "walk");
+	player = Entity_load(sprite, pos, *health, *mana, 0);
+
+	player->boundBox = boundBox;
 
 	player->frame = 0;
 
@@ -58,13 +127,19 @@ void Player_Init(){
 	player->update = Player_Update;
 	
 	player->team = TEAM_PLAYER;
+
 	player->p_em = particle_em_new();
 
+	//starting weapon
 	PlayerEquip.weapon = getWeapon("longsword");
 	player->weapon = PlayerEquip.weapon;
+	//armor
 	PlayerEquip.head = getArmor("head chain hood");
 	PlayerEquip.chest = getArmor("chest chain");
 
+	//should get rid of having to do things this way
+	anim_current = WALK;
+	
 	Player_Update_Camera();
 }
 
@@ -141,8 +216,8 @@ void Player_Draw_equip(){
 	}
 }
 
-void Player_Draw(){
-
+void Player_Draw()
+{
 	Entity_Draw(player);
 
 	Player_Draw_equip();
@@ -195,23 +270,25 @@ void Player_Update(Entity *self)
 	{
 		return;
 	}
-
-	player->next_frame -= g_delta;
-	if(player->next_frame <= 0)
+	else
 	{
-		player->frame++;
-		player->next_frame = 10;
+		player->next_frame -= g_delta;
+		if(player->next_frame <= 0)
+		{
+			player->frame++;
+			player->next_frame = 60;
+		}
 	}
-
+	
 	//if animation finished, reset to walk animation
 	if(frame >= (anim_start_frame + fpl - 1))
 	{
 		anim_current = WALK;
 		
 		//change to walk sprite
-		player->sprite = playerBody.image;
+		player->sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "walk");
 		//update frames per line on equips
-		fpl = playerBody.image->fpl;
+		fpl = player->sprite->fpl;
 		
 		player->weapon->active = false;
 		
@@ -275,6 +352,7 @@ void Player_Move(SDL_Event *e){
 			animation = face_right;
 			
 			player->frame = player_get_new_frame(animation, frame, fpl);
+	
 			player->face_dir = face_right;
 			break;
 		case SDLK_q:
@@ -311,7 +389,7 @@ void Player_Move(SDL_Event *e){
 				anim_current = SLASH;
 				animation = player->face_dir;
 				///player->sprite->fpl = playerBody.image_slash->fpl;
-				player->sprite = playerBody.image_slash;
+				player->sprite = (Sprite *) g_hash_table_lookup(g_player_sprites, "slash");
 				fpl = player->sprite->fpl;
 
 				player->frame = animation * fpl; // go back to start of animation					
@@ -322,7 +400,7 @@ void Player_Move(SDL_Event *e){
 			//if(player_struct.weapon == WEAP_SWORD)
 			if(anim_current != SLASH)
 			{
-				Sprite *new_sprite = playerBody.image_slash;				
+				Sprite *new_sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "slash");			
 				player->sprite = new_sprite;				
 
 				//weapon sprites have fewer frames than player slash anim

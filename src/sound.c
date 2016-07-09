@@ -80,7 +80,7 @@ Dict * sound_load_wav(char *filename)
 void sound_load_all_resources(char *filename)
 {
 	int i = 0;
-	Dict * sound_file_hash = load_dict_from_file("def/sound/sound_config.def");
+	Dict * sound_file_hash = Load_Dict_From_File("def/sound/sound_config.def");
 	Line key;
 
 	for( i = 0; i < sound_file_hash->item_count; i++)

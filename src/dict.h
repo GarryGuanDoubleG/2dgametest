@@ -80,7 +80,7 @@ Dict *Dict_New_String(char *text);
 
 /*creates new key values based on inputs of different types*/
 Dict * Dict_New_bool(Bool n);
-Dict * Dict_New_int(int n);
+Dict * Dict_New_Int(int n);
 Dict * Dict_New_uint(int n);
 Dict * Dict_New_float(float n);
 Dict * Dict_New_vec2d(Vec2d n);
@@ -110,7 +110,7 @@ int dict_get_hash_count(Dict * hash);
 */
 Dict * dict_get_hash_nth(Line key, Dict *hash, int n);
 
-Dict * dict_get_hash_value(Dict*hash, Line key);
+Dict * Dict_Get_Hash_Value(Dict*hash, Line key);
 
 void Dict_Array_Cpy(Dict * dict_array, int index, void * data, int array_len);
 

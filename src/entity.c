@@ -9,6 +9,7 @@ Entity			*EntityList; // handle on all entities
 Dict			*Entity_defs = NULL;// dictionary of all Entity definitions
 
 extern			Entity *player;
+extern			void Player_Draw();
 
 void Entity_initialize_system(){
 	int i;
@@ -24,7 +25,7 @@ void Entity_initialize_system(){
 		EntityList[i].inuse = false;
 	}
 
-	Entity_defs = load_dict_from_file("def/test.def");
+	Entity_defs = Load_Dict_From_File("def/test.def");
 
 	if(!Entity_defs)
 	{
@@ -109,7 +110,7 @@ Entity* Entity_load(Sprite *sprite,Vec2d pos, int health, int stamina, int state
 			 EntityList[i].maxhealth = health;
 			 EntityList[i].stamina = stamina;
 			 EntityList[i].state = state;
-			 EntityList[i].followPath = ent_follow_path;
+			 EntityList[i].followPath = Follow_Path;
 			 EntityList[i].id = i;
 			 EntityList[i].path = NULL;
 			 return &EntityList[i];
@@ -270,6 +271,10 @@ void Entity_update_all(){
 		if(&EntityList[i] != player)
 		{		
 			Entity_Draw(&EntityList[i]);
+		}
+		else
+		{
+			Player_Draw();
 		}
 	}
 }
@@ -519,73 +524,71 @@ void Entity_Set_Random_Velocity(Entity *ent, int speed)
 }
 
 
-void ent_follow_path(Entity *self)
+void Follow_Path(Entity *self)
 {
 	Vec2d tile_pos;
-	Vec2d tile_center_pos;
-	Vec2d self_center_pos = { ENT_CENTER_X(self), ENT_CENTER_Y(self)};
-	Vec2d player_center_pos = { ENT_CENTER_X(Entity_Get_Player()), ENT_CENTER_Y(Entity_Get_Player()) };
+	Vec2d center_pos;
+	Vec2d my_pos;
+	Vec2d next_pos;
+	
 	Vec2d new_vel;
-	//smaller bounds mean closer
-	Rect_f tile_bound = {-1,-1, TILE_WIDTH/3, TILE_HEIGHT/3};
-	Rect_f self_bound = {self->position.x + self->boundBox.x, self->position.y + self->boundBox.y,
-						 self->boundBox.w, self->boundBox.h};
-	float x;
-	float y;
+	Vec2d dir;
 
-	int distance;
-	if(!self) 
-	{
-		return;
-	}
-	if(self->state != STATE_AGGRO)
-	{
-		return;
-	}
-	if(!self->path)
-	{
-		return;
-	}
-	else
-	{
-		 tile_pos = tile_get_pos(self->path->tile_index);
+	Path *path;
 
-		 tile_center_pos.x = TILE_CENTER_X(tile_pos);
-		 tile_center_pos.y = TILE_CENTER_Y(tile_pos);
+	Rect_f tile_bB;
+	Rect_f self_bB;
 
-		 tile_bound.x = tile_center_pos.x;
-		 tile_bound.y = tile_center_pos.y;
-	}
+	//return in case of error
+	if(!self) return;
+	if(!self->path) return;
 
-	if(rect_collide(tile_bound, self_bound))
-	{
-		path_free_node(&(self->path));
-		self->velocity.x = 0;
-		self->velocity.y = 0;
-	}
-	else
-	{	
-		Vec2dSubtract(tile_center_pos, self_center_pos, new_vel);
-		Normalize2d(new_vel);
-		VectorScale(&new_vel, &new_vel, 5);
-		x = new_vel.x;
-		y = new_vel.y;
-		while((x * x + y * y) < 49)
+	my_pos.x	= self->position.x;
+	my_pos.y	= self->position.y;
+	path		= self->path;
+
+	//set new bounding box for collision detection
+	self_bB.x = my_pos.x + self->boundBox.w/2 - 10;
+	self_bB.y = my_pos.y + self->boundBox.h/2 - 10;
+	self_bB.w = 20;
+	self_bB.h =	20;
+
+	tile_pos	= tile_get_pos(path->tile_index);
+
+	tile_bB.x = tile_pos.x ;
+	tile_bB.y = tile_pos.y ;
+	tile_bB.w = TILE_WIDTH;
+	tile_bB.h = TILE_HEIGHT;
+
+	if(rect_collide(self_bB, tile_bB))
+	{				
+		path = self->path->next;
+		Path_Free_Node(&self->path);
+
+		if(!path)
 		{
-			if(x == 0 && y == 0)
-				break;
-			x *= 2;
-			y *= 2;
+			self->velocity.x = 0;
+			self->velocity.y = 0;
+			return;
 		}
-		new_vel.x = x;
-		new_vel.y = y;
-		self->velocity = new_vel;
-	//	slog("New Vel X:%f Y:%f", new_vel.x, new_vel.y);
+
+		tile_pos	= tile_get_pos(path->tile_index);
+		tile_pos.x	= tile_pos.x + TILE_WIDTH  / 3;
+		tile_pos.y	= tile_pos.y + TILE_HEIGHT / 3;
 	}
+	center_pos.x = self_bB.x;
+	center_pos.y = self_bB.y;
+	//Get Direction to center of next tile
+	Vec2dSubtract(tile_pos, center_pos, dir);
+	//set it to unit vector and scale by speed
+	Normalize2d(dir);
+	VectorScale(&dir, &new_vel, self->aggro_speed);
+	//update new vel
+	self->velocity = new_vel;
 
 }
 
-Entity * ent_find_nearest_enemy(Entity *self)
+Entity * Find_Nearest_Enemy(Entity *self)
 {
 	int i;
 	float min_dist = 99999;
@@ -623,7 +626,7 @@ Entity * ent_find_nearest_enemy(Entity *self)
 
 }
 
-Entity * ent_find_nearest_teammate(Entity *self)
+Entity * Find_Nearest_Teammate(Entity *self)
 {
 	int i;
 	float min_dist = 99999;

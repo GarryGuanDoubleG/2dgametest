@@ -54,7 +54,7 @@ Dict *json_convert(json_t *json)
   }
   if (json_is_integer(json))
   {
-    return Dict_New_int(json_integer_value(json));
+    return Dict_New_Int(json_integer_value(json));
   }
   if (json_is_real(json))
   {
@@ -75,7 +75,7 @@ Dict *mgl_json_list_convert(json_t *json)
   Dict *data = Dict_New_list();
   json_array_foreach(json, index, value)
   {
-    mgl_Dict_list_append(data,mgl_json_convert(value));
+    mgl_Dict_list_append(data,mgl_json_convertvalue));
   }
   return data;
 }

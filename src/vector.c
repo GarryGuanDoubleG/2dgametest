@@ -47,7 +47,7 @@ float Normalize2d(Vec2d &v){
 	float length;
 	int ilen;
 	length = GetLength2d(v);
-	ilen = (int)length;
+	//ilen = (int)length;
 	if(length == 0)
 	{
 		slog("length is 0");
@@ -55,8 +55,8 @@ float Normalize2d(Vec2d &v){
 		return length;
 	}
 	
-	v.x = v.x / ilen;
-	v.y = v.y / ilen;
+	v.x = v.x / length;
+	v.y = v.y / length;
 
 	return length;
 }

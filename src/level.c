@@ -89,10 +89,10 @@ void Level_Editor_Load_Assets()
 	int i, j;
 	Line key;
 
-	assets = load_dict_from_file("editor/editor_asset.def");
+	assets = Load_Dict_From_File("editor/editor_asset.def");
 
 	//get tile rows
-	value = dict_get_hash_value(assets, "terrain");
+	value = Dict_Get_Hash_Value(assets, "terrain");
 	if(!value || value->data_type != DICT_HASH) return;
 	
 	for(i = 0; i < value->item_count; i++)
@@ -100,8 +100,8 @@ void Level_Editor_Load_Assets()
 		Sprite *sprite;
 		char *filepath;
 
-		int imageW, imageH;
-		int frameW, frameH;
+		int *imageW, *imageH;
+		int *frameW, *frameH;
 		char * type;
 
 		Dict * sprite_info;
@@ -109,15 +109,15 @@ void Level_Editor_Load_Assets()
 
 		if(!sprite_info) return;
 
-		filepath = (char *)(dict_get_hash_value(sprite_info, "image")->keyValue);
+		filepath = (char *)(Dict_Get_Hash_Value(sprite_info, "image")->keyValue);
 
-		imageW = atoi((char*)(dict_get_hash_value(sprite_info, "imageW")->keyValue));
-		imageH = atoi((char*)(dict_get_hash_value(sprite_info, "imageH")->keyValue));
-		frameW = atoi((char*)(dict_get_hash_value(sprite_info, "frameW")->keyValue));
-		frameH = atoi((char*)(dict_get_hash_value(sprite_info, "frameH")->keyValue));
-		type = (char*)(dict_get_hash_value(sprite_info, "type")->keyValue);
+		imageW = (int *)(Dict_Get_Hash_Value(sprite_info, "imageW")->keyValue);
+		imageH = (int *)(Dict_Get_Hash_Value(sprite_info, "imageH")->keyValue);
+		frameW = (int *)(Dict_Get_Hash_Value(sprite_info, "frameW")->keyValue);
+		frameH = (int *)(Dict_Get_Hash_Value(sprite_info, "frameH")->keyValue);
+		type = (char*)(Dict_Get_Hash_Value(sprite_info, "type")->keyValue);
 
-		sprite = Sprite_Load(filepath, imageW, imageH, frameW, frameH);
+		sprite = Sprite_Load(filepath, *imageW, *imageH, *frameW, *frameH);
 		
 		if(!sprite) return;
 
@@ -313,8 +313,8 @@ void Level_Load(int load)
 	Dict * value;
 
 	int *tile_map;
-	int tile_row;
-	int tile_col;
+	int *tile_row;
+	int *tile_col;
 
 	if(load == Bool_False)
 	{
@@ -322,20 +322,20 @@ void Level_Load(int load)
 		return;
 	}
 
-	last_save = load_dict_from_file("save.def");
+	last_save = Load_Dict_From_File("save.def");
 	
 	//get tile rows
-	value = dict_get_hash_value(last_save, "TILE_ROWS");
+	value = Dict_Get_Hash_Value(last_save, "TILE_ROWS");
 	if(!value) return;
-	tile_row = atoi((char *)value->keyValue);
+	tile_row = (int *)value->keyValue;
 
 	//get tile columns
-	value = dict_get_hash_value(last_save, "TILE_COLUMNS");
+	value = Dict_Get_Hash_Value(last_save, "TILE_COLUMNS");
 	if(!value) return;
-	tile_col = atoi((char *)value->keyValue);
+	tile_col = (int *)value->keyValue;
 
 	//get map
-	value = dict_get_hash_value(last_save, "TILE_MAP");
+	value = Dict_Get_Hash_Value(last_save, "TILE_MAP");
 	if(!value) return;
 	tile_map = (int *)value->keyValue;
 
@@ -344,7 +344,7 @@ void Level_Load(int load)
 
 	//player data should be stored in a hash
 	//but only starting tile is being saved;
-	value = dict_get_hash_value(last_save, "PLAYER_TILE");
+	value = Dict_Get_Hash_Value(last_save, "PLAYER_TILE");
 	if(!value)
 		Player_Load_from_Def(NULL);
 	 else
@@ -381,7 +381,7 @@ void Level_Save()
 	if(ent_player)
 	{
 		player_tile = Tile_Get_Index(player->position, player->boundBox);
-		Dict_Hash_Insert(save, "PLAYER_TILE", Dict_New_int(player_tile));
+		Dict_Hash_Insert(save, "PLAYER_TILE", Dict_New_Int(player_tile));
 	}
 
 	//save tile info
@@ -392,8 +392,8 @@ void Level_Save()
 		Dict_Array_Cpy(dict_tile_map, 0, tile_map, tile_count);
 	
 		//save tile dimensions and map
-		Dict_Hash_Insert(save, "TILE_ROWS", Dict_New_int(row));
-		Dict_Hash_Insert(save, "TILE_COLUMNS", Dict_New_int(col));
+		Dict_Hash_Insert(save, "TILE_ROWS", Dict_New_Int(row));
+		Dict_Hash_Insert(save, "TILE_COLUMNS", Dict_New_Int(col));
 		Dict_Hash_Insert(save, "TILE_MAP", dict_tile_map);
 	}
 

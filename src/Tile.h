@@ -98,6 +98,8 @@ int tile_traversable(int tile_index);
 */
 int tile_get_type(int index);
 
+int tile_moveable(int index);
+
 void tile_editor_set_type(int tile_index, int new_type);
 /*
 * @brief gets the tile index based on Entity position and bouding box
@@ -150,10 +152,10 @@ int *Tile_Map_Get(int &tile_count, int &row, int &col);
 #define DOWN 2
 #define RIGHT 3
 
-#define TILE_CAN_MOVE_LEFT(a)  (a % TILE_ROWS !=0 ? true: false)
+#define TILE_CAN_MOVE_LEFT(a)  ((a % TILE_ROWS !=0) ? true: false)
 #define TILE_CAN_MOVE_RIGHT(a) (( a % (TILE_ROWS-1) !=0 || a == 0) ? true: false)
-#define TILE_CAN_MOVE_DOWN(a) (a < TOTAL_TILES - TILE_ROWS ? true : false )
-#define TILE_CAN_MOVE_UP(a) (a >= TILE_ROWS ? true : false)
+#define TILE_CAN_MOVE_DOWN(a) ((a < TOTAL_TILES - TILE_ROWS)  ? true : false )
+#define TILE_CAN_MOVE_UP(a) (a >= TILE_ROWS  ? true : false)
 //takes vec2d
 #define TILE_CENTER_X(a) (a.x + TILE_WIDTH/2)
 #define TILE_CENTER_Y(a) (a.y + TILE_HEIGHT/2)

@@ -69,7 +69,7 @@ void angel_think(Entity *self)
 	}
 	
 	randomNum = rand() % 15;
-	teammate = ent_find_nearest_teammate(self);
+	teammate = Find_Nearest_Teammate(self);
 
 	if(teammate)
 	{

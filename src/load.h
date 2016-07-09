@@ -2,7 +2,7 @@
 #define _LOAD_H_
 #include "dict.h"
 
-Dict * load_dict_from_file(char * filename);
+Dict * Load_Dict_From_File(char * filename);
 
 
 #endif

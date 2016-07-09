@@ -132,9 +132,9 @@ void particle_load_from_def(char *filename)
 	Line key;
 	char * filepath;
 	Sprite *particle_sprite, *temp;
-	int  img_width,img_height, frame_width, frame_height, fpl;
+	int  *img_width, *img_height, *frame_width, *frame_height, *fpl;
 
-	particle_dict = load_dict_from_file(filename);
+	particle_dict = Load_Dict_From_File(filename);
 
 	if(particle_dict->data_type != DICT_HASH)
 	{
@@ -149,18 +149,19 @@ void particle_load_from_def(char *filename)
 			slog("Error: %s should be a hash", key);
 			break;
 		}
-		filepath		= (char *)(dict_get_hash_value(value, "filepath")->keyValue);
+		filepath		= (char *)(Dict_Get_Hash_Value(value, "filepath")->keyValue);
 		
-		img_width		= atoi((char *)(dict_get_hash_value(value, "img_width")->keyValue));
-		img_height		= atoi((char *)(dict_get_hash_value(value, "img_height")->keyValue));
+		img_width		= (int *)(Dict_Get_Hash_Value(value, "img_width")->keyValue);
 
-		frame_width		= atoi((char*)(dict_get_hash_value(value, "frame_width")->keyValue));
-		frame_height	= atoi((char *)(dict_get_hash_value(value, "frame_height")->keyValue));
+		img_height		= (int *)(Dict_Get_Hash_Value(value, "img_height")->keyValue);
 
-		fpl				= atoi((char *)(dict_get_hash_value(value, "frames_per_line")->keyValue));
+		frame_width		= (int *)(Dict_Get_Hash_Value(value, "frame_width")->keyValue);
+		frame_height	= (int *)(Dict_Get_Hash_Value(value, "frame_height")->keyValue);
 
-		particle_sprite = Sprite_Load(filepath, img_width, img_height, frame_width, frame_height);
-		particle_sprite->fpl = fpl;
+		fpl				= (int *)(Dict_Get_Hash_Value(value, "frames_per_line")->keyValue);
+
+		particle_sprite = Sprite_Load(filepath, *img_width, *img_height, *frame_width, *frame_height);
+		particle_sprite->fpl = *fpl;
 
 		if(particle_sprite)
 		{

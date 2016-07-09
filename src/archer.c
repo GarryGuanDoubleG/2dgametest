@@ -62,7 +62,7 @@ void archer_think(Entity *self)
 	else{
 		self->nextThink = self->thinkRate;
 	}
-	enemy = ent_find_nearest_enemy(self);
+	enemy = Find_Nearest_Enemy(self);
 	
 	randomNum = rand() % 15;
 	if(enemy)

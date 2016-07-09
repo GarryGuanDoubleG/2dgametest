@@ -75,7 +75,7 @@ Bool music_load_resouce_all(char *filename)
 	Line key;
 	if(!filename) return Bool_False;
 
-	music_hash_file = load_dict_from_file("def/music.def");
+	music_hash_file = Load_Dict_From_File("def/music.def");
 	if(!music_hash_file)
 	{
 		return Bool_False;

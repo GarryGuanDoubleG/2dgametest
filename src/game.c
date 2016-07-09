@@ -62,13 +62,11 @@ int main(int argc, char *argv[])
   {
 	//render or draw functions go here
 	//draw functions should go in order from background first to player draw calls last
-    SDL_RenderClear(g_graphics_renderer);//clear screen
-
 	Draw_All();
-	
-	Enemy_Spawn(SPIDER);
 
 	Entity_update_all();
+	Enemy_Spawn(SPIDER);
+
 	Entity_think_all();
 	Entity_check_collision_all();
 //	struct_update_all();
@@ -150,8 +148,9 @@ void Init_All()
 
 void Draw_All()
 {
+	SDL_RenderClear(g_graphics_renderer);//clear screen
 	tile_draw();	
-	Player_Draw();
+	//Player_Draw();
 	Draw_Mouse();
 	particle_em_draw_all();
 }

@@ -379,6 +379,13 @@ int tile_get_type(int index)
 	return dest_tile_list[index].mType;
 }
 
+int tile_moveable(int index)
+{
+	if(tile_get_type(index) != TILE_TREE)
+		return 1;
+	return 0;
+}
+
 void tile_editor_set_type(int tile_index, int new_type)
 {
 	if(tile_index < TOTAL_TILES && tile_index >= 0 )
@@ -485,10 +492,21 @@ void tile_draw(){
 		}
 		if(rect_collide(camera, tile_box))
 		{
+			SDL_Rect white_box = {draw_pos.x - camera.x, draw_pos.y - camera.y, TILE_WIDTH, TILE_HEIGHT};
+
 			//draw grass
-			itoa(TILE_GRASS, key, 10);
+  			itoa(TILE_GRASS, key, 10);
 			sprite = (Sprite *) g_hash_table_lookup(g_tile_sprites, key);
 			Sprite_Draw(sprite, 0, draw_pos);
+
+			SDL_SetRenderDrawBlendMode(Graphics_Get_Renderer(), SDL_BLENDMODE_NONE);
+			if(i % 2 == 0)SDL_SetRenderDrawColor(Graphics_Get_Renderer(),255,i%255,i%255,0);
+			else SDL_SetRenderDrawColor(Graphics_Get_Renderer(),i%255,i%255,255,0);
+			
+			if(SDL_RenderFillRect(Graphics_Get_Renderer(), &white_box))
+			{
+				slog("Failed to Fill bg rect");
+			}
 
 			itoa(tile->mType, key, 10);
 			sprite = (Sprite *)g_hash_table_lookup(g_tile_sprites, key);
@@ -543,18 +561,24 @@ Tile tile_start()
 int tile_collision(Vec2d pos, SDL_Rect bound)
 {
 	int i;
-	Rect_f player_pos = {pos.x + bound.x, pos.y + bound.y, bound.w, bound.h};
+	float f_tile_w;
+	float f_tile_h;
+
+	Rect_f ent_bB = {pos.x + bound.x, pos.y + bound.y, bound.w, bound.h};
 	Rect_f tile_bound;
+
+	f_tile_w = TILE_WIDTH;
+	f_tile_h = TILE_HEIGHT;
 
 	for( i = 0; i < TOTAL_TILES; i++)
 	{
 		//offset to make tile collision more lenient
-		tile_bound.x = tile_list[i].mBox.x + TILE_WIDTH * .2f;
-		tile_bound.y = tile_list[i].mBox.y + TILE_HEIGHT * .2f;
-		tile_bound.w = tile_list[i].mBox.w * .6f;
-		tile_bound.h = tile_list[i].mBox.h * .8f;
+		tile_bound.x = tile_list[i].mBox.x;
+		tile_bound.y = tile_list[i].mBox.y;
+		tile_bound.w = f_tile_w;
+		tile_bound.h = f_tile_h;
 
-		if(rect_collide(player_pos, tile_bound))
+		if(rect_collide(ent_bB, tile_bound))
 		{
 			if(tile_list[i].mType != TILE_GRASS && tile_list[i].mType != TILE_ROAD)
 			{
@@ -736,7 +760,7 @@ int *Tile_Map_Get(int &tile_count, int &row, int& col)
 	return tile_map;
 }
 
-void tile_load_tiles(Dict *value)
+void Tile_Load(Dict *value)
 {
 	int i;
 	Line key;
@@ -747,7 +771,7 @@ void tile_load_tiles(Dict *value)
 		Sprite *sprite;
 
 		char *filepath;
-		char * type;
+		Line type;
 
 		tile = dict_get_hash_nth(key, value, i);
 
@@ -758,8 +782,8 @@ void tile_load_tiles(Dict *value)
 		}
 		//get tile info to load sprite
 
-		filepath = (char *)(dict_get_hash_value(tile, "filepath")->keyValue);
-		type	 = (char *)(dict_get_hash_value(tile, "type")->keyValue);
+		filepath = (char *)(Dict_Get_Hash_Value(tile, "filepath")->keyValue);
+		itoa(*(int *)(Dict_Get_Hash_Value(tile, "type")->keyValue), type, 10);
 
 		//load and store sprite
 		sprite = Sprite_Load(filepath, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
@@ -785,8 +809,8 @@ void tile_load_assets()
 
 	Line key;
 
-	assets = load_dict_from_file("def/tiles.def");
-	value = dict_get_hash_value(assets, "tiles");
+	assets = Load_Dict_From_File("def/tiles.def");
+	value = Dict_Get_Hash_Value(assets, "tiles");
 
 	g_tile_sprites = g_hash_table_new_full(g_str_hash,
 							  g_str_equal,
@@ -799,9 +823,9 @@ void tile_load_assets()
 		return;
 	}
 
-	tile_load_tiles(value);
+	Tile_Load(value);
 
-	value = dict_get_hash_value(assets, "destructables");
+	value = Dict_Get_Hash_Value(assets, "destructables");
 
 	if(!value || value->data_type != DICT_HASH)
 	{
@@ -809,5 +833,5 @@ void tile_load_assets()
 		return;
 	}
 	
-	tile_load_tiles(value);
+	Tile_Load(value);
 }

@@ -158,19 +158,19 @@ void Entity_update_all();
 /*
 * @brief moves to center of next tile in the Entity's path
 */
-void ent_follow_path(Entity *self);
+void Follow_Path(Entity *self);
 /**
 * @brief locates the nearest Entity on the enemy tam
 * @param takes pointer to Entity to use find nearest enemy relative to self's position
 * @return returns pointer to enemy Entity
 */
-Entity * ent_find_nearest_enemy(Entity *self);
+Entity * Find_Nearest_Enemy(Entity *self);
 /**
 * @brief locates the nearest Entity on the friendly team
 * @param takes pointer to Entity to use find nearest enemy relative to self's position
 * @return returns pointer to friendly Entity
 */
-Entity * ent_find_nearest_teammate(Entity *self);
+Entity * Find_Nearest_Teammate(Entity *self);
 //in class
 /*
  *@brief return a pointer to an empty Entity structure
