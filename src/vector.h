@@ -59,7 +59,7 @@ SDL_Rect New_SDL_Rect(int x, int y, int w, int h);
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
 #define Vec4dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z, c.w = a.w + b.w)
 
-#define Vec2dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y)
+#define Vec2dSubtract(a,b,c) ( c.x =  b.x - a.x, c.y = b.y - a.y)
 #define Vec3dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y)
 #define Vec4dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y, c.w = a.w - b.w)
 
@@ -82,5 +82,8 @@ SDL_Rect New_SDL_Rect(int x, int y, int w, int h);
 #define Vec2dSet(vec,a,b)(vec.x=(a),vec.y=(b))
 #define Vec3dSet(vec,a,b,c)(vec.x=(a),vec.y=(b),vec.z=(c))
 #define Vec4dSet(vec,a,b,c,d)(vec.x=(a),vec.y=(b),vec.z=(c),vec.w=(d))
+
+//absolute value
+#define Vec2dAbs(a, b)( b.x = a.x >= 0 ? a.x : -a.x, b.y = a.y >= 0 ? a.y : -a.y)
 
 #endif

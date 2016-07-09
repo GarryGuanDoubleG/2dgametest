@@ -7,7 +7,7 @@
 #define Vec3dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z)
 #define Vec4dAdd(a,b,c) ( c.x = a.x + b.x, c.y = a.y + b.y, c.z = a.z + b.z, c.w = a.w + b.w)
 
-#define Vec2dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y)
+#define Vec2dSubtract(a,b,c) ( c.x =  b.x - a.x, c.y = b.y - a.y)
 #define Vec3dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y)
 #define Vec4dSubtract(a,b,c) ( c.x = a.x - b.x, c.y = a.y - b.y, c.z = a.z - a.y, c.w = a.w - b.w)
 

@@ -311,14 +311,14 @@ Path *Find_New_Path(int start, int target, int range)
 		//get next node to check
 		curr_node	= open_list_get();
 		//no possible path, break
-		if(!curr_node)
+		if(!curr_node || (g_ol_count + g_cl_count) >= range)
 			break;
 		//directional options from current node
 		moves		= Get_Moves(curr_node->tile_index);
 
 		//found target or checked too many path nodes
-		if(curr_node->tile_index == target ||
-			(g_ol_count + g_cl_count) >= range)
+		if(curr_node->tile_index == target)/*||
+			(g_ol_count + g_cl_count) >= range)*/
 		{
 			path = Assign_Path(curr_node);
 			break;
@@ -351,7 +351,7 @@ Path* getPath(Vec2d self_pos, Vec2d target_pos, SDL_Rect self_bound, SDL_Rect ta
 	int target;
 	
 	//maximum tiles to check before quitting path search
-	const int path_size = range * range;
+	const int path_size = 4 * range;
 
 	start = Tile_Get_Index(self_pos, self_bound);
 	target= Tile_Get_Index(target_pos, target_bound);

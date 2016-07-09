@@ -1,7 +1,7 @@
 {
 	"frameW": 80,
 	"frameH": 80,
-	"health": 100,
+	"health": 10020,
 	"mana":	100,
 	"int": 1,
 	"dex": 1,

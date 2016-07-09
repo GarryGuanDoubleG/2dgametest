@@ -21,6 +21,8 @@ int G_Selected_Type = -1;
 int G_Store_Pos = Bool_True;
 int count = 0;
 
+extern Entity *g_player;
+
 void Level_Editor_Input(SDL_Event *e);
 
 void Level_Set_Select(gpointer key, gpointer tile_pos, gpointer data)
@@ -201,14 +203,14 @@ void Level_Tile_Tools_Draw(void *key, gpointer sprite, gpointer pos)
 			draw_pos.x = 330 + camera_pos.x;
 			draw_pos.y = 300 + camera_pos.y;
 
-			Vec2dSubtract(draw_pos, Camera_Get_Editor_Offset(), draw_pos);
+			Vec2dSubtract(Camera_Get_Editor_Offset(), draw_pos, draw_pos);
 		}
 		else
 		{
 			draw_pos.x = 330 + camera_pos.x;
 			draw_pos.y = 500 + camera_pos.y;;
 
-			Vec2dSubtract(draw_pos, Camera_Get_Editor_Offset(), draw_pos);
+			Vec2dSubtract(Camera_Get_Editor_Offset(), draw_pos, draw_pos);
 		}
 		Sprite_Draw((Sprite *)sprite, 0, draw_pos);
 		return;
@@ -336,7 +338,7 @@ void Level_Load(int load)
 
 	//get map
 	value = Dict_Get_Hash_Value(last_save, "TILE_MAP");
-	if(!value) return;
+	if(!value) return; 
 	tile_map = (int *)value->keyValue;
 
 	//load map into game
@@ -362,7 +364,7 @@ void Level_Save()
 	int col;
 
 	int player_tile;
-	Entity * ent_player;
+	
 	Entity * ent;
 
 	Dict *dict_tile_map;
@@ -376,11 +378,11 @@ void Level_Save()
 	if(!save) return;
 
 	//save player
-	ent_player = Entity_Get_Player();
+	g_player;
 
-	if(ent_player)
+	if(g_player)
 	{
-		player_tile = Tile_Get_Index(player->position, player->boundBox);
+		player_tile = Tile_Get_Index(g_player->position, g_player->boundBox);
 		Dict_Hash_Insert(save, "PLAYER_TILE", Dict_New_Int(player_tile));
 	}
 
@@ -451,7 +453,7 @@ void Level_Editor_Input(SDL_Event *e)
 		
 		mouse_pos = G_Mouse_Pos;
 		Vec2dAdd(mouse_pos, camera, mouse_pos);
-		Vec2dSubtract(mouse_pos, cam_offset, mouse_pos);
+		Vec2dSubtract(cam_offset, mouse_pos, mouse_pos);
 		mouse_bounds = New_SDL_Rect(mouse_pos.x, mouse_pos.y, 16, 16);
 
 		slog("mouse pos %f %f", mouse_pos.x, mouse_pos.y);
@@ -462,7 +464,7 @@ void Level_Editor_Input(SDL_Event *e)
 		//need to edit for readability
 		if(rect_collide(mouse_bounds, tile_map_bounds) && G_Selected_Type >= 0 )
 		{	
-			Vec2dSubtract(mouse_pos, cam_offset, mouse_pos);
+			Vec2dSubtract(cam_offset, mouse_pos, mouse_pos);
 			
 			mouse_bounds = New_SDL_Rect(0, 0, 16, 16);
 			//gets tile number based on original absolute positions not relative to camera

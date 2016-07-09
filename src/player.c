@@ -6,7 +6,7 @@
 #include "simple_logger.h"
 char* player_char_file = "images/player/BODY_male.png";
 
-Entity* player = NULL;
+Entity* g_player = NULL;
 
 const int PLAYERH = 64; /*<player image height*/
 const int PLAYERW = 64; /*<player image width is 64x64.*/
@@ -84,8 +84,8 @@ void Player_Init()
 	dict_sprites	= Dict_Get_Hash_Value(player_def, "sprites");
 	dict_bB			= Dict_Get_Hash_Value(player_def, "boundBox");
 
-	health			= (int *)Dict_Get_Hash_Value(player_def, "health");
-	mana			= (int *)Dict_Get_Hash_Value(player_def, "health");
+	health			= (int *)Dict_Get_Hash_Value(player_def, "health")->keyValue;
+	mana			= (int *)Dict_Get_Hash_Value(player_def, "mana")->keyValue;
 
 	boundBox.x		= * (int *)(Dict_Get_Hash_Value(dict_bB, "x")->keyValue);
 	boundBox.y		= * (int *)(Dict_Get_Hash_Value(dict_bB, "y")->keyValue);
@@ -115,24 +115,25 @@ void Player_Init()
 
 		g_hash_table_insert(g_player_sprites, g_strdup(key), sprite);
 	}
-
+	//default sprite
 	sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "walk");
-	player = Entity_load(sprite, pos, *health, *mana, 0);
 
-	player->boundBox = boundBox;
+	g_player = Entity_load(sprite, pos, *health, *mana, 0);
 
-	player->frame = 0;
+	g_player->boundBox = boundBox;
 
-	player->think = Player_Think;
-	player->update = Player_Update;
+	g_player->frame = 0;
+
+	g_player->think = Player_Think;
+	g_player->update = Player_Update;
 	
-	player->team = TEAM_PLAYER;
+	g_player->team = TEAM_PLAYER;
 
-	player->p_em = particle_em_new();
+	g_player->p_em = particle_em_new();
 
 	//starting weapon
 	PlayerEquip.weapon = getWeapon("longsword");
-	player->weapon = PlayerEquip.weapon;
+	g_player->weapon = PlayerEquip.weapon;
 	//armor
 	PlayerEquip.head = getArmor("head chain hood");
 	PlayerEquip.chest = getArmor("chest chain");
@@ -163,7 +164,7 @@ void Player_Load_from_Def(Dict *value)
 		offset.x = 10;
 		offset.y = 20;
 
-		Vec2dAdd(offset, pos, player->position);
+		Vec2dAdd(offset, pos, g_player->position);
 	}
 	else
 	{
@@ -171,7 +172,7 @@ void Player_Load_from_Def(Dict *value)
 
 		pos.x = start.mBox.x;
 		pos.y = start.mBox.y;
-		player->position = pos;
+		g_player->position = pos;
 	}
 
 	Player_Update_Camera();
@@ -181,47 +182,47 @@ void Player_Load_from_Def(Dict *value)
 void Player_Draw_equip(){
 	Vec2d draw_pos;
 
-	Vec2dCopy(player->position, draw_pos);
+	Vec2dCopy(g_player->position, draw_pos);
 
 	if(PlayerEquip.feet){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), player->frame, player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.feet), g_player->frame, g_player->position);
 	}
 	if(PlayerEquip.hands){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), player->frame, player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.hands), g_player->frame, g_player->position);
 	}
 	if(PlayerEquip.head){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), player->frame, player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.head), g_player->frame, g_player->position);
 	}
 	if(PlayerEquip.torso){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), player->frame, player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.torso), g_player->frame, g_player->position);
 	}
 	if(PlayerEquip.chest){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), player->frame, player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.chest), g_player->frame, g_player->position);
 	}
 	if(PlayerEquip.shoulders){
-		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), player->frame, player->position);
+		Sprite_Draw(getArmorAnim(anim_current, PlayerEquip.shoulders), g_player->frame, g_player->position);
 	}
 
 	if(PlayerEquip.weapon && PlayerEquip.weapon->active && anim_current == SLASH ){
 		//sword sprites are 192x192 pixels, need offset
 		if(PlayerEquip.weapon->type == WEAP_SWORD){
 			//offset it
-			Vec2dSet(draw_pos, player->position.x - PLAYER_FRAMEW, player->position.y - PLAYER_FRAMEH);
+			Vec2dSet(draw_pos, g_player->position.x - PLAYER_FRAMEW, g_player->position.y - PLAYER_FRAMEH);
 
-			Sprite_Draw(player->weapon->image, player->frame, draw_pos);
+			Sprite_Draw(g_player->weapon->image, g_player->frame, draw_pos);
 		}
 		else{ //draw on player instead
-			Sprite_Draw(PlayerEquip.weapon->image, player->frame, player->position);
+			Sprite_Draw(PlayerEquip.weapon->image, g_player->frame, g_player->position);
 		} 
 	}
 }
 
 void Player_Draw()
 {
-	Entity_Draw(player);
+	Entity_Draw(g_player);
 
 	Player_Draw_equip();
-	hud_draw(Camera_Get_Camera(),player->health, player->maxhealth, player->stamina, player->stamina);
+	hud_draw(Camera_Get_Camera(),g_player->health, g_player->maxhealth, g_player->stamina, g_player->stamina);
 }
 
 int player_get_new_frame(int animation, int curr_frame, int fpl)
@@ -246,23 +247,23 @@ int player_get_new_frame(int animation, int curr_frame, int fpl)
 
 void Player_Update(Entity *self)
 {
-	Vec2d new_pos = {player->position.x + player->velocity.x, player->position.y + player->velocity.y};
+	Vec2d new_pos = {g_player->position.x + g_player->velocity.x, g_player->position.y + g_player->velocity.y};
 	int frame;
 	int fpl;
 	int animation;
 	int anim_start_frame;
 
-	frame = player->frame;
-	fpl = player->sprite->fpl;	
-	animation = player->face_dir;
+	frame = g_player->frame;
+	fpl = g_player->sprite->fpl;	
+	animation = g_player->face_dir;
 	anim_start_frame = fpl * animation;
 
-	if(!tile_collision(new_pos, player->boundBox))
+	if(!tile_collision(new_pos, g_player->boundBox))
 	{
-		player->position = new_pos;
+		g_player->position = new_pos;
 	}
-	player->velocity.x = 0;
-	player->velocity.y = 0;
+	g_player->velocity.x = 0;
+	g_player->velocity.y = 0;
 
 	//don't update walk animation
 	//handled in player move
@@ -272,11 +273,11 @@ void Player_Update(Entity *self)
 	}
 	else
 	{
-		player->next_frame -= g_delta;
-		if(player->next_frame <= 0)
+		g_player->next_frame -= g_delta;
+		if(g_player->next_frame <= 0)
 		{
-			player->frame++;
-			player->next_frame = 60;
+			g_player->frame++;
+			g_player->next_frame = 60;
 		}
 	}
 	
@@ -286,16 +287,16 @@ void Player_Update(Entity *self)
 		anim_current = WALK;
 		
 		//change to walk sprite
-		player->sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "walk");
+		g_player->sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "walk");
 		//update frames per line on equips
-		fpl = player->sprite->fpl;
+		fpl = g_player->sprite->fpl;
 		
-		player->weapon->active = false;
+		g_player->weapon->active = false;
 		
 		anim_start_frame = animation * fpl;
 		frame = anim_start_frame;
 
-		player->frame = frame;
+		g_player->frame = frame;
 	}
 }
 
@@ -303,8 +304,8 @@ void Player_Update_Camera()
 {
 	Vec2d pos;
 
-	pos.x = player->position.x - SCREEN_WIDTH / 2;
-	pos.y = player->position.y - SCREEN_HEIGHT / 2;
+	pos.x = g_player->position.x - SCREEN_WIDTH / 2;
+	pos.y = g_player->position.y - SCREEN_HEIGHT / 2;
 
 	Camera_SetPosition(pos);
 }
@@ -321,46 +322,46 @@ void Player_Move(SDL_Event *e){
 		return;
 	}
 	
-	frame = player->frame;
-	fpl = player->sprite->fpl;
+	frame = g_player->frame;
+	fpl = g_player->sprite->fpl;
 
 	switch( e->key.keysym.sym )
     {
         case SDLK_UP:
-			player->velocity.y -=5;			
+			g_player->velocity.y -=5;			
 			animation = face_up; 
 
-			player->frame = player_get_new_frame(animation, frame, fpl);
-			player->face_dir = face_up;
+			g_player->frame = player_get_new_frame(animation, frame, fpl);
+			g_player->face_dir = face_up;
 			break;
         case SDLK_DOWN:
-			player->velocity.y +=5;
+			g_player->velocity.y +=5;
 			animation = face_down;
 			
-			player->frame = player_get_new_frame(animation, frame, fpl);
-			player->face_dir = face_down;
+			g_player->frame = player_get_new_frame(animation, frame, fpl);
+			g_player->face_dir = face_down;
 			break;
         case SDLK_LEFT:
-			player->velocity.x -= 5;
+			g_player->velocity.x -= 5;
 			animation = face_left;
 			
-			player->frame = player_get_new_frame(animation, frame, fpl);
-			player->face_dir = face_left;
+			g_player->frame = player_get_new_frame(animation, frame, fpl);
+			g_player->face_dir = face_left;
 			break;
         case SDLK_RIGHT:
-			player->velocity.x += 5;
+			g_player->velocity.x += 5;
 			animation = face_right;
 			
-			player->frame = player_get_new_frame(animation, frame, fpl);
+			g_player->frame = player_get_new_frame(animation, frame, fpl);
 	
-			player->face_dir = face_right;
+			g_player->face_dir = face_right;
 			break;
 		case SDLK_q:
 			slog("Q press");
-			p.y = player->position.y + player->sprite->frameH * 3 / 4;
-			p.x = player->position.x;
+			p.y = g_player->position.y + g_player->sprite->frameH * 3 / 4;
+			p.x = g_player->position.x;
 					
-			particle_em_add(player->p_em, PARTICLE_SPELLCAST, p);
+			particle_em_add(g_player->p_em, PARTICLE_SPELLCAST, p);
 			break;
 		case SDLK_e:
 			set_hud_state(HUD_state::main_menu);
@@ -387,13 +388,13 @@ void Player_Move(SDL_Event *e){
 			if(anim_current != SLASH && Player_Tree_Collision())
 			{
 				anim_current = SLASH;
-				animation = player->face_dir;
+				animation = g_player->face_dir;
 				///player->sprite->fpl = playerBody.image_slash->fpl;
-				player->sprite = (Sprite *) g_hash_table_lookup(g_player_sprites, "slash");
-				fpl = player->sprite->fpl;
+				g_player->sprite = (Sprite *) g_hash_table_lookup(g_player_sprites, "slash");
+				fpl = g_player->sprite->fpl;
 
-				player->frame = animation * fpl; // go back to start of animation					
-				player->next_frame = 50;
+				g_player->frame = animation * fpl; // go back to start of animation					
+				g_player->next_frame = 50;
 			}
 			break;
 		case SDLK_SPACE:			
@@ -401,21 +402,21 @@ void Player_Move(SDL_Event *e){
 			if(anim_current != SLASH)
 			{
 				Sprite *new_sprite = (Sprite *)g_hash_table_lookup(g_player_sprites, "slash");			
-				player->sprite = new_sprite;				
+				g_player->sprite = new_sprite;				
 
 				//weapon sprites have fewer frames than player slash anim
 				//set new player sprite to have fewer fpl
 				fpl = PlayerEquip.weapon->fpl;
 				new_sprite->fpl = fpl;
 				
-				animation = player->face_dir;
-				player->frame = fpl * animation; // start frame on animation matching direction
-				player->next_frame = 50;
+				animation = g_player->face_dir;
+				g_player->frame = fpl * animation; // start frame on animation matching direction
+				g_player->next_frame = 50;
 				anim_current = SLASH;
-				player->weapon->active = true;				
+				g_player->weapon->active = true;				
 																				
 				//check if we hit enemy
-				weapon_collision(player);
+				weapon_collision(g_player);
 			}
 			break;
 		default:
@@ -426,13 +427,13 @@ void Player_Move(SDL_Event *e){
 
 int Player_Tree_Collision()
 {
-	if(!player)
+	if(!g_player)
 	{ 
 		slog("No player or face direction");
 		return false;
 	}
 
-	return tile_forage(player->position, player->boundBox, player->face_dir);
+	return tile_forage(g_player->position, g_player->boundBox, g_player->face_dir);
 }
 void Player_Think(Entity* self)
 {

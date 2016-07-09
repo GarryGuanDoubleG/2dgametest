@@ -3,7 +3,7 @@
 static int struct_show_select = false;
 static Entity * selected_struct = NULL;
 extern struct Mouse;
-extern Entity *player;
+extern Entity *g_player;
 
 void struct_update(Entity *self)
 {
@@ -16,18 +16,16 @@ Vec2d StructGetBuildPos()
 	Vec2d build_pos;
 	Vec2d offset;
 
-	player_pos = player->position;
-
-	if(player->face_dir == 0)		
+	if(g_player->face_dir == 0)		
 		Vec2dSet(offset, 0, -128);
-	else if(player->face_dir == 1)
+	else if(g_player->face_dir == 1)
 		Vec2dSet(offset, -128, 0);
-	else if(player->face_dir == 2)
+	else if(g_player->face_dir == 2)
 		Vec2dSet(offset, 0, 128);
-	else if(player->face_dir == 3)
+	else if(g_player->face_dir == 3)
 		Vec2dSet(offset, 128, 0);
 
-	Vec2dAdd(offset, player->position, build_pos);
+	Vec2dAdd(offset, g_player->position, build_pos);
 
 	return build_pos;
 }
@@ -108,7 +106,7 @@ void update_selected_struct(Entity *self)
 		frame_offset.y = self->sprite->frameH/2;
 
 		Vec2dAdd(m_pos,cam_offset, draw_pos);
-		Vec2dSubtract(draw_pos, frame_offset, draw_pos); 
+		Vec2dSubtract( frame_offset, draw_pos, draw_pos); 
 		self->boundBox.x = draw_pos.x;
 		self->boundBox.y = draw_pos.y;
 		self->position = draw_pos;

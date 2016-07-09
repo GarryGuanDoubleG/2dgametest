@@ -64,11 +64,11 @@ int main(int argc, char *argv[])
 	//draw functions should go in order from background first to player draw calls last
 	Draw_All();
 
+	Entity_check_collision_all();
 	Entity_update_all();
 	Enemy_Spawn(SPIDER);
 
 	Entity_think_all();
-	Entity_check_collision_all();
 //	struct_update_all();
 
 	G_MONSTER_SPAWN_TIMER -= 1;

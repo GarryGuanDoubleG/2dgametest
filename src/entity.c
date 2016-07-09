@@ -8,7 +8,7 @@ int				g_entity_count = 0;
 Entity			*EntityList; // handle on all entities
 Dict			*Entity_defs = NULL;// dictionary of all Entity definitions
 
-extern			Entity *player;
+extern			Entity *g_player;
 extern			void Player_Draw();
 
 void Entity_initialize_system(){
@@ -183,7 +183,7 @@ void draw_health_bar(Entity *self){
 void Entity_Draw(Entity *ent){
 	//SDL Main Camera src rect	
 	Sprite_Draw(ent->sprite, ent->frame, ent->position);
-	if(ent != player)
+	if(ent != g_player)
 	{
 		draw_health_bar(ent);
 	}
@@ -232,7 +232,7 @@ void Entity_update_all(){
 		if(!EntityList[i].inuse){
 			continue;
 		}
-		if(!EntityList[i].sprite)
+		if(!EntityList[i].sprite || EntityList[i].health <= 0)
 		{
 			Entity_Free(&EntityList[i]);
 			continue;
@@ -261,14 +261,14 @@ void Entity_update_all(){
 
 		EntityList[i].update(&EntityList[i]);
 		//don't free player
-		if(EntityList[i].health <= 0 && !(&EntityList[i] == player))
+		if(EntityList[i].health <= 0 && !(&EntityList[i] == g_player))
 		{
 			Entity_Free(&EntityList[i]);
 		}
 		if(EntityList[i].weapon){
 			EntityList[i].weapon->face_dir = EntityList[i].face_dir;
 		}
-		if(&EntityList[i] != player)
+		if(&EntityList[i] != g_player)
 		{		
 			Entity_Draw(&EntityList[i]);
 		}
@@ -473,13 +473,11 @@ void Entity_check_collision_all()
 //player 
 Entity * Entity_Get_Player()
 {
-	return player;
+	return g_player;
 }
 
 void Entity_Move_Towards_Player(Entity *ent, int speed)
 {
-	Entity *player;
-
 	Vec2d direction;
 	Vec2d player_pos;
 	Vec2d new_vel;
@@ -487,10 +485,9 @@ void Entity_Move_Towards_Player(Entity *ent, int speed)
 
 	float distance;
 
-	player = Entity_Get_Player();
 
-	direction.x = player->position.x - ent->position.x;
-	direction.y = player->position.y - ent->position.y;
+	direction.x = g_player->position.x - ent->position.x;
+	direction.y = g_player->position.y - ent->position.y;
 
 	distance = Normalize2d(direction);
 	VectorScale(&direction, &new_vel, speed);
@@ -579,7 +576,7 @@ void Follow_Path(Entity *self)
 	center_pos.x = self_bB.x;
 	center_pos.y = self_bB.y;
 	//Get Direction to center of next tile
-	Vec2dSubtract(tile_pos, center_pos, dir);
+	Vec2dSubtract(center_pos, tile_pos, dir);
 	//set it to unit vector and scale by speed
 	Normalize2d(dir);
 	VectorScale(&dir, &new_vel, self->aggro_speed);

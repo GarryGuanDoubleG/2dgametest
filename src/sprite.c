@@ -345,7 +345,7 @@ void Sprite_Text_Draw(Sprite *text, Vec2d draw_pos, int alpha)
 	cam_pos.x = cam.x;
 	cam_pos.y = cam.y;
 
-	Vec2dSubtract(draw_pos, cam_pos, pos_rel); 
+	Vec2dSubtract( cam_pos, draw_pos, pos_rel); 
 
 	src.x = 0;
 	src.y = 0;
